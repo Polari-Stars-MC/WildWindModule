@@ -51,6 +51,7 @@ allprojects {
         mavenLocal()
         mavenCentral()
         maven("https://maven.neoforged.net/releases")
+        maven("https://maven.ithundxr.dev/snapshots")
 //        maven("https://maven.creeperhost.net/")
     }
     configure<ForgeLikeToml> {
