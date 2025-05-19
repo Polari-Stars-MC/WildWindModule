@@ -11,6 +11,7 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.ClipContext;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
@@ -27,6 +28,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  */
 public class ModBlocks {
     public static final BlockEntry<DropExperienceBlock> SALT_ORE;
+    public static final BlockEntry<DropExperienceBlock> DEEPSLATE_SALT_ORE;
     public static final BlockEntry<Block> SALT_BLOCK;
 
     static {
@@ -38,9 +40,9 @@ public class ModBlocks {
                         .requiresCorrectToolForDrops()
                         .strength(3))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                .blockstate((c, p) ->
+                        p.simpleBlock(c.get()))
                 .loot((l, b) -> {
-
-
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
                     l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
                             LootItem.lootTableItem(ModItems.SALT)
@@ -50,6 +52,25 @@ public class ModBlocks {
                 .item().build()
                 .lang("Salt ore")
                 .register();
+        DEEPSLATE_SALT_ORE = REGISTRATE
+                .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                .properties(p -> p
+                        .requiresCorrectToolForDrops()
+                        .instrument(NoteBlockInstrument.BASEDRUM)
+                        .mapColor(MapColor.DEEPSLATE)
+                        .strength(4.5F, 3)
+                        .sound(SoundType.DEEPSLATE))
+                .blockstate((c, p) ->
+                        p.simpleBlock(c.get()))
+                .loot((l, b) -> {
+                    HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+                    l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
+                            LootItem.lootTableItem(ModItems.SALT)
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
+                                    .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
+                })
+                .item().build()
+                .register();
         SALT_BLOCK = REGISTRATE
                 .block("salt_block", Block::new)
                 .properties(properties -> properties
@@ -57,7 +78,7 @@ public class ModBlocks {
                         .requiresCorrectToolForDrops()
                         .isRedstoneConductor((_0, _1, _2) -> true))
                 .blockstate((c, p) ->
-                        p.cubeAll(c.get()))
+                        p.simpleBlock(c.get()))
                 .item().build()
                 .defaultLoot()
                 .lang("Salt block")
