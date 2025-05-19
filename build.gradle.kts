@@ -50,6 +50,9 @@ allprojects {
     repositories {
         mavenLocal()
         mavenCentral()
+        flatDir {
+            dirs(rootProject.file("libs"))
+        }
         maven("https://maven.neoforged.net/releases")
         maven("https://maven.ithundxr.dev/snapshots")
 //        maven("https://maven.creeperhost.net/")
