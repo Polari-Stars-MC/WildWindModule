@@ -4,6 +4,11 @@ import org.polaris2023.mcmeta.extension.forge.neo.NeoForgeModsToml
 
 dependencies {
     implementation(project(":Agricultural"))
+    implementation(jarJar(
+        group = "dev.xkmc",
+        name = "fast_projectile_api",
+        version = "[3.0.5,)"
+    ))
 }
 
 val modId: String by project
