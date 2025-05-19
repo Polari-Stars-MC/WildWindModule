@@ -62,6 +62,7 @@ public class ModBlocks {
                         .sound(SoundType.DEEPSLATE))
                 .blockstate((c, p) ->
                         p.simpleBlock(c.get()))
+                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .loot((l, b) -> {
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
                     l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
@@ -70,6 +71,7 @@ public class ModBlocks {
                                     .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
                 })
                 .item().build()
+                .lang("Deepslate salt ore")
                 .register();
         SALT_BLOCK = REGISTRATE
                 .block("salt_block", Block::new)

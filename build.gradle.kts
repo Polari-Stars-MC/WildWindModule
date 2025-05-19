@@ -255,6 +255,15 @@ subprojects {
         enabled = true
     }
 
+    val dataBuild:TaskProvider<Task> by tasks.registering {
+        group = "build"
+        val runData: Task by tasks.getting
+        dependsOn(runData)
+        finalizedBy(tasks.build)
+        tasks.build.get().mustRunAfter(runData)
+
+    }
+
     sonatypeUploader {
         tokenName = properties["central.sonatype.token.name"].toString()
         tokenPasswd = properties["central.sonatype.token.passwd"].toString()
@@ -289,3 +298,10 @@ subprojects {
     }
 }
 
+val dataBuild by tasks.registering {
+    group = "build"
+    subprojects.forEach {
+        val dataBuild by it.tasks.getting
+        dependsOn(dataBuild)
+    }
+}
