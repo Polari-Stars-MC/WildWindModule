@@ -267,7 +267,9 @@ subprojects {
     tasks.jarJar {
         enabled = true
     }
-
+    tasks.javadoc {
+        enabled = false
+    }
     val dataBuild:TaskProvider<Task> by tasks.registering {
         group = "build"
         val runData: Task by tasks.getting
