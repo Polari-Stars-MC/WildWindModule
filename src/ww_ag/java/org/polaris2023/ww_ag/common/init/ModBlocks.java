@@ -27,6 +27,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import org.polaris2023.ww_ag.WWAgMod;
+import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
+import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -48,8 +50,7 @@ public class ModBlocks {
                         .requiresCorrectToolForDrops()
                         .strength(3))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
                 .loot((l, b) -> {
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
                     l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
@@ -57,7 +58,8 @@ public class ModBlocks {
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
                                     .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
                 })
-                .item().build()
+                .tag(WWBlockTags.ORES$SALT.get())
+                .item().tag(WWItemTags.ORES$SALT.get()).build()
                 .lang("Salt ore")
                 .register();
         DEEPSLATE_SALT_ORE = REGISTRATE
@@ -68,8 +70,7 @@ public class ModBlocks {
                         .mapColor(MapColor.DEEPSLATE)
                         .strength(4.5F, 3)
                         .sound(SoundType.DEEPSLATE))
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .loot((l, b) -> {
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
@@ -78,7 +79,8 @@ public class ModBlocks {
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
                                     .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
                 })
-                .item().build()
+                .tag(WWBlockTags.ORES$SALT.get())
+                .item().tag(WWItemTags.ORES$SALT.get()).build()
                 .lang("Deepslate salt ore")
                 .register();
         SALT_BLOCK = REGISTRATE
@@ -87,8 +89,8 @@ public class ModBlocks {
                         .strength(3F)
                         .requiresCorrectToolForDrops()
                         .isRedstoneConductor((_0, _1, _2) -> true))
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
+                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .item().build()
                 .defaultLoot()
                 .lang("Salt block")

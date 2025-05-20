@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL2.1"
+issueTrackerURL="https://github.com/Polari-Stars-MC/WildWind/issues"
+[[mods]]
+modId="ww_adv"
+version="0.0.0.1A"
+displayName="Wild Wind: Adventure"
+description='''
+This is Wild Wind: Adventure
+'''
+authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
+logoFile="ww_adv.png"
+[[mixins]]
+config="META-INF/ww_adv.mixins.json"
+[[dependencies.ww_adv]]
+modId="neoforge"
+versionRange="[21.1.0,)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_adv]]
+modId="minecraft"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_adv]]
+modId="ww_ag"
+versionRange="[0,)"
+ordering="NONE"
+side="BOTH"
+type="required"

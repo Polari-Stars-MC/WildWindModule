@@ -241,6 +241,7 @@ subprojects {
         neoForge.setAccessTransformers(atFile)
     }
     tasks.jar {
+        exclude(".cache")
         if (atFile.readBytes().isEmpty()) {
             exclude("META-INF/accesstransformer.cfg")
         }
@@ -266,15 +267,20 @@ subprojects {
     tasks.jarJar {
         enabled = true
     }
+    tasks.javadoc {
+        enabled = false
+    }
 
     val dataBuild:TaskProvider<Task> by tasks.registering {
-        group = "build"
-        val runData: Task by tasks.getting
-        dependsOn(runData)
-        finalizedBy(tasks.build)
-        tasks.build.get().mustRunAfter(runData)
+            group = "build"
+            val runData: Task by tasks.getting
+            dependsOn(runData)
 
-    }
+            finalizedBy(tasks.build)
+            tasks.build.get().mustRunAfter(runData)
+
+        }
+
 
     sonatypeUploader {
         tokenName = properties["central.sonatype.token.name"].toString()

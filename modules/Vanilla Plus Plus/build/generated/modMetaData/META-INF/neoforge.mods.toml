@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL2.1"
+issueTrackerURL="https://github.com/Polari-Stars-MC/WildWind/issues"
+[[mods]]
+modId="ww_vpp"
+version="0.0.0.1A"
+displayName="Wild Wind: Vanilla Plus Plus"
+description='''
+This is Wild Wind: Vanilla Plus Plus
+'''
+authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
+logoFile="ww_vpp.png"
+[[mixins]]
+config="META-INF/ww_vpp.mixins.json"
+[[dependencies.ww_vpp]]
+modId="neoforge"
+versionRange="[21.1.0,)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_vpp]]
+modId="minecraft"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_vpp]]
+modId="ww_ag"
+versionRange="[0,)"
+ordering="NONE"
+side="BOTH"
+type="required"
