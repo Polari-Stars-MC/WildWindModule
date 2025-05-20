@@ -270,17 +270,17 @@ subprojects {
     tasks.javadoc {
         enabled = false
     }
+
     val dataBuild:TaskProvider<Task> by tasks.registering {
-        group = "build"
-        val runData: Task by tasks.getting
-        val generatedModsTomlByNeoForge by tasks.getting
-        dependsOn(runData, generatedModsTomlByNeoForge)
+            group = "build"
+            val runData: Task by tasks.getting
+            dependsOn(runData)
 
-        finalizedBy(tasks.build)
-        runData.mustRunAfter(generatedModsTomlByNeoForge)
-        tasks.build.get().mustRunAfter(runData)
+            finalizedBy(tasks.build)
+            tasks.build.get().mustRunAfter(runData)
 
-    }
+        }
+
 
     sonatypeUploader {
         tokenName = properties["central.sonatype.token.name"].toString()

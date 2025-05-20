@@ -1,0 +1,33 @@
+modLoader="javafml"
+loaderVersion="[4,)"
+license="LGPL2.1"
+issueTrackerURL="https://github.com/Polari-Stars-MC/WildWind/issues"
+[[mods]]
+modId="ww_deco"
+version="0.0.0.1A"
+displayName="Wild Wind: Deco"
+description='''
+This is Wild Wind: Deco
+'''
+authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
+logoFile="ww_deco.png"
+[[mixins]]
+config="META-INF/ww_deco.mixins.json"
+[[dependencies.ww_deco]]
+modId="neoforge"
+versionRange="[21.1.0,)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_deco]]
+modId="minecraft"
+versionRange="[1.21.1,1.22)"
+ordering="NONE"
+side="BOTH"
+type="required"
+[[dependencies.ww_deco]]
+modId="ww_ag"
+versionRange="[0,)"
+ordering="NONE"
+side="BOTH"
+type="required"
