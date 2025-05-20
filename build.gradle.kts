@@ -95,6 +95,7 @@ subprojects {
     val mixinsFile = resourcesDir.resolve("META-INF/$modId.mixins.json")
     val atFile = resourcesDir.resolve("META-INF/accesstransformer.cfg")
     val enumFile = resourcesDir.resolve("META-INF/enumextensions.json")
+    val interfaceFile = file("interfaces.json")
 
     sourceSets {
         main {
@@ -162,6 +163,10 @@ subprojects {
     if(enumFile.exists().not()) {
         enumFile.parentFile.mkdirs()
         enumFile.createNewFile()
+    }
+    if (interfaceFile.exists().not()) {
+        interfaceFile.parentFile.mkdirs()
+        interfaceFile.createNewFile()
     }
 
     configure<McMetaSettings> {
@@ -241,6 +246,13 @@ subprojects {
         }
         if (enumFile.readBytes().isEmpty()) {
             exclude("META-INF/enumextensions.json")
+        }
+    }
+
+    neoForge {
+        if (interfaceFile.readBytes().isNotEmpty()) {
+            interfaceInjectionData.from(interfaceFile)
+            interfaceInjectionData.publish(interfaceFile)
         }
     }
 
