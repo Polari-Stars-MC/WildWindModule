@@ -13,7 +13,13 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 public class ModItems {
     public static final ItemEntry<Item> SALT = REGISTRATE
             .item("salt", Item::new)
-            .model((c, p) -> p.basicItem(c.get()))
+            .defaultModel()
+            .lang("Salt")
+            .register();
+    public static final ItemEntry<Item> BAKED_APPLE = REGISTRATE
+            .item("baked_apple", Item::new)
+            .defaultModel()
+            .lang("Baked apple")
             .register();
     public static void register() {}
 }

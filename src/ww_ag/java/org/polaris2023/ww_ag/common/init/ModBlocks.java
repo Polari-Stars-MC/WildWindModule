@@ -48,8 +48,7 @@ public class ModBlocks {
                         .requiresCorrectToolForDrops()
                         .strength(3))
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
                 .loot((l, b) -> {
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
                     l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
@@ -68,8 +67,7 @@ public class ModBlocks {
                         .mapColor(MapColor.DEEPSLATE)
                         .strength(4.5F, 3)
                         .sound(SoundType.DEEPSLATE))
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
                 .tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .loot((l, b) -> {
                     HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
@@ -87,8 +85,7 @@ public class ModBlocks {
                         .strength(3F)
                         .requiresCorrectToolForDrops()
                         .isRedstoneConductor((_0, _1, _2) -> true))
-                .blockstate((c, p) ->
-                        p.simpleBlock(c.get()))
+                .defaultBlockstate()
                 .item().build()
                 .defaultLoot()
                 .lang("Salt block")

@@ -241,6 +241,7 @@ subprojects {
         neoForge.setAccessTransformers(atFile)
     }
     tasks.jar {
+        exclude(".cache")
         if (atFile.readBytes().isEmpty()) {
             exclude("META-INF/accesstransformer.cfg")
         }
