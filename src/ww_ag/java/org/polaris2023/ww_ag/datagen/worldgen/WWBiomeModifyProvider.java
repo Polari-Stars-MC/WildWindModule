@@ -20,14 +20,14 @@ import java.util.function.Supplier;
  * {@code @Date 2025/05/20 08:14:18}
  */
 public enum WWBiomeModifyProvider implements Supplier<ResourceKey<BiomeModifier>> {
-    SALT_ORR((k, context) -> {
+    SALT_ORE((k, context) -> {
         var biomesLookup = context.lookup(Registries.BIOME);
         var placeFeatureLookup = context.lookup(Registries.PLACED_FEATURE);
         context.register(k, new BiomeModifiers.AddFeaturesBiomeModifier(
                 biomesLookup.getOrThrow(Tags.Biomes.IS_OVERWORLD),
                 HolderSet.direct(
                         placeFeatureLookup.getOrThrow(WWPlaceFeatureProvider.ORE_SALT.get()),
-                        placeFeatureLookup.getOrThrow(WWPlaceFeatureProvider.RE_SALT_BUILD.get())
+                        placeFeatureLookup.getOrThrow(WWPlaceFeatureProvider.SALT_BUILD.get())
                 ),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));

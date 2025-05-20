@@ -1,12 +1,10 @@
 package org.polaris2023.ww_ag.datagen.worldgen;
 
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.PlacementUtils;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
-import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.placement.*;
 import org.polaris2023.ww_ag.WWAgMod;
 
@@ -31,7 +29,7 @@ public enum WWPlaceFeatureProvider implements Supplier<ResourceKey<PlacedFeature
                 ))
         );
     }),
-    RE_SALT_BUILD((k, context) -> {
+    SALT_BUILD((k, context) -> {
         var lookup = context.lookup(Registries.CONFIGURED_FEATURE);
         PlacementUtils.register(
                 context, k,
