@@ -2,10 +2,13 @@ package org.polaris2023.ww_ag.common.init;
 
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.ItemEntry;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.Rarity;
+import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
@@ -17,7 +20,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<Item>
-            BAKED_APPLE, NETHERITE_APPLE;
+            BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE;
 
     static {
         {
@@ -63,14 +66,29 @@ public class ModItems {
                     .defaultModel()
                     .tab(ModTabs.FOOD_AND_DRINK.key())
                     .properties(p -> p
+                            .rarity(Rarity.RARE)
                             .food(new FoodProperties.Builder()
                                     .nutrition(5)
                                     .saturationModifier(1.2F)
                                     .build()))
-                    .recipe((c, p) -> {
-
-                    })
                     .lang("Netherite apple")
+                    .register();
+        }
+        {
+            ENCHANTED_NETHERITE_APPLE = REGISTRATE
+                    .item("enchanted_netherite_apple", Item::new)
+                    .model((c, p) -> {
+                        p.withExistingParent(c.getId().getPath(), NETHERITE_APPLE.getId().withPrefix("item/"));
+                    })
+                    .tab(ModTabs.FOOD_AND_DRINK.key())
+                    .properties(p -> p
+                            .rarity(Rarity.EPIC)
+                            .component(DataComponents.ENCHANTMENT_GLINT_OVERRIDE, true)
+                            .food(new FoodProperties.Builder()
+                                    .nutrition(5)
+                                    .saturationModifier(1.2F)
+                                    .build()))
+                    .lang("Enchanted netherite apple")
                     .register();
         }
     }
