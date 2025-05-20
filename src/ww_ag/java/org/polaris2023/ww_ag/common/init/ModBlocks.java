@@ -27,6 +27,8 @@ import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import net.neoforged.neoforge.registries.datamaps.DataMapType;
 import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
 import org.polaris2023.ww_ag.WWAgMod;
+import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
+import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -56,7 +58,8 @@ public class ModBlocks {
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
                                     .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
                 })
-                .item().build()
+                .tag(WWBlockTags.ORES$SALT.get())
+                .item().tag(WWItemTags.ORES$SALT.get()).build()
                 .lang("Salt ore")
                 .register();
         DEEPSLATE_SALT_ORE = REGISTRATE
@@ -76,7 +79,8 @@ public class ModBlocks {
                                     .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
                                     .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
                 })
-                .item().build()
+                .tag(WWBlockTags.ORES$SALT.get())
+                .item().tag(WWItemTags.ORES$SALT.get()).build()
                 .lang("Deepslate salt ore")
                 .register();
         SALT_BLOCK = REGISTRATE
@@ -86,6 +90,7 @@ public class ModBlocks {
                         .requiresCorrectToolForDrops()
                         .isRedstoneConductor((_0, _1, _2) -> true))
                 .defaultBlockstate()
+                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
                 .item().build()
                 .defaultLoot()
                 .lang("Salt block")
