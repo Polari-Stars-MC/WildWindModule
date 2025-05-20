@@ -271,8 +271,11 @@ subprojects {
     val dataBuild:TaskProvider<Task> by tasks.registering {
         group = "build"
         val runData: Task by tasks.getting
-        dependsOn(runData)
+        val generatedModsTomlByNeoForge by tasks.getting
+        dependsOn(runData, generatedModsTomlByNeoForge)
+
         finalizedBy(tasks.build)
+        runData.mustRunAfter(generatedModsTomlByNeoForge)
         tasks.build.get().mustRunAfter(runData)
 
     }
