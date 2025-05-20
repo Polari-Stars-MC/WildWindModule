@@ -3,23 +3,23 @@ loaderVersion="[4,)"
 license="LGPL2.1"
 issueTrackerURL="https://github.com/Polari-Stars-MC/WildWind/issues"
 [[mods]]
-modId="ww_all"
+modId="wild_wind"
 version="0.0.0.1A"
 displayName="Wild Wind: All In All"
 description='''
 This is Wild Wind: All In All
 '''
 authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
-logoFile="ww_all.png"
+logoFile="wild_wind.png"
 [[mixins]]
-config="META-INF/ww_all.mixins.json"
-[[dependencies.ww_all]]
+config="META-INF/wild_wind.mixins.json"
+[[dependencies.wild_wind]]
 modId="neoforge"
 versionRange="[21.1.0,)"
 ordering="NONE"
 side="BOTH"
 type="required"
-[[dependencies.ww_all]]
+[[dependencies.wild_wind]]
 modId="minecraft"
 versionRange="[1.21.1,1.22)"
 ordering="NONE"

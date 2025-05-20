@@ -1,8 +1,8 @@
 {
   "required": true,
-  "package": "org.polaris2023.ww_all.mixin",
+  "package": "org.polaris2023.wild_wind.mixin",
   "compatibilityLevel": "JAVA_21",
-  "refmap": "ww_all.remap.json",
+  "refmap": "wild_wind.remap.json",
   "mixins": [],
   "client": [],
   "server": [],
