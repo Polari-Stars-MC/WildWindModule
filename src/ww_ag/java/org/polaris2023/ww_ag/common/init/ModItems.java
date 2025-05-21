@@ -32,7 +32,7 @@ public class ModItems {
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
-            BAKED_MUSHROOM;
+            BAKED_MUSHROOM, BAKED_SEEDS;
 
     static {
         {
@@ -123,14 +123,36 @@ public class ModItems {
                                 .nutrition(4)
                                 .saturationModifier(0.6F)
                                 .build()), (c, p) -> {
-                    DataIngredient mushrooms = DataIngredient.tag(Tags.Items.MUSHROOMS);
-                    DataIngredient fungus = DataIngredient.tag(WWItemTags.FUNGUS.get());
-                    p.smelting(mushrooms, RecipeCategory.FOOD, c, 0.35F);
-                    p.smelting(fungus, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(mushrooms, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(fungus, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(mushrooms, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(fungus, RecipeCategory.FOOD, c, 0.35F);
+                    DataIngredient[] ingredients = new DataIngredient[]{
+                            DataIngredient.tag(Tags.Items.MUSHROOMS),
+                            DataIngredient.tag(WWItemTags.FUNGUS.get())
+                    };
+                    for (DataIngredient ingredient : ingredients) {
+                       p.smelting(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                       p.smoking(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                       p.campfire(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                    }
+                });
+            }
+            {
+                BAKED_SEEDS = baseFood("baked_seeds", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(4)
+                                .saturationModifier(.1F)
+                                .build()), (c, p) -> {
+                    DataIngredient[] ingredients = new DataIngredient[]{
+                            DataIngredient.tag(Tags.Items.SEEDS_WHEAT),
+                            DataIngredient.tag(Tags.Items.SEEDS_PUMPKIN),
+                            DataIngredient.tag(Tags.Items.SEEDS_MELON),
+                            DataIngredient.tag(Tags.Items.SEEDS_BEETROOT),
+                            DataIngredient.tag(Tags.Items.SEEDS_TORCHFLOWER),
+                            DataIngredient.items(Items.PITCHER_POD),
+                    };
+                    for (DataIngredient ingredient : ingredients) {
+                        p.smelting(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                        p.smoking(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                        p.campfire(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                    }
                 });
             }
         }
