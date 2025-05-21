@@ -27,7 +27,7 @@ public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
-            BAKED_MELON_SLICE;
+            BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE;
 
     static {
         {
@@ -87,7 +87,29 @@ public class ModItems {
                                         .nutrition(4)
                                         .saturationModifier(0.3F)
                                 .build()), (c, p) -> {
+                    DataIngredient items = DataIngredient.items(Items.MELON_SLICE);
+                    p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                PUMPKIN_SLICE = baseFood("pumpkin_slice", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(2)
+                                .saturationModifier(0.3F)
+                                .build()), (c, p) -> {
 
+                });
+                BAKED_PUMPKIN_SLICE = baseFood("baked_pumpkin_slice", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(4)
+                                .saturationModifier(0.3F)
+                                .build()), (c, p) -> {
+                    DataIngredient items = DataIngredient.items(ModItems.PUMPKIN_SLICE.get());
+                    p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
                 });
             }
         }
