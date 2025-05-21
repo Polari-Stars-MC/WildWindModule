@@ -1,7 +1,6 @@
 package org.polaris2023.ww_ag.common.init;
 
 import net.minecraft.sounds.SoundEvent;
-import net.neoforged.neoforge.common.data.SoundDefinition;
 import net.neoforged.neoforge.common.data.SoundDefinition.SoundType;
 import org.polaris2023.ww_ag.common.init.tags.WWSoundTags;
 import org.polaris2023.ww_ag.common.registrate.entry.SoundEntry;
@@ -12,6 +11,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  * @author baka4n
  * {@code @Date 2025/05/21 12:57:42}
  */
+@SuppressWarnings("unused")
 public class ModSounds {
 
     public static final SoundEntry<SoundEvent> GLARE_AMBIENT_1 = REGISTRATE

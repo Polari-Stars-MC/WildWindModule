@@ -9,17 +9,12 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
-
-import java.util.function.Supplier;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -27,6 +22,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  * @author baka4n
  * {@code @Date 2025/05/18 14:58:14}
  */
+@SuppressWarnings("unused")
 public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<Item>
@@ -208,9 +204,7 @@ public class ModItems {
     public static ItemEntry<Item> parentVanillaFood(String name, NonNullUnaryOperator<Item.Properties> properties, Item vanilla, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe) {
         return REGISTRATE
                 .item(name, Item::new)
-                .model((c, p) -> {
-                    p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/"));
-                })
+                .model((c, p) -> p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
@@ -220,9 +214,7 @@ public class ModItems {
     public static ItemEntry<Item> parentFood(String name, NonNullUnaryOperator<Item.Properties> properties, ItemEntry<?> entry, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe) {
         return REGISTRATE
                 .item(name, Item::new)
-                .model((c, p) -> {
-                    p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/"));
-                })
+                .model((c, p) -> p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)

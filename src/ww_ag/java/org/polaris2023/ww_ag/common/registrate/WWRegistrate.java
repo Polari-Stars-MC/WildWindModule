@@ -1,12 +1,6 @@
 package org.polaris2023.ww_ag.common.registrate;
 
-import com.tterrag.registrate.builders.Builder;
-import com.tterrag.registrate.providers.DataProviderInitializer;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateProvider;
-import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
-import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import org.polaris2023.ww_ag.common.registrate.build.SoundBuilder;
@@ -16,7 +10,9 @@ import java.util.function.Function;
 /**
 * @author baka4n
 * {@code @Date 2025/05/19 22:44:01}
-*/public class WWRegistrate extends L2Registrate {
+*/
+@SuppressWarnings("unused")
+public class WWRegistrate extends L2Registrate {
     public WWRegistrate(String modid) {
         super(modid);
     }

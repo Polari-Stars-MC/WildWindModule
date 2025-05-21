@@ -2,7 +2,6 @@ package org.polaris2023.ww_ag.common.registrate.entry;
 
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.util.entry.RegistryEntry;
-import net.minecraft.core.Holder;
 import net.minecraft.sounds.SoundEvent;
 import net.neoforged.neoforge.registries.DeferredHolder;
 

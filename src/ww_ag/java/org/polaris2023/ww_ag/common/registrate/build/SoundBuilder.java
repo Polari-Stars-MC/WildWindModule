@@ -6,11 +6,10 @@ import com.tterrag.registrate.builders.BuilderCallback;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.util.entry.RegistryEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
 import com.tterrag.registrate.util.nullness.NonnullType;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import net.neoforged.neoforge.common.data.SoundDefinition;
@@ -18,12 +17,16 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.entry.SoundEntry;
 
+import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Supplier;
 
 /**
  * @author baka4n
  * {@code @Date 2025/05/21 13:06:54}
  */
+@MethodsReturnNonnullByDefault
+@ParametersAreNonnullByDefault
+@SuppressWarnings("unused")
 public class SoundBuilder<T extends SoundEvent, P> extends AbstractBuilder<SoundEvent, T, P, SoundBuilder<T, P>> {
     private final Supplier<T> sound;
     private SoundBuilder(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback, Supplier<T> supplier) {
@@ -58,18 +61,16 @@ public class SoundBuilder<T extends SoundEvent, P> extends AbstractBuilder<Sound
                                            int distance,
                                            boolean stream,
                                            boolean preload) {
-        return setData(WWProviderType.SOUND_DEFINE, (c, p) -> {
-            p.add(c.get(), SoundDefinition.definition()
-                    .with(SoundDefinition.Sound
-                            .sound(c.getId(), type)
-                            .volume(volume)
-                            .pitch(pitch)
-                            .weight(weight)
-                            .attenuationDistance(distance)
-                            .stream(stream)
-                            .preload(preload)
-                    ));
-        });
+        return setData(WWProviderType.SOUND_DEFINE, (c, p) -> p.add(c.get(), SoundDefinition.definition()
+                .with(SoundDefinition.Sound
+                        .sound(c.getId(), type)
+                        .volume(volume)
+                        .pitch(pitch)
+                        .weight(weight)
+                        .attenuationDistance(distance)
+                        .stream(stream)
+                        .preload(preload)
+                )));
     }
 
 
