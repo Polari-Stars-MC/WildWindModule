@@ -32,7 +32,8 @@ public class ModItems {
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
-            BAKED_MUSHROOM, BAKED_SEEDS;
+            BAKED_MUSHROOM, BAKED_SEEDS, BAKED_BERRIES,
+            BAKED_CARROT, BAKED_BEETROOT;
 
     static {
         {
@@ -153,6 +154,42 @@ public class ModItems {
                         p.smoking(ingredient, RecipeCategory.FOOD, c, 0.35F);
                         p.campfire(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
+                });
+            }
+            {
+                BAKED_BERRIES = baseFood("baked_berries", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(3)
+                                .saturationModifier(.1F)
+                                .build()), (c, p) -> {
+                    DataIngredient berry = DataIngredient.tag(Tags.Items.FOODS_BERRY);
+                    p.smelting(berry, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(berry, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(berry, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                BAKED_CARROT = baseFood("baked_carrot", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(7)
+                                .saturationModifier(.6F)
+                                .build()), (c, p) -> {
+                    DataIngredient carrot = DataIngredient.tag(Tags.Items.CROPS_CARROT);
+                    p.smelting(carrot, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(carrot, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(carrot, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                BAKED_BEETROOT = baseFood("baked_beetroot", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(6)
+                                .saturationModifier(.6F)
+                                .build()), (c, p) -> {
+                    DataIngredient beetroot = DataIngredient.tag(Tags.Items.CROPS_BEETROOT);
+                    p.smelting(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(beetroot, RecipeCategory.FOOD, c, 0.35F);
                 });
             }
         }
