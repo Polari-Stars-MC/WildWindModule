@@ -15,7 +15,9 @@ import java.util.function.Supplier;
  * {@code @Date 2025/05/20 17:36:46}
  */
 public enum WWItemTags implements Supplier<TagKey<Item>> {
-    ORES$SALT;
+    ORES$SALT,
+    FUNGUS
+    ;
     private final TagKey<Item> tag;
 
     WWItemTags() {

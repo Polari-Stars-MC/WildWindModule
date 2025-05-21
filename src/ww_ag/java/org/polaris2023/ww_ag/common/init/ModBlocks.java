@@ -42,60 +42,74 @@ public class ModBlocks {
     public static final BlockEntry<Block> SALT_BLOCK;
 
     static {
-        SALT_ORE = REGISTRATE
-                .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
-                .properties(properties -> properties
-                        .mapColor(MapColor.STONE)
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .requiresCorrectToolForDrops()
-                        .strength(3))
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .defaultBlockstate()
-                .loot((l, b) -> {
-                    HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                    l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
-                            LootItem.lootTableItem(ModItems.SALT)
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
-                                    .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
-                })
-                .tag(WWBlockTags.ORES$SALT.get())
-                .item().tag(WWItemTags.ORES$SALT.get()).build()
-                .lang("Salt ore")
-                .register();
-        DEEPSLATE_SALT_ORE = REGISTRATE
-                .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
-                .properties(p -> p
-                        .requiresCorrectToolForDrops()
-                        .instrument(NoteBlockInstrument.BASEDRUM)
-                        .mapColor(MapColor.DEEPSLATE)
-                        .strength(4.5F, 3)
-                        .sound(SoundType.DEEPSLATE))
-                .defaultBlockstate()
-                .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .loot((l, b) -> {
-                    HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                    l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
-                            LootItem.lootTableItem(ModItems.SALT)
-                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
-                                    .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
-                })
-                .tag(WWBlockTags.ORES$SALT.get())
-                .item().tag(WWItemTags.ORES$SALT.get()).build()
-                .lang("Deepslate salt ore")
-                .register();
-        SALT_BLOCK = REGISTRATE
-                .block("salt_block", Block::new)
-                .properties(properties -> properties
-                        .strength(3F)
-                        .requiresCorrectToolForDrops()
-                        .isRedstoneConductor((_0, _1, _2) -> true))
-                .defaultBlockstate()
-                .tag(BlockTags.MINEABLE_WITH_SHOVEL)
-                .item().build()
-                .defaultLoot()
-                .lang("Salt block")
+        {
+            SALT_ORE = REGISTRATE
+                    .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .properties(properties -> properties
+                            .mapColor(MapColor.STONE)
+                            .instrument(NoteBlockInstrument.BASEDRUM)
+                            .requiresCorrectToolForDrops()
+                            .strength(3))
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .defaultBlockstate()
+                    .loot((l, b) -> {
+                        HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+                        l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
+                                LootItem.lootTableItem(ModItems.SALT)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
+                                        .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
+                    })
+                    .tag(WWBlockTags.ORES$SALT.get())
+                    .item()
+                    .tab(ModTabs.NATURAL_BLOCKS.key())
+                    .tag(WWItemTags.ORES$SALT.get())
+                    .build()
+                    .lang("Salt ore")
+                    .register();
+        }
+        {
+            DEEPSLATE_SALT_ORE = REGISTRATE
+                    .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .properties(p -> p
+                            .requiresCorrectToolForDrops()
+                            .instrument(NoteBlockInstrument.BASEDRUM)
+                            .mapColor(MapColor.DEEPSLATE)
+                            .strength(4.5F, 3)
+                            .sound(SoundType.DEEPSLATE))
+                    .defaultBlockstate()
+                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
+                    .loot((l, b) -> {
+                        HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+                        l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
+                                LootItem.lootTableItem(ModItems.SALT)
+                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
+                                        .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
+                    })
+                    .tag(WWBlockTags.ORES$SALT.get())
+                    .item()
+                    .tab(ModTabs.NATURAL_BLOCKS.key())
+                    .tag(WWItemTags.ORES$SALT.get())
+                    .build()
+                    .lang("Deepslate salt ore")
+                    .register();
+        }
+        {
+            SALT_BLOCK = REGISTRATE
+                    .block("salt_block", Block::new)
+                    .properties(properties -> properties
+                            .strength(3F)
+                            .requiresCorrectToolForDrops()
+                            .isRedstoneConductor((_0, _1, _2) -> true))
+                    .defaultBlockstate()
+                    .tag(BlockTags.MINEABLE_WITH_SHOVEL)
+                    .item()
+                    .tab(ModTabs.BUILDING_BLOCK.key())
+                    .build()
+                    .defaultLoot()
+                    .lang("Salt block")
 
-                .register();
+                    .register();
+        }
     }
 
     public static void register() {}
