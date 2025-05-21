@@ -9,10 +9,14 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
+import net.minecraft.world.level.block.Blocks;
+import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
 import java.util.function.Supplier;
@@ -27,7 +31,8 @@ public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
-            BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE;
+            BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
+            BAKED_MUSHROOM;
 
     static {
         {
@@ -110,6 +115,22 @@ public class ModItems {
                     p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
                     p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
                     p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                BAKED_MUSHROOM = baseFood("baked_mushroom", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(4)
+                                .saturationModifier(0.6F)
+                                .build()), (c, p) -> {
+                    DataIngredient mushrooms = DataIngredient.tag(Tags.Items.MUSHROOMS);
+                    DataIngredient fungus = DataIngredient.tag(WWItemTags.FUNGUS.get());
+                    p.smelting(mushrooms, RecipeCategory.FOOD, c, 0.35F);
+                    p.smelting(fungus, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(mushrooms, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(fungus, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(mushrooms, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(fungus, RecipeCategory.FOOD, c, 0.35F);
                 });
             }
         }
