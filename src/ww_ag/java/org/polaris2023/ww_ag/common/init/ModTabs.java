@@ -30,12 +30,6 @@ public class ModTabs {
         b.icon(asStack);
     });
 
-    public static SimpleEntry<CreativeModeTab> register(String name, String display, Supplier<ItemStack> supplier) {
-        return REGISTRATE.buildModCreativeTab(name, "Wild Wind: " + display, b -> {
-            b.icon(supplier);
-        });
-    }
-
 
 
 
