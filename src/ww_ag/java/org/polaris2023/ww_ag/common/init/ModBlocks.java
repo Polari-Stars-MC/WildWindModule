@@ -1,19 +1,12 @@
 package org.polaris2023.ww_ag.common.init;
 
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
-import net.minecraft.core.RegistrySetBuilder;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.registries.RegistryPatchGenerator;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.ClipContext;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.SoundType;
@@ -23,10 +16,6 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import net.neoforged.neoforge.registries.datamaps.DataMapType;
-import net.neoforged.neoforge.registries.datamaps.builtin.NeoForgeDataMaps;
-import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
@@ -45,6 +34,9 @@ public class ModBlocks {
         {
             SALT_ORE = REGISTRATE
                     .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .zh_cn("盐矿石")
+                    .zh_tw("鹽礦石")
+                    .lang("Salt ore")
                     .properties(properties -> properties
                             .mapColor(MapColor.STONE)
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -64,12 +56,14 @@ public class ModBlocks {
                     .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
-                    .lang("Salt ore")
                     .register();
         }
         {
             DEEPSLATE_SALT_ORE = REGISTRATE
                     .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .zh_cn("深层盐矿石")
+                    .zh_tw("深層鹽礦石")
+                    .lang("Deepslate salt ore")
                     .properties(p -> p
                             .requiresCorrectToolForDrops()
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -90,12 +84,14 @@ public class ModBlocks {
                     .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
-                    .lang("Deepslate salt ore")
                     .register();
         }
         {
             SALT_BLOCK = REGISTRATE
                     .block("salt_block", Block::new)
+                    .zh_cn("盐块")
+                    .zh_tw("鹽塊")
+                    .lang("Salt block")
                     .properties(properties -> properties
                             .strength(3F)
                             .requiresCorrectToolForDrops()
@@ -106,8 +102,6 @@ public class ModBlocks {
                     .tab(ModTabs.BUILDING_BLOCK.key())
                     .build()
                     .defaultLoot()
-                    .lang("Salt block")
-
                     .register();
         }
     }

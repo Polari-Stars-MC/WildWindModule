@@ -9,17 +9,12 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.world.effect.MobEffectInstance;
-import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
-import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
-
-import java.util.function.Supplier;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -27,12 +22,14 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  * @author baka4n
  * {@code @Date 2025/05/18 14:58:14}
  */
+@SuppressWarnings("unused")
 public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
-            BAKED_MUSHROOM, BAKED_SEEDS;
+            BAKED_MUSHROOM, BAKED_SEEDS, BAKED_BERRIES,
+            BAKED_CARROT, BAKED_BEETROOT;
 
     static {
         {
@@ -155,6 +152,42 @@ public class ModItems {
                     }
                 });
             }
+            {
+                BAKED_BERRIES = baseFood("baked_berries", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(3)
+                                .saturationModifier(.1F)
+                                .build()), (c, p) -> {
+                    DataIngredient berry = DataIngredient.tag(Tags.Items.FOODS_BERRY);
+                    p.smelting(berry, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(berry, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(berry, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                BAKED_CARROT = baseFood("baked_carrot", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(7)
+                                .saturationModifier(.6F)
+                                .build()), (c, p) -> {
+                    DataIngredient carrot = DataIngredient.tag(Tags.Items.CROPS_CARROT);
+                    p.smelting(carrot, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(carrot, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(carrot, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
+            {
+                BAKED_BEETROOT = baseFood("baked_beetroot", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(6)
+                                .saturationModifier(.6F)
+                                .build()), (c, p) -> {
+                    DataIngredient beetroot = DataIngredient.tag(Tags.Items.CROPS_BEETROOT);
+                    p.smelting(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                });
+            }
         }
     }
 
@@ -171,9 +204,7 @@ public class ModItems {
     public static ItemEntry<Item> parentVanillaFood(String name, NonNullUnaryOperator<Item.Properties> properties, Item vanilla, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe) {
         return REGISTRATE
                 .item(name, Item::new)
-                .model((c, p) -> {
-                    p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/"));
-                })
+                .model((c, p) -> p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
@@ -183,9 +214,7 @@ public class ModItems {
     public static ItemEntry<Item> parentFood(String name, NonNullUnaryOperator<Item.Properties> properties, ItemEntry<?> entry, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe) {
         return REGISTRATE
                 .item(name, Item::new)
-                .model((c, p) -> {
-                    p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/"));
-                })
+                .model((c, p) -> p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)

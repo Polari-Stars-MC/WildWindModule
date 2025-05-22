@@ -24,6 +24,6 @@ public class WWAgDatapackProvider extends DatapackBuiltinEntriesProvider {
             .add(Registries.PLACED_FEATURE, WWPlaceFeatureProvider::bootstrap)
             .add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WWBiomeModifyProvider::bootstrap);
     public WWAgDatapackProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {
-        super(output, registries, REGISTRY_SET, Set.of("minecraft", WWAgMod.modid));
+        super(output, registries, REGISTRY_SET, Set.of("minecraft", WWAgMod.MODID));
     }
 }
