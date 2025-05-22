@@ -402,10 +402,15 @@ public class ModItems {
                                 .nutrition(4)
                                 .saturationModifier(.8F)
                                 .build()), (c, p) -> {
-                    DataIngredient calamari = DataIngredient.items(CALAMARI.get());
-                    p.smelting(calamari, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(calamari, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(calamari, RecipeCategory.FOOD, c, 0.35F);
+                    DataIngredient[] items = new DataIngredient[]{
+                            DataIngredient.items(CALAMARI.get()),
+                            DataIngredient.items(GLOWING_CALAMARI.get())
+                    };
+                    for (DataIngredient item : items) {
+                        p.smelting(item, RecipeCategory.FOOD, c, 0.35F);
+                        p.smoking(item, RecipeCategory.FOOD, c, 0.35F);
+                        p.campfire(item, RecipeCategory.FOOD, c, 0.35F);
+                    }
                 }, b -> {
                     b.zh_cn("熟鱿鱼须");
                     b.zh_cn("熟魷魚須");
