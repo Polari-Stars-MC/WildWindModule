@@ -38,7 +38,8 @@ public class ModItems {
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
             BAKED_MUSHROOM, BAKED_SEEDS, BAKED_BERRIES,
             BAKED_CARROT, BAKED_BEETROOT,
-            BAKED_LIVING_TUBER;
+            BAKED_LIVING_TUBER,
+            VENISON, COOKED_VENISON;
 
     static {
         {
@@ -277,6 +278,36 @@ public class ModItems {
                     b.zh_cn("烤活根");
                     b.zh_tw("烤活根");
                     b.zh_hk("烤活根");
+                });
+            }
+            {
+                VENISON = baseFood("venison", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(3)
+                                .saturationModifier(.3F)
+                                .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), 0.3F)
+                                .build()
+                        ), (c, p) -> {
+
+                    }, b -> {
+                    b.zh_cn("鹿排");
+                    b.zh_tw("鹿排");
+                    b.zh_hk("鹿排");
+                });
+                COOKED_VENISON = baseFood("cooked_venison", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(8)
+                                .saturationModifier(.8F)
+                                .build()
+                        ), (c, p) -> {
+                    DataIngredient venison = DataIngredient.items(VENISON.get());
+                    p.smelting(venison, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(venison, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(venison, RecipeCategory.FOOD, c, 0.35F);
+                    }, b -> {
+                    b.zh_cn("熟鹿排");
+                    b.zh_tw("熟鹿排");
+                    b.zh_hk("熟鹿排");
                 });
             }
         }
