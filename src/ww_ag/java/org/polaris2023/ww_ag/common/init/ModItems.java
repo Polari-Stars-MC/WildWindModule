@@ -9,12 +9,15 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.world.effect.MobEffectInstance;
+import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
+import org.polaris2023.ww_ag.common.items.LivingTuberItem;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -25,6 +28,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 @SuppressWarnings("unused")
 public class ModItems {
     public static final ItemEntry<Item> SALT;
+    public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
     public static final ItemEntry<Item>
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
@@ -187,6 +191,24 @@ public class ModItems {
                     p.smoking(beetroot, RecipeCategory.FOOD, c, 0.35F);
                     p.campfire(beetroot, RecipeCategory.FOOD, c, 0.35F);
                 });
+            }
+            {
+                LIVING_TUBER = REGISTRATE
+                        .item("living_tuber", LivingTuberItem::new)
+                        .zh_cn("活根")
+                        .zh_tw("活根")
+                        .zh_hk("活根")
+                        .lang("Living Tuber")
+                        .properties(p -> p
+                                .food(new FoodProperties.Builder()
+                                        .nutrition(4)
+                                        .saturationModifier(.1F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 600, 6), 1)
+                                        .effect(() -> new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 600, 3), 1)
+                                        .effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 600, 0), 1)
+                                        .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 600, 0), 1)
+                                        .build()))
+                        .register();
             }
         }
     }
