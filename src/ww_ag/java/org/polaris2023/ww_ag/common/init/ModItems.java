@@ -48,7 +48,7 @@ public class ModItems {
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
-            CALAMARI, RAW_TROUT;
+            CALAMARI, TROUT;
 
     static {
         {
@@ -420,7 +420,7 @@ public class ModItems {
 
             }//(cooked/glowing/)calamari
             {
-                RAW_TROUT = baseFood("raw_trout", p -> p
+                TROUT = baseFood("trout", p -> p
                         .food(new FoodProperties.Builder()
                                 .nutrition(1)
                                 .saturationModifier(.1F)
@@ -437,7 +437,7 @@ public class ModItems {
                                 .nutrition(6)
                                 .saturationModifier(.8F)
                                 .build()), (c, p) -> {
-                    DataIngredient trout = DataIngredient.items(RAW_TROUT.get());
+                    DataIngredient trout = DataIngredient.items(TROUT.get());
                     p.smelting(trout, RecipeCategory.FOOD, c, 0.35F);
                     p.smoking(trout, RecipeCategory.FOOD, c, 0.35F);
                     p.campfire(trout, RecipeCategory.FOOD, c, 0.35F);
@@ -447,7 +447,7 @@ public class ModItems {
                     b.zh_hk("熟鱒魚");
                 });
 
-            }//(cooked/raw)trout
+            }//(cooked/)trout
         }
     }
 
