@@ -33,7 +33,8 @@ public class ModItems {
             BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
             BAKED_MUSHROOM, BAKED_SEEDS, BAKED_BERRIES,
-            BAKED_CARROT, BAKED_BEETROOT;
+            BAKED_CARROT, BAKED_BEETROOT,
+            BAKED_LIVING_TUBER;
 
     static {
         {
@@ -200,6 +201,7 @@ public class ModItems {
                         .zh_hk("活根")
                         .lang("Living Tuber")
                         .properties(p -> p
+                                .stacksTo(16)
                                 .food(new FoodProperties.Builder()
                                         .nutrition(4)
                                         .saturationModifier(.1F)
@@ -209,6 +211,21 @@ public class ModItems {
                                         .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 600, 0), 1)
                                         .build()))
                         .register();
+                BAKED_LIVING_TUBER = baseFood("baked_living_tuber", p -> p
+                        .stacksTo(16)
+                        .food(new FoodProperties.Builder()
+                                .nutrition(8)
+                                .saturationModifier(.1F)
+                                .effect(() -> new MobEffectInstance(MobEffects.MOVEMENT_SLOWDOWN, 600, 6), 1)
+                                .effect(() -> new MobEffectInstance(MobEffects.DIG_SLOWDOWN, 600, 3), 1)
+                                .effect(() -> new MobEffectInstance(MobEffects.WEAKNESS, 600, 0), 1)
+                                .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 600, 0), 1)
+                                .build()), (c, p) -> {
+                    DataIngredient data = DataIngredient.items(LIVING_TUBER.get());
+                    p.smelting(data, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(data, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(data, RecipeCategory.FOOD, c, 0.35F);
+                });
             }
         }
     }
