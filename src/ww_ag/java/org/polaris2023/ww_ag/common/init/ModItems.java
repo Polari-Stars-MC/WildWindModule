@@ -42,12 +42,13 @@ public class ModItems {
             BAKED_PUMPKIN_SLICE,
             BAKED_SEEDS;
     public static final ItemEntry<Item>
-            COOKED_BAT_WING, COOKED_CALAMARI, COOKED_FROG_LEG, COOKED_VENISON;
+            COOKED_BAT_WING, COOKED_CALAMARI, COOKED_FROG_LEG, COOKED_VENISON, COOKED_TROUT;
+    public static final ItemEntry<Item> GLOWING_CALAMARI;
     public static final ItemEntry<Item>
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
-            CALAMARI, GLOWING_CALAMARI;
+            CALAMARI, RAW_TROUT;
 
     static {
         {
@@ -417,7 +418,36 @@ public class ModItems {
                     b.zh_cn("熟魷魚須");
                 });
 
-            }
+            }//(cooked/glowing/)calamari
+            {
+                RAW_TROUT = baseFood("raw_trout", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(1)
+                                .saturationModifier(.1F)
+                                .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
+                                .build()), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("生鳟鱼");
+                    b.zh_tw("生鱒魚");
+                    b.zh_hk("生鱒魚");
+                });
+                COOKED_TROUT = baseFood("cooked_trout", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(6)
+                                .saturationModifier(.8F)
+                                .build()), (c, p) -> {
+                    DataIngredient trout = DataIngredient.items(RAW_TROUT.get());
+                    p.smelting(trout, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(trout, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(trout, RecipeCategory.FOOD, c, 0.35F);
+                }, b -> {
+                    b.zh_cn("熟鳟鱼");
+                    b.zh_tw("熟鱒魚");
+                    b.zh_hk("熟鱒魚");
+                });
+
+            }//(cooked/raw)trout
         }
     }
 
