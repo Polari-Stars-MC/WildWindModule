@@ -1,11 +1,14 @@
 package org.polaris2023.ww_ag.common.init.tags;
 
+import net.minecraft.core.HolderSet;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.TagKey;
 import org.polaris2023.ww_ag.WWAgMod;
 
 import java.util.Locale;
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
@@ -31,5 +34,9 @@ public enum WWSoundTags implements Supplier<TagKey<SoundEvent>> {
     @Override
     public TagKey<SoundEvent> get() {
         return tag;
+    }
+
+    public void tagFor(Consumer<HolderSet.Named<SoundEvent>> consumer) {
+        BuiltInRegistries.SOUND_EVENT.getTag(tag).ifPresent(consumer);
     }
 }
