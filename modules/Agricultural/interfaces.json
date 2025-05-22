@@ -1,0 +1,5 @@
+{
+  "com/tterrag/registrate/builders/ItemBuilder<T, P>": [
+    "org/polaris2023/ww_ag/utils/ILang<net/minecraft/world/item/Item, T, P, com/tterrag/registrate/builders/ItemBuilder<T, P>>"
+  ]
+}

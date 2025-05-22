@@ -34,6 +34,9 @@ public class ModBlocks {
         {
             SALT_ORE = REGISTRATE
                     .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .zh_cn("盐矿石")
+                    .zh_tw("鹽礦石")
+                    .lang("Salt ore")
                     .properties(properties -> properties
                             .mapColor(MapColor.STONE)
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -53,12 +56,14 @@ public class ModBlocks {
                     .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
-                    .lang("Salt ore")
                     .register();
         }
         {
             DEEPSLATE_SALT_ORE = REGISTRATE
                     .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .zh_cn("深层盐矿石")
+                    .zh_tw("深層鹽礦石")
+                    .lang("Deepslate salt ore")
                     .properties(p -> p
                             .requiresCorrectToolForDrops()
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -79,12 +84,14 @@ public class ModBlocks {
                     .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
-                    .lang("Deepslate salt ore")
                     .register();
         }
         {
             SALT_BLOCK = REGISTRATE
                     .block("salt_block", Block::new)
+                    .zh_cn("盐块")
+                    .zh_tw("鹽塊")
+                    .lang("Salt block")
                     .properties(properties -> properties
                             .strength(3F)
                             .requiresCorrectToolForDrops()
@@ -95,8 +102,6 @@ public class ModBlocks {
                     .tab(ModTabs.BUILDING_BLOCK.key())
                     .build()
                     .defaultLoot()
-                    .lang("Salt block")
-
                     .register();
         }
     }

@@ -5,6 +5,7 @@ import com.tterrag.registrate.providers.RegistrateProvider;
 import com.tterrag.registrate.providers.RegistrateTagsProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
+import org.polaris2023.ww_ag.datagen.WWLanguage;
 import org.polaris2023.ww_ag.datagen.WWSoundDefineProvider;
 
 /**
@@ -14,4 +15,7 @@ import org.polaris2023.ww_ag.datagen.WWSoundDefineProvider;
 public interface WWProviderType<T extends RegistrateProvider> extends ProviderType<T> {
     ProviderType<RegistrateTagsProvider.Impl<SoundEvent>> SOUNDS = ProviderType.registerDynamicTag("tags/sound", "sound_events", Registries.SOUND_EVENT);
     ProviderType<WWSoundDefineProvider> SOUND_DEFINE = ProviderType.registerProvider("sound_define", c -> new WWSoundDefineProvider(c.parent(), c.output(), c.fileHelper()));
+    ProviderType<WWLanguage> ZH_CN = WWLanguage.create("zh_cn");
+    ProviderType<WWLanguage> ZH_TW = WWLanguage.create("zh_tw");
+    ProviderType<WWLanguage> ZH_HK = WWLanguage.create("zh_hk");
 }
