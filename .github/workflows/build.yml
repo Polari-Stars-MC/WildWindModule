@@ -2,7 +2,13 @@
 
 name: Build Release All Mods
 
-on : [push, pull_request]
+on :
+  push:
+    branches:
+      - main
+      - dev/**
+    paths:
+      - src/**
 
 env:
   git_branch: ${{github.ref_name}}
