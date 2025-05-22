@@ -47,7 +47,7 @@ public class ModItems {
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
-            CALAMARI;
+            CALAMARI, GLOWING_CALAMARI;
 
     static {
         {
@@ -383,8 +383,19 @@ public class ModItems {
 
                 }, b -> {
                     b.zh_cn("生鱿鱼须");
-                    b.zh_cn("生魷魚須");
-                    b.zh_cn("生魷魚須");
+                    b.zh_tw("生魷魚須");
+                    b.zh_hk("生魷魚須");
+                });
+                GLOWING_CALAMARI = baseFood("glowing_calamari", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(2)
+                                .saturationModifier(.1F)
+                                .build()), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("发光鱿鱼须");
+                    b.zh_tw("發光魷魚須");
+                    b.zh_hk("發光魷魚須");
                 });
                 COOKED_CALAMARI = baseFood("cooked_calamari", p -> p
                         .food(new FoodProperties.Builder()
