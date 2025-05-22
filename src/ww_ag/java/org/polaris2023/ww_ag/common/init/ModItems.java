@@ -34,12 +34,20 @@ public class ModItems {
     public static final ItemEntry<Item> SALT;
     public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
     public static final ItemEntry<Item>
-            BAKED_APPLE, NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
-            BAKED_MELON_SLICE, PUMPKIN_SLICE, BAKED_PUMPKIN_SLICE,
-            BAKED_MUSHROOM, BAKED_SEEDS, BAKED_BERRIES,
-            BAKED_CARROT, BAKED_BEETROOT,
+            BAKED_APPLE,
+            BAKED_BEETROOT, BAKED_BERRIES,
+            BAKED_CARROT,
             BAKED_LIVING_TUBER,
-            VENISON, COOKED_VENISON;
+            BAKED_MELON_SLICE, BAKED_MUSHROOM,
+            BAKED_PUMPKIN_SLICE,
+            BAKED_SEEDS;
+    public static final ItemEntry<Item>
+            COOKED_BAT_WING, COOKED_CALAMARI, COOKED_FROG_LEG, COOKED_VENISON;
+    public static final ItemEntry<Item>
+            NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
+            PUMPKIN_SLICE,
+            VENISON, BAT_WING, FROG_LEG,
+            CALAMARI;
 
     static {
         {
@@ -75,7 +83,7 @@ public class ModItems {
                     b.zh_tw("烤蘋果");
                     b.zh_hk("烤蘋果");
                 });
-            }
+            }//Baked apple
             {
                 NETHERITE_APPLE = baseFood("netherite_apple", p -> p
                         .rarity(Rarity.RARE)
@@ -89,7 +97,7 @@ public class ModItems {
                     b.zh_tw("下界合金蘋果");
                     b.zh_hk("下界合金蘋果");
                 });
-            }
+            }//netherite apple
             {
                 ENCHANTED_NETHERITE_APPLE = parentFood("enchanted_netherite_apple", p -> p
                         .rarity(Rarity.EPIC)
@@ -104,7 +112,7 @@ public class ModItems {
                     b.zh_tw("附魔下界合金蘋果");
                     b.zh_hk("附魔下界合金蘋果");
                 });
-            }
+            }//enchanted netherite apple
             {
                 BAKED_MELON_SLICE = baseFood("baked_melon_slice", p ->
                         p.food(new FoodProperties.Builder()
@@ -120,7 +128,7 @@ public class ModItems {
                     b.zh_tw("烤西瓜片");
                     b.zh_hk("烤西瓜片");
                 });
-            }
+            }//baked melon slice
             {
                 PUMPKIN_SLICE = baseFood("pumpkin_slice", p -> p
                         .food(new FoodProperties.Builder()
@@ -147,7 +155,7 @@ public class ModItems {
                     b.zh_tw("烤南瓜片");
                     b.zh_hk("烤南瓜片");
                 });
-            }
+            }//(baked/) pumpkin slice
             {
                 BAKED_MUSHROOM = baseFood("baked_mushroom", p -> p
                         .food(new FoodProperties.Builder()
@@ -168,7 +176,7 @@ public class ModItems {
                     b.zh_tw("烤蘑菇");
                     b.zh_hk("烤蘑菇");
                 });
-            }
+            }//baked mushroom
             {
                 BAKED_SEEDS = baseFood("baked_seeds", p -> p
                         .food(new FoodProperties.Builder()
@@ -193,7 +201,7 @@ public class ModItems {
                     b.zh_tw("烤種子");
                     b.zh_hk("烤種子");
                 });
-            }
+            }//baked seeds
             {
                 BAKED_BERRIES = baseFood("baked_berries", p -> p
                         .food(new FoodProperties.Builder()
@@ -209,7 +217,7 @@ public class ModItems {
                     b.zh_tw("烤漿果");
                     b.zh_hk("烤漿果");
                 });
-            }
+            }//baked berries
             {
                 BAKED_CARROT = baseFood("baked_carrot", p -> p
                         .food(new FoodProperties.Builder()
@@ -225,7 +233,7 @@ public class ModItems {
                     b.zh_tw("烤胡蘿蔔");
                     b.zh_hk("烤胡蘿蔔");
                 });
-            }
+            }//baked carrot
             {
                 BAKED_BEETROOT = baseFood("baked_beetroot", p -> p
                         .food(new FoodProperties.Builder()
@@ -241,7 +249,7 @@ public class ModItems {
                     b.zh_tw("烤甜菜");
                     b.zh_hk("烤甜菜");
                 });
-            }
+            }//baked beetroot
             {
                 LIVING_TUBER = REGISTRATE
                         .item("living_tuber", LivingTuberItem::new)
@@ -279,7 +287,7 @@ public class ModItems {
                     b.zh_tw("烤活根");
                     b.zh_hk("烤活根");
                 });
-            }
+            }//(baked/)living tuber
             {
                 VENISON = baseFood("venison", p -> p
                         .food(new FoodProperties.Builder()
@@ -309,6 +317,90 @@ public class ModItems {
                     b.zh_tw("熟鹿排");
                     b.zh_hk("熟鹿排");
                 });
+            }//(baked/)venison
+            {
+                BAT_WING = baseFood("bat_wing", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(2)
+                                .saturationModifier(.1F)
+                                .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
+                                .build()), (c, p) -> {
+                }, b -> {
+                    b.zh_cn("生蝙蝠翼");
+                    b.zh_tw("生蝙蝠翼");
+                    b.zh_hk("生蝙蝠翼");
+                });
+                COOKED_BAT_WING = baseFood("cooked_bat_wing", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(4)
+                                .saturationModifier(.8F)
+                                .build()), (c, p) -> {
+                    DataIngredient batWing = DataIngredient.items(BAT_WING.get());
+                    p.smelting(batWing, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(batWing, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(batWing, RecipeCategory.FOOD, c, 0.35F);
+                    }, b -> {
+                    b.zh_cn("熟蝙蝠翼");
+                    b.zh_tw("熟蝙蝠翼");
+                    b.zh_hk("熟蝙蝠翼");
+                });
+            }//(cooked/)bat wing
+            {
+                FROG_LEG = baseFood("frog_leg", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(1)
+                                .saturationModifier(.8F)
+                                .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
+                                .build()), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("生蛙腿");
+                    b.zh_tw("生蛙腿");
+                    b.zh_hk("生蛙腿");
+                });
+                COOKED_FROG_LEG = baseFood("cooked_frog_leg", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(2)
+                                .saturationModifier(.8F)
+                                .build()), (c, p) -> {
+                    DataIngredient frogLeg = DataIngredient.items(FROG_LEG.get());
+                    p.smelting(frogLeg, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(frogLeg, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(frogLeg, RecipeCategory.FOOD, c, 0.35F);
+                }, b -> {
+                    b.zh_cn("熟蛙腿");
+                    b.zh_tw("熟蛙腿");
+                    b.zh_hk("熟蛙腿");
+                });
+
+            }//(cooked/)frog.leg
+            {
+                CALAMARI = baseFood("calamari", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(2)
+                                .saturationModifier(.1F)
+                                .build()), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("生鱿鱼须");
+                    b.zh_cn("生魷魚須");
+                    b.zh_cn("生魷魚須");
+                });
+                COOKED_CALAMARI = baseFood("cooked_calamari", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(4)
+                                .saturationModifier(.8F)
+                                .build()), (c, p) -> {
+                    DataIngredient calamari = DataIngredient.items(CALAMARI.get());
+                    p.smelting(calamari, RecipeCategory.FOOD, c, 0.35F);
+                    p.smoking(calamari, RecipeCategory.FOOD, c, 0.35F);
+                    p.campfire(calamari, RecipeCategory.FOOD, c, 0.35F);
+                }, b -> {
+                    b.zh_cn("熟鱿鱼须");
+                    b.zh_cn("熟魷魚須");
+                    b.zh_cn("熟魷魚須");
+                });
+
             }
         }
     }
