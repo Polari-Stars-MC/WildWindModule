@@ -50,6 +50,7 @@ public class ModItems {
             COOKED_PIRANHA,
             COOKED_TROUT,
             COOKED_VENISON;
+    public static final ItemEntry<Item> BEERY_PIE;
     public static final ItemEntry<Item> GLOWING_CALAMARI;
     public static final ItemEntry<Item>
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
@@ -511,6 +512,31 @@ public class ModItems {
 
                 });
             }//dough
+            {
+                BEERY_PIE = baseFood("berry_pie", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(8)
+                                .saturationModifier(.1F)
+                                .effect(() -> new MobEffectInstance(MobEffects.DIG_SPEED, 6000, 0), 1)
+                                .build()), (c, p) -> {
+                    DataIngredient egg = DataIngredient.tag(Tags.Items.EGGS);
+                    DataIngredient glow = DataIngredient.items(Items.GLOW_BERRIES);
+                    DataIngredient sweet = DataIngredient.items(Items.SWEET_BERRIES);
+                    ShapelessRecipeBuilder
+                            .shapeless(RecipeCategory.FOOD, c.get())
+                            .unlockedBy("has_" + p.safeName(egg), egg.getCriterion(p))
+                            .unlockedBy("has_" + p.safeName(glow), glow.getCriterion(p))
+                            .unlockedBy("has_" + p.safeName(sweet), sweet.getCriterion(p))
+                            .requires(glow.toVanilla())
+                            .requires(sweet.toVanilla(), 2)
+                            .requires(egg.toVanilla())
+                            .save(p, p.safeId(c.get()));
+                }, b -> {
+                    b.zh_cn("浆果派");
+                    b.zh_tw("漿果派");
+                    b.zh_hk("漿果派");
+                });
+            }
         }
     }
 
