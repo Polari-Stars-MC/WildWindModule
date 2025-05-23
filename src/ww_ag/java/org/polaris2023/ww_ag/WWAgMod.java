@@ -97,6 +97,9 @@ public class WWAgMod {
                 provider.add(entry.getKey(), entry.getValue());
             }
         });
+        REGISTRATE.addDataGenerator(WWProviderType.GLM, p -> {
+
+        });
     }
 
     @SubscribeEvent

@@ -4,11 +4,19 @@ import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.AbstractBuilder;
 import com.tterrag.registrate.builders.BuilderCallback;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonnullType;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.entry.LootModifierEntry;
+import org.polaris2023.ww_ag.datagen.WWGlobalLootModifier;
+
+import java.util.function.Consumer;
 
 /**
  * @author baka4n
@@ -36,6 +44,12 @@ public class LootModifierBuilder<T extends IGlobalLootModifier, P> extends Abstr
     @Override
     protected @NonnullType MapCodec<T> createEntry() {
         return codec;
+    }
+
+    public LootModifierBuilder<T, P> add(Consumer<WWGlobalLootModifier> consumer) {
+        return setData(WWProviderType.GLM, (c, p) -> {
+            consumer.accept(p);
+        });
     }
 
     @Override
