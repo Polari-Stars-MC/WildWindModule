@@ -10,6 +10,7 @@ import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -42,13 +43,18 @@ public class ModItems {
             BAKED_PUMPKIN_SLICE,
             BAKED_SEEDS;
     public static final ItemEntry<Item>
-            COOKED_BAT_WING, COOKED_CALAMARI, COOKED_FROG_LEG, COOKED_VENISON, COOKED_TROUT;
+            COOKED_BAT_WING,
+            COOKED_CALAMARI,
+            COOKED_FROG_LEG,
+            COOKED_PIRANHA,
+            COOKED_TROUT,
+            COOKED_VENISON;
     public static final ItemEntry<Item> GLOWING_CALAMARI;
     public static final ItemEntry<Item>
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
-            CALAMARI, TROUT;
+            CALAMARI, TROUT, PIRANHA, DOUGH;
 
     static {
         {
@@ -61,14 +67,22 @@ public class ModItems {
                         DataIngredient ores = DataIngredient.tag(WWItemTags.ORES$SALT.get());
                         p.storage(DataIngredient.items(c), RecipeCategory.MISC, c, items, ModBlocks.SALT_BLOCK);
                         p.square(items, RecipeCategory.MISC, c, false);
-                        p.smelting(ores, RecipeCategory.MISC, c, 0.35F);
-                        p.blasting(ores, RecipeCategory.MISC, c, 0.35F);
+                        p.smeltingAndBlasting(ores, RecipeCategory.MISC, c, 0.35F);
                     })
                     .lang("Salt")
                     .register();
         }
         //food
         {
+            FoodProperties TROUT_FOOD = new FoodProperties.Builder()
+                    .nutrition(1)
+                    .saturationModifier(.1F)
+                    .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
+                    .build();
+            FoodProperties COOKED_TROUT_FOOD = new FoodProperties.Builder()
+                    .nutrition(6)
+                    .saturationModifier(.8F)
+                    .build();
             {
                 BAKED_APPLE = baseFood("baked_apple", p -> p
                         .food(new FoodProperties.Builder()
@@ -76,9 +90,7 @@ public class ModItems {
                                 .saturationModifier(0.3F)
                                 .build()), (c, p) -> {
                     DataIngredient items = DataIngredient.items(Items.APPLE);
-                    p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤苹果");
                     b.zh_tw("烤蘋果");
@@ -121,9 +133,7 @@ public class ModItems {
                                         .saturationModifier(0.3F)
                                 .build()), (c, p) -> {
                     DataIngredient items = DataIngredient.items(Items.MELON_SLICE);
-                    p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤西瓜片");
                     b.zh_tw("烤西瓜片");
@@ -148,9 +158,7 @@ public class ModItems {
                                 .saturationModifier(0.3F)
                                 .build()), (c, p) -> {
                     DataIngredient items = DataIngredient.items(ModItems.PUMPKIN_SLICE.get());
-                    p.smelting(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(items, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(items, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤南瓜片");
                     b.zh_tw("烤南瓜片");
@@ -168,9 +176,7 @@ public class ModItems {
                             DataIngredient.tag(WWItemTags.FUNGUS.get())
                     };
                     for (DataIngredient ingredient : ingredients) {
-                       p.smelting(ingredient, RecipeCategory.FOOD, c, 0.35F);
-                       p.smoking(ingredient, RecipeCategory.FOOD, c, 0.35F);
-                       p.campfire(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                       p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
                     b.zh_cn("烤蘑菇");
@@ -193,9 +199,7 @@ public class ModItems {
                             DataIngredient.items(Items.PITCHER_POD),
                     };
                     for (DataIngredient ingredient : ingredients) {
-                        p.smelting(ingredient, RecipeCategory.FOOD, c, 0.35F);
-                        p.smoking(ingredient, RecipeCategory.FOOD, c, 0.35F);
-                        p.campfire(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                        p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
                     b.zh_cn("烤种子");
@@ -210,9 +214,7 @@ public class ModItems {
                                 .saturationModifier(.1F)
                                 .build()), (c, p) -> {
                     DataIngredient berry = DataIngredient.tag(Tags.Items.FOODS_BERRY);
-                    p.smelting(berry, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(berry, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(berry, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(berry, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤浆果");
                     b.zh_tw("烤漿果");
@@ -226,9 +228,7 @@ public class ModItems {
                                 .saturationModifier(.6F)
                                 .build()), (c, p) -> {
                     DataIngredient carrot = DataIngredient.tag(Tags.Items.CROPS_CARROT);
-                    p.smelting(carrot, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(carrot, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(carrot, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(carrot, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤胡萝卜");
                     b.zh_tw("烤胡蘿蔔");
@@ -242,9 +242,7 @@ public class ModItems {
                                 .saturationModifier(.6F)
                                 .build()), (c, p) -> {
                     DataIngredient beetroot = DataIngredient.tag(Tags.Items.CROPS_BEETROOT);
-                    p.smelting(beetroot, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(beetroot, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(beetroot, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(beetroot, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤甜菜");
                     b.zh_tw("烤甜菜");
@@ -280,9 +278,7 @@ public class ModItems {
                                 .effect(() -> new MobEffectInstance(MobEffects.BLINDNESS, 600, 0), 1)
                                 .build()), (c, p) -> {
                     DataIngredient data = DataIngredient.items(LIVING_TUBER.get());
-                    p.smelting(data, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(data, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(data, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(data, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("烤活根");
                     b.zh_tw("烤活根");
@@ -310,9 +306,7 @@ public class ModItems {
                                 .build()
                         ), (c, p) -> {
                     DataIngredient venison = DataIngredient.items(VENISON.get());
-                    p.smelting(venison, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(venison, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(venison, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(venison, RecipeCategory.FOOD, c, 0.35F);
                     }, b -> {
                     b.zh_cn("熟鹿排");
                     b.zh_tw("熟鹿排");
@@ -337,9 +331,7 @@ public class ModItems {
                                 .saturationModifier(.8F)
                                 .build()), (c, p) -> {
                     DataIngredient batWing = DataIngredient.items(BAT_WING.get());
-                    p.smelting(batWing, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(batWing, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(batWing, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(batWing, RecipeCategory.FOOD, c, 0.35F);
                     }, b -> {
                     b.zh_cn("熟蝙蝠翼");
                     b.zh_tw("熟蝙蝠翼");
@@ -365,9 +357,7 @@ public class ModItems {
                                 .saturationModifier(.8F)
                                 .build()), (c, p) -> {
                     DataIngredient frogLeg = DataIngredient.items(FROG_LEG.get());
-                    p.smelting(frogLeg, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(frogLeg, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(frogLeg, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(frogLeg, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("熟蛙腿");
                     b.zh_tw("熟蛙腿");
@@ -408,9 +398,7 @@ public class ModItems {
                             DataIngredient.items(GLOWING_CALAMARI.get())
                     };
                     for (DataIngredient item : items) {
-                        p.smelting(item, RecipeCategory.FOOD, c, 0.35F);
-                        p.smoking(item, RecipeCategory.FOOD, c, 0.35F);
-                        p.campfire(item, RecipeCategory.FOOD, c, 0.35F);
+                        p.food(item, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
                     b.zh_cn("熟鱿鱼须");
@@ -420,27 +408,24 @@ public class ModItems {
 
             }//(cooked/glowing/)calamari
             {
-                TROUT = baseFood("trout", p -> p
-                        .food(new FoodProperties.Builder()
-                                .nutrition(1)
-                                .saturationModifier(.1F)
-                                .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
-                                .build()), (c, p) -> {
+                TROUT = baseFood("trout", p -> {
+
+                    return p
+                            .food(TROUT_FOOD);
+                }, (c, p) -> {
 
                 }, b -> {
                     b.zh_cn("生鳟鱼");
                     b.zh_tw("生鱒魚");
                     b.zh_hk("生鱒魚");
                 });
-                COOKED_TROUT = baseFood("cooked_trout", p -> p
-                        .food(new FoodProperties.Builder()
-                                .nutrition(6)
-                                .saturationModifier(.8F)
-                                .build()), (c, p) -> {
+                COOKED_TROUT = baseFood("cooked_trout", p -> {
+
+                    return p
+                            .food(COOKED_TROUT_FOOD);
+                }, (c, p) -> {
                     DataIngredient trout = DataIngredient.items(TROUT.get());
-                    p.smelting(trout, RecipeCategory.FOOD, c, 0.35F);
-                    p.smoking(trout, RecipeCategory.FOOD, c, 0.35F);
-                    p.campfire(trout, RecipeCategory.FOOD, c, 0.35F);
+                    p.food(trout, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
                     b.zh_cn("熟鳟鱼");
                     b.zh_tw("熟鱒魚");
@@ -448,6 +433,58 @@ public class ModItems {
                 });
 
             }//(cooked/)trout
+            {
+                PIRANHA = baseFood("piranha", p -> p
+                        .food(TROUT_FOOD), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("生食人鱼");
+                    b.zh_tw("生食人魚");
+                    b.zh_hk("生食人魚");
+                });
+                COOKED_PIRANHA = baseFood("cooked_piranha", p -> p
+                        .food(COOKED_TROUT_FOOD), (c, p) -> {
+                    DataIngredient piranha = DataIngredient.items(PIRANHA.get());
+                    p.food(piranha, RecipeCategory.FOOD, c, 0.35F);
+                }, b -> {
+                    b.zh_cn("熟食人鱼");
+                    b.zh_tw("熟食人魚");
+                    b.zh_hk("熟食人魚");
+                });
+
+            }//(cooked/)piranha
+            {
+                DOUGH = baseFood("dough", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(3)
+                                .saturationModifier(.3F)
+                                .build()
+                        ), (c, p) -> {
+
+                    DataIngredient wheat = DataIngredient.tag(Tags.Items.CROPS_WHEAT);
+                    DataIngredient water = DataIngredient.items(Items.WATER_BUCKET);
+                    DataIngredient dough = DataIngredient.items(c.get());
+                    ShapelessRecipeBuilder
+                            .shapeless(RecipeCategory.FOOD, c.get(), 4)
+                            .unlockedBy("has_" + p.safeName(wheat), wheat.getCriterion(p))
+                            .requires(wheat.toVanilla())
+                            .requires(wheat.toVanilla())
+                            .requires(wheat.toVanilla())
+                            .requires(water.toVanilla())
+                            .save(p, p.safeId(dough));
+                    ShapelessRecipeBuilder
+                            .shapeless(RecipeCategory.FOOD, Items.BREAD, 1)
+                            .unlockedBy("has_" + p.safeName(dough), dough.getCriterion(p))
+                            .requires(dough.toVanilla())
+                            .requires(dough.toVanilla())
+                            .requires(dough.toVanilla())
+                            .save(p, p.safeId(Items.BREAD));
+                    p.food(dough, RecipeCategory.FOOD, () -> Items.BREAD, .35F);
+
+                }, b -> {
+
+                });
+            }//dough
         }
     }
 
