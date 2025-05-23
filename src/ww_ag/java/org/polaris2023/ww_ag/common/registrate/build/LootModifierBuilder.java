@@ -1,0 +1,50 @@
+package org.polaris2023.ww_ag.common.registrate.build;
+
+import com.mojang.serialization.MapCodec;
+import com.tterrag.registrate.AbstractRegistrate;
+import com.tterrag.registrate.builders.AbstractBuilder;
+import com.tterrag.registrate.builders.BuilderCallback;
+import com.tterrag.registrate.util.nullness.NonnullType;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
+import org.polaris2023.ww_ag.common.registrate.entry.LootModifierEntry;
+
+/**
+ * @author baka4n
+ * {@code @Date 2025/05/23 14:43:54}
+ */
+public class LootModifierBuilder<T extends IGlobalLootModifier, P> extends AbstractBuilder<MapCodec<? extends IGlobalLootModifier>, MapCodec<T>, P, LootModifierBuilder<T, P>> {
+    private final MapCodec<T> codec;
+    private LootModifierBuilder(AbstractRegistrate<?> owner,
+                                P parent,
+                                String name,
+                                BuilderCallback callback,
+                                MapCodec<T> mapCodec) {
+        super(owner, parent, name, callback, NeoForgeRegistries.Keys.GLOBAL_LOOT_MODIFIER_SERIALIZERS);
+        this.codec = mapCodec;
+    }
+
+    public static <T extends IGlobalLootModifier, P> LootModifierBuilder<T, P> create(AbstractRegistrate<?> owner,
+                                                                                      P parent,
+                                                                                      String name,
+                                                                                      BuilderCallback callback,
+                                                                                      MapCodec<T> mapCodec) {
+        return new LootModifierBuilder<>(owner, parent, name, callback, mapCodec);
+    }
+
+    @Override
+    protected @NonnullType MapCodec<T> createEntry() {
+        return codec;
+    }
+
+    @Override
+    protected LootModifierEntry<T> createEntryWrapper(DeferredHolder<MapCodec<? extends IGlobalLootModifier>, MapCodec<T>> delegate) {
+        return new LootModifierEntry<>(getOwner(), delegate);
+    }
+
+    @Override
+    public LootModifierEntry<T> register() {
+        return (LootModifierEntry<T>) super.register();
+    }
+}
