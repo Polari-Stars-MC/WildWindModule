@@ -50,7 +50,7 @@ public class ModItems {
             COOKED_PIRANHA,
             COOKED_TROUT,
             COOKED_VENISON;
-    public static final ItemEntry<Item> BEERY_PIE;
+    public static final ItemEntry<Item> APPLE_PIE, BEERY_PIE;
     public static final ItemEntry<Item> GLOWING_CALAMARI;
     public static final ItemEntry<Item>
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
@@ -513,6 +513,29 @@ public class ModItems {
                 });
             }//dough
             {
+
+                APPLE_PIE = baseFood("apple_pie", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(6)
+                                .saturationModifier(.3F)
+                                .build()), (c, p) -> {
+                    DataIngredient egg = DataIngredient.tag(Tags.Items.EGGS);
+                    DataIngredient apple = DataIngredient.items(Items.APPLE);
+                    DataIngredient sugar = DataIngredient.items(Items.SUGAR);
+                    ShapelessRecipeBuilder
+                            .shapeless(RecipeCategory.FOOD, c.get())
+                            .unlockedBy("has_" + p.safeName(egg), egg.getCriterion(p))
+                            .unlockedBy("has_" + p.safeName(apple), apple.getCriterion(p))
+                            .unlockedBy("has_" + p.safeName(sugar), sugar.getCriterion(p))
+                            .requires(apple.toVanilla())
+                            .requires(sugar.toVanilla())
+                            .requires(egg.toVanilla())
+                            .save(p, p.safeId(c.get()));
+                }, b -> {
+                    b.zh_cn("苹果派");
+                    b.zh_tw("蘋果派");
+                    b.zh_hk("蘋果派");
+                });
                 BEERY_PIE = baseFood("berry_pie", p -> p
                         .food(new FoodProperties.Builder()
                                 .nutrition(8)
@@ -536,7 +559,7 @@ public class ModItems {
                     b.zh_tw("漿果派");
                     b.zh_hk("漿果派");
                 });
-            }
+            }//(apple/berry) pie
         }
     }
 
