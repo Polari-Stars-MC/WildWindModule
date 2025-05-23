@@ -11,6 +11,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -32,7 +33,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  */
 @SuppressWarnings("unused")
 public class ModItems {
-    public static final ItemEntry<Item> SALT;
+    public static final ItemEntry<Item> CANDY, SALT;
     public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
     public static final ItemEntry<Item>
             BAKED_APPLE,
@@ -71,7 +72,35 @@ public class ModItems {
                     })
                     .lang("Salt")
                     .register();
-        }
+        }//salt
+        {
+            CANDY = REGISTRATE
+                    .item("candy", Item::new)
+                    .zh_cn("糖果")
+                    .zh_tw("糖果")
+                    .zh_hk("糖果")
+                    .lang("Candy")
+                    .properties(properties -> properties
+                            .stacksTo(16))
+                    .recipe((c ,p) -> {
+                        DataIngredient apple = DataIngredient.items(Items.APPLE);
+                        DataIngredient glow = DataIngredient.items(Items.GLOW_BERRIES);
+                        DataIngredient sweet = DataIngredient.items(Items.SWEET_BERRIES);
+                        ShapelessRecipeBuilder
+                                .shapeless(RecipeCategory.FOOD, c.get())
+                                .unlockedBy("has_" + p.safeName(apple), apple.getCriterion(p))
+                                .unlockedBy("has_" + p.safeName(glow), glow.getCriterion(p))
+                                .unlockedBy("has_" + p.safeName(sweet), sweet.getCriterion(p))
+                                .requires(glow.toVanilla())
+                                .requires(sweet.toVanilla(), 2)
+                                .requires(apple.toVanilla())
+                                .save(p, p.safeId(c.get()));
+
+                    })
+                    .defaultModel()
+                    .tab(ModTabs.FOOD_AND_DRINK.key())
+                    .register();
+        }//candy
         //food
         {
             FoodProperties TROUT_FOOD = new FoodProperties.Builder()
@@ -467,17 +496,14 @@ public class ModItems {
                     ShapelessRecipeBuilder
                             .shapeless(RecipeCategory.FOOD, c.get(), 4)
                             .unlockedBy("has_" + p.safeName(wheat), wheat.getCriterion(p))
-                            .requires(wheat.toVanilla())
-                            .requires(wheat.toVanilla())
-                            .requires(wheat.toVanilla())
+                            .unlockedBy("has_" + p.safeName(water), water.getCriterion(p))
+                            .requires(wheat.toVanilla(), 3)
                             .requires(water.toVanilla())
                             .save(p, p.safeId(dough));
                     ShapelessRecipeBuilder
                             .shapeless(RecipeCategory.FOOD, Items.BREAD, 1)
                             .unlockedBy("has_" + p.safeName(dough), dough.getCriterion(p))
-                            .requires(dough.toVanilla())
-                            .requires(dough.toVanilla())
-                            .requires(dough.toVanilla())
+                            .requires(dough.toVanilla(), 3)
                             .save(p, p.safeId(Items.BREAD));
                     p.food(dough, RecipeCategory.FOOD, () -> Items.BREAD, .35F);
 
