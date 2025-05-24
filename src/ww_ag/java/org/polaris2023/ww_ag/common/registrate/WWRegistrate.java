@@ -1,5 +1,6 @@
 package org.polaris2023.ww_ag.common.registrate;
 
+import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -8,8 +9,10 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import org.polaris2023.ww_ag.common.registrate.build.BlockBuilder;
 import org.polaris2023.ww_ag.common.registrate.build.ItemBuilder;
+import org.polaris2023.ww_ag.common.registrate.build.LootModifierBuilder;
 import org.polaris2023.ww_ag.common.registrate.build.SoundBuilder;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -77,6 +80,10 @@ public class WWRegistrate extends L2Registrate {
 
     public <T extends SoundEvent> SoundBuilder<T, L2Registrate> customSound(String name, Function<ResourceLocation, T> function) {
         return entry(name, callback -> SoundBuilder.create(this, self(), name, callback, () -> function.apply(loc(name))));
+    }
+
+    public <T extends IGlobalLootModifier> LootModifierBuilder<T, L2Registrate> glm(String name, MapCodec<T> codec) {
+        return entry(name, callback -> LootModifierBuilder.create(this, self(), name, callback, codec));
     }
 
 }

@@ -2,15 +2,29 @@ package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.Util;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.init.ModBlocks;
 import org.polaris2023.ww_ag.common.init.ModItems;
 import org.polaris2023.ww_ag.common.init.ModSounds;
@@ -19,7 +33,9 @@ import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
-import org.polaris2023.ww_ag.datagen.WWAgDatapackProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWBiomeModifyProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWConfiguredFeatureProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
 
 import java.util.Map;
 import java.util.Objects;
@@ -97,14 +113,87 @@ public class WWAgMod {
                 provider.add(entry.getKey(), entry.getValue());
             }
         });
+        ResourceKey<LootTable> DROP_BAT_WING = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_bat_wing"));
+        ResourceKey<LootTable> DROP_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_calamari"));
+        ResourceKey<LootTable> DROP_GLOWING_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_glowing_calamari"));
+
+        REGISTRATE.addDataGenerator(WWProviderType.GLM, p -> {
+            p.add("bats_drops_wing", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.BAT.getDefaultLootTable()
+                            )
+                    }, DROP_BAT_WING
+            ));
+            p.add("bats_drops_glowing_calamari", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.GLOW_SQUID.getDefaultLootTable()
+                            )
+                    }, DROP_GLOWING_CALAMARI
+            ));
+            p.add("bats_drops_calamari", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.SQUID.getDefaultLootTable()
+                            )
+                    }, DROP_CALAMARI
+            ));
+
+        });
+        REGISTRATE.addDataGenerator(ProviderType.LOOT, p -> {
+            p.addLootAction(WWProviderType.BASE, base -> {
+                {
+                    base.add(DROP_BAT_WING, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1F))
+                                    .add(LootItem.lootTableItem(ModItems.BAT_WING))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0F, 2F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0F, 2F)))
+                            ));
+                }//drops/bat wing
+                {
+                    base.add(DROP_CALAMARI, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(ModItems.CALAMARI))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0.0F, 1.0F)
+                                    ))
+                            ));
+                    base.add(DROP_GLOWING_CALAMARI, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(ModItems.GLOWING_CALAMARI))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0.0F, 1.0F)
+                                    ))
+                            ));
+                }//drops/(glowing/)calamari
+            });
+
+        });
+        REGISTRATE.addDataGenerator(WWProviderType.REPEATER, p -> {
+            p.add(Registries.CONFIGURED_FEATURE, WWConfiguredFeatureProvider::bootstrap);
+            p.add(Registries.PLACED_FEATURE, WWPlaceFeatureProvider::bootstrap);
+            p.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WWBiomeModifyProvider::bootstrap);
+        });
     }
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {
         var gen = event.getGenerator();
         PackOutput output = gen.getPackOutput();
-        WWAgDatapackProvider datapack = new WWAgDatapackProvider(output, event.getLookupProvider());
-        gen.addProvider(true, datapack);
+
 
     }
 }
