@@ -110,11 +110,9 @@ public class WWAgMod {
                 provider.add(entry.getKey(), entry.getValue());
             }
         });
-        ResourceKey<LootTable> DROP_FUR = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_fur"));
         ResourceKey<LootTable> DROP_BAT_WING = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_bat_wing"));
         ResourceKey<LootTable> DROP_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_calamari"));
         ResourceKey<LootTable> DROP_GLOWING_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_glowing_calamari"));
-        ResourceKey<LootTable> DROP_CHARRED_BONE = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_charred_bone"));
 
         REGISTRATE.addDataGenerator(WWProviderType.GLM, p -> {
             p.add("bats_drops_wing", new AddTableLootModifier(
@@ -124,20 +122,62 @@ public class WWAgMod {
                             )
                     }, DROP_BAT_WING
             ));
+            p.add("bats_drops_glowing_calamari", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.GLOW_SQUID.getDefaultLootTable()
+                            )
+                    }, DROP_GLOWING_CALAMARI
+            ));
+            p.add("bats_drops_calamari", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.SQUID.getDefaultLootTable()
+                            )
+                    }, DROP_CALAMARI
+            ));
+
         });
         REGISTRATE.addDataGenerator(ProviderType.LOOT, p -> {
             p.addLootAction(WWProviderType.BASE, base -> {
-                base.add(DROP_BAT_WING, LootTable
-                        .lootTable()
-                        .withPool(LootPool
-                                .lootPool()
-                                .setRolls(ConstantValue.exactly(1F))
-                                .add(LootItem.lootTableItem(ModItems.BAT_WING))
-                                .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
-                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0F, 2F)))
-                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0F, 2F)))
-                        ));
+                {
+                    base.add(DROP_BAT_WING, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1F))
+                                    .add(LootItem.lootTableItem(ModItems.BAT_WING))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0F, 2F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0F, 2F)))
+                            ));
+                }//drops/bat wing
+                {
+                    base.add(DROP_CALAMARI, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(ModItems.CALAMARI))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0.0F, 1.0F)
+                                    ))
+                            ));
+                    base.add(DROP_GLOWING_CALAMARI, LootTable
+                            .lootTable()
+                            .withPool(LootPool
+                                    .lootPool()
+                                    .setRolls(ConstantValue.exactly(1.0F))
+                                    .add(LootItem.lootTableItem(ModItems.GLOWING_CALAMARI))
+                                    .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 4.0F)))
+                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0.0F, 1.0F)
+                                    ))
+                            ));
+                }//drops/(glowing/)calamari
             });
+
         });
     }
 
