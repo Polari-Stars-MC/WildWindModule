@@ -2,12 +2,28 @@ package org.polaris2023.ww_ag.datagen;
 
 import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.providers.RegistrateProvider;
+import dev.xkmc.l2core.serial.loot.LootTableTemplate;
+import net.minecraft.advancements.critereon.*;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.predicates.AnyOfCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.predicates.LootItemEntityPropertyCondition;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.common.data.GlobalLootModifierProvider;
+import net.neoforged.neoforge.common.loot.LootTableIdCondition;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -20,6 +36,19 @@ public class WWGlobalLootModifier extends GlobalLootModifierProvider implements 
         super(output, registries, parent.getModid());
         this.parent = parent;
     }
+
+
+    @SafeVarargs
+    public final LootItemCondition anyOf(ResourceKey<LootTable>... lootTables) {
+        return AnyOfCondition.anyOf(
+                Arrays.stream(lootTables)
+                        .map(ResourceKey::location)
+                        .map(LootTableIdCondition::builder)
+                        .toArray(LootTableIdCondition.Builder[]::new)
+        ).build();
+    }
+
+
 
     @Override
     protected void start() {

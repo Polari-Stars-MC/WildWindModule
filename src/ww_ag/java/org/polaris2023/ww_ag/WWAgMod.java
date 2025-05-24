@@ -2,14 +2,27 @@ package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.Util;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
+import net.minecraft.world.level.storage.loot.LootPool;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.EnchantedCountIncreaseFunction;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.functions.SmeltItemFunction;
+import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
+import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.polaris2023.ww_ag.common.init.ModBlocks;
 import org.polaris2023.ww_ag.common.init.ModItems;
@@ -97,8 +110,34 @@ public class WWAgMod {
                 provider.add(entry.getKey(), entry.getValue());
             }
         });
-        REGISTRATE.addDataGenerator(WWProviderType.GLM, p -> {
+        ResourceKey<LootTable> DROP_FUR = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_fur"));
+        ResourceKey<LootTable> DROP_BAT_WING = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_bat_wing"));
+        ResourceKey<LootTable> DROP_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_calamari"));
+        ResourceKey<LootTable> DROP_GLOWING_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_glowing_calamari"));
+        ResourceKey<LootTable> DROP_CHARRED_BONE = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_charred_bone"));
 
+        REGISTRATE.addDataGenerator(WWProviderType.GLM, p -> {
+            p.add("bats_drops_wing", new AddTableLootModifier(
+                    new LootItemCondition[]{
+                            p.anyOf(
+                                    EntityType.BAT.getDefaultLootTable()
+                            )
+                    }, DROP_BAT_WING
+            ));
+        });
+        REGISTRATE.addDataGenerator(ProviderType.LOOT, p -> {
+            p.addLootAction(WWProviderType.BASE, base -> {
+                base.add(DROP_BAT_WING, LootTable
+                        .lootTable()
+                        .withPool(LootPool
+                                .lootPool()
+                                .setRolls(ConstantValue.exactly(1F))
+                                .add(LootItem.lootTableItem(ModItems.BAT_WING))
+                                .apply(SmeltItemFunction.smelted().when(base.shouldSmeltLoot()))
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(0F, 2F)))
+                                .apply(EnchantedCountIncreaseFunction.lootingMultiplier(base.registry, UniformGenerator.between(0F, 2F)))
+                        ));
+            });
         });
     }
 

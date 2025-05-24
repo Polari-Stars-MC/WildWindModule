@@ -8,13 +8,18 @@ import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullSupplier;
 import com.tterrag.registrate.util.nullness.NonnullType;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.storage.loot.LootTable;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.entry.LootModifierEntry;
 import org.polaris2023.ww_ag.datagen.WWGlobalLootModifier;
+import org.polaris2023.ww_ag.datagen.loot.WWBaseLootSubProvider;
 
 import java.util.function.Consumer;
 
@@ -50,6 +55,10 @@ public class LootModifierBuilder<T extends IGlobalLootModifier, P> extends Abstr
         return setData(WWProviderType.GLM, (c, p) -> {
             consumer.accept(p);
         });
+    }
+
+    public LootModifierBuilder<T, P> loot(NonNullConsumer<WWBaseLootSubProvider> consumer) {
+        return setData(ProviderType.LOOT, (c, p) -> p.addLootAction(WWProviderType.BASE, consumer::accept));
     }
 
     @Override
