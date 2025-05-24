@@ -24,6 +24,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.init.ModBlocks;
 import org.polaris2023.ww_ag.common.init.ModItems;
 import org.polaris2023.ww_ag.common.init.ModSounds;
@@ -32,7 +33,9 @@ import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
-import org.polaris2023.ww_ag.datagen.WWAgDatapackProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWBiomeModifyProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWConfiguredFeatureProvider;
+import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
 
 import java.util.Map;
 import java.util.Objects;
@@ -179,14 +182,18 @@ public class WWAgMod {
             });
 
         });
+        REGISTRATE.addDataGenerator(WWProviderType.REPEATER, p -> {
+            p.add(Registries.CONFIGURED_FEATURE, WWConfiguredFeatureProvider::bootstrap);
+            p.add(Registries.PLACED_FEATURE, WWPlaceFeatureProvider::bootstrap);
+            p.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WWBiomeModifyProvider::bootstrap);
+        });
     }
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {
         var gen = event.getGenerator();
         PackOutput output = gen.getPackOutput();
-        WWAgDatapackProvider datapack = new WWAgDatapackProvider(output, event.getLookupProvider());
-        gen.addProvider(true, datapack);
+
 
     }
 }
