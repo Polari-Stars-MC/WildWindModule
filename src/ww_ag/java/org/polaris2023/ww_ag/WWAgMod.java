@@ -3,7 +3,6 @@ package org.polaris2023.ww_ag;
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
@@ -40,6 +39,7 @@ import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("CodeBlock2Expr")
 @Mod(WWAgMod.MODID)
 @EventBusSubscriber(modid = WWAgMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class WWAgMod {
@@ -191,8 +191,6 @@ public class WWAgMod {
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {
-        var gen = event.getGenerator();
-        PackOutput output = gen.getPackOutput();
 
 
     }

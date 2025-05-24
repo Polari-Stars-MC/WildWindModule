@@ -31,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
+@SuppressWarnings("unused")
 public class WWDataRepeater implements DataProvider, RegistrateProvider {
     private final AbstractRegistrate<?> parent;
     private final PackOutput output;

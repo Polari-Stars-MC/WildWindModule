@@ -11,7 +11,6 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
-import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -438,22 +437,16 @@ public class ModItems {
 
             }//(cooked/glowing/)calamari
             {
-                TROUT = baseFood("trout", p -> {
-
-                    return p
-                            .food(TROUT_FOOD);
-                }, (c, p) -> {
+                TROUT = baseFood("trout", p -> p
+                        .food(TROUT_FOOD), (c, p) -> {
 
                 }, b -> {
                     b.zh_cn("生鳟鱼");
                     b.zh_tw("生鱒魚");
                     b.zh_hk("生鱒魚");
                 });
-                COOKED_TROUT = baseFood("cooked_trout", p -> {
-
-                    return p
-                            .food(COOKED_TROUT_FOOD);
-                }, (c, p) -> {
+                COOKED_TROUT = baseFood("cooked_trout", p -> p
+                        .food(COOKED_TROUT_FOOD), (c, p) -> {
                     DataIngredient trout = DataIngredient.items(TROUT.get());
                     p.food(trout, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {

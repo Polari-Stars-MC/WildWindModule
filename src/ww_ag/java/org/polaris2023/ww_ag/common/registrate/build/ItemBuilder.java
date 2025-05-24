@@ -7,14 +7,19 @@ import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateProvider;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
+import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
+
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * @author baka4n
  * {@code @Date 2025/05/22 08:40:18}
  */
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
 public class ItemBuilder<T extends Item, P> extends com.tterrag.registrate.builders.ItemBuilder<T, P> {
 
     public static <T extends Item, P> ItemBuilder<T, P> create(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback, NonNullFunction<Item.Properties, T> factory) {

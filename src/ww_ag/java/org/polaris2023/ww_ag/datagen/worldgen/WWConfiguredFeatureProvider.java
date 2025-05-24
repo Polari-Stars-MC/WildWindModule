@@ -8,7 +8,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
 import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
-import net.minecraft.world.level.levelgen.structure.templatesystem.RuleTest;
 import net.minecraft.world.level.levelgen.structure.templatesystem.TagMatchTest;
 import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.init.ModBlocks;
@@ -22,6 +21,7 @@ import java.util.function.Supplier;
  * @author baka4n
  * {@code @Date 2025/05/20 09:15:47}
  */
+@SuppressWarnings("CodeBlock2Expr")
 public enum WWConfiguredFeatureProvider implements Supplier<ResourceKey<ConfiguredFeature<?, ?>>> {
     ORE_SALT((k, context) -> {
         FeatureUtils.register(context, k, Feature.ORE, new OreConfiguration(List.of(

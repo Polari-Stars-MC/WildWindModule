@@ -22,6 +22,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
  * @author baka4n
  * {@code @Date 2025/05/21 12:46:06}
  */
+@SuppressWarnings("CodeBlock2Expr")
 @ParametersAreNonnullByDefault
 @MethodsReturnNonnullByDefault
 @EventBusSubscriber(modid = WWAgMod.MODID)
