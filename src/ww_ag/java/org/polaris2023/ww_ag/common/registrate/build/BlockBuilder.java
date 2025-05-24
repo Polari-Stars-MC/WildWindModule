@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
+import org.polaris2023.ww_ag.datagen.WWDataRepeater;
 
 /**
  * @author baka4n
@@ -45,6 +46,10 @@ public class BlockBuilder<T extends Block, P> extends com.tterrag.registrate.bui
     @Override
     public <D extends RegistrateProvider> BlockBuilder<T, P> setData(ProviderType<? extends D> type, NonNullBiConsumer<DataGenContext<Block, T>, D> cons) {
         return (BlockBuilder<T, P>) super.setData(type, cons);
+    }
+
+    public BlockBuilder<T, P> datagen(NonNullBiConsumer<DataGenContext<Block, T>, WWDataRepeater> cons) {
+        return setData(WWProviderType.REPEATER, cons);
     }
 
     public BlockBuilder<T, P> zh_cn(String name) {
