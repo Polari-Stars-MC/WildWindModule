@@ -19,6 +19,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.Rarity;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
+import org.polaris2023.ww_ag.common.items.CheeseItem;
 import org.polaris2023.ww_ag.common.items.LivingTuberItem;
 import org.polaris2023.ww_ag.common.registrate.build.ItemBuilder;
 
@@ -34,6 +35,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 public class ModItems {
     public static final ItemEntry<Item> CANDY, SALT;
     public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
+    public static final ItemEntry<CheeseItem> CHEESE;
     public static final ItemEntry<Item>
             BAKED_APPLE,
             BAKED_BEETROOT, BAKED_BERRIES,
@@ -45,11 +47,15 @@ public class ModItems {
     public static final ItemEntry<Item>
             COOKED_BAT_WING,
             COOKED_CALAMARI,
+            COOKED_EGG,
             COOKED_FROG_LEG,
             COOKED_PIRANHA,
             COOKED_TROUT,
             COOKED_VENISON;
-    public static final ItemEntry<Item> APPLE_PIE, BEERY_PIE;
+    public static final ItemEntry<Item>
+            ENCHANTED_NETHERITE_APPLE_PIE, NETHERITE_APPLE_PIE,
+            ENCHANTED_GOLDEN_APPLE_PIE, GOLDEN_APPLE_PIE,
+            APPLE_PIE, BEERY_PIE;
     public static final ItemEntry<Item> GLOWING_CALAMARI;
     public static final ItemEntry<Item>
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
@@ -158,8 +164,8 @@ public class ModItems {
             {
                 BAKED_MELON_SLICE = baseFood("baked_melon_slice", p ->
                         p.food(new FoodProperties.Builder()
-                                        .nutrition(4)
-                                        .saturationModifier(0.3F)
+                                .nutrition(4)
+                                .saturationModifier(0.3F)
                                 .build()), (c, p) -> {
                     DataIngredient items = DataIngredient.items(Items.MELON_SLICE);
                     p.food(items, RecipeCategory.FOOD, c, 0.35F);
@@ -205,7 +211,7 @@ public class ModItems {
                             DataIngredient.tag(WWItemTags.FUNGUS.get())
                     };
                     for (DataIngredient ingredient : ingredients) {
-                       p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
+                        p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
                     b.zh_cn("烤蘑菇");
@@ -284,6 +290,7 @@ public class ModItems {
                         .zh_cn("活根")
                         .zh_tw("活根")
                         .zh_hk("活根")
+                        .defaultModel()
                         .lang("Living Tuber")
                         .properties(p -> p
                                 .stacksTo(16)
@@ -323,7 +330,7 @@ public class ModItems {
                                 .build()
                         ), (c, p) -> {
 
-                    }, b -> {
+                }, b -> {
                     b.zh_cn("鹿排");
                     b.zh_tw("鹿排");
                     b.zh_hk("鹿排");
@@ -336,7 +343,7 @@ public class ModItems {
                         ), (c, p) -> {
                     DataIngredient venison = DataIngredient.items(VENISON.get());
                     p.food(venison, RecipeCategory.FOOD, c, 0.35F);
-                    }, b -> {
+                }, b -> {
                     b.zh_cn("熟鹿排");
                     b.zh_tw("熟鹿排");
                     b.zh_hk("熟鹿排");
@@ -361,7 +368,7 @@ public class ModItems {
                                 .build()), (c, p) -> {
                     DataIngredient batWing = DataIngredient.items(BAT_WING.get());
                     p.food(batWing, RecipeCategory.FOOD, c, 0.35F);
-                    }, b -> {
+                }, b -> {
                     b.zh_cn("熟蝙蝠翼");
                     b.zh_tw("熟蝙蝠翼");
                     b.zh_hk("熟蝙蝠翼");
@@ -506,7 +513,69 @@ public class ModItems {
                 });
             }//dough
             {
+                NETHERITE_APPLE_PIE = baseFood("netherite_apple_pie", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .nutrition(10)
+                                        .saturationModifier(1.2F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 3600, 0), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 140, 1), 1.0F)
+                                        .build()
+                        ), (c, p) -> {
 
+                }, b -> {
+                    b.zh_cn("下界合金苹果派");
+                    b.zh_tw("下界合金蘋果派");
+                    b.zh_hk("下界合金蘋果派");
+                });
+                ENCHANTED_NETHERITE_APPLE_PIE = parentFood("enchanted_netherite_apple_pie", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .nutrition(10)
+                                        .saturationModifier(1.2F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 3600, 0), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 600, 1), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 8400, 0), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 8400, 0), 1.0F)
+                                        .build()
+                        ), NETHERITE_APPLE_PIE, (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("附魔下界合金苹果派");
+                    b.zh_tw("附魔下界合金蘋果派");
+                    b.zh_hk("附魔下界合金蘋果派");
+                });
+                GOLDEN_APPLE_PIE = baseFood("golden_apple_pie", p -> p
+                        .food(new FoodProperties.Builder()
+                                .nutrition(8)
+                                .saturationModifier(1.2F)
+                                .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 3600, 0), 1.0F)
+                                .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 140, 1), 1.0F)
+                                .build()
+                        ), (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("金苹果派");
+                    b.zh_tw("金蘋果派");
+                    b.zh_hk("金蘋果派");
+                });
+                ENCHANTED_GOLDEN_APPLE_PIE = parentFood("enchanted_golden_apple_pie", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .nutrition(8)
+                                        .saturationModifier(1.2F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.ABSORPTION, 3600, 0), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.REGENERATION, 600, 1), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.FIRE_RESISTANCE, 8400, 0), 1.0F)
+                                        .effect(() -> new MobEffectInstance(MobEffects.DAMAGE_RESISTANCE, 8400, 0), 1.0F)
+                                        .build()
+                        ), GOLDEN_APPLE_PIE, (c, p) -> {
+
+                }, b -> {
+                    b.zh_cn("附魔金苹果派");
+                    b.zh_tw("附魔金蘋果派");
+                    b.zh_hk("附魔金蘋果派");
+                });
                 APPLE_PIE = baseFood("apple_pie", p -> p
                         .food(new FoodProperties.Builder()
                                 .nutrition(6)
@@ -552,7 +621,56 @@ public class ModItems {
                     b.zh_tw("漿果派");
                     b.zh_hk("漿果派");
                 });
-            }//(apple/berry) pie
+            }//((enchanted/)(golden/netherite)/)apple/berry)pie
+            {
+                COOKED_EGG = baseFood("cooked_egg", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .nutrition(5)
+                                        .saturationModifier(.6F)
+                                        .build()
+                        ), (c, p) -> {
+                    DataIngredient egg = DataIngredient.tag(Tags.Items.EGGS);
+                    p.food(egg, RecipeCategory.FOOD, c, .35F);
+                }, b -> {
+                    b.zh_cn("煎蛋");
+                    b.zh_tw("煎蛋");
+                    b.zh_hk("煎蛋");
+                });
+            }//cooked_egg
+            {
+                CHEESE = REGISTRATE
+                        .item("cheese", CheeseItem::new)
+                        .zh_cn("奶酪")
+                        .zh_tw("乳酪")
+                        .zh_hk("乳酪")
+                        .defaultLang()
+                        .defaultModel()
+                        .tab(ModTabs.FOOD_AND_DRINK.key())
+                        .properties(p -> p
+                                .stacksTo(16)
+                                .food(
+                                        new FoodProperties.Builder()
+                                                .nutrition(3)
+                                                .saturationModifier(1.2F)
+                                                .build()
+                                ))
+                        .recipe((c, p) -> {
+                            DataIngredient brown = DataIngredient.items(Items.BROWN_MUSHROOM);
+                            DataIngredient sugar = DataIngredient.items(Items.SUGAR);
+                            DataIngredient milk = DataIngredient.items(Items.MILK_BUCKET);
+                            ShapelessRecipeBuilder
+                                    .shapeless(RecipeCategory.FOOD, c.get())
+                                    .unlockedBy("has_" + p.safeName(brown), brown.getCriterion(p))
+                                    .unlockedBy("has_" + p.safeName(sugar), sugar.getCriterion(p))
+                                    .unlockedBy("has_" + p.safeName(milk), milk.getCriterion(p))
+                                    .requires(brown.toVanilla())
+                                    .requires(sugar.toVanilla())
+                                    .requires(milk.toVanilla())
+                                    .save(p, p.safeId(c.get()));
+                        })
+                        .register();
+            }
         }
     }
 
