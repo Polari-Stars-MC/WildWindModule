@@ -28,7 +28,7 @@ public class CheeseItem extends Item {
         activeEffects.stream().filter(instance -> !instance.getEffect().value().isBeneficial())
                 .forEach(instance -> {
                     livingEntity.removeEffect(instance.getEffect());
-                });
+                });// remove debuff
         return stack;
     }
 }

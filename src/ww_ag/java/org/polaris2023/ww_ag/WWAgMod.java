@@ -21,6 +21,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
@@ -50,6 +51,7 @@ public class WWAgMod {
         return ResourceLocation.fromNamespaceAndPath("c", path);
     }
     public WWAgMod() {
+        NeoForgeMod.enableMilkFluid();
         ModTabs.register();
         ModBlocks.register();
         ModItems.register();

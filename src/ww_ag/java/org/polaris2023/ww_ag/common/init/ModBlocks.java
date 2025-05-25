@@ -3,19 +3,24 @@ package org.polaris2023.ww_ag.common.init;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.DropExperienceBlock;
+import net.minecraft.world.level.block.LiquidBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
+import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.neoforge.common.NeoForgeMod;
+import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
@@ -29,6 +34,7 @@ public class ModBlocks {
     public static final BlockEntry<DropExperienceBlock> SALT_ORE;
     public static final BlockEntry<DropExperienceBlock> DEEPSLATE_SALT_ORE;
     public static final BlockEntry<Block> SALT_BLOCK;
+    public static final BlockEntry<LiquidBlock> MILK;
 
     static {
         {
@@ -102,6 +108,21 @@ public class ModBlocks {
                     .tab(ModTabs.BUILDING_BLOCK.key())
                     .build()
                     .defaultLoot()
+                    .register();
+        }
+        {
+            MILK = REGISTRATE
+                    .block("milk", properties ->
+                            new LiquidBlock(
+                                    (FlowingFluid) NeoForgeMod.MILK.get(),
+                                    properties
+                                            .mapColor(MapColor.SNOW)
+                            ))
+                    .blockstate((c, p) -> {
+                        p.simpleBlock(c.getEntry(), p.models().getBuilder("milk")
+                                .texture("particle", ResourceLocation.fromNamespaceAndPath("neoforge", "block/milk_still")));
+                    })
+                    .tag(WWBlockTags.MILK.get())
                     .register();
         }
     }
