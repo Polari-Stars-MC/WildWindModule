@@ -61,7 +61,8 @@ public class ModItems {
             NETHERITE_APPLE, ENCHANTED_NETHERITE_APPLE,
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
-            CALAMARI, TROUT, PIRANHA, DOUGH;
+            CALAMARI, TROUT, PIRANHA, DOUGH,
+            FAILED_CUISINE, CHARRED_CUISINE;
 
     static {
         {
@@ -670,7 +671,29 @@ public class ModItems {
                                     .save(p, p.safeId(c.get()));
                         })
                         .register();
-            }
+            }//cheese
+            {
+                FAILED_CUISINE = baseFood("failed_cuisine", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .build()), (c, p) -> {
+
+                }, b-> {
+                    b.zh_cn("失败料理");
+                    b.zh_cn("失敗料理");
+                    b.zh_cn("失敗料理");
+                });
+                CHARRED_CUISINE = baseFood("charred_cuisine", p -> p
+                        .food(
+                                new FoodProperties.Builder()
+                                        .build()), (c, p) -> {
+
+                }, b-> {
+                    b.zh_cn("焦糊料理");
+                    b.zh_cn("焦糊料理");
+                    b.zh_cn("焦糊料理");
+                });
+            }//(charred/failed)cuisine
         }
     }
 
