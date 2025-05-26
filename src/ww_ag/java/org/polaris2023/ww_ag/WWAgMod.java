@@ -25,10 +25,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.polaris2023.ww_ag.common.init.ModBlocks;
-import org.polaris2023.ww_ag.common.init.ModItems;
-import org.polaris2023.ww_ag.common.init.ModSounds;
-import org.polaris2023.ww_ag.common.init.ModTabs;
+import org.polaris2023.ww_ag.common.init.*;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
@@ -56,6 +53,7 @@ public class WWAgMod {
         ModBlocks.register();
         ModItems.register();
         ModSounds.register();
+        ModFluids.register();
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, blockIntrinsic -> {
             IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> fungus = blockIntrinsic.addTag(WWBlockTags.FUNGUS.get());
             fungus.add(Blocks.CRIMSON_FUNGUS);
