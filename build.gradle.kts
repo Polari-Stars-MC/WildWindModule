@@ -1,6 +1,7 @@
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
+import dev.vfyjxf.gradle.accessor.ModAccessTransformExtension
 import org.polaris2023.mcmeta.extension.McMetaSettings
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeDependency
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeToml
@@ -27,6 +28,7 @@ plugins {
     base
     alias(libs.plugins.mod.dev.gradle)
     id("io.github.jeadyx.sonatype-uploader").version("2.8")
+    id("dev.vfyjxf.modaccessor") version "1.1.1"
 }
 val mcVersion: String by rootProject
 val mcVersionRange: String by rootProject
@@ -81,14 +83,14 @@ val lib = libs
 
 subprojects {
     apply(plugin = lib.plugins.mod.dev.gradle.get().pluginId)
-
+    apply(plugin = "dev.vfyjxf.modaccessor")
 	
     val modId: String by project
     val modName: String by project
     val modVersion: String by project
     val modClassPrefix: String by project
     val generatedDir = file("build/generated/data/")
-    val resourcesDir = rootProject.file("src/${modId}/resources/")
+    val resourcesDir = rootProject.file("src/${modId}/resources")
     val javaDir = rootProject.file("src/${modId}/java/")
     resourcesDir.mkdirs()
     javaDir.mkdirs()
@@ -239,6 +241,13 @@ subprojects {
 
     if (atFile.readBytes().isNotEmpty()) {
         neoForge.setAccessTransformers(atFile)
+    }
+
+    modAccessor {
+        createTransformConfiguration(configurations.getAt("compileOnly"))
+        if (atFile.readBytes().isNotEmpty()) {
+            accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
+        }
     }
     tasks.jar {
         exclude(".cache")
