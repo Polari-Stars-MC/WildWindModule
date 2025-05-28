@@ -2,6 +2,7 @@ package org.polaris2023.ww_ag.common.init;
 
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -16,14 +17,18 @@ import net.minecraft.data.recipes.ShapelessRecipeBuilder;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.Items;
-import net.minecraft.world.item.Rarity;
+import net.minecraft.world.item.*;
+import net.minecraft.world.item.alchemy.Potion;
+import net.minecraft.world.item.alchemy.PotionContents;
+import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.items.CheeseItem;
 import org.polaris2023.ww_ag.common.items.LivingTuberItem;
 import org.polaris2023.ww_ag.utils.ILanguage;
+
+import java.util.List;
+import java.util.Optional;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -63,8 +68,55 @@ public class ModItems {
             VENISON, BAT_WING, FROG_LEG,
             CALAMARI, TROUT, PIRANHA, DOUGH,
             FAILED_CUISINE, CHARRED_CUISINE;
+    public static final ItemEntry<Item> LINGERING_MILK_BOTTLE;
+    public static final ItemEntry<Item>
+            MILK_BOTTLE,
+            SPLASH_MILK_BOTTLE
+            ;
 
     static {
+        {
+            MILK_BOTTLE = b(
+                    REGISTRATE.item("milk_bottle", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("奶瓶");
+                        b.ww_ag$zh_tw("奶瓶");
+                        b.ww_ag$zh_hk("奶瓶");
+                    }
+            )
+                    .lang("Milk bottle")
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+            SPLASH_MILK_BOTTLE = b(
+                    REGISTRATE.item("splash_milk_bottle", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("喷溅型奶瓶");
+                        b.ww_ag$zh_tw("噴濺型奶瓶");
+                        b.ww_ag$zh_hk("噴濺型奶瓶");
+                    }
+            )
+                    .lang("Splash milk bottle")
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+            LINGERING_MILK_BOTTLE = b(
+                    REGISTRATE.item("lingering_milk_bottle", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("滞留型奶瓶");
+                        b.ww_ag$zh_tw("滯留型奶瓶");
+                        b.ww_ag$zh_hk("滯留型奶瓶");
+                    }
+            )
+                    .lang("Lingering milk bottle")
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+
+        }
         {
             SALT = REGISTRATE
                     .item("salt", Item::new)
