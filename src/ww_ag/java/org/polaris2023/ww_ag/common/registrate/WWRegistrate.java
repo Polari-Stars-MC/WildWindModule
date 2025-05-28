@@ -30,46 +30,6 @@ public class WWRegistrate extends L2Registrate {
         super(modid);
     }
 
-    @Override
-    public <T extends Block, P> BlockBuilder<T, P> block(P parent, String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return (BlockBuilder<T, P>) entry(name, c -> BlockBuilder.create(this, parent, name, c, factory));
-    }
-
-    @Override
-    public <T extends Block> BlockBuilder<T, L2Registrate> block(NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return block(self(), factory);
-    }
-
-    @Override
-    public <T extends Block, P> BlockBuilder<T, P> block(P parent, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return block(parent, currentName(), factory);
-    }
-
-    @Override
-    public <T extends Block> BlockBuilder<T, L2Registrate> block(String name, NonNullFunction<BlockBehaviour.Properties, T> factory) {
-        return block(self(), name, factory);
-    }
-
-    @Override
-    public <T extends Item> ItemBuilder<T, L2Registrate> item(NonNullFunction<Item.Properties, T> factory) {
-        return item(self(), factory);
-    }
-
-    @Override
-    public <T extends Item> ItemBuilder<T, L2Registrate> item(String name, NonNullFunction<Item.Properties, T> factory) {
-        return item(self(), name, factory);
-    }
-
-    @Override
-    public <T extends Item, P> ItemBuilder<T, P> item(P parent, NonNullFunction<Item.Properties, T> factory) {
-        return item(parent, currentName(), factory);
-    }
-
-    @Override
-    public <T extends Item, P> ItemBuilder<T, P> item(P parent, String name, NonNullFunction<Item.Properties, T> factory) {
-        return (ItemBuilder<T, P>) entry(name, c -> ItemBuilder.create(this, parent, name, c, factory));
-    }
-
     public SoundBuilder<SoundEvent, L2Registrate> fixRangeSound(String name, float range) {
         return entry(name, callback -> SoundBuilder.create(this, self(), name, callback, () -> SoundEvent.createFixedRangeEvent(loc(name), range)));
     }

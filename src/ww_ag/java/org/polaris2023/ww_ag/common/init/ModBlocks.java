@@ -1,6 +1,9 @@
 package org.polaris2023.ww_ag.common.init;
 
+import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -20,9 +23,9 @@ import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.NeoForgeMod;
-import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
+import org.polaris2023.ww_ag.utils.ILanguage;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -38,11 +41,16 @@ public class ModBlocks {
 
     static {
         {
-            SALT_ORE = REGISTRATE
-                    .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
-                    .zh_cn("盐矿石")
-                    .zh_tw("鹽礦石")
-                    .lang("Salt ore")
+            SALT_ORE = b(
+                    REGISTRATE
+                            .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p)),
+                    b -> {
+                        b.ww_ag$zh_cn("盐矿石");
+                                b.ww_ag$zh_tw("鹽礦石");
+                                b.ww_ag$zh_hk("鹽礦石")
+                                .lang("Salt ore");
+                    }
+            )
                     .properties(properties -> properties
                             .mapColor(MapColor.STONE)
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -65,11 +73,17 @@ public class ModBlocks {
                     .register();
         }
         {
-            DEEPSLATE_SALT_ORE = REGISTRATE
-                    .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
-                    .zh_cn("深层盐矿石")
-                    .zh_tw("深層鹽礦石")
-                    .lang("Deepslate salt ore")
+            DEEPSLATE_SALT_ORE = b(
+                    REGISTRATE
+                            .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p)),
+                    b -> {
+                        b.ww_ag$zh_cn("深层盐矿石z");
+                                b.ww_ag$zh_hk("深層鹽礦石");
+
+                                b.ww_ag$zh_tw("深層鹽礦石")
+                                .lang("Deepslate salt ore");
+                    }
+            )
                     .properties(p -> p
                             .requiresCorrectToolForDrops()
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -93,11 +107,16 @@ public class ModBlocks {
                     .register();
         }
         {
-            SALT_BLOCK = REGISTRATE
-                    .block("salt_block", Block::new)
-                    .zh_cn("盐块")
-                    .zh_tw("鹽塊")
-                    .lang("Salt block")
+            SALT_BLOCK = b(
+                    REGISTRATE
+                            .block("salt_block", Block::new),
+                    b -> {
+                        b.ww_ag$zh_cn("盐块");
+                        b.ww_ag$zh_tw("鹽塊");
+                        b.ww_ag$zh_hk("鹽塊")
+                                .lang("Salt block");
+                    }
+            )
                     .properties(properties -> properties
                             .strength(3F)
                             .requiresCorrectToolForDrops()
@@ -125,6 +144,13 @@ public class ModBlocks {
                     .tag(WWBlockTags.MILK.get())
                     .register();
         }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Block> BlockBuilder<T, L2Registrate> b(BlockBuilder<T, L2Registrate> builder,
+                                                                    NonNullConsumer<ILanguage<Block, T, L2Registrate, BlockBuilder<T, L2Registrate>>> b) {
+        b.accept((ILanguage<Block, T, L2Registrate, BlockBuilder<T, L2Registrate>>) builder);
+        return builder;
     }
 
     public static void register() {}

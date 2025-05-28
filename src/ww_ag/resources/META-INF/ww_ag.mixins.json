@@ -4,6 +4,8 @@
   "compatibilityLevel": "JAVA_21",
   "refmap": "ww_ag.remap.json",
   "mixins": [
+    "BlockBuilderMixin",
+    "ItemBuilderMixin",
     "MilkMixinInject"
   ],
   "client": [],

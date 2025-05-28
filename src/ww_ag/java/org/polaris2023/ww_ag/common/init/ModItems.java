@@ -1,10 +1,12 @@
 package org.polaris2023.ww_ag.common.init;
 
+import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.core.component.DataComponents;
@@ -21,9 +23,7 @@ import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.items.CheeseItem;
 import org.polaris2023.ww_ag.common.items.LivingTuberItem;
-import org.polaris2023.ww_ag.common.registrate.build.ItemBuilder;
-
-import java.util.function.Consumer;
+import org.polaris2023.ww_ag.utils.ILanguage;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -81,11 +81,13 @@ public class ModItems {
                     .register();
         }//salt
         {
-            CANDY = REGISTRATE
-                    .item("candy", Item::new)
-                    .zh_cn("糖果")
-                    .zh_tw("糖果")
-                    .zh_hk("糖果")
+            CANDY = b(REGISTRATE
+                    .item("candy", Item::new),
+                    b -> {
+                b.ww_ag$zh_cn("糖果");
+                b.ww_ag$zh_tw("糖果");
+                b.ww_ag$zh_hk("糖果");
+                    })
                     .lang("Candy")
                     .properties(properties -> properties
                             .stacksTo(16))
@@ -128,9 +130,9 @@ public class ModItems {
                     DataIngredient items = DataIngredient.items(Items.APPLE);
                     p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤苹果");
-                    b.zh_tw("烤蘋果");
-                    b.zh_hk("烤蘋果");
+                    b.ww_ag$zh_tw("烤苹果");
+                    b.ww_ag$zh_tw("烤蘋果");
+                    b.ww_ag$zh_hk("烤蘋果");
                 });
             }//Baked apple
             {
@@ -142,9 +144,9 @@ public class ModItems {
                                 .build()), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("下界合金苹果");
-                    b.zh_tw("下界合金蘋果");
-                    b.zh_hk("下界合金蘋果");
+                    b.ww_ag$zh_cn("下界合金苹果");
+                    b.ww_ag$zh_tw("下界合金蘋果");
+                    b.ww_ag$zh_hk("下界合金蘋果");
                 });
             }//netherite apple
             {
@@ -157,9 +159,9 @@ public class ModItems {
                                 .build()), NETHERITE_APPLE, (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("附魔下界合金苹果");
-                    b.zh_tw("附魔下界合金蘋果");
-                    b.zh_hk("附魔下界合金蘋果");
+                    b.ww_ag$zh_cn("附魔下界合金苹果");
+                    b.ww_ag$zh_hk("附魔下界合金蘋果");
+                    b.ww_ag$zh_hk("附魔下界合金蘋果");
                 });
             }//enchanted netherite apple
             {
@@ -171,9 +173,9 @@ public class ModItems {
                     DataIngredient items = DataIngredient.items(Items.MELON_SLICE);
                     p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤西瓜片");
-                    b.zh_tw("烤西瓜片");
-                    b.zh_hk("烤西瓜片");
+                    b.ww_ag$zh_cn("烤西瓜片");
+                    b.ww_ag$zh_tw("烤西瓜片");
+                    b.ww_ag$zh_hk("烤西瓜片");
                 });
             }//baked melon slice
             {
@@ -184,9 +186,9 @@ public class ModItems {
                                 .build()), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("南瓜片");
-                    b.zh_tw("南瓜片");
-                    b.zh_hk("南瓜片");
+                    b.ww_ag$zh_cn("南瓜片");
+                    b.ww_ag$zh_tw("南瓜片");
+                    b.ww_ag$zh_hk("南瓜片");
                 });
                 BAKED_PUMPKIN_SLICE = baseFood("baked_pumpkin_slice", p -> p
                         .food(new FoodProperties.Builder()
@@ -196,9 +198,9 @@ public class ModItems {
                     DataIngredient items = DataIngredient.items(ModItems.PUMPKIN_SLICE.get());
                     p.food(items, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤南瓜片");
-                    b.zh_tw("烤南瓜片");
-                    b.zh_hk("烤南瓜片");
+                    b.ww_ag$zh_cn("烤南瓜片");
+                    b.ww_ag$zh_tw("烤南瓜片");
+                    b.ww_ag$zh_hk("烤南瓜片");
                 });
             }//(baked/) pumpkin slice
             {
@@ -215,9 +217,9 @@ public class ModItems {
                         p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
-                    b.zh_cn("烤蘑菇");
-                    b.zh_tw("烤蘑菇");
-                    b.zh_hk("烤蘑菇");
+                    b.ww_ag$zh_cn("烤蘑菇");
+                    b.ww_ag$zh_tw("烤蘑菇");
+                    b.ww_ag$zh_hk("烤蘑菇");
                 });
             }//baked mushroom
             {
@@ -238,9 +240,9 @@ public class ModItems {
                         p.food(ingredient, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
-                    b.zh_cn("烤种子");
-                    b.zh_tw("烤種子");
-                    b.zh_hk("烤種子");
+                    b.ww_ag$zh_cn("烤种子");
+                    b.ww_ag$zh_tw("烤種子");
+                    b.ww_ag$zh_hk("烤種子");
                 });
             }//baked seeds
             {
@@ -252,9 +254,9 @@ public class ModItems {
                     DataIngredient berry = DataIngredient.tag(Tags.Items.FOODS_BERRY);
                     p.food(berry, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤浆果");
-                    b.zh_tw("烤漿果");
-                    b.zh_hk("烤漿果");
+                    b.ww_ag$zh_cn("烤浆果");
+                    b.ww_ag$zh_tw("烤漿果");
+                    b.ww_ag$zh_hk("烤漿果");
                 });
             }//baked berries
             {
@@ -266,9 +268,9 @@ public class ModItems {
                     DataIngredient carrot = DataIngredient.tag(Tags.Items.CROPS_CARROT);
                     p.food(carrot, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤胡萝卜");
-                    b.zh_tw("烤胡蘿蔔");
-                    b.zh_hk("烤胡蘿蔔");
+                    b.ww_ag$zh_cn("烤胡萝卜");
+                    b.ww_ag$zh_tw("烤胡蘿蔔");
+                    b.ww_ag$zh_hk("烤胡蘿蔔");
                 });
             }//baked carrot
             {
@@ -280,17 +282,21 @@ public class ModItems {
                     DataIngredient beetroot = DataIngredient.tag(Tags.Items.CROPS_BEETROOT);
                     p.food(beetroot, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤甜菜");
-                    b.zh_tw("烤甜菜");
-                    b.zh_hk("烤甜菜");
+                    b.ww_ag$zh_cn("烤甜菜");
+                    b.ww_ag$zh_tw("烤甜菜");
+                    b.ww_ag$zh_hk("烤甜菜");
                 });
             }//baked beetroot
             {
-                LIVING_TUBER = REGISTRATE
-                        .item("living_tuber", LivingTuberItem::new)
-                        .zh_cn("活根")
-                        .zh_tw("活根")
-                        .zh_hk("活根")
+                LIVING_TUBER = b(
+                        REGISTRATE
+                                .item("living_tuber", LivingTuberItem::new),
+                        b -> {
+                            b.ww_ag$zh_cn("活根");
+                            b.ww_ag$zh_tw("活根");
+                            b.ww_ag$zh_hk("活根");
+                        }
+                )
                         .defaultModel()
                         .lang("Living Tuber")
                         .properties(p -> p
@@ -317,9 +323,9 @@ public class ModItems {
                     DataIngredient data = DataIngredient.items(LIVING_TUBER.get());
                     p.food(data, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("烤活根");
-                    b.zh_tw("烤活根");
-                    b.zh_hk("烤活根");
+                    b.ww_ag$zh_cn("烤活根");
+                    b.ww_ag$zh_tw("烤活根");
+                    b.ww_ag$zh_hk("烤活根");
                 });
             }//(baked/)living tuber
             {
@@ -332,9 +338,9 @@ public class ModItems {
                         ), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("鹿排");
-                    b.zh_tw("鹿排");
-                    b.zh_hk("鹿排");
+                    b.ww_ag$zh_cn("鹿排");
+                    b.ww_ag$zh_tw("鹿排");
+                    b.ww_ag$zh_hk("鹿排");
                 });
                 COOKED_VENISON = baseFood("cooked_venison", p -> p
                         .food(new FoodProperties.Builder()
@@ -345,9 +351,9 @@ public class ModItems {
                     DataIngredient venison = DataIngredient.items(VENISON.get());
                     p.food(venison, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("熟鹿排");
-                    b.zh_tw("熟鹿排");
-                    b.zh_hk("熟鹿排");
+                    b.ww_ag$zh_cn("熟鹿排");
+                    b.ww_ag$zh_tw("熟鹿排");
+                    b.ww_ag$zh_hk("熟鹿排");
                 });
             }//(baked/)venison
             {
@@ -358,9 +364,9 @@ public class ModItems {
                                 .effect(() -> new MobEffectInstance(MobEffects.HUNGER, 600, 0), .3F)
                                 .build()), (c, p) -> {
                 }, b -> {
-                    b.zh_cn("生蝙蝠翼");
-                    b.zh_tw("生蝙蝠翼");
-                    b.zh_hk("生蝙蝠翼");
+                    b.ww_ag$zh_cn("生蝙蝠翼");
+                    b.ww_ag$zh_tw("生蝙蝠翼");
+                    b.ww_ag$zh_hk("生蝙蝠翼");
                 });
                 COOKED_BAT_WING = baseFood("cooked_bat_wing", p -> p
                         .food(new FoodProperties.Builder()
@@ -370,9 +376,9 @@ public class ModItems {
                     DataIngredient batWing = DataIngredient.items(BAT_WING.get());
                     p.food(batWing, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("熟蝙蝠翼");
-                    b.zh_tw("熟蝙蝠翼");
-                    b.zh_hk("熟蝙蝠翼");
+                    b.ww_ag$zh_cn("熟蝙蝠翼");
+                    b.ww_ag$zh_tw("熟蝙蝠翼");
+                    b.ww_ag$zh_hk("熟蝙蝠翼");
                 });
             }//(cooked/)bat wing
             {
@@ -384,9 +390,9 @@ public class ModItems {
                                 .build()), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("生蛙腿");
-                    b.zh_tw("生蛙腿");
-                    b.zh_hk("生蛙腿");
+                    b.ww_ag$zh_cn("生蛙腿");
+                    b.ww_ag$zh_tw("生蛙腿");
+                    b.ww_ag$zh_hk("生蛙腿");
                 });
                 COOKED_FROG_LEG = baseFood("cooked_frog_leg", p -> p
                         .food(new FoodProperties.Builder()
@@ -396,9 +402,9 @@ public class ModItems {
                     DataIngredient frogLeg = DataIngredient.items(FROG_LEG.get());
                     p.food(frogLeg, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("熟蛙腿");
-                    b.zh_tw("熟蛙腿");
-                    b.zh_hk("熟蛙腿");
+                    b.ww_ag$zh_cn("熟蛙腿");
+                    b.ww_ag$zh_tw("熟蛙腿");
+                    b.ww_ag$zh_hk("熟蛙腿");
                 });
 
             }//(cooked/)frog.leg
@@ -410,9 +416,9 @@ public class ModItems {
                                 .build()), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("生鱿鱼须");
-                    b.zh_tw("生魷魚須");
-                    b.zh_hk("生魷魚須");
+                    b.ww_ag$zh_cn("生鱿鱼须");
+                    b.ww_ag$zh_tw("生魷魚須");
+                    b.ww_ag$zh_hk("生魷魚須");
                 });
                 GLOWING_CALAMARI = baseFood("glowing_calamari", p -> p
                         .food(new FoodProperties.Builder()
@@ -421,9 +427,9 @@ public class ModItems {
                                 .build()), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("发光鱿鱼须");
-                    b.zh_tw("發光魷魚須");
-                    b.zh_hk("發光魷魚須");
+                    b.ww_ag$zh_cn("发光鱿鱼须");
+                    b.ww_ag$zh_tw("發光魷魚須");
+                    b.ww_ag$zh_hk("發光魷魚須");
                 });
                 COOKED_CALAMARI = baseFood("cooked_calamari", p -> p
                         .food(new FoodProperties.Builder()
@@ -438,9 +444,9 @@ public class ModItems {
                         p.food(item, RecipeCategory.FOOD, c, 0.35F);
                     }
                 }, b -> {
-                    b.zh_cn("熟鱿鱼须");
-                    b.zh_cn("熟魷魚須");
-                    b.zh_cn("熟魷魚須");
+                    b.ww_ag$zh_cn("熟鱿鱼须");
+                    b.ww_ag$zh_cn("熟魷魚須");
+                    b.ww_ag$zh_cn("熟魷魚須");
                 });
 
             }//(cooked/glowing/)calamari
@@ -449,18 +455,18 @@ public class ModItems {
                         .food(TROUT_FOOD), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("生鳟鱼");
-                    b.zh_tw("生鱒魚");
-                    b.zh_hk("生鱒魚");
+                    b.ww_ag$zh_cn("生鳟鱼");
+                    b.ww_ag$zh_tw("生鱒魚");
+                    b.ww_ag$zh_hk("生鱒魚");
                 });
                 COOKED_TROUT = baseFood("cooked_trout", p -> p
                         .food(COOKED_TROUT_FOOD), (c, p) -> {
                     DataIngredient trout = DataIngredient.items(TROUT.get());
                     p.food(trout, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("熟鳟鱼");
-                    b.zh_tw("熟鱒魚");
-                    b.zh_hk("熟鱒魚");
+                    b.ww_ag$zh_cn("熟鳟鱼");
+                    b.ww_ag$zh_tw("熟鱒魚");
+                    b.ww_ag$zh_hk("熟鱒魚");
                 });
 
             }//(cooked/)trout
@@ -469,18 +475,18 @@ public class ModItems {
                         .food(TROUT_FOOD), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("生食人鱼");
-                    b.zh_tw("生食人魚");
-                    b.zh_hk("生食人魚");
+                    b.ww_ag$zh_cn("生食人鱼");
+                    b.ww_ag$zh_tw("生食人魚");
+                    b.ww_ag$zh_hk("生食人魚");
                 });
                 COOKED_PIRANHA = baseFood("cooked_piranha", p -> p
                         .food(COOKED_TROUT_FOOD), (c, p) -> {
                     DataIngredient piranha = DataIngredient.items(PIRANHA.get());
                     p.food(piranha, RecipeCategory.FOOD, c, 0.35F);
                 }, b -> {
-                    b.zh_cn("熟食人鱼");
-                    b.zh_tw("熟食人魚");
-                    b.zh_hk("熟食人魚");
+                    b.ww_ag$zh_cn("熟食人鱼");
+                    b.ww_ag$zh_tw("熟食人魚");
+                    b.ww_ag$zh_hk("熟食人魚");
                 });
 
             }//(cooked/)piranha
@@ -525,9 +531,9 @@ public class ModItems {
                         ), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("下界合金苹果派");
-                    b.zh_tw("下界合金蘋果派");
-                    b.zh_hk("下界合金蘋果派");
+                    b.ww_ag$zh_cn("下界合金苹果派");
+                    b.ww_ag$zh_tw("下界合金蘋果派");
+                    b.ww_ag$zh_hk("下界合金蘋果派");
                 });
                 ENCHANTED_NETHERITE_APPLE_PIE = parentFood("enchanted_netherite_apple_pie", p -> p
                         .food(
@@ -542,9 +548,9 @@ public class ModItems {
                         ), NETHERITE_APPLE_PIE, (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("附魔下界合金苹果派");
-                    b.zh_tw("附魔下界合金蘋果派");
-                    b.zh_hk("附魔下界合金蘋果派");
+                    b.ww_ag$zh_cn("附魔下界合金苹果派");
+                    b.ww_ag$zh_tw("附魔下界合金蘋果派");
+                    b.ww_ag$zh_hk("附魔下界合金蘋果派");
                 });
                 GOLDEN_APPLE_PIE = baseFood("golden_apple_pie", p -> p
                         .food(new FoodProperties.Builder()
@@ -556,9 +562,9 @@ public class ModItems {
                         ), (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("金苹果派");
-                    b.zh_tw("金蘋果派");
-                    b.zh_hk("金蘋果派");
+                    b.ww_ag$zh_cn("金苹果派");
+                    b.ww_ag$zh_tw("金蘋果派");
+                    b.ww_ag$zh_hk("金蘋果派");
                 });
                 ENCHANTED_GOLDEN_APPLE_PIE = parentFood("enchanted_golden_apple_pie", p -> p
                         .food(
@@ -573,9 +579,9 @@ public class ModItems {
                         ), GOLDEN_APPLE_PIE, (c, p) -> {
 
                 }, b -> {
-                    b.zh_cn("附魔金苹果派");
-                    b.zh_tw("附魔金蘋果派");
-                    b.zh_hk("附魔金蘋果派");
+                    b.ww_ag$zh_cn("附魔金苹果派");
+                    b.ww_ag$zh_tw("附魔金蘋果派");
+                    b.ww_ag$zh_hk("附魔金蘋果派");
                 });
                 APPLE_PIE = baseFood("apple_pie", p -> p
                         .food(new FoodProperties.Builder()
@@ -595,9 +601,9 @@ public class ModItems {
                             .requires(egg.toVanilla())
                             .save(p, p.safeId(c.get()));
                 }, b -> {
-                    b.zh_cn("苹果派");
-                    b.zh_tw("蘋果派");
-                    b.zh_hk("蘋果派");
+                    b.ww_ag$zh_cn("苹果派");
+                    b.ww_ag$zh_tw("蘋果派");
+                    b.ww_ag$zh_hk("蘋果派");
                 });
                 BEERY_PIE = baseFood("berry_pie", p -> p
                         .food(new FoodProperties.Builder()
@@ -618,9 +624,9 @@ public class ModItems {
                             .requires(egg.toVanilla())
                             .save(p, p.safeId(c.get()));
                 }, b -> {
-                    b.zh_cn("浆果派");
-                    b.zh_tw("漿果派");
-                    b.zh_hk("漿果派");
+                    b.ww_ag$zh_cn("浆果派");
+                    b.ww_ag$zh_tw("漿果派");
+                    b.ww_ag$zh_hk("漿果派");
                 });
             }//((enchanted/)(golden/netherite)/)apple/berry)pie
             {
@@ -634,17 +640,23 @@ public class ModItems {
                     DataIngredient egg = DataIngredient.tag(Tags.Items.EGGS);
                     p.food(egg, RecipeCategory.FOOD, c, .35F);
                 }, b -> {
-                    b.zh_cn("煎蛋");
-                    b.zh_tw("煎蛋");
-                    b.zh_hk("煎蛋");
+                    b.ww_ag$zh_cn("煎蛋");
+                    b.ww_ag$zh_tw("煎蛋");
+                    b.ww_ag$zh_hk("煎蛋");
                 });
             }//cooked_egg
             {
-                CHEESE = REGISTRATE
-                        .item("cheese", CheeseItem::new)
-                        .zh_cn("奶酪")
-                        .zh_tw("乳酪")
-                        .zh_hk("乳酪")
+
+                CHEESE = b(
+                        REGISTRATE
+                                .item("cheese", CheeseItem::new),
+                        b -> {
+                            b.ww_ag$zh_cn("奶酪");
+                            b.ww_ag$zh_tw("乳酪");
+                            b.ww_ag$zh_hk("乳酪");
+                        }
+                )
+
                         .defaultLang()
                         .defaultModel()
                         .tab(ModTabs.FOOD_AND_DRINK.key())
@@ -679,9 +691,9 @@ public class ModItems {
                                         .build()), (c, p) -> {
 
                 }, b-> {
-                    b.zh_cn("失败料理");
-                    b.zh_cn("失敗料理");
-                    b.zh_cn("失敗料理");
+                    b.ww_ag$zh_cn("失败料理");
+                    b.ww_ag$zh_cn("失敗料理");
+                    b.ww_ag$zh_cn("失敗料理");
                 });
                 CHARRED_CUISINE = baseFood("charred_cuisine", p -> p
                         .food(
@@ -689,18 +701,22 @@ public class ModItems {
                                         .build()), (c, p) -> {
 
                 }, b-> {
-                    b.zh_cn("焦糊料理");
-                    b.zh_cn("焦糊料理");
-                    b.zh_cn("焦糊料理");
+                    b.ww_ag$zh_cn("焦糊料理");
+                    b.ww_ag$zh_cn("焦糊料理");
+                    b.ww_ag$zh_cn("焦糊料理");
                 });
             }//(charred/failed)cuisine
         }
     }
 
-    public static ItemEntry<Item> baseFood(String name, NonNullUnaryOperator<Item.Properties> properties, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe, Consumer<ItemBuilder<Item, L2Registrate>> consumer) {
+    @SuppressWarnings("unchecked")
+    public static ItemEntry<Item> baseFood(String name,
+                                           NonNullUnaryOperator<Item.Properties> properties,
+                                           NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
+                                           NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> consumer) {
         ItemBuilder<Item, L2Registrate> item = REGISTRATE
                 .item(name, Item::new);
-        consumer.accept(item);
+        consumer.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
         return item
                 .defaultModel()
                 .recipe(recipe)
@@ -709,9 +725,16 @@ public class ModItems {
                 .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
-    public static ItemEntry<Item> parentVanillaFood(String name, NonNullUnaryOperator<Item.Properties> properties, Item vanilla, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe) {
-        return REGISTRATE
-                .item(name, Item::new)
+    @SuppressWarnings("unchecked")
+    public static ItemEntry<Item> parentVanillaFood(String name,
+                                                    NonNullUnaryOperator<Item.Properties> properties,
+                                                    Item vanilla,
+                                                    NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
+                                                    NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> b) {
+        var item = REGISTRATE
+                .item(name, Item::new);
+        b.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
+        return item
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
@@ -719,10 +742,14 @@ public class ModItems {
                 .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
-    public static ItemEntry<Item> parentFood(String name, NonNullUnaryOperator<Item.Properties> properties, ItemEntry<?> entry, NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe, Consumer<ItemBuilder<Item, L2Registrate>> consumer) {
-        ItemBuilder<Item, L2Registrate> item = REGISTRATE
-                .item(name, Item::new);
-        consumer.accept(item);
+    @SuppressWarnings("unchecked")
+    public static ItemEntry<Item> parentFood(String name,
+                                             NonNullUnaryOperator<Item.Properties> properties,
+                                             ItemEntry<?> entry,
+                                             NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
+                                             NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> consumer) {
+        ItemBuilder<Item, L2Registrate> item = REGISTRATE.item(name, Item::new);
+        consumer.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
         return item
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/")))
                 .recipe(recipe)
@@ -730,6 +757,12 @@ public class ModItems {
                 .properties(properties)
                 .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T extends Item> ItemBuilder<T, L2Registrate> b(ItemBuilder<T, L2Registrate> builder, NonNullConsumer<ILanguage<Item, T, L2Registrate, ItemBuilder<T, L2Registrate>>> b) {
+        b.accept((ILanguage<Item, T, L2Registrate, ItemBuilder<T, L2Registrate>>) builder);
+        return builder;
     }
 
 
