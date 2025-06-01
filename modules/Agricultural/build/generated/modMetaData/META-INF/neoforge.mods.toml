@@ -11,6 +11,8 @@ This is Wild Wind: Agricultural
 '''
 authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
 logoFile="ww_ag.png"
+[[accessTransformers]]
+file="META-INF/accesstransformer.cfg"
 [[mixins]]
 config="META-INF/ww_ag.mixins.json"
 [[dependencies.ww_ag]]

@@ -7,7 +7,6 @@ import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import net.minecraft.world.level.storage.loot.parameters.LootContextParams;
 import org.polaris2023.ww_ag.datagen.WWDataRepeater;
 import org.polaris2023.ww_ag.datagen.WWGlobalLootModifier;
 import org.polaris2023.ww_ag.datagen.WWLanguage;

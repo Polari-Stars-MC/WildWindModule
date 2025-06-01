@@ -7,12 +7,17 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.RegistrySetBuilder;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.CachedOutput;
 import net.minecraft.data.DataProvider;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
+import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.neoforged.fml.LogicalSide;
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
+import net.neoforged.neoforge.common.world.BiomeModifier;
+import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -26,6 +31,7 @@ import java.util.concurrent.CompletableFuture;
  */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
+@SuppressWarnings("unused")
 public class WWDataRepeater implements DataProvider, RegistrateProvider {
     private final AbstractRegistrate<?> parent;
     private final PackOutput output;
@@ -51,6 +57,19 @@ public class WWDataRepeater implements DataProvider, RegistrateProvider {
     public <E,T extends Registry<E>> void add(ResourceKey<T> key, Lifecycle lifecycle, RegistrySetBuilder.RegistryBootstrap<E> bootstrap) {
         builder.add(key, lifecycle, bootstrap);
     }
+
+    public void configuredFeature(RegistrySetBuilder.RegistryBootstrap<ConfiguredFeature<?, ?>> bootstrap) {
+        add(Registries.CONFIGURED_FEATURE, bootstrap);
+    }
+
+    public void placedFeature(RegistrySetBuilder.RegistryBootstrap<PlacedFeature> bootstrap) {
+        add(Registries.PLACED_FEATURE, bootstrap);
+    }
+
+    public void biomeModifier(RegistrySetBuilder.RegistryBootstrap<BiomeModifier> bootstrap) {
+        add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, bootstrap);
+    }
+
 
 
     private void init() {

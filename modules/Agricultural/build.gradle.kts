@@ -1,9 +1,11 @@
 dependencies {
-    implementation(jarJar(
-        group="com.tterrag.registrate",
-        name="Registrate",
+    var registrate = jarJar(
+        group = "com.tterrag.registrate",
+        name = "Registrate",
         version = "[MC1.21-1.3.0+55,)"
-    ))
+    )
+    accessCompileOnly(registrate)
+    runtimeOnly(registrate)
     implementation(jarJar(
         group="dev.xkmc",
         name= "l2serial",

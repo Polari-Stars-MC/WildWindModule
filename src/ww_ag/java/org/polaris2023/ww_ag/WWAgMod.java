@@ -2,12 +2,15 @@ package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
 import net.minecraft.Util;
+import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
-import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -22,13 +25,13 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.neoforge.common.CreativeModeTabRegistry;
+import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
-import org.polaris2023.ww_ag.common.init.ModBlocks;
-import org.polaris2023.ww_ag.common.init.ModItems;
-import org.polaris2023.ww_ag.common.init.ModSounds;
-import org.polaris2023.ww_ag.common.init.ModTabs;
+import org.polaris2023.ww_ag.common.init.*;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
@@ -40,6 +43,7 @@ import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
 import java.util.Map;
 import java.util.Objects;
 
+@SuppressWarnings("CodeBlock2Expr")
 @Mod(WWAgMod.MODID)
 @EventBusSubscriber(modid = WWAgMod.MODID, bus = EventBusSubscriber.Bus.MOD)
 public class WWAgMod {
@@ -50,10 +54,13 @@ public class WWAgMod {
         return ResourceLocation.fromNamespaceAndPath("c", path);
     }
     public WWAgMod() {
+        NeoForgeMod.enableMilkFluid();
         ModTabs.register();
+        ModFluids.register();
         ModBlocks.register();
         ModItems.register();
         ModSounds.register();
+        ModPotions.register();
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, blockIntrinsic -> {
             IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> fungus = blockIntrinsic.addTag(WWBlockTags.FUNGUS.get());
             fungus.add(Blocks.CRIMSON_FUNGUS);
@@ -191,9 +198,14 @@ public class WWAgMod {
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {
-        var gen = event.getGenerator();
-        PackOutput output = gen.getPackOutput();
 
 
     }
+    @SubscribeEvent
+    public static void tab(BuildCreativeModeTabContentsEvent event) {
+        if (event.getTabKey().equals(ModTabs.INGREDIENTS.key())) {
+            event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, ModPotions.MILK));
+        }
+    }
+
 }

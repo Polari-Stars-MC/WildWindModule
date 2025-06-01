@@ -14,7 +14,8 @@ import java.util.function.Supplier;
  */
 public enum WWBlockTags implements Supplier<TagKey<Block>> {
     ORES$SALT,
-    FUNGUS
+    FUNGUS,
+    MILK
     ;
     private final TagKey<Block> tag;
 
