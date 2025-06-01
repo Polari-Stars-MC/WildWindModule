@@ -4,12 +4,17 @@ import com.tterrag.registrate.AbstractRegistrate;
 import com.tterrag.registrate.builders.AbstractBuilder;
 import com.tterrag.registrate.builders.BuilderCallback;
 import com.tterrag.registrate.builders.ItemBuilder;
+import com.tterrag.registrate.util.nullness.NonNullFunction;
 import net.minecraft.core.Registry;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Item;
+import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.utils.ILanguage;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
  * @author baka4n
@@ -18,6 +23,18 @@ import org.spongepowered.asm.mixin.Mixin;
 @Mixin(ItemBuilder.class)
 public abstract class ItemBuilderMixin<T extends Item, P> extends AbstractBuilder<Item, T ,P, ItemBuilder<T, P>> implements ILanguage<Item, T, P, ItemBuilder<T, P>> {
 
+    @Inject(method = "create", at = @At("RETURN"), cancellable = true)
+    private static <T extends Item, P> void create(AbstractRegistrate<?> owner,
+                               P parent,
+                               String name,
+                               BuilderCallback callback,
+                               NonNullFunction<Item.Properties, T> factory,
+                               CallbackInfoReturnable<ItemBuilder<T, P>> cir) {
+        cir.setReturnValue(cir.getReturnValue()
+                .model((c, p) -> {
+                    p.generated(c, WWAgMod.REGISTRATE.loc("itrm/item_placeholder"));
+                }));
+    }
 
     public ItemBuilderMixin(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback, ResourceKey<? extends Registry<Item>> registryKey) {
         super(owner, parent, name, callback, registryKey);

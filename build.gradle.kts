@@ -59,6 +59,10 @@ allprojects {
         maven("https://maven.ithundxr.dev/snapshots")
 //        maven("https://maven.creeperhost.net/")
     }
+    dependencies {
+        compileOnly("org.projectlombok:lombok:1.18.38")
+        annotationProcessor("org.projectlombok:lombok:1.18.38")
+    }
     configure<ForgeLikeToml> {
         loaderVersion = loaderVersionRange
         license = modLicense
@@ -72,8 +76,10 @@ allprojects {
         }
     }
 
+
     tasks.withType<JavaCompile>().configureEach {
         options.encoding = "UTF-8"
+        options.compilerArgs.add("-Xlint:-unchecked")
     }
 
 
