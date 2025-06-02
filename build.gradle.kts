@@ -1,7 +1,6 @@
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import dev.vfyjxf.gradle.accessor.ModAccessTransformExtension
 import org.polaris2023.mcmeta.extension.McMetaSettings
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeDependency
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeToml

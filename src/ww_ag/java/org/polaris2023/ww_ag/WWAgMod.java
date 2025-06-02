@@ -66,6 +66,7 @@ public class WWAgMod {
             fungus.add(Blocks.CRIMSON_FUNGUS);
             fungus.add(Blocks.WARPED_FUNGUS);
         });
+
         REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, itemIntrinsic -> {
             itemIntrinsic.copy(WWBlockTags.FUNGUS.get(), WWItemTags.FUNGUS.get());
         });

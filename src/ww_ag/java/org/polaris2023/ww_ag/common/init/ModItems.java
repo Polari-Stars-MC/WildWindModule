@@ -73,8 +73,38 @@ public class ModItems {
             MILK_BOTTLE,
             SPLASH_MILK_BOTTLE
             ;
+    public static final ItemEntry<Item>
+            SPLASH_HONEY_BOTTLE,
+            LINGERING_HONEY_BOTTLE;
 
     static {
+        {
+            SPLASH_HONEY_BOTTLE = b(
+                    REGISTRATE.item("splash_honey_bottle", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("喷溅型蜂蜜瓶");
+                        b.ww_ag$zh_tw("噴濺型蜂蜜瓶");
+                        b.ww_ag$zh_hk("噴濺型蜂蜜瓶");
+                    })
+                    .lang("Splash honey bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1))
+                    .register();
+            LINGERING_HONEY_BOTTLE = b(
+                    REGISTRATE.item("lingering_honey_bottle", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("滞留型蜂蜜瓶");
+                        b.ww_ag$zh_tw("滞留型蜂蜜瓶");
+                        b.ww_ag$zh_hk("滞留型蜂蜜瓶");
+                    })
+                    .lang("Lingering honey bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1))
+                    .register();
+
+        }//(splash/lingering)honey bottle
         {
             MILK_BOTTLE = b(
                     REGISTRATE.item("milk_bottle", Item::new),
@@ -85,6 +115,7 @@ public class ModItems {
                     }
             )
                     .lang("Milk bottle")
+                    .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
                     )
@@ -98,6 +129,7 @@ public class ModItems {
                     }
             )
                     .lang("Splash milk bottle")
+                    .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
                     )
@@ -111,12 +143,13 @@ public class ModItems {
                     }
             )
                     .lang("Lingering milk bottle")
+                    .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
                     )
                     .register();
 
-        }
+        }//(splash/lingering/)milk bottle
         {
             SALT = REGISTRATE
                     .item("salt", Item::new)
