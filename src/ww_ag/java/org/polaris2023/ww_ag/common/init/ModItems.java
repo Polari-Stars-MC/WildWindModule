@@ -14,6 +14,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.data.recipes.ShapelessRecipeBuilder;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
@@ -38,7 +39,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  */
 @SuppressWarnings("unused")
 public class ModItems {
-    public static final ItemEntry<Item> CANDY, SALT;
+    public static final ItemEntry<Item> CANDY, SALT, FISH_BONE;
     public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
     public static final ItemEntry<CheeseItem> CHEESE;
     public static final ItemEntry<Item>
@@ -67,7 +68,7 @@ public class ModItems {
             PUMPKIN_SLICE,
             VENISON, BAT_WING, FROG_LEG,
             CALAMARI, TROUT, PIRANHA, DOUGH,
-            FAILED_CUISINE, CHARRED_CUISINE;
+            FAILED_CUISINE, CHARRED_CUISINE, FLOUR;
     public static final ItemEntry<Item> LINGERING_MILK_BOTTLE;
     public static final ItemEntry<Item>
             MILK_BOTTLE,
@@ -542,7 +543,8 @@ public class ModItems {
                 }, b -> {
                     b.ww_ag$zh_cn("生鳟鱼");
                     b.ww_ag$zh_tw("生鱒魚");
-                    b.ww_ag$zh_hk("生鱒魚");
+                    b.ww_ag$zh_hk("生鱒魚")
+                            .tag(Tags.Items.FOODS_RAW_FISH);
                 });
                 COOKED_TROUT = baseFood("cooked_trout", p -> p
                         .food(COOKED_TROUT_FOOD), (c, p) -> {
@@ -551,7 +553,8 @@ public class ModItems {
                 }, b -> {
                     b.ww_ag$zh_cn("熟鳟鱼");
                     b.ww_ag$zh_tw("熟鱒魚");
-                    b.ww_ag$zh_hk("熟鱒魚");
+                    b.ww_ag$zh_hk("熟鱒魚")
+                            .tag(Tags.Items.FOODS_COOKED_FISH);
                 });
 
             }//(cooked/)trout
@@ -562,7 +565,8 @@ public class ModItems {
                 }, b -> {
                     b.ww_ag$zh_cn("生食人鱼");
                     b.ww_ag$zh_tw("生食人魚");
-                    b.ww_ag$zh_hk("生食人魚");
+                    b.ww_ag$zh_hk("生食人魚")
+                            .tag(Tags.Items.FOODS_RAW_FISH);
                 });
                 COOKED_PIRANHA = baseFood("cooked_piranha", p -> p
                         .food(COOKED_TROUT_FOOD), (c, p) -> {
@@ -571,7 +575,8 @@ public class ModItems {
                 }, b -> {
                     b.ww_ag$zh_cn("熟食人鱼");
                     b.ww_ag$zh_tw("熟食人魚");
-                    b.ww_ag$zh_hk("熟食人魚");
+                    b.ww_ag$zh_hk("熟食人魚")
+                            .tag(Tags.Items.FOODS_COOKED_FISH);
                 });
 
             }//(cooked/)piranha
@@ -583,25 +588,23 @@ public class ModItems {
                                 .build()
                         ), (c, p) -> {
 
-                    DataIngredient wheat = DataIngredient.tag(Tags.Items.CROPS_WHEAT);
+                    DataIngredient flour = DataIngredient.items(ModItems.FLOUR.get());
                     DataIngredient water = DataIngredient.items(Items.WATER_BUCKET);
                     DataIngredient dough = DataIngredient.items(c.get());
                     ShapelessRecipeBuilder
-                            .shapeless(RecipeCategory.FOOD, c.get(), 4)
-                            .unlockedBy("has_" + p.safeName(wheat), wheat.getCriterion(p))
-                            .unlockedBy("has_" + p.safeName(water), water.getCriterion(p))
-                            .requires(wheat.toVanilla(), 3)
+                            .shapeless(RecipeCategory.FOOD, c.get(), 1)
+                            .unlockedBy("has_" + p.safeName(flour), flour.getCriterion(p))
+                            .requires(flour.toVanilla(), 3)
                             .requires(water.toVanilla())
                             .save(p, p.safeId(dough));
-                    ShapelessRecipeBuilder
-                            .shapeless(RecipeCategory.FOOD, Items.BREAD, 1)
-                            .unlockedBy("has_" + p.safeName(dough), dough.getCriterion(p))
-                            .requires(dough.toVanilla(), 3)
-                            .save(p, p.safeId(Items.BREAD));
+
                     p.food(dough, RecipeCategory.FOOD, () -> Items.BREAD, .35F);
 
                 }, b -> {
-
+                    b.ww_ag$zh_cn("面团");
+                    b.ww_ag$zh_cn("麵團");
+                    b.ww_ag$zh_cn("麵團")
+                            .tag(ItemTags.COW_FOOD);
                 });
             }//dough
             {
@@ -742,7 +745,7 @@ public class ModItems {
                         }
                 )
 
-                        .defaultLang()
+                        .lang("Cheese")
                         .defaultModel()
                         .tab(ModTabs.FOOD_AND_DRINK.key())
                         .properties(p -> p
@@ -791,6 +794,54 @@ public class ModItems {
                     b.ww_ag$zh_cn("焦糊料理");
                 });
             }//(charred/failed)cuisine
+            {
+                FLOUR = baseFood(
+                        "flour",
+                        p -> p
+                                .food(
+                                        new FoodProperties.Builder()
+                                                .nutrition(1)
+                                                .saturationModifier(.6F)
+                                                .build()
+                                ),
+                        (c, p) -> {
+                            DataIngredient wheat = DataIngredient.tag(Tags.Items.CROPS_WHEAT);
+                            ShapelessRecipeBuilder
+                                    .shapeless(RecipeCategory.FOOD, c.getEntry(), 5)
+                                    .unlockedBy("has_" + p.safeName(wheat), wheat.getCriterion(p))
+                                    .requires(wheat.toVanilla(), 2)
+                                    .save(p, p.safeId(c.get()));
+                        },
+                        b -> {
+                            b.ww_ag$zh_cn("面粉");
+                            b.ww_ag$zh_tw("麵粉");
+                            b.ww_ag$zh_hk("麵粉");
+                        });
+            }//FLOUR
+            {
+                FISH_BONE = b(
+                        REGISTRATE.item("fish_bone", Item::new),
+                        b -> {
+                            b.ww_ag$zh_cn("鱼骨");
+                            b.ww_ag$zh_cn("魚骨");
+                            b.ww_ag$zh_cn("魚骨");
+                        }
+                )
+                        .lang("Fish bone")
+                        .properties(p -> p
+                                .stacksTo(16))
+                        .defaultModel()
+                        .recipe((c, p) -> {
+                            DataIngredient self = DataIngredient.items(c);
+                            ShapelessRecipeBuilder
+                                    .shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
+                                    .unlockedBy("has_" + p.safeName(self), self.getCriterion(p))
+                                    .requires(self.toVanilla())
+                                    .save(p, p.safeId(Items.BONE_MEAL));
+                        })
+                        .tag(Tags.Items.BONES)
+                        .register();
+            }//fish bone
         }
     }
 
