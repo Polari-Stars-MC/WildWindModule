@@ -9,8 +9,8 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
-import net.neoforged.neoforge.event.entity.living.LivingUseTotemEvent;
 import org.polaris2023.ww_ag.WWAgMod;
+import org.polaris2023.ww_ag.common.init.ModConfigs;
 
 import static org.polaris2023.ww_ag.common.init.ModItems.FISH_BONE;
 
@@ -29,7 +29,10 @@ public class LivingEvents {
 
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
 
-        if(stack.is(Tags.Items.FOODS_COOKED_FISH) || stack.is(Tags.Items.FOODS_RAW_FISH)) {
+        if(
+                ModConfigs.USE_ITEM.fish_bone_loot.get() && (stack.is(Tags.Items.FOODS_COOKED_FISH) ||
+                        stack.is(Tags.Items.FOODS_RAW_FISH))
+        ) {
             if (livingEntity instanceof Player player) {
                 player.addItem(FISH_BONE.asStack());
             }

@@ -14,6 +14,9 @@ import net.minecraft.world.level.gameevent.GameEvent;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.entity.living.LivingEntityUseItemEvent;
+import org.polaris2023.ww_ag.WWAgMod;
+import org.polaris2023.ww_ag.common.init.ModConfigs;
+import org.polaris2023.ww_ag.config.UseItemConfig;
 import org.polaris2023.ww_ag.utils.TeleportUtil;
 import org.polaris2023.ww_vpp.WWVppMod;
 
@@ -31,8 +34,7 @@ public class LivingEvents {
         LivingEntity livingEntity = event.getEntity();
 
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
-
-        if(item.equals(Items.POPPED_CHORUS_FRUIT)) {
+        if(ModConfigs.USE_ITEM.popped_chorus_fruit.get() && item.equals(Items.POPPED_CHORUS_FRUIT)) {
             if(TeleportUtil.tryTeleportToSurface(livingEntity, serverLevel, livingEntity.getOnPos()) || TeleportUtil.randomTeleportAround(livingEntity, serverLevel)) {
                 serverLevel.gameEvent(GameEvent.TELEPORT, livingEntity.position(), GameEvent.Context.of(livingEntity));
                 SoundSource soundsource;
@@ -53,7 +55,7 @@ public class LivingEvents {
                 player.resetCurrentImpulseContext();
                 player.getCooldowns().addCooldown(item, 20);
             }
-        } else if(item.equals(Items.GLISTERING_MELON_SLICE)) {
+        } else if(ModConfigs.USE_ITEM.glistering_melon_slice.get() && item.equals(Items.GLISTERING_MELON_SLICE)) {
             livingEntity.heal(1.0F);
         }
     }

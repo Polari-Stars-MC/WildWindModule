@@ -1,6 +1,10 @@
 package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import dev.xkmc.l2core.serial.config.ConfigTypeEntry;
+import dev.xkmc.l2core.serial.config.PacketHandlerWithConfig;
+import dev.xkmc.l2core.util.ConfigInit;
 import net.minecraft.Util;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -25,6 +29,7 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.CreativeModeTabRegistry;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
@@ -36,6 +41,7 @@ import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.config.UseItemConfig;
 import org.polaris2023.ww_ag.datagen.worldgen.WWBiomeModifyProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWConfiguredFeatureProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
@@ -50,6 +56,7 @@ public class WWAgMod {
     public static final String MODID = "ww_ag";
     public static final WWRegistrate REGISTRATE =
             new WWRegistrate(MODID);
+    public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(MODID, 1);
     public static ResourceLocation cLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath("c", path);
     }
@@ -61,6 +68,7 @@ public class WWAgMod {
         ModItems.register();
         ModSounds.register();
         ModPotions.register();
+        ModConfigs.register();
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, blockIntrinsic -> {
             IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> fungus = blockIntrinsic.addTag(WWBlockTags.FUNGUS.get());
             fungus.add(Blocks.CRIMSON_FUNGUS);
@@ -195,7 +203,10 @@ public class WWAgMod {
             p.add(Registries.PLACED_FEATURE, WWPlaceFeatureProvider::bootstrap);
             p.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WWBiomeModifyProvider::bootstrap);
         });
+
+
     }
+
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {

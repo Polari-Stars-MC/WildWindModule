@@ -104,6 +104,8 @@ subprojects {
     val enumFile = resourcesDir.resolve("META-INF/enumextensions.json")
     val interfaceFile = file("interfaces.json")
 
+
+
     sourceSets {
         main {
             java {
@@ -253,6 +255,24 @@ subprojects {
         if (atFile.readBytes().isNotEmpty()) {
             accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
         }
+    }
+
+    dependencies {
+        val registrate = "accessCompileOnly"(
+            group = "com.tterrag.registrate",
+            name = "Registrate",
+            version = "[MC1.21-1.3.0+55,)"
+        )
+        runtimeOnly(registrate)
+        implementation(
+            group="dev.xkmc",
+            name= "l2serial",
+            version="[3.1.1,)")
+        implementation(
+            group="dev.xkmc",
+            name= "l2core",
+            version="[3.0.8,)"
+        )
     }
     tasks.jar {
         exclude(".cache")
