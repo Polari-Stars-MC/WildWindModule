@@ -62,13 +62,13 @@ public class WWAgMod {
     }
     public WWAgMod() {
         NeoForgeMod.enableMilkFluid();
+        ModConfigs.register();
         ModTabs.register();
         ModFluids.register();
         ModBlocks.register();
         ModItems.register();
         ModSounds.register();
         ModPotions.register();
-        ModConfigs.register();
         REGISTRATE.addDataGenerator(ProviderType.BLOCK_TAGS, blockIntrinsic -> {
             IntrinsicHolderTagsProvider.IntrinsicTagAppender<Block> fungus = blockIntrinsic.addTag(WWBlockTags.FUNGUS.get());
             fungus.add(Blocks.CRIMSON_FUNGUS);

@@ -20,9 +20,11 @@ import static org.polaris2023.ww_ag.common.init.ModItems.FISH_BONE;
  */
 @EventBusSubscriber(modid = WWAgMod.MODID, bus = EventBusSubscriber.Bus.GAME)
 public class LivingEvents {
+
     @SuppressWarnings("resource")
     @SubscribeEvent
     public static void onUseFinish(LivingEntityUseItemEvent.Finish event) {
+
         ItemStack stack = event.getItem();
         Item item = stack.getItem();
         LivingEntity livingEntity = event.getEntity();

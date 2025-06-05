@@ -5,8 +5,7 @@
   "refmap": "ww_ag.remap.json",
   "mixins": [
     "BlockBuilderMixin",
-    "ItemBuilderMixin",
-    "MilkMixinInject"
+    "ItemBuilderMixin"
   ],
   "client": [],
   "server": [],
