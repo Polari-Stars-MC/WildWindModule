@@ -15,7 +15,8 @@ public class UseItemConfig extends ConfigInit {
             glistering_melon_slice,
             fish_bone_loot;
     public UseItemConfig(ConfigInit.Builder builder) {
-        folder("wild_wind");
+        folder("wild_wind/");
+
         popped_chorus_fruit = builder.text("Popped chorus fruit (default true)").define("popped_chorus_fruit", true);
         glistering_melon_slice = builder.text("Glistering melon slice (default true)").define("glistering_melon_slice", true);
         fish_bone_loot = builder.text("Fish bone loot (default true)").define("fish_bone_loot", true);
