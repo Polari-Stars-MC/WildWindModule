@@ -30,11 +30,10 @@ public class LivingEvents {
     @SuppressWarnings("resource")
     public static void onUseFinish(LivingEntityUseItemEvent.Finish event) {
         ItemStack stack = event.getItem();
-        Item item = stack.getItem();
         LivingEntity livingEntity = event.getEntity();
 
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
-        if(ModConfigs.USE_ITEM.popped_chorus_fruit.get() && item.equals(Items.POPPED_CHORUS_FRUIT)) {
+        if(ModConfigs.USE_ITEM.popped_chorus_fruit.get() && stack.is(Items.POPPED_CHORUS_FRUIT)) {
             if(TeleportUtil.tryTeleportToSurface(livingEntity, serverLevel, livingEntity.getOnPos()) || TeleportUtil.randomTeleportAround(livingEntity, serverLevel)) {
                 serverLevel.gameEvent(GameEvent.TELEPORT, livingEntity.position(), GameEvent.Context.of(livingEntity));
                 SoundSource soundsource;
@@ -53,9 +52,9 @@ public class LivingEvents {
 
             if (livingEntity instanceof Player player) {
                 player.resetCurrentImpulseContext();
-                player.getCooldowns().addCooldown(item, 20);
+                player.getCooldowns().addCooldown(stack.getItem(), 20);
             }
-        } else if(ModConfigs.USE_ITEM.glistering_melon_slice.get() && item.equals(Items.GLISTERING_MELON_SLICE)) {
+        } else if(ModConfigs.USE_ITEM.glistering_melon_slice.get() && stack.is(Items.GLISTERING_MELON_SLICE)) {
             livingEntity.heal(1.0F);
         }
     }
