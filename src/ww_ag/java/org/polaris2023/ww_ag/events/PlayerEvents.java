@@ -2,13 +2,18 @@ package org.polaris2023.ww_ag.events;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.ItemInteractionResult;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.BucketItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.Level;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LiquidBlockContainer;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
@@ -16,11 +21,15 @@ import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.util.TriState;
+import net.neoforged.neoforge.event.entity.player.ItemTooltipEvent;
 import net.neoforged.neoforge.event.entity.player.PlayerInteractEvent;
+import net.neoforged.neoforge.event.entity.player.UseItemOnBlockEvent;
 import net.neoforged.neoforge.fluids.FluidType;
 import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.init.ModBlocks;
 import org.polaris2023.ww_ag.common.init.ModConfigs;
+import org.polaris2023.ww_ag.common.init.ModDataComponents;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 
@@ -39,6 +48,7 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void rightMilkPlaceAndGet(PlayerInteractEvent.RightClickBlock event) {
         ItemStack stack = event.getItemStack();
+
         BlockPos pos = event.getPos();//get current block pos
         Level level = event.getLevel();
         Player player = event.getEntity();
@@ -53,11 +63,21 @@ public class PlayerEvents {
             if (stack.is(Items.MILK_BUCKET)) {
                 BlockPos posNow = canBlockContainFluid(player, level, pos, state) ? pos : getFacePos;
                 stack.shrink(1);
-                level.setBlockAndUpdate(posNow, ModBlocks.MILK.getDefaultState());
+                ResourceLocation location = stack.getOrDefault(ModDataComponents.MILK_TYPE, ModBlocks.MILK.getId());
+                event.setCanceled(true);
+                Block block = BuiltInRegistries.BLOCK.get(location);
+                level.setBlockAndUpdate(posNow, block.defaultBlockState());
                 ItemStack defaultInstance = Items.BUCKET.getDefaultInstance();
                 player.addItem(defaultInstance);
-                event.setCancellationResult(InteractionResult.sidedSuccess(level.isClientSide));
+                event.setCancellationResult(InteractionResult.SUCCESS);
             }
         }
+    }
+
+    @SubscribeEvent
+    public static void a(ItemTooltipEvent event) {
+        ItemStack stack = event.getItemStack();
+        ResourceLocation location = stack.getOrDefault(ModDataComponents.MILK_TYPE, ModBlocks.MILK.getId());
+        event.getToolTip().add(Component.literal(location.toString()));
     }
 }

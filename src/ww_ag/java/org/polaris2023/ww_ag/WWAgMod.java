@@ -2,6 +2,7 @@ package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import dev.xkmc.l2core.init.reg.simple.Reg;
 import dev.xkmc.l2core.serial.config.ConfigTypeEntry;
 import dev.xkmc.l2core.serial.config.PacketHandlerWithConfig;
 import dev.xkmc.l2core.util.ConfigInit;
@@ -35,6 +36,7 @@ import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.init.*;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
@@ -56,12 +58,14 @@ public class WWAgMod {
     public static final String MODID = "ww_ag";
     public static final WWRegistrate REGISTRATE =
             new WWRegistrate(MODID);
+    public static final Reg REG = new Reg(MODID);
     public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(MODID, 1);
     public static ResourceLocation cLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath("c", path);
     }
     public WWAgMod() {
         NeoForgeMod.enableMilkFluid();
+        ModDataComponents.register();
         ModConfigs.register();
         ModTabs.register();
         ModFluids.register();
@@ -218,6 +222,12 @@ public class WWAgMod {
         if (event.getTabKey().equals(ModTabs.INGREDIENTS.key())) {
             event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, ModPotions.MILK));
         }
+    }
+
+    @SubscribeEvent
+    public static void componentApply(ModifyDefaultComponentsEvent event) {
+        event.modify(Items.MILK_BUCKET, builder ->
+                builder.set(ModDataComponents.MILK_TYPE.get(), ModBlocks.MILK.getId()));
     }
 
 }
