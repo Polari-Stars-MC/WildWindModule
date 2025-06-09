@@ -7,10 +7,7 @@ import com.tterrag.registrate.providers.loot.RegistrateLootTableProvider;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
-import org.polaris2023.ww_ag.datagen.WWDataRepeater;
-import org.polaris2023.ww_ag.datagen.WWGlobalLootModifier;
-import org.polaris2023.ww_ag.datagen.WWLanguage;
-import org.polaris2023.ww_ag.datagen.WWSoundDefineProvider;
+import org.polaris2023.ww_ag.datagen.*;
 import org.polaris2023.ww_ag.datagen.loot.WWBaseLootSubProvider;
 
 /**
@@ -25,7 +22,8 @@ public interface WWProviderType<T extends RegistrateProvider> extends ProviderTy
     ProviderType<WWLanguage> ZH_HK = WWLanguage.create("zh_hk");
     ProviderType<WWGlobalLootModifier> GLM = ProviderType.registerProvider("global_loot_modifier", c -> new WWGlobalLootModifier(c.parent(), c.output(), c.provider()));
     ProviderType<WWDataRepeater> REPEATER = ProviderType.registerProvider("ww_data_repeater", c -> new WWDataRepeater(c.parent(), c.output(), c.provider()));
-
+    @SuppressWarnings("deprecation")
+    ProviderType<WWConfigGen> CFG = ProviderType.registerProvider("cfg", c -> new WWConfigGen(c.parent(), c.event().getGenerator(), c.provider(), c.parent().getModid()));
 
     RegistrateLootTableProvider.LootType<WWBaseLootSubProvider> BASE =
             RegistrateLootTableProvider.LootType.register("ww_base", LootContextParamSets.ENTITY, WWBaseLootSubProvider::new);

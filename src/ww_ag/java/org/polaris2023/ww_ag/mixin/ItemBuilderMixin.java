@@ -32,7 +32,7 @@ public abstract class ItemBuilderMixin<T extends Item, P> extends AbstractBuilde
                                CallbackInfoReturnable<ItemBuilder<T, P>> cir) {
         cir.setReturnValue(cir.getReturnValue()
                 .model((c, p) -> {
-                    p.generated(c, WWAgMod.REGISTRATE.loc("itrm/item_placeholder"));
+                    p.generated(c, WWAgMod.REGISTRATE.loc("item/item_placeholder"));
                 }));
     }
 

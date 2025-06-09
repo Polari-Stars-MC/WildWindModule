@@ -1,7 +1,6 @@
 import com.google.gson.GsonBuilder
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
-import dev.vfyjxf.gradle.accessor.ModAccessTransformExtension
 import org.polaris2023.mcmeta.extension.McMetaSettings
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeDependency
 import org.polaris2023.mcmeta.extension.forge.ForgeLikeToml
@@ -104,6 +103,8 @@ subprojects {
     val atFile = resourcesDir.resolve("META-INF/accesstransformer.cfg")
     val enumFile = resourcesDir.resolve("META-INF/enumextensions.json")
     val interfaceFile = file("interfaces.json")
+
+
 
     sourceSets {
         main {
@@ -254,6 +255,24 @@ subprojects {
         if (atFile.readBytes().isNotEmpty()) {
             accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
         }
+    }
+
+    dependencies {
+        val registrate = "accessCompileOnly"(
+            group = "com.tterrag.registrate",
+            name = "Registrate",
+            version = "[MC1.21-1.3.0+55,)"
+        )
+        runtimeOnly(registrate)
+        implementation(
+            group="dev.xkmc",
+            name= "l2serial",
+            version="[3.1.1,)")
+        implementation(
+            group="dev.xkmc",
+            name= "l2core",
+            version="[3.0.8,)"
+        )
     }
     tasks.jar {
         exclude(".cache")

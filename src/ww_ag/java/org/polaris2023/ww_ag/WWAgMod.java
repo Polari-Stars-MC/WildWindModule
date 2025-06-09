@@ -1,6 +1,11 @@
 package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
+import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import dev.xkmc.l2core.init.reg.simple.Reg;
+import dev.xkmc.l2core.serial.config.ConfigTypeEntry;
+import dev.xkmc.l2core.serial.config.PacketHandlerWithConfig;
+import dev.xkmc.l2core.util.ConfigInit;
 import net.minecraft.Util;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
@@ -25,17 +30,20 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.CreativeModeTabRegistry;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.init.*;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.config.UseItemConfig;
 import org.polaris2023.ww_ag.datagen.worldgen.WWBiomeModifyProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWConfiguredFeatureProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
@@ -50,11 +58,15 @@ public class WWAgMod {
     public static final String MODID = "ww_ag";
     public static final WWRegistrate REGISTRATE =
             new WWRegistrate(MODID);
+    public static final Reg REG = new Reg(MODID);
+    public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(MODID, 1);
     public static ResourceLocation cLoc(String path) {
         return ResourceLocation.fromNamespaceAndPath("c", path);
     }
     public WWAgMod() {
         NeoForgeMod.enableMilkFluid();
+        ModDataComponents.register();
+        ModConfigs.register();
         ModTabs.register();
         ModFluids.register();
         ModBlocks.register();
@@ -66,6 +78,7 @@ public class WWAgMod {
             fungus.add(Blocks.CRIMSON_FUNGUS);
             fungus.add(Blocks.WARPED_FUNGUS);
         });
+
         REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, itemIntrinsic -> {
             itemIntrinsic.copy(WWBlockTags.FUNGUS.get(), WWItemTags.FUNGUS.get());
         });
@@ -194,7 +207,10 @@ public class WWAgMod {
             p.add(Registries.PLACED_FEATURE, WWPlaceFeatureProvider::bootstrap);
             p.add(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WWBiomeModifyProvider::bootstrap);
         });
+
+
     }
+
 
     @SubscribeEvent
     public static void gatherEvent(GatherDataEvent event) {
@@ -206,6 +222,12 @@ public class WWAgMod {
         if (event.getTabKey().equals(ModTabs.INGREDIENTS.key())) {
             event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, ModPotions.MILK));
         }
+    }
+
+    @SubscribeEvent
+    public static void componentApply(ModifyDefaultComponentsEvent event) {
+        event.modify(Items.MILK_BUCKET, builder ->
+                builder.set(ModDataComponents.MILK_TYPE.get(), ModBlocks.MILK.getId()));
     }
 
 }
