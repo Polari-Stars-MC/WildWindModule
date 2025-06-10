@@ -70,18 +70,20 @@ public class WWRegistrate extends L2Registrate {
     }
 
     private static class TabSorter {
-        private static final TreeMap<Integer, TabSorter> MAP = new TreeMap<>();
+        private static final TreeMap<String, TreeMap<Integer, TabSorter>> MAP = new TreeMap<>();
         private final ResourceLocation id;
         public TabSorter(int index, ResourceLocation id) {
-            MAP.put(index, this);
+            TreeMap<Integer, TabSorter> map = MAP.getOrDefault(id.getNamespace(), new TreeMap<>());
+            map.put(index, this);
+            MAP.put(id.getNamespace(), map);
             this.id = id;
         }
 
         public void sort(CreativeModeTab.Builder b, int index) {
             List<ResourceLocation> before = new ArrayList<>(), after = new ArrayList<>();
-            for (Map.Entry<Integer, TabSorter> entry : MAP.entrySet()) {
+            var map = MAP.get(id.getNamespace());
+            for (var entry : map.entrySet()) {
                 Integer key = entry.getKey();
-                System.out.println(index + ":" + key + ":" + entry.getValue().id);
                 if (key > index) {
                     after.add(entry.getValue().id);
                 } else if (key < index) {
