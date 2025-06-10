@@ -23,20 +23,20 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 public class ModTabs {
     public static final SimpleEntry<CreativeModeTab> BUILDING_BLOCK =
             REGISTRATE
-                    .buildModCreativeTab("building_block", "Wild Wind: Building Block",
-                            b -> b.icon(ModBlocks.SALT_BLOCK::asStack));
+                    .buildWWCreativeTab("building_block", "Wild Wind: Building Block",
+                            b -> b.icon(ModBlocks.SALT_BLOCK::asStack), 0);
     public static final SimpleEntry<CreativeModeTab> NATURAL_BLOCKS =
             REGISTRATE
-                    .buildModCreativeTab("natural_blocks", "Wild Wind: Natural Blocks",
-                            b -> b.icon(ModBlocks.SALT_ORE::asStack));
+                    .buildWWCreativeTab("natural_blocks", "Wild Wind: Natural Blocks",
+                            b -> b.icon(ModBlocks.SALT_ORE::asStack), 1);
     public static final SimpleEntry<CreativeModeTab> INGREDIENTS =
             REGISTRATE
-                    .buildModCreativeTab("ingredients", "Wild Wind: Ingredients",
-                            b -> b.icon(ModItems.SALT::asStack));
+                    .buildWWCreativeTab("ingredients", "Wild Wind: Ingredients",
+                            b -> b.icon(ModItems.SALT::asStack), 2);
     public static final SimpleEntry<CreativeModeTab> FOOD_AND_DRINK =
             REGISTRATE
-                    .buildModCreativeTab("food_and_drink", "Wild Wind: Food And Drink",
-                            b -> b.icon(ModItems.BAKED_APPLE::asStack));
+                    .buildWWCreativeTab("food_and_drink", "Wild Wind: Food And Drink",
+                            b -> b.icon(ModItems.BAKED_APPLE::asStack), 3);
 
     private synchronized SimpleEntry<CreativeModeTab> buildCreativeTabImpl(String name, Component comp, Consumer<CreativeModeTab.Builder> config) {
         return new SimpleEntry<>(REGISTRATE.generic(REGISTRATE, name, Registries.CREATIVE_MODE_TAB, () -> {

@@ -20,12 +20,13 @@ public class ModBlocks {
     public static final PlanksEntry<WWRegistrate> AZALEA;
 
     static {
+        REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         AZALEA = REGISTRATE
                 .planks("azalea")
                 .planks(() -> Blocks.MANGROVE_PLANKS)
                 .registerPlanks(b -> {
                     b.defaultBlockstate();
-                    b.item().tab(ModTabs.BUILDING_BLOCK.key()).build();
+                    b.item().build();
                     b(b, l -> {
                         l.ww_ag$zh_cn("杜鹃木板");
                         l.ww_ag$zh_tw("杜鵑木板");
