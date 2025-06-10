@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import org.polaris2023.ww_ag.common.registrate.build.*;
+import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.function.Function;
@@ -35,6 +36,10 @@ public class WWRegistrate extends L2Registrate {
     }
     public SoundBuilder<SoundEvent, L2Registrate> variableRangeSound(String name) {
         return entry(name, callback -> SoundBuilder.create(this, self(), name, callback, () -> SoundEvent.createVariableRangeEvent(loc(name))));
+    }
+
+    public PlanksEntry<WWRegistrate> planks(String name) {
+        return new PlanksEntry<>(this, name);
     }
 
     public <T extends SoundEvent> SoundBuilder<T, L2Registrate> customSound(String name, Function<ResourceLocation, T> function) {

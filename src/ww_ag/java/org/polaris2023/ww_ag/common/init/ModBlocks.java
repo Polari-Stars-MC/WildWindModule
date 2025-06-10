@@ -11,10 +11,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.DropExperienceBlock;
-import net.minecraft.world.level.block.LiquidBlock;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.material.FlowingFluid;
 import net.minecraft.world.level.material.MapColor;
@@ -25,6 +22,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
+import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
@@ -144,6 +143,7 @@ public class ModBlocks {
                     .tag(WWBlockTags.MILK.get())
                     .register();
         }
+
     }
 
     @SuppressWarnings("unchecked")

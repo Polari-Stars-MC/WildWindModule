@@ -257,6 +257,13 @@ subprojects {
         }
     }
 
+    val projectNames = listOf(
+        "Deco",
+        "Adventure",
+        "Vanilla Plus Plus",
+        "All In All"
+    )
+
     dependencies {
         val registrate = "accessCompileOnly"(
             group = "com.tterrag.registrate",
@@ -273,6 +280,7 @@ subprojects {
             name= "l2core",
             version="[3.0.8,)"
         )
+
     }
     tasks.jar {
         exclude(".cache")
