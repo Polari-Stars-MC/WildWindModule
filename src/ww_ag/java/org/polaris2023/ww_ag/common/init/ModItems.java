@@ -79,6 +79,47 @@ public class ModItems {
             LINGERING_HONEY_BOTTLE;
 
     static {
+        REGISTRATE.defaultCreativeTab(ModTabs.INGREDIENTS.key());
+        {
+            SALT = REGISTRATE
+                    .item("salt", Item::new)
+                    .defaultModel()
+                    .tab(ModTabs.INGREDIENTS.key())
+                    .recipe((c, p) -> {
+                        DataIngredient items = DataIngredient.items(ModBlocks.SALT_BLOCK.get());
+                        DataIngredient ores = DataIngredient.tag(WWItemTags.ORES$SALT.get());
+                        p.storage(DataIngredient.items(c), RecipeCategory.MISC, c, items, ModBlocks.SALT_BLOCK);
+                        p.square(items, RecipeCategory.MISC, c, false);
+                        p.smeltingAndBlasting(ores, RecipeCategory.MISC, c, 0.35F);
+                    })
+                    .lang("Salt")
+                    .register();
+        }//salt
+        {
+            FISH_BONE = b(
+                    REGISTRATE.item("fish_bone", Item::new),
+                    b -> {
+                        b.ww_ag$zh_cn("鱼骨");
+                        b.ww_ag$zh_cn("魚骨");
+                        b.ww_ag$zh_cn("魚骨");
+                    }
+            )
+                    .lang("Fish bone")
+                    .properties(p -> p
+                            .stacksTo(16))
+                    .defaultModel()
+                    .recipe((c, p) -> {
+                        DataIngredient self = DataIngredient.items(c);
+                        ShapelessRecipeBuilder
+                                .shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
+                                .unlockedBy("has_" + p.safeName(self), self.getCriterion(p))
+                                .requires(self.toVanilla())
+                                .save(p, p.safeId(Items.BONE_MEAL));
+                    })
+                    .tag(Tags.Items.BONES)
+                    .register();
+        }//fish bone
+        REGISTRATE.defaultCreativeTab(ModTabs.FOOD_AND_DRINK.key());
         {
             SPLASH_HONEY_BOTTLE = b(
                     REGISTRATE.item("splash_honey_bottle", Item::new),
@@ -152,21 +193,6 @@ public class ModItems {
 
         }//(splash/lingering/)milk bottle
         {
-            SALT = REGISTRATE
-                    .item("salt", Item::new)
-                    .defaultModel()
-                    .tab(ModTabs.INGREDIENTS.key())
-                    .recipe((c, p) -> {
-                        DataIngredient items = DataIngredient.items(ModBlocks.SALT_BLOCK.get());
-                        DataIngredient ores = DataIngredient.tag(WWItemTags.ORES$SALT.get());
-                        p.storage(DataIngredient.items(c), RecipeCategory.MISC, c, items, ModBlocks.SALT_BLOCK);
-                        p.square(items, RecipeCategory.MISC, c, false);
-                        p.smeltingAndBlasting(ores, RecipeCategory.MISC, c, 0.35F);
-                    })
-                    .lang("Salt")
-                    .register();
-        }//salt
-        {
             CANDY = b(REGISTRATE
                     .item("candy", Item::new),
                     b -> {
@@ -197,6 +223,7 @@ public class ModItems {
                     .register();
         }//candy
         //food
+
         {
             FoodProperties TROUT_FOOD = new FoodProperties.Builder()
                     .nutrition(1)
@@ -818,30 +845,7 @@ public class ModItems {
                             b.ww_ag$zh_hk("麵粉");
                         });
             }//FLOUR
-            {
-                FISH_BONE = b(
-                        REGISTRATE.item("fish_bone", Item::new),
-                        b -> {
-                            b.ww_ag$zh_cn("鱼骨");
-                            b.ww_ag$zh_cn("魚骨");
-                            b.ww_ag$zh_cn("魚骨");
-                        }
-                )
-                        .lang("Fish bone")
-                        .properties(p -> p
-                                .stacksTo(16))
-                        .defaultModel()
-                        .recipe((c, p) -> {
-                            DataIngredient self = DataIngredient.items(c);
-                            ShapelessRecipeBuilder
-                                    .shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
-                                    .unlockedBy("has_" + p.safeName(self), self.getCriterion(p))
-                                    .requires(self.toVanilla())
-                                    .save(p, p.safeId(Items.BONE_MEAL));
-                        })
-                        .tag(Tags.Items.BONES)
-                        .register();
-            }//fish bone
+
         }
     }
 
@@ -858,7 +862,6 @@ public class ModItems {
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
     @SuppressWarnings("unchecked")
@@ -875,7 +878,6 @@ public class ModItems {
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
     @SuppressWarnings("unchecked")
@@ -891,7 +893,6 @@ public class ModItems {
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
 

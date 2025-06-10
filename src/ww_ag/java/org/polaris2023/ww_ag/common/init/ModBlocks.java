@@ -39,6 +39,7 @@ public class ModBlocks {
     public static final BlockEntry<LiquidBlock> MILK;
 
     static {
+        REGISTRATE.defaultCreativeTab(ModTabs.NATURAL_BLOCKS.key());
         {
             SALT_ORE = b(
                     REGISTRATE
@@ -66,7 +67,6 @@ public class ModBlocks {
                     })
                     .tag(WWBlockTags.ORES$SALT.get())
                     .item()
-                    .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
                     .register();
@@ -100,11 +100,11 @@ public class ModBlocks {
                     })
                     .tag(WWBlockTags.ORES$SALT.get())
                     .item()
-                    .tab(ModTabs.NATURAL_BLOCKS.key())
                     .tag(WWItemTags.ORES$SALT.get())
                     .build()
                     .register();
         }
+        REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         {
             SALT_BLOCK = b(
                     REGISTRATE
@@ -123,7 +123,6 @@ public class ModBlocks {
                     .defaultBlockstate()
                     .tag(BlockTags.MINEABLE_WITH_SHOVEL)
                     .item()
-                    .tab(ModTabs.BUILDING_BLOCK.key())
                     .build()
                     .defaultLoot()
                     .register();

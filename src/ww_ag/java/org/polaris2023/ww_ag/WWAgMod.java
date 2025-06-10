@@ -217,12 +217,7 @@ public class WWAgMod {
 
 
     }
-    @SubscribeEvent
-    public static void tab(BuildCreativeModeTabContentsEvent event) {
-        if (event.getTabKey().equals(ModTabs.INGREDIENTS.key())) {
-            event.accept(PotionContents.createItemStack(Items.LINGERING_POTION, ModPotions.MILK));
-        }
-    }
+
 
     @SubscribeEvent
     public static void componentApply(ModifyDefaultComponentsEvent event) {
