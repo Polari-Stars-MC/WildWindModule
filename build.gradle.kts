@@ -39,6 +39,7 @@ val neoVersionRange: String by rootProject
 val loaderVersionRange: String by rootProject
 val parchmentMappingsVersion: String by rootProject
 val parchmentMinecraftVersion: String by rootProject
+
 allprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "java-library")
@@ -83,6 +84,8 @@ allprojects {
 
 
 }
+
+
 
 val lib = libs
 
