@@ -24,27 +24,40 @@ public class ModTabs {
     public static final SimpleEntry<CreativeModeTab> BUILDING_BLOCK =
             REGISTRATE
                     .buildWWCreativeTab("building_block", "Wild Wind: Building Block",
-                            b -> b.icon(ModBlocks.SALT_BLOCK::asStack), 0);
+                            b -> b.icon(ModBlocks.SALT_BLOCK::asStack), 0,
+                            l -> {
+                        l.ww_ag$zh_cn("原野之风：建筑方块");
+                        l.ww_ag$zh_tw("風靈荒野：建築方塊");
+                        l.ww_ag$zh_hk("風與草之詩：建築積木");
+                    });
     public static final SimpleEntry<CreativeModeTab> NATURAL_BLOCKS =
             REGISTRATE
                     .buildWWCreativeTab("natural_blocks", "Wild Wind: Natural Blocks",
-                            b -> b.icon(ModBlocks.SALT_ORE::asStack), 1);
+                            b -> b.icon(ModBlocks.SALT_ORE::asStack), 1,
+                            l -> {
+                                l.ww_ag$zh_cn("原野之风：自然方块");
+                                l.ww_ag$zh_tw("風靈荒野：自然方塊");
+                                l.ww_ag$zh_hk("風與草之詩：自然積木");
+                            });
     public static final SimpleEntry<CreativeModeTab> INGREDIENTS =
             REGISTRATE
                     .buildWWCreativeTab("ingredients", "Wild Wind: Ingredients",
-                            b -> b.icon(ModItems.SALT::asStack), 2);
+                            b -> b.icon(ModItems.SALT::asStack), 2,
+                            l -> {
+                                l.ww_ag$zh_cn("原野之风：材料");
+                                l.ww_ag$zh_tw("風靈荒野：材料");
+                                l.ww_ag$zh_hk("風與草之詩：材料");
+                            });
     public static final SimpleEntry<CreativeModeTab> FOOD_AND_DRINK =
             REGISTRATE
                     .buildWWCreativeTab("food_and_drink", "Wild Wind: Food And Drink",
-                            b -> b.icon(ModItems.BAKED_APPLE::asStack), 3);
+                            b -> b.icon(ModItems.BAKED_APPLE::asStack), 3,
+                            l -> {
+                                l.ww_ag$zh_cn("原野之风：食物与饮品");
+                                l.ww_ag$zh_tw("風靈荒野：食物與飲料");
+                                l.ww_ag$zh_hk("風與草之詩：食物同飲品");
+                            });
 
-    private synchronized SimpleEntry<CreativeModeTab> buildCreativeTabImpl(String name, Component comp, Consumer<CreativeModeTab.Builder> config) {
-        return new SimpleEntry<>(REGISTRATE.generic(REGISTRATE, name, Registries.CREATIVE_MODE_TAB, () -> {
-            CreativeModeTab.Builder builder = CreativeModeTab.builder().title(comp).withTabsBefore(CreativeModeTabs.SPAWN_EGGS);
-            config.accept(builder);
-            return builder.build();
-        }).register());
-    }
 
 
     public static void register() {

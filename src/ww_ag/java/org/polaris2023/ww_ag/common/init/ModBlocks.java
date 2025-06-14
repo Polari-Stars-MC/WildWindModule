@@ -4,6 +4,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import lombok.experimental.ExtensionMethod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceLocation;
@@ -22,9 +23,8 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
-import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
-import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
+import org.polaris2023.ww_ag.utils.RegUtil;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -32,6 +32,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  * @author baka4n
  * {@code @Date 2025/05/18 14:58:14}
  */
+@ExtensionMethod({RegUtil.class})
 public class ModBlocks {
     public static final BlockEntry<DropExperienceBlock> SALT_ORE;
     public static final BlockEntry<DropExperienceBlock> DEEPSLATE_SALT_ORE;
@@ -41,16 +42,12 @@ public class ModBlocks {
     static {
         REGISTRATE.defaultCreativeTab(ModTabs.NATURAL_BLOCKS.key());
         {
-            SALT_ORE = b(
-                    REGISTRATE
-                            .block("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p)),
-                    b -> {
-                        b.ww_ag$zh_cn("盐矿石");
-                                b.ww_ag$zh_tw("鹽礦石");
-                                b.ww_ag$zh_hk("鹽礦石")
-                                .lang("Salt ore");
-                    }
-            )
+            SALT_ORE = REGISTRATE.blockReg("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .ww_ag$zh_cn("盐矿石")
+                    .ww_ag$zh_tw("鹽礦石")
+                    .ww_ag$zh_hk("鹽礦石")
+                    .ww_ag$self()
+                    .lang("Salt ore")
                     .properties(properties -> properties
                             .mapColor(MapColor.STONE)
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -72,17 +69,13 @@ public class ModBlocks {
                     .register();
         }
         {
-            DEEPSLATE_SALT_ORE = b(
-                    REGISTRATE
-                            .block("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p)),
-                    b -> {
-                        b.ww_ag$zh_cn("深层盐矿石z");
-                                b.ww_ag$zh_hk("深層鹽礦石");
-
-                                b.ww_ag$zh_tw("深層鹽礦石")
-                                .lang("Deepslate salt ore");
-                    }
-            )
+            DEEPSLATE_SALT_ORE = REGISTRATE
+                    .blockReg("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .ww_ag$zh_cn("深层盐矿石")
+                    .ww_ag$zh_hk("深層鹽礦石")
+                    .ww_ag$zh_tw("深層鹽礦石")
+                    .ww_ag$self()
+                    .lang("Deepslate salt ore")
                     .properties(p -> p
                             .requiresCorrectToolForDrops()
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -106,16 +99,14 @@ public class ModBlocks {
         }
         REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         {
-            SALT_BLOCK = b(
-                    REGISTRATE
-                            .block("salt_block", Block::new),
-                    b -> {
-                        b.ww_ag$zh_cn("盐块");
-                        b.ww_ag$zh_tw("鹽塊");
-                        b.ww_ag$zh_hk("鹽塊")
-                                .lang("Salt block");
-                    }
-            )
+
+            SALT_BLOCK = REGISTRATE
+                    .blockReg("salt_block", Block::new)
+                    .ww_ag$zh_cn("盐块")
+                    .ww_ag$zh_tw("鹽塊")
+                    .ww_ag$zh_hk("鹽塊")
+                    .ww_ag$self()
+                    .lang("Salt block")
                     .properties(properties -> properties
                             .strength(3F)
                             .requiresCorrectToolForDrops()
@@ -129,12 +120,17 @@ public class ModBlocks {
         }
         {
             MILK = REGISTRATE
-                    .block("milk", properties ->
-                            new LiquidBlock(
-                                    (FlowingFluid) NeoForgeMod.MILK.get(),
-                                    properties
-                                            .mapColor(MapColor.SNOW)
-                            ))
+                            .blockReg("milk", properties ->
+                                    new LiquidBlock(
+                                            (FlowingFluid) NeoForgeMod.MILK.get(),
+                                            properties
+                                                    .mapColor(MapColor.SNOW)
+                                    ))
+                    .ww_ag$zh_cn("牛奶")
+                    .ww_ag$zh_tw("牛奶")
+                    .ww_ag$zh_hk("牛奶")
+                    .ww_ag$self()
+                    .lang("Milk")
                     .blockstate((c, p) -> {
                         p.simpleBlock(c.getEntry(), p.models().getBuilder("milk")
                                 .texture("particle", ResourceLocation.fromNamespaceAndPath("neoforge", "block/milk_still")));
@@ -143,13 +139,6 @@ public class ModBlocks {
                     .register();
         }
 
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Block> BlockBuilder<T, L2Registrate> b(BlockBuilder<T, L2Registrate> builder,
-                                                                    NonNullConsumer<ILanguage<Block, T, L2Registrate, BlockBuilder<T, L2Registrate>>> b) {
-        b.accept((ILanguage<Block, T, L2Registrate, BlockBuilder<T, L2Registrate>>) builder);
-        return builder;
     }
 
     public static void register() {}

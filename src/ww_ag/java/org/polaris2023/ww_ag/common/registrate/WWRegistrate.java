@@ -3,11 +3,18 @@ package org.polaris2023.ww_ag.common.registrate;
 import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.builders.Builder;
 import com.tterrag.registrate.builders.BuilderCallback;
+import com.tterrag.registrate.builders.NoConfigBuilder;
+import com.tterrag.registrate.providers.DataGenContext;
+import com.tterrag.registrate.providers.ProviderType;
+import com.tterrag.registrate.providers.RegistrateProvider;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.xkmc.l2core.init.L2Core;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.Util;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
@@ -23,6 +30,8 @@ import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.registrate.build.*;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
+import org.polaris2023.ww_ag.datagen.WWLanguage;
+import org.polaris2023.ww_ag.utils.ILanguage;
 
 import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
@@ -50,23 +59,81 @@ public class WWRegistrate extends L2Registrate {
     }
 
 
-    public synchronized SimpleEntry<CreativeModeTab> buildWWCreativeTab(String name, String def, Consumer<CreativeModeTab.Builder> config, int index) {
+    public synchronized SimpleEntry<CreativeModeTab> buildWWCreativeTab(String name,
+                                                                        String def,
+                                                                        Consumer<CreativeModeTab.Builder> config,
+                                                                        int index) {
         ResourceLocation id = ResourceLocation.fromNamespaceAndPath(getModid(), name);
         this.defaultCreativeTab(ResourceKey.create(Registries.CREATIVE_MODE_TAB, id));
         TabSorter sorter = new TabSorter(index, id);
         return WWAgMod.REGISTRATE.buildCreativeTabImpl(name, this.addLang("itemGroup", id, def), (b) -> {
             config.accept(b);
             sorter.sort(b, index);
+        }, l -> {
+
         });
 
     }
+    public synchronized SimpleEntry<CreativeModeTab> buildWWCreativeTab(String name,
+                                                                        String def,
+                                                                        Consumer<CreativeModeTab.Builder> config,
+                                                                        int index,
+                                                                        NonNullConsumer<ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>>> lang) {
+        ResourceLocation id = ResourceLocation.fromNamespaceAndPath(getModid(), name);
+        this.defaultCreativeTab(ResourceKey.create(Registries.CREATIVE_MODE_TAB, id));
+        TabSorter sorter = new TabSorter(index, id);
+        return WWAgMod.REGISTRATE.buildCreativeTabImpl(name, this.addLang("itemGroup", id, def), (b) -> {
+            config.accept(b);
+            sorter.sort(b, index);
+        }, lang);
 
-    private synchronized SimpleEntry<CreativeModeTab> buildCreativeTabImpl(String name, Component comp, Consumer<CreativeModeTab.Builder> config) {
-        return new SimpleEntry<>(this.generic(this.self(), name, Registries.CREATIVE_MODE_TAB, () -> {
+    }
+
+
+    private synchronized SimpleEntry<CreativeModeTab> buildCreativeTabImpl(String name,
+                                                                           Component comp,
+                                                                           Consumer<CreativeModeTab.Builder> config,
+                                                                           NonNullConsumer<ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>>> lang) {
+        NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate> generic = this.generic(this.self(), name, Registries.CREATIVE_MODE_TAB, () -> {
             CreativeModeTab.Builder builder = CreativeModeTab.builder().title(comp).withTabsBefore(CreativeModeTabs.SPAWN_EGGS);
             config.accept(builder);
             return builder.build();
-        }).register());
+        });
+        ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>> iLanguage = new ILanguage<>() {
+
+            @Override
+            public NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate> ww_ag$self() {
+                return generic;
+            }
+
+            @Override
+            public ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>> ww_ag$zh_cn(String name) {
+                generic.setData(WWProviderType.ZH_CN, (c, p) -> {
+                    p.add(Util.makeDescriptionId("itemGroup", c.getId()), name);
+                });
+                return this;
+            }
+            @Override
+            public ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>> ww_ag$zh_tw(String name) {
+                generic.setData(WWProviderType.ZH_TW, (c, p) -> {
+                    p.add(Util.makeDescriptionId("itemGroup", c.getId()), name);
+                });
+                return this;
+            }
+            @Override
+            public ILanguage<CreativeModeTab, CreativeModeTab, L2Registrate, NoConfigBuilder<CreativeModeTab, CreativeModeTab, L2Registrate>> ww_ag$zh_hk(String name) {
+                generic.setData(WWProviderType.ZH_HK, (c, p) -> {
+                    p.add(Util.makeDescriptionId("itemGroup", c.getId()), name);
+                });
+                return this;
+            }
+
+
+        };
+
+        lang.accept(iLanguage);
+
+        return new SimpleEntry<>(generic.register());
     }
 
     private static class TabSorter {
@@ -78,6 +145,7 @@ public class WWRegistrate extends L2Registrate {
             MAP.put(id.getNamespace(), map);
             this.id = id;
         }
+
 
         public void sort(CreativeModeTab.Builder b, int index) {
             List<ResourceLocation> before = new ArrayList<>(), after = new ArrayList<>();
@@ -94,8 +162,6 @@ public class WWRegistrate extends L2Registrate {
             b.withTabsBefore(before.toArray(new ResourceLocation[0]));
         }
     }
-
-
 
     public PlanksEntry<WWRegistrate> planks(String name) {
         return new PlanksEntry<>(this, name);

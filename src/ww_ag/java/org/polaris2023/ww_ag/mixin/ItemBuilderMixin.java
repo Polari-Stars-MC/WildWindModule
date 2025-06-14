@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * @code @Date 2025/5/28 01:11:24
  */
 @Mixin(ItemBuilder.class)
+@SuppressWarnings("unchecked")
 public abstract class ItemBuilderMixin<T extends Item, P> extends AbstractBuilder<Item, T ,P, ItemBuilder<T, P>> implements ILanguage<Item, T, P, ItemBuilder<T, P>> {
 
     @Inject(method = "create", at = @At("RETURN"), cancellable = true)
@@ -36,28 +37,32 @@ public abstract class ItemBuilderMixin<T extends Item, P> extends AbstractBuilde
                 }));
     }
 
+    @Override
+    public ItemBuilder<T, P> ww_ag$self() {
+        return (ItemBuilder<T, P>) (Object) this;
+    }
+
     public ItemBuilderMixin(AbstractRegistrate<?> owner, P parent, String name, BuilderCallback callback, ResourceKey<? extends Registry<Item>> registryKey) {
         super(owner, parent, name, callback, registryKey);
     }
 
     @Override
-    public ItemBuilder<T, P> ww_ag$zh_cn(String name) {
-        return setData(WWProviderType.ZH_CN, (c, p) -> {
+    public ILanguage<Item, T, P, ItemBuilder<T, P>> ww_ag$zh_cn(String name) {
+        return ILanguage.convert1(setData(WWProviderType.ZH_CN, (c, p) -> {
             p.add(c.getEntry(), name);
-        });
+        }));
     }
 
     @Override
-    public ItemBuilder<T, P> ww_ag$zh_tw(String name) {
-        return setData(WWProviderType.ZH_TW, (c, p) -> {
+    public ILanguage<Item, T, P, ItemBuilder<T, P>> ww_ag$zh_hk(String name) {
+        return ILanguage.convert1(setData(WWProviderType.ZH_HK, (c, p) -> {
             p.add(c.getEntry(), name);
-        });
+        }));
     }
-
     @Override
-    public ItemBuilder<T, P> ww_ag$zh_hk(String name) {
-        return setData(WWProviderType.ZH_HK, (c, p) -> {
+    public ILanguage<Item, T, P, ItemBuilder<T, P>> ww_ag$zh_tw(String name) {
+        return ILanguage.convert1(setData(WWProviderType.ZH_TW, (c, p) -> {
             p.add(c.getEntry(), name);
-        });
+        }));
     }
 }

@@ -82,57 +82,17 @@ public class WWAgMod {
         REGISTRATE.addDataGenerator(ProviderType.ITEM_TAGS, itemIntrinsic -> {
             itemIntrinsic.copy(WWBlockTags.FUNGUS.get(), WWItemTags.FUNGUS.get());
         });
-        REGISTRATE.addDataGenerator(WWProviderType.ZH_CN, provider -> {
-            Map<String,String> tabTranslate = Map.of(
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.BUILDING_BLOCK.getKey()).location()),
-                    "原野之风：建筑方块",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.NATURAL_BLOCKS.getKey()).location()),
-                    "原野之风：自然方块",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.INGREDIENTS.getKey()).location()),
-                    "原野之风：材料",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.FOOD_AND_DRINK.getKey()).location()),
-                    "原野之风：食物与饮品",
-                    REGISTRATE.getModid() + ".title",
-                    "原野之风：农业"
-            );
-            for (Map.Entry<String, String> entry : tabTranslate.entrySet()) {
-                provider.add(entry.getKey(), entry.getValue());
-            }
+        REGISTRATE.addDataGenerator(WWProviderType.ZH_CN, p -> {
+            p.add(MODID + ".title", "原野之风：农业");
         });
-        REGISTRATE.addDataGenerator(WWProviderType.ZH_TW, provider -> {
-            Map<String,String> tabTranslate = Map.of(
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.BUILDING_BLOCK.getKey()).location()),
-                    "風靈荒野：建築方塊",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.NATURAL_BLOCKS.getKey()).location()),
-                    "風靈荒野：自然方塊",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.INGREDIENTS.getKey()).location()),
-                    "風靈荒野：材料",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.FOOD_AND_DRINK.getKey()).location()),
-                    "風靈荒野：食物與飲料",
-                    REGISTRATE.getModid() + ".title",
-                    "風靈荒野：農業"
-            );
-            for (Map.Entry<String, String> entry : tabTranslate.entrySet()) {
-                provider.add(entry.getKey(), entry.getValue());
-            }
+        REGISTRATE.addDataGenerator(WWProviderType.ZH_TW, p -> {
+            p.add(MODID + ".title", "風靈荒野：農業");
         });
-        REGISTRATE.addDataGenerator(WWProviderType.ZH_HK, provider -> {
-            Map<String,String> tabTranslate = Map.of(
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.BUILDING_BLOCK.getKey()).location()),
-                    "風與草之詩：建築積木",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.NATURAL_BLOCKS.getKey()).location()),
-                    "風與草之詩：自然積木",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.INGREDIENTS.getKey()).location()),
-                    "風與草之詩：材料",
-                    Util.makeDescriptionId("itemGroup", Objects.requireNonNull(ModTabs.FOOD_AND_DRINK.getKey()).location()),
-                    "風與草之詩：食物同飲品",
-                    REGISTRATE.getModid() + ".title",
-                    "風與草之詩：農業"
-            );
-            for (Map.Entry<String, String> entry : tabTranslate.entrySet()) {
-                provider.add(entry.getKey(), entry.getValue());
-            }
+        REGISTRATE.addDataGenerator(WWProviderType.ZH_HK, p -> {
+            p.add(MODID + ".title", "風與草之詩：農業");
         });
+
+
         ResourceKey<LootTable> DROP_BAT_WING = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_bat_wing"));
         ResourceKey<LootTable> DROP_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_calamari"));
         ResourceKey<LootTable> DROP_GLOWING_CALAMARI = ResourceKey.create(Registries.LOOT_TABLE, REGISTRATE.loc("entities/misc/drop_glowing_calamari"));
