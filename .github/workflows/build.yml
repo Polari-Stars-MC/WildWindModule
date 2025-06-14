@@ -9,6 +9,7 @@ on :
       - dev/**
     paths:
       - src/**
+      - ap/src/**
 
 env:
   git_branch: ${{github.ref_name}}

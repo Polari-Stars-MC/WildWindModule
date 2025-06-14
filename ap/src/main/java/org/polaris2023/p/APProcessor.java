@@ -21,6 +21,7 @@ import java.util.stream.Stream;
 @SupportedSourceVersion(value = SourceVersion.RELEASE_21)
 @SupportedAnnotationTypes(value = "*")
 @AutoService(Processor.class)
+@SuppressWarnings("unused")
 public class APProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
