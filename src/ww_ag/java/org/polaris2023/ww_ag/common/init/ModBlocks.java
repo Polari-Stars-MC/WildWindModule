@@ -20,6 +20,7 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
+import net.neoforged.fml.ModLoader;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;

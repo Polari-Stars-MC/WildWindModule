@@ -21,4 +21,5 @@ projectNames.forEach {
     include(it)
     project(":$it").projectDir = file("modules/$it")
 }
+includeBuild("ap")
 rootProject.name = "ww"

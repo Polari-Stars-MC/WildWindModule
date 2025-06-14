@@ -281,6 +281,10 @@ subprojects {
             version="[3.0.8,)"
         )
 
+        val ap = rootProject.files("ap/build/libs/ap.jar")
+        compileOnly(ap)
+        annotationProcessor(ap)
+
     }
     tasks.jar {
         exclude(".cache")
