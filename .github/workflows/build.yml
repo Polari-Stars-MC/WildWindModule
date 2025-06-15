@@ -10,6 +10,8 @@ on :
     paths:
       - src/**
       - ap/src/**
+  workflow_dispatch:
+
 
 env:
   git_branch: ${{github.ref_name}}
@@ -24,6 +26,8 @@ jobs:
           path: |
             ~/.gradle/caches
             ~/.gradle/wrapper
+            ～/WildWindModule/WildWindModule/**/.gradle
+            ～/WildWindModule/WildWindModule/**/build
           key: ${{ runner.os }}-gradle-${{ env.git_branch }}
           restore-keys: |
             ${{ runner.os }}-gradle

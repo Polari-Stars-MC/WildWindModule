@@ -31,8 +31,14 @@ public class APProcessor extends AbstractProcessor {
         ProtectionDomain protectionDomain = APProcessor.class.getProtectionDomain();
         URL location = protectionDomain.getCodeSource().getLocation();
         try {
-            Path path = Path.of(location.toURI());
+            Path path = Path.of(location.toURI())
+                    .getParent()
+                    .getParent()
+                    .getParent()
+                    .getParent()
+                    .resolve("src/re-register");
             System.out.println(path);
+            System.out.println(Files.exists(path));
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
