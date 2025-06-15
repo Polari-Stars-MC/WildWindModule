@@ -285,8 +285,11 @@ subprojects {
         )
 
         val ap = rootProject.files("ap/build/libs/ap.jar")
-        compileOnly(ap)
-        annotationProcessor(ap)
+
+        if (ap.singleFile.exists()) {
+            compileOnly(ap)
+            annotationProcessor(ap)
+        }
 
     }
     tasks.jar {
