@@ -77,7 +77,7 @@ public class ModItems {
     static {
         {
             SALT = REGISTRATE
-                    .defaultCreativeTab(ModTabs.INGREDIENTS.key())
+                    .defTab(ModTabs.INGREDIENTS.key())
                     .itemReg("salt", Item::new)
                     .ww_ag$zh_cn("盐")
                     .ww_ag$zh_tw("鹽")
@@ -118,7 +118,7 @@ public class ModItems {
         }//fish bone
         {
             SPLASH_HONEY_BOTTLE = REGISTRATE
-                    .defaultCreativeTab(ModTabs.FOOD_AND_DRINK.key())
+                    .defTab(ModTabs.FOOD_AND_DRINK.key())
                     .itemReg("splash_honey_bottle", Item::new)
                     .ww_ag$zh_cn("喷溅型蜂蜜瓶")
                     .ww_ag$zh_tw("噴濺型蜂蜜瓶")
@@ -835,7 +835,6 @@ public class ModItems {
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> baseFood(String name,
                                            NonNullUnaryOperator<Item.Properties> properties,
                                            NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
@@ -851,7 +850,6 @@ public class ModItems {
                 .properties(properties)
                 .register();
     }
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> parentVanillaFood(String name,
                                                     NonNullUnaryOperator<Item.Properties> properties,
                                                     Item vanilla,
@@ -868,7 +866,6 @@ public class ModItems {
                 .properties(properties)
                 .register();
     }
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> parentFood(String name,
                                              NonNullUnaryOperator<Item.Properties> properties,
                                              ItemEntry<?> entry,

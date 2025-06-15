@@ -1,5 +1,6 @@
 package org.polaris2023.ww_ag.common.init.tags;
 
+import lombok.experimental.ExtensionMethod;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
@@ -11,22 +12,23 @@ import java.util.Locale;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
-
 /**
  * @author baka4n
  * {@code @Date 2025/05/21 12:48:09}
  */
+@ExtensionMethod({TagKey.class, WWAgMod.class})
 public enum WWSoundTags implements Supplier<TagKey<SoundEvent>> {
     GLARE$DEATH,
     GLARE$AMBIENT,
     ;
     private final TagKey<SoundEvent> tag;
     WWSoundTags() {
-        tag = TagKey.create(Registries.SOUND_EVENT, WWAgMod.cLoc(name().toLowerCase(Locale.ROOT).replace("$", "/")));
+        String id = name().toLowerCase(Locale.ROOT).replace("$", "/");
+        tag = Registries.SOUND_EVENT.create(id.cLoc());
     }
     WWSoundTags(Object mod) {
-        tag = TagKey.create(Registries.SOUND_EVENT, REGISTRATE.loc(name().toLowerCase(Locale.ROOT).replace("$", "/")));
+        String id = name().toLowerCase(Locale.ROOT).replace("$", "/");
+        tag = Registries.SOUND_EVENT.create(id.loc());
     }
 
 

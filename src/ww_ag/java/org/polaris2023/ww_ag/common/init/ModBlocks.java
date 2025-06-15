@@ -41,9 +41,10 @@ public class ModBlocks {
     public static final BlockEntry<LiquidBlock> MILK;
 
     static {
-        REGISTRATE.defaultCreativeTab(ModTabs.NATURAL_BLOCKS.key());
         {
-            SALT_ORE = REGISTRATE.blockReg("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+            SALT_ORE = REGISTRATE
+                    .defTab(ModTabs.NATURAL_BLOCKS.key())
+                    .blockReg("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
                     .ww_ag$zh_cn("盐矿石")
                     .ww_ag$zh_tw("鹽礦石")
                     .ww_ag$zh_hk("鹽礦石")
@@ -98,10 +99,10 @@ public class ModBlocks {
                     .build()
                     .register();
         }
-        REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         {
 
             SALT_BLOCK = REGISTRATE
+                    .defTab(ModTabs.BUILDING_BLOCK.key())
                     .blockReg("salt_block", Block::new)
                     .ww_ag$zh_cn("盐块")
                     .ww_ag$zh_tw("鹽塊")

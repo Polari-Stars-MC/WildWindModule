@@ -60,9 +60,8 @@ public class WWAgMod {
             new WWRegistrate(MODID);
     public static final Reg REG = new Reg(MODID);
     public static final PacketHandlerWithConfig HANDLER = new PacketHandlerWithConfig(MODID, 1);
-    public static ResourceLocation cLoc(String path) {
-        return ResourceLocation.fromNamespaceAndPath("c", path);
-    }
+    public static ResourceLocation cLoc(String path) { return ResourceLocation.fromNamespaceAndPath("c", path); }
+    public static ResourceLocation loc(String path) { return REGISTRATE.loc(path); }
     public WWAgMod() {
         NeoForgeMod.enableMilkFluid();
         ModDataComponents.register();

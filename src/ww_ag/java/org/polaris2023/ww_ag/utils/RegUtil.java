@@ -4,9 +4,12 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.util.nullness.NonNullFunction;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 
 
 /**
@@ -15,7 +18,9 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
  */
 @SuppressWarnings("unchecked")
 public class RegUtil {
-
+    public static WWRegistrate defTab(WWRegistrate registrate, ResourceKey<CreativeModeTab> key) {
+        return (WWRegistrate) registrate.defaultCreativeTab(key);
+    }
     public static <P extends Item> ILanguage<Item, P, L2Registrate, ItemBuilder<P, L2Registrate>> itemReg(
             L2Registrate registrate,
             String name,
