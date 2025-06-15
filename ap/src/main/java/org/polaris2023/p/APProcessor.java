@@ -9,8 +9,11 @@ import javax.annotation.processing.*;
 import javax.lang.model.SourceVersion;
 import javax.lang.model.element.TypeElement;
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.security.ProtectionDomain;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -25,20 +28,12 @@ import java.util.stream.Stream;
 public class APProcessor extends AbstractProcessor {
     @Override
     public boolean process(Set<? extends TypeElement> annotations, RoundEnvironment roundEnv) {
-        Path parent = Path.of(System.getProperty("user.dir"))
-                .getParent().getParent().resolve("src/re-register");
-        try(var f = Files.walk(parent)) {
-            f
-                    .filter(path -> !Files.isDirectory(path))
-                    .forEach(path -> {
-                        try {
-                            TomlParseResult parse = Toml.parse(path);
-                            System.out.println(parse.get("salt"));
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    });
-        } catch (IOException e) {
+        ProtectionDomain protectionDomain = APProcessor.class.getProtectionDomain();
+        URL location = protectionDomain.getCodeSource().getLocation();
+        try {
+            Path path = Path.of(location.toURI());
+            System.out.println(path);
+        } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
         return false;
