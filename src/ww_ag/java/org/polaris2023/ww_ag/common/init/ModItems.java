@@ -2,7 +2,6 @@ package org.polaris2023.ww_ag.common.init;
 
 import com.tterrag.registrate.builders.ItemBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.ItemEntry;
@@ -10,6 +9,7 @@ import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import lombok.experimental.ExtensionMethod;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.recipes.RecipeCategory;
@@ -19,17 +19,12 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.*;
-import net.minecraft.world.item.alchemy.Potion;
-import net.minecraft.world.item.alchemy.PotionContents;
-import net.minecraft.world.level.material.MapColor;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.items.CheeseItem;
 import org.polaris2023.ww_ag.common.items.LivingTuberItem;
 import org.polaris2023.ww_ag.utils.ILanguage;
-
-import java.util.List;
-import java.util.Optional;
+import org.polaris2023.ww_ag.utils.RegUtil;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
@@ -38,6 +33,7 @@ import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
  * {@code @Date 2025/05/18 14:58:14}
  */
 @SuppressWarnings("unused")
+@ExtensionMethod({RegUtil.class})
 public class ModItems {
     public static final ItemEntry<Item> CANDY, SALT, FISH_BONE;
     public static final ItemEntry<LivingTuberItem> LIVING_TUBER;
@@ -80,82 +76,14 @@ public class ModItems {
 
     static {
         {
-            SPLASH_HONEY_BOTTLE = b(
-                    REGISTRATE.item("splash_honey_bottle", Item::new),
-                    b -> {
-                        b.ww_ag$zh_cn("喷溅型蜂蜜瓶");
-                        b.ww_ag$zh_tw("噴濺型蜂蜜瓶");
-                        b.ww_ag$zh_hk("噴濺型蜂蜜瓶");
-                    })
-                    .lang("Splash honey bottle")
-                    .defaultModel()
-                    .properties(p -> p
-                            .stacksTo(1))
-                    .register();
-            LINGERING_HONEY_BOTTLE = b(
-                    REGISTRATE.item("lingering_honey_bottle", Item::new),
-                    b -> {
-                        b.ww_ag$zh_cn("滞留型蜂蜜瓶");
-                        b.ww_ag$zh_tw("滞留型蜂蜜瓶");
-                        b.ww_ag$zh_hk("滞留型蜂蜜瓶");
-                    })
-                    .lang("Lingering honey bottle")
-                    .defaultModel()
-                    .properties(p -> p
-                            .stacksTo(1))
-                    .register();
-
-        }//(splash/lingering)honey bottle
-        {
-            MILK_BOTTLE = b(
-                    REGISTRATE.item("milk_bottle", Item::new),
-                    b -> {
-                        b.ww_ag$zh_cn("奶瓶");
-                        b.ww_ag$zh_tw("奶瓶");
-                        b.ww_ag$zh_hk("奶瓶");
-                    }
-            )
-                    .lang("Milk bottle")
-                    .defaultModel()
-                    .properties(p -> p
-                            .stacksTo(1)
-                    )
-                    .register();
-            SPLASH_MILK_BOTTLE = b(
-                    REGISTRATE.item("splash_milk_bottle", Item::new),
-                    b -> {
-                        b.ww_ag$zh_cn("喷溅型奶瓶");
-                        b.ww_ag$zh_tw("噴濺型奶瓶");
-                        b.ww_ag$zh_hk("噴濺型奶瓶");
-                    }
-            )
-                    .lang("Splash milk bottle")
-                    .defaultModel()
-                    .properties(p -> p
-                            .stacksTo(1)
-                    )
-                    .register();
-            LINGERING_MILK_BOTTLE = b(
-                    REGISTRATE.item("lingering_milk_bottle", Item::new),
-                    b -> {
-                        b.ww_ag$zh_cn("滞留型奶瓶");
-                        b.ww_ag$zh_tw("滯留型奶瓶");
-                        b.ww_ag$zh_hk("滯留型奶瓶");
-                    }
-            )
-                    .lang("Lingering milk bottle")
-                    .defaultModel()
-                    .properties(p -> p
-                            .stacksTo(1)
-                    )
-                    .register();
-
-        }//(splash/lingering/)milk bottle
-        {
             SALT = REGISTRATE
-                    .item("salt", Item::new)
+                    .defTab(ModTabs.INGREDIENTS.key())
+                    .itemReg("salt", Item::new)
+                    .ww_ag$zh_cn("盐")
+                    .ww_ag$zh_tw("鹽")
+                    .ww_ag$zh_hk("鹽")
+                    .ww_ag$self()
                     .defaultModel()
-                    .tab(ModTabs.INGREDIENTS.key())
                     .recipe((c, p) -> {
                         DataIngredient items = DataIngredient.items(ModBlocks.SALT_BLOCK.get());
                         DataIngredient ores = DataIngredient.tag(WWItemTags.ORES$SALT.get());
@@ -167,13 +95,99 @@ public class ModItems {
                     .register();
         }//salt
         {
-            CANDY = b(REGISTRATE
-                    .item("candy", Item::new),
-                    b -> {
-                b.ww_ag$zh_cn("糖果");
-                b.ww_ag$zh_tw("糖果");
-                b.ww_ag$zh_hk("糖果");
+            FISH_BONE = REGISTRATE
+                    .itemReg("fish_bone", Item::new)
+                    .ww_ag$zh_cn("鱼骨")
+                    .ww_ag$zh_cn("魚骨")
+                    .ww_ag$zh_cn("魚骨")
+                    .ww_ag$self()
+                    .lang("Fish bone")
+                    .properties(p -> p
+                            .stacksTo(16))
+                    .defaultModel()
+                    .recipe((c, p) -> {
+                        DataIngredient self = DataIngredient.items(c);
+                        ShapelessRecipeBuilder
+                                .shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
+                                .unlockedBy("has_" + p.safeName(self), self.getCriterion(p))
+                                .requires(self.toVanilla())
+                                .save(p, p.safeId(Items.BONE_MEAL));
                     })
+                    .tag(Tags.Items.BONES)
+                    .register();
+        }//fish bone
+        {
+            SPLASH_HONEY_BOTTLE = REGISTRATE
+                    .defTab(ModTabs.FOOD_AND_DRINK.key())
+                    .itemReg("splash_honey_bottle", Item::new)
+                    .ww_ag$zh_cn("喷溅型蜂蜜瓶")
+                    .ww_ag$zh_tw("噴濺型蜂蜜瓶")
+                    .ww_ag$zh_hk("噴濺型蜂蜜瓶")
+                    .ww_ag$self()
+                    .lang("Splash honey bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1))
+                    .register();
+            LINGERING_HONEY_BOTTLE = REGISTRATE
+                    .itemReg("lingering_honey_bottle", Item::new)
+                    .ww_ag$zh_cn("滞留型蜂蜜瓶")
+                    .ww_ag$zh_tw("滞留型蜂蜜瓶")
+                    .ww_ag$zh_hk("滞留型蜂蜜瓶")
+                    .ww_ag$self()
+                    .lang("Lingering honey bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1))
+                    .register();
+
+        }//(splash/lingering)honey bottle
+        {
+            MILK_BOTTLE = REGISTRATE
+                    .itemReg("milk_bottle", Item::new)
+                    .ww_ag$zh_cn("奶瓶")
+                    .ww_ag$zh_tw("奶瓶")
+                    .ww_ag$zh_hk("奶瓶")
+                    .ww_ag$self()
+                    .lang("Milk bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+            SPLASH_MILK_BOTTLE = REGISTRATE
+                    .itemReg("splash_milk_bottle", Item::new)
+                    .ww_ag$zh_cn("喷溅型奶瓶")
+                    .ww_ag$zh_tw("噴濺型奶瓶")
+                    .ww_ag$zh_hk("噴濺型奶瓶")
+                    .ww_ag$self()
+                    .lang("Splash milk bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+            LINGERING_MILK_BOTTLE = REGISTRATE
+                    .itemReg("lingering_milk_bottle", Item::new)
+                    .ww_ag$zh_cn("滞留型奶瓶")
+                    .ww_ag$zh_tw("滯留型奶瓶")
+                    .ww_ag$zh_hk("滯留型奶瓶")
+                    .ww_ag$self()
+                    .lang("Lingering milk bottle")
+                    .defaultModel()
+                    .properties(p -> p
+                            .stacksTo(1)
+                    )
+                    .register();
+
+        }//(splash/lingering/)milk bottle
+        {
+            CANDY = REGISTRATE
+                    .itemReg("candy", Item::new)
+                    .ww_ag$zh_cn("糖果")
+                    .ww_ag$zh_tw("糖果")
+                    .ww_ag$zh_hk("糖果")
+                    .ww_ag$self()
                     .lang("Candy")
                     .properties(properties -> properties
                             .stacksTo(16))
@@ -197,6 +211,7 @@ public class ModItems {
                     .register();
         }//candy
         //food
+
         {
             FoodProperties TROUT_FOOD = new FoodProperties.Builder()
                     .nutrition(1)
@@ -374,15 +389,12 @@ public class ModItems {
                 });
             }//baked beetroot
             {
-                LIVING_TUBER = b(
-                        REGISTRATE
-                                .item("living_tuber", LivingTuberItem::new),
-                        b -> {
-                            b.ww_ag$zh_cn("活根");
-                            b.ww_ag$zh_tw("活根");
-                            b.ww_ag$zh_hk("活根");
-                        }
-                )
+                LIVING_TUBER = REGISTRATE
+                        .itemReg("living_tuber", LivingTuberItem::new)
+                        .ww_ag$zh_cn("活根")
+                        .ww_ag$zh_tw("活根")
+                        .ww_ag$zh_hk("活根")
+                        .ww_ag$self()
                         .defaultModel()
                         .lang("Living Tuber")
                         .properties(p -> p
@@ -544,6 +556,7 @@ public class ModItems {
                     b.ww_ag$zh_cn("生鳟鱼");
                     b.ww_ag$zh_tw("生鱒魚");
                     b.ww_ag$zh_hk("生鱒魚")
+                            .ww_ag$self()
                             .tag(Tags.Items.FOODS_RAW_FISH);
                 });
                 COOKED_TROUT = baseFood("cooked_trout", p -> p
@@ -554,6 +567,7 @@ public class ModItems {
                     b.ww_ag$zh_cn("熟鳟鱼");
                     b.ww_ag$zh_tw("熟鱒魚");
                     b.ww_ag$zh_hk("熟鱒魚")
+                            .ww_ag$self()
                             .tag(Tags.Items.FOODS_COOKED_FISH);
                 });
 
@@ -566,6 +580,7 @@ public class ModItems {
                     b.ww_ag$zh_cn("生食人鱼");
                     b.ww_ag$zh_tw("生食人魚");
                     b.ww_ag$zh_hk("生食人魚")
+                            .ww_ag$self()
                             .tag(Tags.Items.FOODS_RAW_FISH);
                 });
                 COOKED_PIRANHA = baseFood("cooked_piranha", p -> p
@@ -576,6 +591,7 @@ public class ModItems {
                     b.ww_ag$zh_cn("熟食人鱼");
                     b.ww_ag$zh_tw("熟食人魚");
                     b.ww_ag$zh_hk("熟食人魚")
+                            .ww_ag$self()
                             .tag(Tags.Items.FOODS_COOKED_FISH);
                 });
 
@@ -604,6 +620,7 @@ public class ModItems {
                     b.ww_ag$zh_cn("面团");
                     b.ww_ag$zh_cn("麵團");
                     b.ww_ag$zh_cn("麵團")
+                            .ww_ag$self()
                             .tag(ItemTags.COW_FOOD);
                 });
             }//dough
@@ -735,16 +752,12 @@ public class ModItems {
             }//cooked_egg
             {
 
-                CHEESE = b(
-                        REGISTRATE
-                                .item("cheese", CheeseItem::new),
-                        b -> {
-                            b.ww_ag$zh_cn("奶酪");
-                            b.ww_ag$zh_tw("乳酪");
-                            b.ww_ag$zh_hk("乳酪");
-                        }
-                )
-
+                CHEESE = REGISTRATE
+                        .itemReg("cheese", CheeseItem::new)
+                        .ww_ag$zh_cn("奶酪")
+                        .ww_ag$zh_tw("乳酪")
+                        .ww_ag$zh_hk("乳酪")
+                        .ww_ag$self()
                         .lang("Cheese")
                         .defaultModel()
                         .tab(ModTabs.FOOD_AND_DRINK.key())
@@ -818,87 +831,55 @@ public class ModItems {
                             b.ww_ag$zh_hk("麵粉");
                         });
             }//FLOUR
-            {
-                FISH_BONE = b(
-                        REGISTRATE.item("fish_bone", Item::new),
-                        b -> {
-                            b.ww_ag$zh_cn("鱼骨");
-                            b.ww_ag$zh_cn("魚骨");
-                            b.ww_ag$zh_cn("魚骨");
-                        }
-                )
-                        .lang("Fish bone")
-                        .properties(p -> p
-                                .stacksTo(16))
-                        .defaultModel()
-                        .recipe((c, p) -> {
-                            DataIngredient self = DataIngredient.items(c);
-                            ShapelessRecipeBuilder
-                                    .shapeless(RecipeCategory.MISC, Items.BONE_MEAL)
-                                    .unlockedBy("has_" + p.safeName(self), self.getCriterion(p))
-                                    .requires(self.toVanilla())
-                                    .save(p, p.safeId(Items.BONE_MEAL));
-                        })
-                        .tag(Tags.Items.BONES)
-                        .register();
-            }//fish bone
+
         }
     }
 
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> baseFood(String name,
                                            NonNullUnaryOperator<Item.Properties> properties,
                                            NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
                                            NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> consumer) {
-        ItemBuilder<Item, L2Registrate> item = REGISTRATE
-                .item(name, Item::new);
-        consumer.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
+        var item = REGISTRATE
+                .itemReg(name, Item::new);
+        consumer.accept(item);
         return item
+                .ww_ag$self()
                 .defaultModel()
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> parentVanillaFood(String name,
                                                     NonNullUnaryOperator<Item.Properties> properties,
                                                     Item vanilla,
                                                     NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
                                                     NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> b) {
         var item = REGISTRATE
-                .item(name, Item::new);
-        b.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
+                .itemReg(name, Item::new);
+        b.accept(item);
         return item
+                .ww_ag$self()
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
     }
-    @SuppressWarnings("unchecked")
     public static ItemEntry<Item> parentFood(String name,
                                              NonNullUnaryOperator<Item.Properties> properties,
                                              ItemEntry<?> entry,
                                              NonNullBiConsumer<DataGenContext<Item, Item>, RegistrateRecipeProvider> recipe,
                                              NonNullConsumer<ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>> consumer) {
-        ItemBuilder<Item, L2Registrate> item = REGISTRATE.item(name, Item::new);
-        consumer.accept((ILanguage<Item, Item, L2Registrate, ItemBuilder<Item, L2Registrate>>) item);
+        var item = REGISTRATE.itemReg(name, Item::new);
+        consumer.accept(item);
         return item
+                .ww_ag$self()
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/")))
                 .recipe(recipe)
                 .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
                 .properties(properties)
-                .tab(ModTabs.FOOD_AND_DRINK.key())
                 .register();
-    }
-
-    @SuppressWarnings("unchecked")
-    public static <T extends Item> ItemBuilder<T, L2Registrate> b(ItemBuilder<T, L2Registrate> builder, NonNullConsumer<ILanguage<Item, T, L2Registrate, ItemBuilder<T, L2Registrate>>> b) {
-        b.accept((ILanguage<Item, T, L2Registrate, ItemBuilder<T, L2Registrate>>) builder);
-        return builder;
     }
 
 

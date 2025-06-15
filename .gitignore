@@ -10,6 +10,7 @@ build/reports/
 **/build/generated/data/
 !src/**/build/
 
+
 # Ignore Gradle GUI config
 gradle-app.setting
 

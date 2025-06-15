@@ -10,6 +10,5 @@ import org.polaris2023.ww_ag.WWAgMod;
  * @code @Date 2025/5/28 21:09:38
  */
 public class ModPotions {
-    public static final SimpleEntry<Potion> MILK = WWAgMod.REGISTRATE.potion("milk", Potion::new);
     public static void register() {}
 }

@@ -1,0 +1,27 @@
+
+[salt]
+modid = "ww_ag"				# 模组id定义 ww_ag农业 ww_adv冒险 ww_deco装饰 ww_vpp魔改
+en_us = "Salt"				# 英文
+zh_cn = "盐"					# 简中
+zh_tw = "鹽"					# 台中
+zh_hk = "鹽"					# 港中
+type = "Item"				# 物品Item方块Block
+[salt.item]					#物品属性
+# stacksTo = 64
+# durability = 100
+# rarity = "minecraft:common"
+# craftRemainder = "minecraft:diamond"
+# fireResistant = true 防火
+# jukeboxPlayable= "minecraft:cat"
+# setNoRepair = true
+[salt.food]
+nutrition = 1				# 饥饿
+saturationModifier = 0.1	# 饱和
+# fast = false				# 快速食用	
+# alwaysEdible = false		# 始终能食用
+# usingConvertsTo = "minecraft:air" #食用后转换成
+# [[salt.food.effect]]
+# key = "minecraft:hunger"
+# time = 600
+# level = 0
+# range = 0.3

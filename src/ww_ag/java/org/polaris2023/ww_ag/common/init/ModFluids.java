@@ -31,6 +31,7 @@ public class ModFluids {
                     b.ww_ag$zh_cn("蜂蜜桶");
                     b.ww_ag$zh_tw("蜂蜜桶");
                     b.ww_ag$zh_hk("蜂蜜桶")
+                            .ww_ag$self()
                             .lang("Honey Bucket");
                 }
         ).tag(Tags.Fluids.HONEY).register();

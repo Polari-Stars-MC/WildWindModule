@@ -7,8 +7,12 @@ package org.polaris2023.ww_ag.utils;
 public interface ILanguage<E,
         P extends E,
         G,
-        T extends com.tterrag.registrate.builders.AbstractBuilder<E, P, G, T>> {
-    T ww_ag$zh_cn(String name);
-    T ww_ag$zh_tw(String name);
-    T ww_ag$zh_hk(String name);
+        T extends com.tterrag.registrate.builders.AbstractBuilder<E, P, G, T>> extends ISelf<T> {
+    @SuppressWarnings("unchecked")
+    static <E, P extends E, G, T extends com.tterrag.registrate.builders.AbstractBuilder<E, P, G, T>> ILanguage<E, P, G, T> convert1(T t) {
+        return (ILanguage<E, P, G, T>) t;
+    }
+    ILanguage<E, P, G, T> ww_ag$zh_cn(String name);
+    ILanguage<E, P, G, T> ww_ag$zh_tw(String name);
+    ILanguage<E, P, G, T> ww_ag$zh_hk(String name);
 }

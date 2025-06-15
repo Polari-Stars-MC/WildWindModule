@@ -1,5 +1,6 @@
 package org.polaris2023.ww_vpp.events;
 
+import lombok.experimental.ExtensionMethod;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundEvents;
@@ -31,6 +32,7 @@ import org.polaris2023.ww_vpp.WWVppMod;
  * @code @Date 2025/6/4 08:38:47
  */
 @EventBusSubscriber(modid = WWVppMod.MODID, bus = EventBusSubscriber.Bus.GAME)
+@ExtensionMethod(TeleportUtil.class)
 public class LivingEvents {
     @SubscribeEvent
     @SuppressWarnings("resource")
@@ -40,7 +42,7 @@ public class LivingEvents {
 
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
         if(ModConfigs.USE_ITEM.popped_chorus_fruit.get() && stack.is(Items.POPPED_CHORUS_FRUIT)) {
-            if(TeleportUtil.tryTeleportToSurface(livingEntity, serverLevel, livingEntity.getOnPos()) || TeleportUtil.randomTeleportAround(livingEntity, serverLevel)) {
+            if(livingEntity.tryTeleportToSurface(serverLevel, livingEntity.getOnPos()) || livingEntity.randomTeleportAround(serverLevel)) {
                 serverLevel.gameEvent(GameEvent.TELEPORT, livingEntity.position(), GameEvent.Context.of(livingEntity));
                 SoundSource soundsource;
                 SoundEvent soundevent;

@@ -39,6 +39,7 @@ val neoVersionRange: String by rootProject
 val loaderVersionRange: String by rootProject
 val parchmentMappingsVersion: String by rootProject
 val parchmentMinecraftVersion: String by rootProject
+
 allprojects {
     apply(plugin = "maven-publish")
     apply(plugin = "java-library")
@@ -83,6 +84,8 @@ allprojects {
 
 
 }
+
+
 
 val lib = libs
 
@@ -257,6 +260,13 @@ subprojects {
         }
     }
 
+    val projectNames = listOf(
+        "Deco",
+        "Adventure",
+        "Vanilla Plus Plus",
+        "All In All"
+    )
+
     dependencies {
         val registrate = "accessCompileOnly"(
             group = "com.tterrag.registrate",
@@ -273,6 +283,14 @@ subprojects {
             name= "l2core",
             version="[3.0.8,)"
         )
+
+        val ap = rootProject.files("ap/build/libs/ap.jar")
+
+        if (ap.singleFile.exists()) {
+            compileOnly(ap)
+            annotationProcessor(ap)
+        }
+
     }
     tasks.jar {
         exclude(".cache")
