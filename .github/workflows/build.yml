@@ -43,6 +43,8 @@ jobs:
         run: echo "RELEASE_VERSION=${GITHUB_REF:10}" >> $GITHUB_ENV
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
+      - name: build ap
+        run: ./gradlew :ap:shadowJar
       - name: Data Build AG
         run: ./gradlew :Agricultural:dataBuild
       - name: Data Build Ad

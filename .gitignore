@@ -9,8 +9,7 @@ build/reports/
 **/build/generated/jarJar/
 **/build/generated/data/
 !src/**/build/
-!ap/build/libs/
-ap/build/libs/ap-all.jar
+
 
 # Ignore Gradle GUI config
 gradle-app.setting
