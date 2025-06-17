@@ -1,0 +1,110 @@
+package org.polaris2023.ww_ag.utils.planks;
+
+import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullConsumer;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.common.util.Lazy;
+import org.polaris2023.ww_ag.common.StrippedBlock;
+import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
+import org.polaris2023.ww_ag.utils.ISelf;
+
+import java.util.function.Supplier;
+
+/**
+ * @author baka4n
+ * @code @Date 2025/6/16 22:26:19
+ */
+
+@MethodsReturnNonnullByDefault
+public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+    T setLog(BlockEntry<RotatedPillarBlock> entry);
+    T setStrippedLog(BlockEntry<RotatedPillarBlock> entry);
+    default PlanksEntry<E> strippedLog(
+            Supplier<Block> copy,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
+        return strippedLog(copy, __ -> {}, factory);
+    }
+
+    default PlanksEntry<E> strippedLog(
+            Supplier<Block> copy,
+            NonNullConsumer<BlockBehaviour.Properties> properties,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        T self = ww_ag$self();
+        return setStrippedLog(factory.apply(self.registrate.block("stripped_" + self.name + "_log", __ -> {
+            BlockBehaviour.Properties properties1 =
+                    copy != null ?
+                    BlockBehaviour.Properties.ofFullCopy(copy.get())
+                    : BlockBehaviour.Properties.of();
+            properties.accept(properties1);
+            return new RotatedPillarBlock(properties1);
+        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+    }
+    default PlanksEntry<E> strippedLog(
+            NonNullConsumer<BlockBehaviour.Properties> properties,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        return strippedLog(null ,properties, factory);
+    }
+
+
+    default PlanksEntry<E> strippedLog(
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        return strippedLog(__ -> {}, factory);
+    }
+
+    default PlanksEntry<E> strippedLog() {
+        return strippedLog(NonNullUnaryOperator.identity());
+    }
+
+
+    default PlanksEntry<E> log(
+            Supplier<Block> copy,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
+        return log(copy, __ -> {}, factory);
+    }
+
+    default PlanksEntry<E> log(
+            Supplier<Block> copy,
+            NonNullConsumer<BlockBehaviour.Properties> properties,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        T self = ww_ag$self();
+        return setLog(factory.apply(self.registrate.block(self.name + "_log", __ -> {
+            BlockBehaviour.Properties properties1 =
+                    copy != null ?
+                    BlockBehaviour.Properties.ofFullCopy(copy.get())
+                    : BlockBehaviour.Properties.of();
+            properties.accept(properties1);
+            return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_log.get()));
+        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+    }
+    default PlanksEntry<E> log(
+            NonNullConsumer<BlockBehaviour.Properties> properties,
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        return log(null, properties, factory);
+    }
+
+
+    default PlanksEntry<E> log(
+            NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
+    ) {
+        return log(__ -> {}, factory);
+    }
+
+    default PlanksEntry<E> log() {
+        return log(NonNullUnaryOperator.identity());
+    }
+
+
+
+}

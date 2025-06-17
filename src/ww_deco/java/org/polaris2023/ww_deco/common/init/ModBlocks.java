@@ -24,14 +24,38 @@ public class ModBlocks {
         REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         AZALEA = REGISTRATE
                 .planks("azalea")
-                .planks(() -> Blocks.MANGROVE_PLANKS)
-                .registerPlanks(b -> ILanguage.convert1(b)
+                .planks(() -> Blocks.MANGROVE_PLANKS, b -> ILanguage.convert1(b)
                         .ww_ag$zh_cn("杜鹃木板")
                         .ww_ag$zh_tw("杜鵑木板")
                         .ww_ag$zh_hk("杜鵑木板")
                         .ww_ag$self()
-                        .defaultBlockstate()
-                        .item().build());
+                        .lang("Azalea planks"))
+                .strippedLog(() -> Blocks.STRIPPED_MANGROVE_LOG, b -> ILanguage
+                        .convert1(b)
+                        .ww_ag$zh_cn("去皮杜鹃原木")
+                        .ww_ag$zh_tw("去皮杜鵑原木")
+                        .ww_ag$zh_hk("去皮杜鵑原木")
+                        .ww_ag$self()
+                        .lang("Stripped azalea log"))
+                .log(() -> Blocks.MANGROVE_LOG, b -> ILanguage.convert1(b)
+                        .ww_ag$zh_cn("杜鹃原木")
+                        .ww_ag$zh_tw("杜鵑原木")
+                        .ww_ag$zh_hk("杜鵑原木")
+                        .ww_ag$self()
+                        .lang("Azalea log"))
+                .strippedWood(() -> Blocks.STRIPPED_MANGROVE_WOOD,  b -> ILanguage.convert1(b)
+                        .ww_ag$zh_cn("去皮杜鹃木")
+                        .ww_ag$zh_tw("去皮杜鵑木")
+                        .ww_ag$zh_hk("去皮杜鵑木")
+                        .ww_ag$self()
+                        .lang("Stripped azalea wood"))
+                .wood(() -> Blocks.MANGROVE_WOOD,  b -> ILanguage.convert1(b)
+                        .ww_ag$zh_cn("杜鹃木")
+                        .ww_ag$zh_tw("杜鵑木")
+                        .ww_ag$zh_hk("杜鵑木")
+                        .ww_ag$self()
+                        .lang(" Azalea wood"))
+                ;
     }
     public static void register() {}
 }

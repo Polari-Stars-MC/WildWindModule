@@ -16,7 +16,8 @@ import java.util.function.Supplier;
 @ExtensionMethod({WWAgMod.class, ItemTags.class})
 public enum WWItemTags implements Supplier<TagKey<Item>> {
     ORES$SALT,
-    FUNGUS
+    FUNGUS,
+    AZALEA_LOGS,
     ;
     private final TagKey<Item> tag;
 

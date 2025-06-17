@@ -1,62 +1,89 @@
 package org.polaris2023.ww_ag.common.registrate.entry;
 
-import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
-import net.minecraft.core.Holder;
+import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.PoweredBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.utils.planks.ILog;
+import org.polaris2023.ww_ag.utils.planks.IPlanks;
+import org.polaris2023.ww_ag.utils.planks.IWood;
 
-import java.util.function.Supplier;
+import javax.annotation.ParametersAreNonnullByDefault;
 
 /**
  * @author baka4n
  * @code @Date 2025/6/10 15:28:54
  */
-@SuppressWarnings("unchecked")
-public class PlanksEntry<T extends WWRegistrate> {
-    public BlockBuilder<?, L2Registrate> tBuilder;
+@SuppressWarnings({"unused"})
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+public class PlanksEntry<T extends WWRegistrate> implements
+        IPlanks<T, PlanksEntry<T>>,
+        ILog<T, PlanksEntry<T>>,
+        IWood<T, PlanksEntry<T>> {
     public final T registrate;
-    public BlockEntry<RotatedPillarBlock> planks;
+    public BlockEntry<RotatedPillarBlock>
+            planks,
+            stripped_log,
+            log,
+            stripped_wood,
+            wood
+    ;
     public final String name;
+    final ResourceLocation logsRl;
+    public final TagKey<Block> blockLogs;
+    public final TagKey<Item> itemLogs;
     public PlanksEntry(T registrate, String name) {
         this.registrate = registrate;
         this.name = name;
+        logsRl = ResourceLocation.fromNamespaceAndPath("c", name + "_logs");
+        blockLogs = BlockTags.create(logsRl);
+        itemLogs = ItemTags.create(logsRl);
     }
 
-    public PlanksEntry<T> planks(
-            Supplier<Block> copy,
-            NonNullConsumer<BlockBehaviour.Properties> properties
-    ) {
-        tBuilder = registrate.block(name + "_planks", __ -> {
-            BlockBehaviour.Properties properties1 = BlockBehaviour.Properties.ofFullCopy(copy.get());
-            properties.accept(properties1);
-            return new RotatedPillarBlock(properties1);
-        }).tag(BlockTags.PLANKS);
-        return this;
-    }public PlanksEntry<T> planks(Supplier<Block> copy) {
-        tBuilder = registrate.block(name + "_planks", __ -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(copy.get())))
-                .tag(BlockTags.PLANKS);
-        return this;
+    @Override
+    public PlanksEntry<T> setPlanks(BlockEntry<RotatedPillarBlock> entry) {
+        if (planks != null) throw new IllegalArgumentException("%s_planks is registered!".formatted(name));
+        planks = entry;
+        return ww_ag$self();
     }
-    public PlanksEntry<T> planks() {
-        tBuilder = registrate.block(name + "_planks", RotatedPillarBlock::new)
-                .tag(BlockTags.PLANKS);
+
+    @Override
+    public PlanksEntry<T> ww_ag$self() {
         return this;
     }
 
+    @Override
+    public PlanksEntry<T> setLog(BlockEntry<RotatedPillarBlock> entry) {
+        if (log != null) throw new IllegalArgumentException("%s_log is registered!".formatted(name));
+        log = entry;
+        return ww_ag$self();
+    }
 
-    public PlanksEntry<T> registerPlanks(NonNullConsumer<BlockBuilder<RotatedPillarBlock, L2Registrate>> consumer) {
-        BlockBuilder<RotatedPillarBlock, L2Registrate> tBuilder1 = (BlockBuilder<RotatedPillarBlock, L2Registrate>) tBuilder;
-        consumer.accept(tBuilder1);
-        planks = tBuilder1.register();
-        tBuilder = null;
-        return this;
+    @Override
+    public PlanksEntry<T> setStrippedLog(BlockEntry<RotatedPillarBlock> entry) {
+        if (stripped_log != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        stripped_log = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setWood(BlockEntry<RotatedPillarBlock> entry) {
+        if (wood != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        stripped_wood = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setStrippedWood(BlockEntry<RotatedPillarBlock> entry) {
+        if (wood != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        stripped_wood = entry;
+        return ww_ag$self();
     }
 }

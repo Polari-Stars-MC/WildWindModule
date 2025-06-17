@@ -1,21 +1,14 @@
 package org.polaris2023.ww_ag;
 
 import com.tterrag.registrate.providers.ProviderType;
-import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.simple.Reg;
-import dev.xkmc.l2core.serial.config.ConfigTypeEntry;
 import dev.xkmc.l2core.serial.config.PacketHandlerWithConfig;
-import dev.xkmc.l2core.util.ConfigInit;
-import net.minecraft.Util;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.tags.IntrinsicHolderTagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.alchemy.PotionContents;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -30,12 +23,9 @@ import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
-import net.neoforged.fml.config.ModConfig;
-import net.neoforged.neoforge.common.CreativeModeTabRegistry;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import net.neoforged.neoforge.common.loot.AddTableLootModifier;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
-import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.ww_ag.common.init.*;
@@ -43,13 +33,9 @@ import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
 import org.polaris2023.ww_ag.common.registrate.WWProviderType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
-import org.polaris2023.ww_ag.config.UseItemConfig;
 import org.polaris2023.ww_ag.datagen.worldgen.WWBiomeModifyProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWConfiguredFeatureProvider;
 import org.polaris2023.ww_ag.datagen.worldgen.WWPlaceFeatureProvider;
-
-import java.util.Map;
-import java.util.Objects;
 
 @SuppressWarnings("CodeBlock2Expr")
 @Mod(WWAgMod.MODID)
@@ -63,6 +49,7 @@ public class WWAgMod {
     public static ResourceLocation cLoc(String path) { return ResourceLocation.fromNamespaceAndPath("c", path); }
     public static ResourceLocation loc(String path) { return REGISTRATE.loc(path); }
     public WWAgMod() {
+
         NeoForgeMod.enableMilkFluid();
         ModDataComponents.register();
         ModConfigs.register();
