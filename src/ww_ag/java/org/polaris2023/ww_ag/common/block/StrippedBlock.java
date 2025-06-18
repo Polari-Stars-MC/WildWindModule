@@ -1,8 +1,7 @@
-package org.polaris2023.ww_ag.common;
+package org.polaris2023.ww_ag.common.block;
 
 import com.google.common.base.Supplier;
 import net.minecraft.world.item.context.UseOnContext;
-import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbilities;

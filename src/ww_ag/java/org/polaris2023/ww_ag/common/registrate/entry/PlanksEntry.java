@@ -1,6 +1,9 @@
 package org.polaris2023.ww_ag.common.registrate.entry;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -8,13 +11,18 @@ import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.utils.planks.IButton;
 import org.polaris2023.ww_ag.utils.planks.ILog;
 import org.polaris2023.ww_ag.utils.planks.IPlanks;
 import org.polaris2023.ww_ag.utils.planks.IWood;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Locale;
 
 /**
  * @author baka4n
@@ -26,25 +34,38 @@ import javax.annotation.ParametersAreNonnullByDefault;
 public class PlanksEntry<T extends WWRegistrate> implements
         IPlanks<T, PlanksEntry<T>>,
         ILog<T, PlanksEntry<T>>,
-        IWood<T, PlanksEntry<T>> {
+        IWood<T, PlanksEntry<T>>,
+        IButton<T, PlanksEntry<T>> {
     public final T registrate;
     public BlockEntry<RotatedPillarBlock>
             planks,
             stripped_log,
             log,
             stripped_wood,
-            wood
-    ;
+            wood;
+    public final WoodType wt;
+    public final BlockSetType bst;
+    public BlockEntry<ButtonBlock> button;
     public final String name;
     final ResourceLocation logsRl;
     public final TagKey<Block> blockLogs;
     public final TagKey<Item> itemLogs;
+    @Setter
+    @Accessors(fluent = true)
+    public String zhCn,zhTw,zhHk;
+
+    public String firstUpName() {
+        return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
+    }
     public PlanksEntry(T registrate, String name) {
         this.registrate = registrate;
         this.name = name;
         logsRl = ResourceLocation.fromNamespaceAndPath("c", name + "_logs");
         blockLogs = BlockTags.create(logsRl);
         itemLogs = ItemTags.create(logsRl);
+        var tName = registrate.getModid() + "_" + name;
+        bst = BlockSetType.register(new BlockSetType(tName));
+        wt = WoodType.register(new WoodType(tName, bst));
     }
 
     @Override
@@ -76,14 +97,21 @@ public class PlanksEntry<T extends WWRegistrate> implements
     @Override
     public PlanksEntry<T> setWood(BlockEntry<RotatedPillarBlock> entry) {
         if (wood != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
-        stripped_wood = entry;
+        wood = entry;
         return ww_ag$self();
     }
 
     @Override
     public PlanksEntry<T> setStrippedWood(BlockEntry<RotatedPillarBlock> entry) {
-        if (wood != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        if (stripped_wood != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
         stripped_wood = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setButton(BlockEntry<ButtonBlock> entry) {
+        if (button != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        button = entry;
         return ww_ag$self();
     }
 }

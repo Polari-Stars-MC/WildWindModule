@@ -10,9 +10,10 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.common.util.Lazy;
-import org.polaris2023.ww_ag.common.StrippedBlock;
+import org.polaris2023.ww_ag.common.block.StrippedBlock;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
+import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.ISelf;
 
 import java.util.function.Supplier;
@@ -31,6 +32,10 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return strippedLog(copy, __ -> {}, factory);
     }
+    default PlanksEntry<E> strippedLog(
+            Supplier<Block> copy) {
+        return strippedLog(copy, __ -> {}, NonNullUnaryOperator.identity());
+    }
 
     default PlanksEntry<E> strippedLog(
             Supplier<Block> copy,
@@ -38,14 +43,22 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         T self = ww_ag$self();
-        return setStrippedLog(factory.apply(self.registrate.block("stripped_" + self.name + "_log", __ -> {
+        BlockBuilder<RotatedPillarBlock, L2Registrate> b = factory.apply(self.registrate.block("stripped_" + self.name + "_log", __ -> {
             BlockBehaviour.Properties properties1 =
                     copy != null ?
-                    BlockBehaviour.Properties.ofFullCopy(copy.get())
-                    : BlockBehaviour.Properties.of();
+                            BlockBehaviour.Properties.ofFullCopy(copy.get())
+                            : BlockBehaviour.Properties.of();
             properties.accept(properties1);
             return new RotatedPillarBlock(properties1);
-        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build();
+        return setStrippedLog(ILanguage
+                .convert1(b)
+                .ww_ag$zh_cn("去皮" + self.zhCn + "原木")
+                .ww_ag$zh_tw("去皮" + self.zhTw + "原木")
+                .ww_ag$zh_hk("去皮" + self.zhHk + "原木")
+                .ww_ag$self()
+                .lang("Stripped " + self.name + " log")
+                .register());
     }
     default PlanksEntry<E> strippedLog(
             NonNullConsumer<BlockBehaviour.Properties> properties,
@@ -71,6 +84,11 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return log(copy, __ -> {}, factory);
     }
+    default PlanksEntry<E> log(
+            Supplier<Block> copy) {
+        return log(copy, __ -> {}, NonNullUnaryOperator.identity());
+    }
+
 
     default PlanksEntry<E> log(
             Supplier<Block> copy,
@@ -78,14 +96,21 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         T self = ww_ag$self();
-        return setLog(factory.apply(self.registrate.block(self.name + "_log", __ -> {
+        BlockBuilder<RotatedPillarBlock, L2Registrate> b = factory.apply(self.registrate.block(self.name + "_log", __ -> {
             BlockBehaviour.Properties properties1 =
                     copy != null ?
-                    BlockBehaviour.Properties.ofFullCopy(copy.get())
-                    : BlockBehaviour.Properties.of();
+                            BlockBehaviour.Properties.ofFullCopy(copy.get())
+                            : BlockBehaviour.Properties.of();
             properties.accept(properties1);
             return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_log.get()));
-        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build();
+        return setLog(ILanguage.convert1(b)
+                .ww_ag$zh_cn(self.zhCn + "原木")
+                .ww_ag$zh_tw(self.zhTw + "原木")
+                .ww_ag$zh_hk(self.zhHk + "原木")
+                .ww_ag$self()
+                .lang(self.firstUpName() + " log")
+                .register());
     }
     default PlanksEntry<E> log(
             NonNullConsumer<BlockBehaviour.Properties> properties,

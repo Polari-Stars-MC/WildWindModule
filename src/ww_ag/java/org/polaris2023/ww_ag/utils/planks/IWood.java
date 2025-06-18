@@ -10,24 +10,19 @@ import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.Direction;
-import net.minecraft.data.models.BlockModelGenerators;
-import net.minecraft.data.models.model.ModelTemplates;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.models.model.TextureSlot;
-import net.minecraft.data.models.model.TexturedModel;
 import net.minecraft.data.recipes.RecipeCategory;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.client.model.generators.BlockStateProvider;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
 import net.neoforged.neoforge.common.util.Lazy;
-import org.polaris2023.ww_ag.common.StrippedBlock;
+import org.polaris2023.ww_ag.common.block.StrippedBlock;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
+import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.ISelf;
 
 import java.util.function.Supplier;
@@ -46,6 +41,11 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return strippedWood(copy, __ -> {}, factory);
     }
+    default PlanksEntry<E> strippedWood(
+            Supplier<Block> copy) {
+        return strippedWood(copy, __ -> {}, NonNullUnaryOperator.identity());
+    }
+
 
     default PlanksEntry<E> strippedWood(
             Supplier<Block> copy,
@@ -53,15 +53,22 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         T self = ww_ag$self();
-        return setStrippedWood(factory.apply(self.registrate.block("stripped_" + self.name + "_wood", __ -> {
-            BlockBehaviour.Properties properties1 =
-                    copy != null ?
-                    BlockBehaviour.Properties.ofFullCopy(copy.get())
-                    : BlockBehaviour.Properties.of();
-            properties.accept(properties1);
-            return new RotatedPillarBlock(properties1);
-        })).blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.stripped_log.get())))
-                .recipe((c, p) -> p.square(DataIngredient.items(self.stripped_log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+        BlockBuilder<RotatedPillarBlock, L2Registrate> b = factory.apply(self.registrate.block("stripped_" + self.name + "_wood", __ -> {
+                    BlockBehaviour.Properties properties1 =
+                            copy != null ?
+                                    BlockBehaviour.Properties.ofFullCopy(copy.get())
+                                    : BlockBehaviour.Properties.of();
+                    properties.accept(properties1);
+                    return new RotatedPillarBlock(properties1);
+                })).blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.stripped_log.get())))
+                .recipe((c, p) -> p.square(DataIngredient.items(self.stripped_log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build();
+        return setStrippedWood(ILanguage.convert1(b)
+                .ww_ag$zh_cn("去皮"+self.zhCn + "木")
+                .ww_ag$zh_tw("去皮"+self.zhTw + "木")
+                .ww_ag$zh_hk("去皮"+self.zhHk + "木")
+                .ww_ag$self()
+                .lang("Stripped " + self.name + " wood")
+                .register());
     }
 
     private void woodModelGen(DataGenContext<Block, RotatedPillarBlock> c, RegistrateBlockstateProvider p, TextureMapping logColumn) {
@@ -111,6 +118,11 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return wood(copy, __ -> {}, factory);
     }
+    default PlanksEntry<E> wood(
+            Supplier<Block> copy) {
+        return wood(copy, __ -> {}, NonNullUnaryOperator.identity());
+    }
+
 
     default PlanksEntry<E> wood(
             Supplier<Block> copy,
@@ -119,15 +131,21 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
     ) {
         T self = ww_ag$self();
 
-        return setWood(factory.apply(self.registrate.block(self.name + "_wood", __ -> {
-            BlockBehaviour.Properties properties1 =
-                    copy != null ?
-                    BlockBehaviour.Properties.ofFullCopy(copy.get())
-                    : BlockBehaviour.Properties.of();
-            properties.accept(properties1);
-            return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_wood.get()));
-        })).blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.log.get())))
-                .recipe((c, p) -> p.square(DataIngredient.items(self.log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build().register());
+        BlockBuilder<RotatedPillarBlock, L2Registrate> b = factory.apply(self.registrate.block(self.name + "_wood", __ -> {
+                    BlockBehaviour.Properties properties1 =
+                            copy != null ?
+                                    BlockBehaviour.Properties.ofFullCopy(copy.get())
+                                    : BlockBehaviour.Properties.of();
+                    properties.accept(properties1);
+                    return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_wood.get()));
+                })).blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.log.get())))
+                .recipe((c, p) -> p.square(DataIngredient.items(self.log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build();
+        return setWood(ILanguage.convert1(b)
+                .ww_ag$zh_cn(self.zhCn + "木")
+                .ww_ag$zh_tw(self.zhTw + "木")
+                .ww_ag$zh_hk(self.zhHk + "木")
+                .ww_ag$self()
+                .lang(self.firstUpName() + " wood").register());
     }
     default PlanksEntry<E> wood(
             NonNullConsumer<BlockBehaviour.Properties> properties,

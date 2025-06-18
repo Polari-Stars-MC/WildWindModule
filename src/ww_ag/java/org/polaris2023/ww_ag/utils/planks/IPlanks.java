@@ -18,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
+import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.ISelf;
 
 import java.util.function.Supplier;
@@ -36,21 +37,28 @@ public interface IPlanks<E extends WWRegistrate,T extends PlanksEntry<E>> extend
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> build
     ) {
         T self = ww_ag$self();
-        return setPlanks(build.apply(self.registrate.block(self.name + "_planks", __ -> {
-            BlockBehaviour.Properties properties1 =
-                    copy != null ?
-                    BlockBehaviour.Properties.ofFullCopy(copy.get())
-                    : BlockBehaviour.Properties.of();
-            properties.accept(properties1);
-            return new RotatedPillarBlock(properties1);
-        }).tag(BlockTags.PLANKS))
+        BlockBuilder<RotatedPillarBlock, L2Registrate> b = build.apply(self.registrate.block(self.name + "_planks", __ -> {
+                    BlockBehaviour.Properties properties1 =
+                            copy != null ?
+                                    BlockBehaviour.Properties.ofFullCopy(copy.get())
+                                    : BlockBehaviour.Properties.of();
+                    properties.accept(properties1);
+                    return new RotatedPillarBlock(properties1);
+                }).tag(BlockTags.PLANKS))
                 .defaultBlockstate().simpleItem()
                 .recipe((c, p) -> {
                     p.planks(
                             DataIngredient.tag(self.itemLogs),
                             RecipeCategory.BUILDING_BLOCKS,
                             c);
-                }).register());
+                });
+        return setPlanks(ILanguage.convert1(b)
+                .ww_ag$zh_cn(self.zhCn + "木板")
+                .ww_ag$zh_tw(self.zhTw + "木板")
+                .ww_ag$zh_hk(self.zhHk + "木板")
+                .ww_ag$self()
+                .lang(self.firstUpName() + " planks")
+                .register());
 
     }
     default PlanksEntry<E> planks(
