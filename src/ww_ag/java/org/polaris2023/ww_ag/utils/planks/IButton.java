@@ -10,11 +10,13 @@ import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import lombok.experimental.ExtensionMethod;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
@@ -44,7 +46,13 @@ public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E>> exten
                     properties.accept(properties1);
                     return new ButtonBlock(self.bst, 30, properties1);
                 }).tag(BlockTags.PLANKS))
-                .blockstate((c, p) -> p.buttonBlock(c.get(), TextureMapping.getBlockTexture(self.planks.get()))).simpleItem()
+                .blockstate((c, p) -> {
+                    ResourceLocation blockTexture = TextureMapping.getBlockTexture(self.planks.get());
+                    p.buttonBlock(c.get(), blockTexture);
+                    BlockModelBuilder inventory = p.models().buttonInventory(c.getId().getPath() + "_inventory", blockTexture);
+                    p.simpleBlockItem(c.get(), inventory);
+                }
+                ).simpleItem()
                 .recipe((c, p) -> {
                     DataIngredient items = DataIngredient.items(self.planks.asItem());
                     RegistrateRecipeProvider.buttonBuilder(c.get(), items.toVanilla())

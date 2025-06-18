@@ -31,6 +31,8 @@ public class ModBlocks {
                 .strippedWood(() -> Blocks.STRIPPED_MANGROVE_WOOD)
                 .wood(() -> Blocks.MANGROVE_WOOD)
                 .button(() -> Blocks.MANGROVE_BUTTON)
+                .door(() -> Blocks.MANGROVE_DOOR)
+                .trapDoor(() -> Blocks.MANGROVE_TRAPDOOR)
                 ;
     }
     public static void register() {}
