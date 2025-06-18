@@ -12,6 +12,7 @@ import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
@@ -45,14 +46,16 @@ public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E>> exten
                                     : BlockBehaviour.Properties.of();
                     properties.accept(properties1);
                     return new ButtonBlock(self.bst, 30, properties1);
-                }).tag(BlockTags.PLANKS))
+                }))
                 .blockstate((c, p) -> {
                     ResourceLocation blockTexture = TextureMapping.getBlockTexture(self.planks.get());
                     p.buttonBlock(c.get(), blockTexture);
                     BlockModelBuilder inventory = p.models().buttonInventory(c.getId().getPath() + "_inventory", blockTexture);
                     p.simpleBlockItem(c.get(), inventory);
                 }
-                ).simpleItem()
+                )
+                .tag(BlockTags.BUTTONS)
+                .item().tag(ItemTags.BUTTONS).build()
                 .recipe((c, p) -> {
                     DataIngredient items = DataIngredient.items(self.planks.asItem());
                     RegistrateRecipeProvider.buttonBuilder(c.get(), items.toVanilla())

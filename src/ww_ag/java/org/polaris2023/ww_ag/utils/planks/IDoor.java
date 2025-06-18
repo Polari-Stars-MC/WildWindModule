@@ -7,15 +7,13 @@ import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
-import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.ItemTags;
 import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.ButtonBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.client.model.generators.BlockModelBuilder;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
@@ -44,7 +42,8 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                                     : BlockBehaviour.Properties.of();
                     properties.accept(properties1);
                     return new DoorBlock(self.bst, properties1);
-                }).tag(BlockTags.PLANKS))
+                }))
+                .tag(BlockTags.DOORS)
                 .blockstate((c, p) -> {
                     ResourceLocation blockTextures = c.getId().withPrefix("block/");
                     p.doorBlock(c.get(),
@@ -52,7 +51,8 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                             blockTextures.withSuffix("_top"));
                 }).item().model((c, p) -> {
                     p.generated(c, c.getId().withPrefix("item/"));
-                }).build()
+                })
+                .tag(ItemTags.DOORS).build()
                 .recipe((c, p) -> {
                     DataIngredient items = DataIngredient.items(self.planks.asItem());
                     RegistrateRecipeProvider.doorBuilder(c.get(), items.toVanilla())
@@ -100,13 +100,15 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                                     : BlockBehaviour.Properties.of();
                     properties.accept(properties1);
                     return new TrapDoorBlock(self.bst, properties1);
-                }).tag(BlockTags.PLANKS))
+                }))
+                .tag(BlockTags.TRAPDOORS)
                 .blockstate((c, p) -> {
                     ResourceLocation blockTextures = c.getId().withPrefix("block/");
                     p.trapdoorBlock(c.get(), blockTextures, true);
                 }).item().model((c, p) -> {
                     p.withExistingParent(c.getId().getPath(), c.getId().withPrefix("block/").withSuffix("_bottom"));
-                }).build()
+                })
+                .tag(ItemTags.TRAPDOORS).build()
                 .recipe((c, p) -> {
                     DataIngredient items = DataIngredient.items(self.planks.asItem());
                     RegistrateRecipeProvider.trapdoorBuilder(c.get(), items.toVanilla())

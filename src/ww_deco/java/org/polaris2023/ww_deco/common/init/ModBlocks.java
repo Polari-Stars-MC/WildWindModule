@@ -33,6 +33,8 @@ public class ModBlocks {
                 .button(() -> Blocks.MANGROVE_BUTTON)
                 .door(() -> Blocks.MANGROVE_DOOR)
                 .trapDoor(() -> Blocks.MANGROVE_TRAPDOOR)
+                .fence(() -> Blocks.MANGROVE_FENCE)
+                .fenceGate(() -> Blocks.MANGROVE_FENCE_GATE)
                 ;
     }
     public static void register() {}

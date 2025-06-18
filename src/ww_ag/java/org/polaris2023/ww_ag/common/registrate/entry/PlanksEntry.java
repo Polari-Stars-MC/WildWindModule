@@ -31,7 +31,8 @@ public class PlanksEntry<T extends WWRegistrate> implements
         ILog<T, PlanksEntry<T>>,
         IWood<T, PlanksEntry<T>>,
         IButton<T, PlanksEntry<T>>,
-        IDoor<T, PlanksEntry<T>> {
+        IDoor<T, PlanksEntry<T>>,
+        IFence<T, PlanksEntry<T>>{
     public final T registrate;
 
     public final WoodType wt;
@@ -53,6 +54,8 @@ public class PlanksEntry<T extends WWRegistrate> implements
     public BlockEntry<DoorBlock> door;
     public BlockEntry<TrapDoorBlock> trapDoor;
     public BlockEntry<ButtonBlock> button;
+    public BlockEntry<FenceGateBlock> fence_gate;
+    public BlockEntry<FenceBlock> fence;
 
     public String firstUpName() {
         return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
@@ -126,6 +129,20 @@ public class PlanksEntry<T extends WWRegistrate> implements
     public PlanksEntry<T> setTrapDoor(BlockEntry<TrapDoorBlock> entry) {
         if (trapDoor != null) throw new IllegalArgumentException("%s_trap_door is registered!".formatted(name));
         trapDoor = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setFenceGate(BlockEntry<FenceGateBlock> entry) {
+        if (fence_gate != null) throw new IllegalArgumentException("%s_fence_gate is registered!".formatted(name));
+        fence_gate = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setFence(BlockEntry<FenceBlock> entry) {
+        if (fence != null) throw new IllegalArgumentException("%s_fence is registered!".formatted(name));
+        fence = entry;
         return ww_ag$self();
     }
 }
