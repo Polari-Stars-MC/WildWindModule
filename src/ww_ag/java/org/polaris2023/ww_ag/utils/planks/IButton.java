@@ -67,7 +67,7 @@ public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E>> exten
                 .ww_ag$zh_tw(self.zhTw+"按鈕")
                 .ww_ag$zh_hk(self.zhHk+"按鈕")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " button").register());
+                .lang(self.firstUpName() + " Button").register());
 
     }
     default PlanksEntry<E> button(

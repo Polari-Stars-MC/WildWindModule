@@ -57,7 +57,7 @@ public interface IPlanks<E extends WWRegistrate,T extends PlanksEntry<E>> extend
                 .ww_ag$zh_tw(self.zhTw + "木板")
                 .ww_ag$zh_hk(self.zhHk + "木板")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " planks")
+                .lang(self.firstUpName() + " Planks")
                 .register());
 
     }

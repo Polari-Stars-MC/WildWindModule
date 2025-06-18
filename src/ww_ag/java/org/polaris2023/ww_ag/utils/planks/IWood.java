@@ -70,7 +70,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .ww_ag$zh_tw("去皮"+self.zhTw + "木")
                 .ww_ag$zh_hk("去皮"+self.zhHk + "木")
                 .ww_ag$self()
-                .lang("Stripped " + self.name + " wood")
+                .lang("Stripped " + self.firstUpName() + " Wood")
                 .register());
     }
 
@@ -151,7 +151,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .ww_ag$zh_tw(self.zhTw + "木")
                 .ww_ag$zh_hk(self.zhHk + "木")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " wood").register());
+                .lang(self.firstUpName() + " Wood").register());
     }
     default PlanksEntry<E> wood(
             NonNullConsumer<BlockBehaviour.Properties> properties,

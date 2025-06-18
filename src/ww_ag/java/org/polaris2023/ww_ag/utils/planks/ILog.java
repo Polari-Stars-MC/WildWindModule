@@ -57,7 +57,7 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
                 .ww_ag$zh_tw("去皮" + self.zhTw + "原木")
                 .ww_ag$zh_hk("去皮" + self.zhHk + "原木")
                 .ww_ag$self()
-                .lang("Stripped " + self.name + " log")
+                .lang("Stripped " + self.firstUpName() + " Log")
                 .register());
     }
     default PlanksEntry<E> strippedLog(
@@ -109,7 +109,7 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
                 .ww_ag$zh_tw(self.zhTw + "原木")
                 .ww_ag$zh_hk(self.zhHk + "原木")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " log")
+                .lang(self.firstUpName() + " Log")
                 .register());
     }
     default PlanksEntry<E> log(

@@ -5,10 +5,12 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
@@ -81,6 +83,11 @@ public class PlanksEntry<T extends WWRegistrate> implements
     @Override
     public PlanksEntry<T> ww_ag$self() {
         return this;
+    }
+
+    public PlanksEntry<T> defTag(ResourceKey<CreativeModeTab> key) {
+        registrate.defaultCreativeTab(key);
+        return ww_ag$self();
     }
 
     @Override

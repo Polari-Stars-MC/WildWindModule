@@ -1,6 +1,7 @@
 package org.polaris2023.ww_deco.common.init;
 
 import lombok.experimental.ExtensionMethod;
+import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import org.polaris2023.ww_ag.common.init.ModTabs;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
@@ -21,10 +22,10 @@ public class ModBlocks {
     public static final PlanksEntry<WWRegistrate> AZALEA;
 
     static {
-        REGISTRATE.defaultCreativeTab(ModTabs.BUILDING_BLOCK.key());
         AZALEA = REGISTRATE
                 .planks("azalea")
                 .zhCn("杜鹃").zhTw("杜鵑").zhHk("杜鵑")
+                .defTag(ModTabs.BUILDING_BLOCK.key())
                 .planks(() -> Blocks.MANGROVE_PLANKS)
                 .strippedLog(() -> Blocks.STRIPPED_MANGROVE_LOG)
                 .log(() -> Blocks.MANGROVE_LOG)

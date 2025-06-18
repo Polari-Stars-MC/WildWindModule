@@ -59,7 +59,7 @@ public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extend
                 .ww_ag$zh_tw(self.zhTw+"木柵欄")
                 .ww_ag$zh_hk(self.zhHk+"木柵欄")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " fence").register());
+                .lang(self.firstUpName() + " Fence").register());
 
     }
     default PlanksEntry<E> fence(
@@ -113,7 +113,7 @@ public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extend
                 .ww_ag$zh_tw(self.zhTw+"木柵欄門")
                 .ww_ag$zh_hk(self.zhHk+"木柵欄門")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " fence gate").register());
+                .lang(self.firstUpName() + " Fence Gate").register());
 
     }
     default PlanksEntry<E> fenceGate(

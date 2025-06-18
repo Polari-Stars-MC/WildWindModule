@@ -64,7 +64,7 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .ww_ag$zh_tw(self.zhTw+"木門")
                 .ww_ag$zh_hk(self.zhHk+"木門")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " door").register());
+                .lang(self.firstUpName() + " Door").register());
 
     }
     default PlanksEntry<E> door(
@@ -120,7 +120,7 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .ww_ag$zh_tw(self.zhTw+"木活板門")
                 .ww_ag$zh_hk(self.zhHk+"木活板門")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " trapdoor").register());
+                .lang(self.firstUpName() + " Trapdoor").register());
 
     }
     default PlanksEntry<E> trapDoor(
