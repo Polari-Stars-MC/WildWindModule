@@ -18,8 +18,8 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.neoforged.neoforge.client.model.generators.ConfiguredModel;
 import net.neoforged.neoforge.client.model.generators.VariantBlockStateBuilder;
-import net.neoforged.neoforge.common.util.Lazy;
-import org.polaris2023.ww_ag.common.block.StrippedBlock;
+import org.polaris2023.ww_ag.common.block.StrippableBlock;
+
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
@@ -140,7 +140,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                                     BlockBehaviour.Properties.ofFullCopy(copy.get())
                                     : BlockBehaviour.Properties.of();
                     properties.accept(properties1);
-                    return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_wood.get()));
+                    return new StrippableBlock(properties1, () -> self.stripped_wood.get());
                 }))
                 .tag(self.blockLogs)
                 .blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.log.get())))

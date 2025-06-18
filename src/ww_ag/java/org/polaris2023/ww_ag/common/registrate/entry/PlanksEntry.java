@@ -34,7 +34,9 @@ public class PlanksEntry<T extends WWRegistrate> implements
         IWood<T, PlanksEntry<T>>,
         IButton<T, PlanksEntry<T>>,
         IDoor<T, PlanksEntry<T>>,
-        IFence<T, PlanksEntry<T>>{
+        IFence<T, PlanksEntry<T>>,
+        ILeaves<T, PlanksEntry<T>>,
+        ISign<T, PlanksEntry<T>> {
     public final T registrate;
 
     public final WoodType wt;
@@ -58,6 +60,11 @@ public class PlanksEntry<T extends WWRegistrate> implements
     public BlockEntry<ButtonBlock> button;
     public BlockEntry<FenceGateBlock> fence_gate;
     public BlockEntry<FenceBlock> fence;
+    public BlockEntry<LeavesBlock> leaves;
+    public BlockEntry<StandingSignBlock> sign;
+    public BlockEntry<CeilingHangingSignBlock> hanging_sign;
+    public BlockEntry<WallSignBlock> wall_sign;
+    public BlockEntry<WallHangingSignBlock> wall_hanging_sign;
 
     public String firstUpName() {
         return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
@@ -150,6 +157,41 @@ public class PlanksEntry<T extends WWRegistrate> implements
     public PlanksEntry<T> setFence(BlockEntry<FenceBlock> entry) {
         if (fence != null) throw new IllegalArgumentException("%s_fence is registered!".formatted(name));
         fence = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setLeaves(BlockEntry<LeavesBlock> entry) {
+        if (leaves != null) throw new IllegalArgumentException("%s_leaves is registered!".formatted(name));
+        leaves = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setSign(BlockEntry<StandingSignBlock> entry) {
+        if (sign != null) throw new IllegalArgumentException("%s_sign is registered!".formatted(name));
+        sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setHangingSign(BlockEntry<CeilingHangingSignBlock> entry) {
+        if (hanging_sign != null) throw new IllegalArgumentException("%s_hanging_sign is registered!".formatted(name));
+        hanging_sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setWallSign(BlockEntry<WallSignBlock> entry) {
+        if (wall_sign != null) throw new IllegalArgumentException("%s_wall_sign is registered!".formatted(name));
+        wall_sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public PlanksEntry<T> setWallHangingSign(BlockEntry<WallHangingSignBlock> entry) {
+        if (wall_hanging_sign != null) throw new IllegalArgumentException("%s_wall_hanging_sign is registered!".formatted(name));
+        wall_hanging_sign = entry;
         return ww_ag$self();
     }
 }

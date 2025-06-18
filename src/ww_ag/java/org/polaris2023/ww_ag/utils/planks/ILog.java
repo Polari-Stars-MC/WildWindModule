@@ -9,8 +9,8 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.common.util.Lazy;
-import org.polaris2023.ww_ag.common.block.StrippedBlock;
+import org.polaris2023.ww_ag.common.block.StrippableBlock;
+
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
@@ -102,7 +102,7 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
                             BlockBehaviour.Properties.ofFullCopy(copy.get())
                             : BlockBehaviour.Properties.of();
             properties.accept(properties1);
-            return new StrippedBlock(properties1, Lazy.of(() -> () -> self.stripped_log.get()));
+            return new StrippableBlock(properties1, () -> self.stripped_log.get());
         })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build();
         return setLog(ILanguage.convert1(b)
                 .ww_ag$zh_cn(self.zhCn + "原木")

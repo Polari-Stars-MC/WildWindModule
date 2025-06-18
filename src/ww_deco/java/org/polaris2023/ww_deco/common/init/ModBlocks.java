@@ -1,12 +1,10 @@
 package org.polaris2023.ww_deco.common.init;
 
 import lombok.experimental.ExtensionMethod;
-import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.level.block.Blocks;
 import org.polaris2023.ww_ag.common.init.ModTabs;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
-import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.RegUtil;
 
 import static org.polaris2023.ww_deco.WWDecoMod.REGISTRATE;
@@ -36,6 +34,7 @@ public class ModBlocks {
                 .trapDoor(() -> Blocks.MANGROVE_TRAPDOOR)
                 .fence(() -> Blocks.MANGROVE_FENCE)
                 .fenceGate(() -> Blocks.MANGROVE_FENCE_GATE)
+                .sign(() -> Blocks.MANGROVE_SIGN)
                 ;
     }
     public static void register() {}
