@@ -166,6 +166,27 @@ public class WWRegistrate extends L2Registrate {
     public PlanksEntry<WWRegistrate, ?> planks(String name) {
         return new PlanksEntry<>(this, name);
     }
+    public PlanksEntry<WWRegistrate, ?> fastPlanks(String name, String zhCn, String zhTw, String zhHk) {
+        return new PlanksEntry<>(this, name)
+                .zhCn(zhCn).zhTw(zhTw).zhHk(zhHk)
+                .planks()
+                .strippedLog()
+                .log()
+                .strippedWood()
+                .wood()
+                .leaves()
+                .button()
+                .door()
+                .trapDoor()
+                .fence()
+                .fenceGate()
+                .sign()
+                .hangingSign()
+                .pressurePlate()
+                .slab()
+                .stairs();
+
+    }
 
     public <T extends SoundEvent> SoundBuilder<T, L2Registrate> customSound(String name, Function<ResourceLocation, T> function) {
         return entry(name, callback -> SoundBuilder.create(this, self(), name, callback, () -> function.apply(loc(name))));

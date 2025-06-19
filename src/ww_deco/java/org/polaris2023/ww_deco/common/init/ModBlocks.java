@@ -38,8 +38,7 @@ public class ModBlocks {
                 .hangingSign(() -> Blocks.MANGROVE_HANGING_SIGN, () -> Blocks.MANGROVE_WALL_HANGING_SIGN)
                 .pressurePlate(() -> Blocks.MANGROVE_PRESSURE_PLATE)
                 .slab(() -> Blocks.MANGROVE_SLAB)
-                .stairs(() -> Blocks.MANGROVE_STAIRS)
-                ;
+                .stairs(() -> Blocks.MANGROVE_STAIRS);
 
     }
     public static void register() {}
