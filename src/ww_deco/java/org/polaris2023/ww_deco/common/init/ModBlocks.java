@@ -17,12 +17,13 @@ import static org.polaris2023.ww_deco.WWDecoMod.REGISTRATE;
 @ExtensionMethod({RegUtil.class})
 public class ModBlocks {
 
-    public static final PlanksEntry<WWRegistrate, ?> AZALEA;
+    public static final PlanksEntry<WWRegistrate, ?>
+            AZALEA, BAOBAB;
 
     static {
         AZALEA = REGISTRATE
                 .planks("azalea")
-                .zhCn("杜鹃").zhTw("杜鵑").zhHk("杜鵑")
+                .zhCn("杜鹃树").zhTw("杜鵑樹").zhHk("杜鵑樹")
                 .defTag(ModTabs.BUILDING_BLOCK.key())
                 .planks(() -> Blocks.MANGROVE_PLANKS)
                 .strippedLog(() -> Blocks.STRIPPED_MANGROVE_LOG)
@@ -34,11 +35,30 @@ public class ModBlocks {
                 .trapDoor(() -> Blocks.MANGROVE_TRAPDOOR)
                 .fence(() -> Blocks.MANGROVE_FENCE)
                 .fenceGate(() -> Blocks.MANGROVE_FENCE_GATE)
-                .sign(() -> Blocks.MANGROVE_SIGN, () -> Blocks.MANGROVE_SIGN)
+                .sign(() -> Blocks.MANGROVE_SIGN, () -> Blocks.MANGROVE_WALL_SIGN)
                 .hangingSign(() -> Blocks.MANGROVE_HANGING_SIGN, () -> Blocks.MANGROVE_WALL_HANGING_SIGN)
                 .pressurePlate(() -> Blocks.MANGROVE_PRESSURE_PLATE)
                 .slab(() -> Blocks.MANGROVE_SLAB)
                 .stairs(() -> Blocks.MANGROVE_STAIRS);
+        BAOBAB = REGISTRATE
+                .planks("baobab")
+                .zhCn("猴面包树").zhTw("猴麵包樹").zhHk("猴麵包樹")
+                .planks(() -> Blocks.ACACIA_PLANKS)
+                .strippedLog(() -> Blocks.STRIPPED_ACACIA_LOG)
+                .log(() -> Blocks.ACACIA_LOG)
+                .strippedWood(() -> Blocks.STRIPPED_ACACIA_WOOD)
+                .wood(() -> Blocks.ACACIA_WOOD)
+                .leaves(() -> Blocks.ACACIA_LEAVES)
+                .button(() -> Blocks.ACACIA_BUTTON)
+                .door(() -> Blocks.ACACIA_DOOR)
+                .trapDoor(() -> Blocks.ACACIA_TRAPDOOR)
+                .fence(() -> Blocks.ACACIA_FENCE)
+                .fenceGate(() -> Blocks.ACACIA_FENCE_GATE)
+                .sign(() -> Blocks.ACACIA_SIGN, () -> Blocks.ACACIA_WALL_SIGN)
+                .hangingSign(() -> Blocks.ACACIA_HANGING_SIGN, () -> Blocks.ACACIA_WALL_HANGING_SIGN)
+                .pressurePlate(() -> Blocks.ACACIA_PRESSURE_PLATE)
+                .slab(() -> Blocks.ACACIA_SLAB)
+                .stairs(() -> Blocks.ACACIA_STAIRS);
 
     }
     public static void register() {}
