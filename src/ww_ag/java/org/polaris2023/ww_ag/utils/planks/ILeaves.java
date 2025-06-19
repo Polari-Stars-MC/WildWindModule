@@ -27,9 +27,9 @@ import java.util.function.Supplier;
  * @author baka4n
  * @code @Date 2025/6/18 23:57:12
  */
-public interface ILeaves<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface ILeaves<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setLeaves(BlockEntry<LeavesBlock> entry);
-    default PlanksEntry<E> leaves(
+    default T leaves(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<LeavesBlock, L2Registrate>> build
@@ -65,19 +65,19 @@ public interface ILeaves<E extends WWRegistrate, T extends PlanksEntry<E>> exten
                 .lang(self.firstUpName() + " Leaves").register());
 
     }
-    default PlanksEntry<E> leaves(
+    default T leaves(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<LeavesBlock, L2Registrate>> build
     ) {
         return leaves(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> leaves(Supplier<Block> copy) {
+    default T leaves(Supplier<Block> copy) {
         return leaves(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> leaves() {
+    default T leaves() {
         return leaves(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> leaves(
+    default T leaves(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<LeavesBlock, L2Registrate>> build
     ) {

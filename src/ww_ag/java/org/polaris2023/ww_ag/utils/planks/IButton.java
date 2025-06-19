@@ -32,9 +32,9 @@ import java.util.function.Supplier;
  * @author baka4n
  * @code @Date 2025/6/18 03:41:44
  */
-public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setButton(BlockEntry<ButtonBlock> entry);
-    default PlanksEntry<E> button(
+    default T button(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<ButtonBlock, L2Registrate>> build
@@ -64,26 +64,26 @@ public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E>> exten
                             .save(p, p.safeId(c.getId()));
                 });
         return setButton(ILanguage.convert1(b)
-                .ww_ag$zh_cn(self.zhCn+"按钮")
-                .ww_ag$zh_tw(self.zhTw+"按鈕")
-                .ww_ag$zh_hk(self.zhHk+"按鈕")
+                .ww_ag$zh_cn(self.zhCn+"木按钮")
+                .ww_ag$zh_tw(self.zhTw+"木按鈕")
+                .ww_ag$zh_hk(self.zhHk+"木按鈕")
                 .ww_ag$self()
                 .lang(self.firstUpName() + " Button").register());
 
     }
-    default PlanksEntry<E> button(
+    default T button(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<ButtonBlock, L2Registrate>> build
     ) {
         return button(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> button(Supplier<Block> copy) {
+    default T button(Supplier<Block> copy) {
         return button(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> button() {
+    default T button() {
         return button(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> button(
+    default T button(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<ButtonBlock, L2Registrate>> build
     ) {

@@ -17,7 +17,7 @@ import static org.polaris2023.ww_deco.WWDecoMod.REGISTRATE;
 @ExtensionMethod({RegUtil.class})
 public class ModBlocks {
 
-    public static final PlanksEntry<WWRegistrate> AZALEA;
+    public static final PlanksEntry<WWRegistrate, ?> AZALEA;
 
     static {
         AZALEA = REGISTRATE
@@ -34,8 +34,13 @@ public class ModBlocks {
                 .trapDoor(() -> Blocks.MANGROVE_TRAPDOOR)
                 .fence(() -> Blocks.MANGROVE_FENCE)
                 .fenceGate(() -> Blocks.MANGROVE_FENCE_GATE)
-                .sign(() -> Blocks.MANGROVE_SIGN)
+                .sign(() -> Blocks.MANGROVE_SIGN, () -> Blocks.MANGROVE_SIGN)
+                .hangingSign(() -> Blocks.MANGROVE_HANGING_SIGN, () -> Blocks.MANGROVE_WALL_HANGING_SIGN)
+                .pressurePlate(() -> Blocks.MANGROVE_PRESSURE_PLATE)
+                .slab(() -> Blocks.MANGROVE_SLAB)
+                .stairs(() -> Blocks.MANGROVE_STAIRS)
                 ;
+
     }
     public static void register() {}
 }

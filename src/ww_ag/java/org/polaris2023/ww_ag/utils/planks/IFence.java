@@ -24,11 +24,11 @@ import java.util.function.Supplier;
  * @author baka4n
  * @code @Date 2025/6/18 19:06:20
  */
-public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setFenceGate(BlockEntry<FenceGateBlock> entry);
     T setFence(BlockEntry<FenceBlock> entry);
 
-    default PlanksEntry<E> fence(
+    default T fence(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<FenceBlock, L2Registrate>> build
@@ -62,19 +62,19 @@ public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extend
                 .lang(self.firstUpName() + " Fence").register());
 
     }
-    default PlanksEntry<E> fence(
+    default T fence(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<FenceBlock, L2Registrate>> build
     ) {
         return fence(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> fence(Supplier<Block> copy) {
+    default T fence(Supplier<Block> copy) {
         return fence(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> fence() {
+    default T fence() {
         return fence(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> fence(
+    default T fence(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<FenceBlock, L2Registrate>> build
     ) {
@@ -82,7 +82,7 @@ public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extend
     }
 
 
-    default PlanksEntry<E> fenceGate(
+    default T fenceGate(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<FenceGateBlock, L2Registrate>> build
@@ -116,19 +116,19 @@ public interface IFence<E extends WWRegistrate, T extends PlanksEntry<E>> extend
                 .lang(self.firstUpName() + " Fence Gate").register());
 
     }
-    default PlanksEntry<E> fenceGate(
+    default T fenceGate(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<FenceGateBlock, L2Registrate>> build
     ) {
         return fenceGate(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> fenceGate(Supplier<Block> copy) {
+    default T fenceGate(Supplier<Block> copy) {
         return fenceGate(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> fenceGate() {
+    default T fenceGate() {
         return fenceGate(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> fenceGate(
+    default T fenceGate(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<FenceGateBlock, L2Registrate>> build
     ) {

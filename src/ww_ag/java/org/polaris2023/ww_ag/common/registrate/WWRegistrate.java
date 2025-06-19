@@ -163,7 +163,7 @@ public class WWRegistrate extends L2Registrate {
         }
     }
 
-    public PlanksEntry<WWRegistrate> planks(String name) {
+    public PlanksEntry<WWRegistrate, ?> planks(String name) {
         return new PlanksEntry<>(this, name);
     }
 

@@ -33,21 +33,21 @@ import java.util.function.Supplier;
  */
 
 @MethodsReturnNonnullByDefault
-public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setWood(BlockEntry<RotatedPillarBlock> entry);
     T setStrippedWood(BlockEntry<RotatedPillarBlock> entry);
-    default PlanksEntry<E> strippedWood(
+    default T strippedWood(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return strippedWood(copy, __ -> {}, factory);
     }
-    default PlanksEntry<E> strippedWood(
+    default T strippedWood(
             Supplier<Block> copy) {
         return strippedWood(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
 
 
-    default PlanksEntry<E> strippedWood(
+    default T strippedWood(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
@@ -97,7 +97,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                                 .buildLast());
     }
 
-    default PlanksEntry<E> strippedWood(
+    default T strippedWood(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
@@ -105,29 +105,29 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
     }
 
 
-    default PlanksEntry<E> strippedWood(
+    default T strippedWood(
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         return strippedWood(__ -> {}, factory);
     }
 
-    default PlanksEntry<E> strippedWood() {
+    default T strippedWood() {
         return strippedWood(NonNullUnaryOperator.identity());
     }
 
 
-    default PlanksEntry<E> wood(
+    default T wood(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return wood(copy, __ -> {}, factory);
     }
-    default PlanksEntry<E> wood(
+    default T wood(
             Supplier<Block> copy) {
         return wood(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
 
 
-    default PlanksEntry<E> wood(
+    default T wood(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
@@ -153,7 +153,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .ww_ag$self()
                 .lang(self.firstUpName() + " Wood").register());
     }
-    default PlanksEntry<E> wood(
+    default T wood(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
@@ -161,13 +161,13 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E>> extends
     }
 
 
-    default PlanksEntry<E> wood(
+    default T wood(
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         return wood(__ -> {}, factory);
     }
 
-    default PlanksEntry<E> wood() {
+    default T wood() {
         return wood(NonNullUnaryOperator.identity());
     }
 

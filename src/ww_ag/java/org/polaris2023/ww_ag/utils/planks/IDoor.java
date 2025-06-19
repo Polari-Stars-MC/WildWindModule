@@ -25,11 +25,11 @@ import java.util.function.Supplier;
  * @author baka4n
  * @code @Date 2025/6/18 16:17:24
  */
-public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setDoor(BlockEntry<DoorBlock> entry);
     T setTrapDoor(BlockEntry<TrapDoorBlock> entry);
 
-    default PlanksEntry<E> door(
+    default T door(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<DoorBlock, L2Registrate>> build
@@ -67,19 +67,19 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .lang(self.firstUpName() + " Door").register());
 
     }
-    default PlanksEntry<E> door(
+    default T door(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<DoorBlock, L2Registrate>> build
     ) {
         return door(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> door(Supplier<Block> copy) {
+    default T door(Supplier<Block> copy) {
         return door(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> door() {
+    default T door() {
         return door(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> door(
+    default T door(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<DoorBlock, L2Registrate>> build
     ) {
@@ -87,7 +87,7 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
     }
 
 
-    default PlanksEntry<E> trapDoor(
+    default T trapDoor(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<TrapDoorBlock, L2Registrate>> build
@@ -123,19 +123,19 @@ public interface IDoor<E extends WWRegistrate, T extends PlanksEntry<E>> extends
                 .lang(self.firstUpName() + " Trapdoor").register());
 
     }
-    default PlanksEntry<E> trapDoor(
+    default T trapDoor(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<TrapDoorBlock, L2Registrate>> build
     ) {
         return trapDoor(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> trapDoor(Supplier<Block> copy) {
+    default T trapDoor(Supplier<Block> copy) {
         return trapDoor(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> trapDoor() {
+    default T trapDoor() {
         return trapDoor(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> trapDoor(
+    default T trapDoor(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<TrapDoorBlock, L2Registrate>> build
     ) {

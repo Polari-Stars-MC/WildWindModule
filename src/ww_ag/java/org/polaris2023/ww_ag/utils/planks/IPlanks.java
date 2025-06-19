@@ -23,10 +23,10 @@ import java.util.function.Supplier;
  * @code @Date 2025/6/16 22:17:03
  */
 @SuppressWarnings("unused")
-public interface IPlanks<E extends WWRegistrate,T extends PlanksEntry<E>> extends ISelf<T> {
+public interface IPlanks<E extends WWRegistrate,T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setPlanks(BlockEntry<RotatedPillarBlock> entry);
 
-    default PlanksEntry<E> planks(
+    default T planks(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> build
@@ -56,19 +56,19 @@ public interface IPlanks<E extends WWRegistrate,T extends PlanksEntry<E>> extend
                 .register());
 
     }
-    default PlanksEntry<E> planks(
+    default T planks(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> build
     ) {
         return planks(copy, __ -> {}, build);
     }
-    default PlanksEntry<E> planks(Supplier<Block> copy) {
+    default T planks(Supplier<Block> copy) {
         return planks(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> planks() {
+    default T planks() {
         return planks(__ -> {}, NonNullUnaryOperator.identity());
     }
-    default PlanksEntry<E> planks(
+    default T planks(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> build
     ) {

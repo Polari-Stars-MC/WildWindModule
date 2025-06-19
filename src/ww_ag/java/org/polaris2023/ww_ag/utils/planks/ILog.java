@@ -24,20 +24,20 @@ import java.util.function.Supplier;
  */
 
 @MethodsReturnNonnullByDefault
-public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends ISelf<T> {
+public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setLog(BlockEntry<RotatedPillarBlock> entry);
     T setStrippedLog(BlockEntry<RotatedPillarBlock> entry);
-    default PlanksEntry<E> strippedLog(
+    default T strippedLog(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return strippedLog(copy, __ -> {}, factory);
     }
-    default PlanksEntry<E> strippedLog(
+    default T strippedLog(
             Supplier<Block> copy) {
         return strippedLog(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
 
-    default PlanksEntry<E> strippedLog(
+    default T strippedLog(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
@@ -60,7 +60,7 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
                 .lang("Stripped " + self.firstUpName() + " Log")
                 .register());
     }
-    default PlanksEntry<E> strippedLog(
+    default T strippedLog(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
@@ -68,29 +68,29 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
     }
 
 
-    default PlanksEntry<E> strippedLog(
+    default T strippedLog(
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         return strippedLog(__ -> {}, factory);
     }
 
-    default PlanksEntry<E> strippedLog() {
+    default T strippedLog() {
         return strippedLog(NonNullUnaryOperator.identity());
     }
 
 
-    default PlanksEntry<E> log(
+    default T log(
             Supplier<Block> copy,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory) {
         return log(copy, __ -> {}, factory);
     }
-    default PlanksEntry<E> log(
+    default T log(
             Supplier<Block> copy) {
         return log(copy, __ -> {}, NonNullUnaryOperator.identity());
     }
 
 
-    default PlanksEntry<E> log(
+    default T log(
             Supplier<Block> copy,
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
@@ -112,7 +112,7 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
                 .lang(self.firstUpName() + " Log")
                 .register());
     }
-    default PlanksEntry<E> log(
+    default T log(
             NonNullConsumer<BlockBehaviour.Properties> properties,
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
@@ -120,13 +120,13 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E>> extends 
     }
 
 
-    default PlanksEntry<E> log(
+    default T log(
             NonNullUnaryOperator<BlockBuilder<RotatedPillarBlock, L2Registrate>> factory
     ) {
         return log(__ -> {}, factory);
     }
 
-    default PlanksEntry<E> log() {
+    default T log() {
         return log(NonNullUnaryOperator.identity());
     }
 
