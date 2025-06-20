@@ -44,11 +44,10 @@ public interface ILeaves<E extends WWRegistrate, T extends PlanksEntry<E, T>> ex
                     return new LeavesBlock(properties1);
                 }))
                 .blockstate((c, p) -> {
-                            ResourceLocation blockTexture = TextureMapping.getBlockTexture(self.planks.get());
+                            ResourceLocation blockTexture = TextureMapping.getBlockTexture(c.get());
                             var model = p.models().leaves(c.getId().getPath(), blockTexture);
                             p.simpleBlockWithItem(c.get(), model);
-                        }
-                )
+                })
                 .tag(BlockTags.LEAVES)
                 .item().tag(ItemTags.LEAVES).build()
                 .recipe((c, p) -> {

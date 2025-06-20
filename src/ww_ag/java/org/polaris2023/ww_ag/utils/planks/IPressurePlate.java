@@ -36,7 +36,7 @@ public interface IPressurePlate<E extends WWRegistrate, T extends PlanksEntry<E,
             NonNullUnaryOperator<BlockBuilder<PressurePlateBlock, L2Registrate>> build
     ) {
         T self = ww_ag$self();
-        var b = build.apply(self.registrate.block(self.name + "_door", __ -> {
+        var b = build.apply(self.registrate.block(self.name + "_pressure_plate", __ -> {
                     BlockBehaviour.Properties properties1 =
                             copy != null ?
                                     BlockBehaviour.Properties.ofFullCopy(copy.get())
@@ -64,7 +64,7 @@ public interface IPressurePlate<E extends WWRegistrate, T extends PlanksEntry<E,
                 .ww_ag$zh_tw(self.zhTw+"木門")
                 .ww_ag$zh_hk(self.zhHk+"木門")
                 .ww_ag$self()
-                .lang(self.firstUpName() + " Door").register());
+                .lang(self.firstUpName() + " Pressure Plate").register());
 
     }
     default T pressurePlate(

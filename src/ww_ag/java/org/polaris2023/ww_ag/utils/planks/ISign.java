@@ -126,12 +126,12 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                     return new StandingSignBlock(self.wt, signP.apply(p));
                 })
                                 .item((b, p) -> new SignItem(signIP.apply(p), b, self.wall_sign.get()))
+                                .model((c, p) -> p.basicItem(c.get()))
                                 .build()
                                 .blockstate((c, p) -> {
                                     var model = p.models().sign(c.getId().getPath(), TextureMapping.getBlockTexture(self.planks.get()));
                                     p.simpleBlock(c.get(), model);
                                     p.simpleBlock(self.wall_sign.get(), model);
-                                    p.simpleBlockItem(c.get(), model);
                                 }))
                         .ww_ag$zh_cn(self.zhCn+"告示牌")
                         .ww_ag$zh_tw(self.zhTw+"告示牌")
@@ -228,12 +228,12 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                     return new CeilingHangingSignBlock(self.wt, signP.apply(p));
                 })
                                 .item((b, p) -> new HangingSignItem(b, self.wall_hanging_sign.get(), signIP.apply(p)))
+                                .model((c, p) -> p.basicItem(c.get()))
                                 .build()
                                 .blockstate((c, p) -> {
                                     var model = p.models().sign(c.getId().getPath(), TextureMapping.getBlockTexture(self.stripped_log.get()));
                                     p.simpleBlock(c.get(), model);
                                     p.simpleBlock(self.wall_hanging_sign.get(), model);
-                                    p.simpleBlockItem(c.get(), model);
                                 }))
                         .ww_ag$zh_cn("悬挂式"+self.zhCn+"告示牌")
                         .ww_ag$zh_tw("懸掛式"+self.zhTw+"告示牌")
