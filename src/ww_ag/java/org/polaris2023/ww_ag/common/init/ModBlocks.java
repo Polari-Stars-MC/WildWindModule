@@ -1,9 +1,6 @@
 package org.polaris2023.ww_ag.common.init;
 
-import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import lombok.experimental.ExtensionMethod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -20,11 +17,9 @@ import net.minecraft.world.level.storage.loot.entries.LootItem;
 import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
 import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
 import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
-import net.neoforged.fml.ModLoader;
 import net.neoforged.neoforge.common.NeoForgeMod;
 import org.polaris2023.ww_ag.common.init.tags.WWBlockTags;
 import org.polaris2023.ww_ag.common.init.tags.WWItemTags;
-import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.RegUtil;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
@@ -49,7 +44,7 @@ public class ModBlocks {
                     .ww_ag$zh_tw("鹽礦石")
                     .ww_ag$zh_hk("鹽礦石")
                     .ww_ag$self()
-                    .lang("Salt ore")
+                    .lang("Salt Ore")
                     .properties(properties -> properties
                             .mapColor(MapColor.STONE)
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -77,7 +72,7 @@ public class ModBlocks {
                     .ww_ag$zh_hk("深層鹽礦石")
                     .ww_ag$zh_tw("深層鹽礦石")
                     .ww_ag$self()
-                    .lang("Deepslate salt ore")
+                    .lang("Deepslate Salt Ore")
                     .properties(p -> p
                             .requiresCorrectToolForDrops()
                             .instrument(NoteBlockInstrument.BASEDRUM)
@@ -108,7 +103,7 @@ public class ModBlocks {
                     .ww_ag$zh_tw("鹽塊")
                     .ww_ag$zh_hk("鹽塊")
                     .ww_ag$self()
-                    .lang("Salt block")
+                    .lang("Salt Block")
                     .properties(properties -> properties
                             .strength(3F)
                             .requiresCorrectToolForDrops()

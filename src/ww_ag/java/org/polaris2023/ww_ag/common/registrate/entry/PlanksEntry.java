@@ -1,62 +1,229 @@
 package org.polaris2023.ww_ag.common.registrate.entry;
 
-import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.util.entry.BlockEntry;
-import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
-import net.minecraft.core.Holder;
+import com.tterrag.registrate.util.entry.ItemEntry;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.experimental.Accessors;
+import net.minecraft.MethodsReturnNonnullByDefault;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.PoweredBlock;
-import net.minecraft.world.level.block.RotatedPillarBlock;
-import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.neoforged.neoforge.common.Tags;
+import net.minecraft.tags.ItemTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.HangingSignItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SignItem;
+import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.WoodType;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
+import org.polaris2023.ww_ag.utils.planks.*;
 
-import java.util.function.Supplier;
+import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.Locale;
 
 /**
  * @author baka4n
  * @code @Date 2025/6/10 15:28:54
  */
-@SuppressWarnings("unchecked")
-public class PlanksEntry<T extends WWRegistrate> {
-    public BlockBuilder<?, L2Registrate> tBuilder;
+@SuppressWarnings({"unused"})
+@ParametersAreNonnullByDefault
+@MethodsReturnNonnullByDefault
+
+public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> implements
+        IPlanks<T, E>,
+        ILog<T, E>,
+        IWood<T, E>,
+        IButton<T, E>,
+        IDoor<T, E>,
+        IFence<T, E>,
+        ILeaves<T, E>,
+        ISign<T, E>,
+        IPressurePlate<T,E>,
+        ISlab<T, E>,
+        IStairs<T, E> {
     public final T registrate;
-    public BlockEntry<RotatedPillarBlock> planks;
+
+    public final WoodType wt;
+    public final BlockSetType bst;
+
     public final String name;
+    final ResourceLocation logsRl;
+    public final TagKey<Block> blockLogs;
+    public final TagKey<Item> itemLogs;
+    @Setter
+    @Accessors(fluent = true)
+    public String zhCn,zhTw,zhHk;
+    public BlockEntry<RotatedPillarBlock>
+            planks,
+            stripped_log,
+            log,
+            stripped_wood,
+            wood;
+    public BlockEntry<DoorBlock> door;
+    public BlockEntry<TrapDoorBlock> trapDoor;
+    public BlockEntry<ButtonBlock> button;
+    public BlockEntry<FenceGateBlock> fence_gate;
+    public BlockEntry<FenceBlock> fence;
+    public BlockEntry<LeavesBlock> leaves;
+    public BlockEntry<StandingSignBlock> sign;
+    public BlockEntry<CeilingHangingSignBlock> hanging_sign;
+    public BlockEntry<WallSignBlock> wall_sign;
+    public BlockEntry<WallHangingSignBlock> wall_hanging_sign;
+    public BlockEntry<PressurePlateBlock> pressure_plate;
+    public BlockEntry<SlabBlock> slab;
+    public BlockEntry<StairBlock> stairs;
+
+    public String firstUpName() {
+        return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
+    }
     public PlanksEntry(T registrate, String name) {
         this.registrate = registrate;
         this.name = name;
+        logsRl = ResourceLocation.fromNamespaceAndPath("c", name + "_logs");
+        blockLogs = BlockTags.create(logsRl);
+        itemLogs = ItemTags.create(logsRl);
+        var tName = registrate.getModid() + "_" + name;
+        bst = BlockSetType.register(new BlockSetType(tName));
+        wt = WoodType.register(new WoodType(tName, bst));
     }
 
-    public PlanksEntry<T> planks(
-            Supplier<Block> copy,
-            NonNullConsumer<BlockBehaviour.Properties> properties
-    ) {
-        tBuilder = registrate.block(name + "_planks", __ -> {
-            BlockBehaviour.Properties properties1 = BlockBehaviour.Properties.ofFullCopy(copy.get());
-            properties.accept(properties1);
-            return new RotatedPillarBlock(properties1);
-        }).tag(BlockTags.PLANKS);
-        return this;
-    }public PlanksEntry<T> planks(Supplier<Block> copy) {
-        tBuilder = registrate.block(name + "_planks", __ -> new RotatedPillarBlock(BlockBehaviour.Properties.ofFullCopy(copy.get())))
-                .tag(BlockTags.PLANKS);
-        return this;
-    }
-    public PlanksEntry<T> planks() {
-        tBuilder = registrate.block(name + "_planks", RotatedPillarBlock::new)
-                .tag(BlockTags.PLANKS);
-        return this;
+    @Override
+    public E setPlanks(BlockEntry<RotatedPillarBlock> entry) {
+        if (planks != null) throw new IllegalArgumentException("%s_planks is registered!".formatted(name));
+        planks = entry;
+        return ww_ag$self();
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
+    public E ww_ag$self() {
+        return (E) this;
+    }
 
-    public PlanksEntry<T> registerPlanks(NonNullConsumer<BlockBuilder<RotatedPillarBlock, L2Registrate>> consumer) {
-        BlockBuilder<RotatedPillarBlock, L2Registrate> tBuilder1 = (BlockBuilder<RotatedPillarBlock, L2Registrate>) tBuilder;
-        consumer.accept(tBuilder1);
-        planks = tBuilder1.register();
-        tBuilder = null;
-        return this;
+    public E defTag(ResourceKey<CreativeModeTab> key) {
+        registrate.defaultCreativeTab(key);
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setLog(BlockEntry<RotatedPillarBlock> entry) {
+        if (log != null) throw new IllegalArgumentException("%s_log is registered!".formatted(name));
+        log = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setStrippedLog(BlockEntry<RotatedPillarBlock> entry) {
+        if (stripped_log != null) throw new IllegalArgumentException("stripped_%s_log is registered!".formatted(name));
+        stripped_log = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setWood(BlockEntry<RotatedPillarBlock> entry) {
+        if (wood != null) throw new IllegalArgumentException("%s_wood is registered!".formatted(name));
+        wood = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setStrippedWood(BlockEntry<RotatedPillarBlock> entry) {
+        if (stripped_wood != null) throw new IllegalArgumentException("stripped_%s_wood is registered!".formatted(name));
+        stripped_wood = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setButton(BlockEntry<ButtonBlock> entry) {
+        if (button != null) throw new IllegalArgumentException("%s_button is registered!".formatted(name));
+        button = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setDoor(BlockEntry<DoorBlock> entry) {
+        if (door != null) throw new IllegalArgumentException("%s_door is registered!".formatted(name));
+        door = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setTrapDoor(BlockEntry<TrapDoorBlock> entry) {
+        if (trapDoor != null) throw new IllegalArgumentException("%s_trap_door is registered!".formatted(name));
+        trapDoor = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setFenceGate(BlockEntry<FenceGateBlock> entry) {
+        if (fence_gate != null) throw new IllegalArgumentException("%s_fence_gate is registered!".formatted(name));
+        fence_gate = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setFence(BlockEntry<FenceBlock> entry) {
+        if (fence != null) throw new IllegalArgumentException("%s_fence is registered!".formatted(name));
+        fence = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setLeaves(BlockEntry<LeavesBlock> entry) {
+        if (leaves != null) throw new IllegalArgumentException("%s_leaves is registered!".formatted(name));
+        leaves = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setSign(BlockEntry<StandingSignBlock> entry) {
+        if (sign != null) throw new IllegalArgumentException("%s_sign is registered!".formatted(name));
+        sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setHangingSign(BlockEntry<CeilingHangingSignBlock> entry) {
+        if (hanging_sign != null) throw new IllegalArgumentException("%s_hanging_sign is registered!".formatted(name));
+        hanging_sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setWallSign(BlockEntry<WallSignBlock> entry) {
+        if (wall_sign != null) throw new IllegalArgumentException("%s_wall_sign is registered!".formatted(name));
+        wall_sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setWallHangingSign(BlockEntry<WallHangingSignBlock> entry) {
+        if (wall_hanging_sign != null) throw new IllegalArgumentException("%s_wall_hanging_sign is registered!".formatted(name));
+        wall_hanging_sign = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setPressurePlate(BlockEntry<PressurePlateBlock> entry) {
+        if (pressure_plate != null) throw new IllegalArgumentException("%s_pressure_plate is registered!".formatted(name));
+        pressure_plate = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setSlab(BlockEntry<SlabBlock> entry) {
+        if (slab != null) throw new IllegalArgumentException("%s_slab is registered!".formatted(name));
+        slab = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setStairs(BlockEntry<StairBlock> entry) {
+        if (stairs != null) throw new IllegalArgumentException("%s_stairs is registered!".formatted(name));
+        stairs = entry;
+        return ww_ag$self();
     }
 }

@@ -26,13 +26,15 @@ import org.polaris2023.ww_ag.common.items.LivingTuberItem;
 import org.polaris2023.ww_ag.utils.ILanguage;
 import org.polaris2023.ww_ag.utils.RegUtil;
 
+import java.util.Locale;
+
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
 
 /**
  * @author baka4n
  * {@code @Date 2025/05/18 14:58:14}
  */
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused", "DuplicatedCode"})
 @ExtensionMethod({RegUtil.class})
 public class ModItems {
     public static final ItemEntry<Item> CANDY, SALT, FISH_BONE;
@@ -101,7 +103,7 @@ public class ModItems {
                     .ww_ag$zh_cn("魚骨")
                     .ww_ag$zh_cn("魚骨")
                     .ww_ag$self()
-                    .lang("Fish bone")
+                    .lang("Fish Bone")
                     .properties(p -> p
                             .stacksTo(16))
                     .defaultModel()
@@ -124,7 +126,7 @@ public class ModItems {
                     .ww_ag$zh_tw("噴濺型蜂蜜瓶")
                     .ww_ag$zh_hk("噴濺型蜂蜜瓶")
                     .ww_ag$self()
-                    .lang("Splash honey bottle")
+                    .lang("Splash Honey Bottle")
                     .defaultModel()
                     .properties(p -> p
                             .stacksTo(1))
@@ -135,7 +137,7 @@ public class ModItems {
                     .ww_ag$zh_tw("滞留型蜂蜜瓶")
                     .ww_ag$zh_hk("滞留型蜂蜜瓶")
                     .ww_ag$self()
-                    .lang("Lingering honey bottle")
+                    .lang("Lingering Honey Bottle")
                     .defaultModel()
                     .properties(p -> p
                             .stacksTo(1))
@@ -149,7 +151,7 @@ public class ModItems {
                     .ww_ag$zh_tw("奶瓶")
                     .ww_ag$zh_hk("奶瓶")
                     .ww_ag$self()
-                    .lang("Milk bottle")
+                    .lang("Milk Bottle")
                     .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
@@ -161,7 +163,7 @@ public class ModItems {
                     .ww_ag$zh_tw("噴濺型奶瓶")
                     .ww_ag$zh_hk("噴濺型奶瓶")
                     .ww_ag$self()
-                    .lang("Splash milk bottle")
+                    .lang("Splash Milk Bottle")
                     .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
@@ -173,7 +175,7 @@ public class ModItems {
                     .ww_ag$zh_tw("滯留型奶瓶")
                     .ww_ag$zh_hk("滯留型奶瓶")
                     .ww_ag$self()
-                    .lang("Lingering milk bottle")
+                    .lang("Lingering Milk Bottle")
                     .defaultModel()
                     .properties(p -> p
                             .stacksTo(1)
@@ -842,11 +844,22 @@ public class ModItems {
         var item = REGISTRATE
                 .itemReg(name, Item::new);
         consumer.accept(item);
+
         return item
                 .ww_ag$self()
                 .defaultModel()
                 .recipe(recipe)
-                .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
+                .lang(__ -> {
+                    var s = name.split(" ");
+                    StringBuilder sb = new StringBuilder();
+                    for (String string : s) {
+                        sb
+                                .append(string.substring(0, 1).toLowerCase(Locale.ROOT))
+                                .append(string.substring(1))
+                                .append(" ");
+                    }
+                    return sb.toString().trim();
+                })
                 .properties(properties)
                 .register();
     }
@@ -862,7 +875,17 @@ public class ModItems {
                 .ww_ag$self()
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), BuiltInRegistries.ITEM.getKey(vanilla).withPrefix("item/")))
                 .recipe(recipe)
-                .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
+                .lang(__ -> {
+                    var s = name.split(" ");
+                    StringBuilder sb = new StringBuilder();
+                    for (String string : s) {
+                        sb
+                                .append(string.substring(0, 1).toLowerCase(Locale.ROOT))
+                                .append(string.substring(1))
+                                .append(" ");
+                    }
+                    return sb.toString().trim();
+                })
                 .properties(properties)
                 .register();
     }
@@ -877,7 +900,17 @@ public class ModItems {
                 .ww_ag$self()
                 .model((c, p) -> p.withExistingParent(c.getId().getPath(), entry.getId().withPrefix("item/")))
                 .recipe(recipe)
-                .lang(name.substring(0, 1).toUpperCase() + name.substring(1).replace("_", " "))
+                .lang(__ -> {
+                    var s = name.split(" ");
+                    StringBuilder sb = new StringBuilder();
+                    for (String string : s) {
+                        sb
+                                .append(string.substring(0, 1).toLowerCase(Locale.ROOT))
+                                .append(string.substring(1))
+                                .append(" ");
+                    }
+                    return sb.toString().trim();
+                })
                 .properties(properties)
                 .register();
     }
