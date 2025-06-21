@@ -43,7 +43,8 @@ public class ModBlocks {
                 .stairs(() -> Blocks.MANGROVE_STAIRS)
                 .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
                 .boat()
-                .chestBoat();
+                .chestBoat()
+                .register();
         BAOBAB = REGISTRATE
                 .planks("baobab", () -> ModEnumExtensions.BAOBAB)
                 .zhCn("猴面包树").zhTw("猴麵包樹").zhHk("猴麵包樹")
@@ -66,7 +67,8 @@ public class ModBlocks {
                 .stairs(() -> Blocks.ACACIA_STAIRS)
                 .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
                 .boat()
-                .chestBoat();
+                .chestBoat()
+                .register();
         PALM = REGISTRATE
                 .planks("palm", () -> ModEnumExtensions.PALM)
                 .zhCn("棕桐").zhTw("棕桐").zhHk("棕桐")
@@ -89,6 +91,7 @@ public class ModBlocks {
                 .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
                 .boat()
                 .chestBoat()
+                .register()
         ;
     }
     public static void register() {}

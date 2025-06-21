@@ -14,9 +14,12 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.utils.planks.*;
 
@@ -24,6 +27,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Objects;
 import java.util.function.Supplier;
 
 /**
@@ -245,6 +249,19 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
     public E setChestBoat(ItemEntry<BoatItem> entry) {
         if (chest_boat != null) throw new IllegalArgumentException("%s_chest_boat is registered!".formatted(name));
         chest_boat = entry;
+        return ww_ag$self();
+    }
+    public E register() {
+        Objects.requireNonNull(registrate.getModEventBus())
+                .addListener((BlockEntityTypeAddBlocksEvent event) -> {
+            event.modify(BlockEntityType.SIGN,
+                    sign.get(),
+                    wall_sign.get());
+            event.modify(BlockEntityType.HANGING_SIGN,
+                    hanging_sign.get(),
+                    wall_hanging_sign.get());
+        });
+
         return ww_ag$self();
     }
 }

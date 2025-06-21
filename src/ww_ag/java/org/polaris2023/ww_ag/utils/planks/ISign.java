@@ -2,6 +2,7 @@ package org.polaris2023.ww_ag.utils.planks;
 
 import com.mojang.serialization.MapCodec;
 import com.tterrag.registrate.builders.BlockBuilder;
+import com.tterrag.registrate.builders.BlockEntityBuilder;
 import com.tterrag.registrate.providers.ProviderType;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
@@ -10,6 +11,8 @@ import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
+import net.minecraft.client.renderer.blockentity.SignRenderer;
+import net.minecraft.core.BlockPos;
 import net.minecraft.data.models.model.TextureMapping;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
@@ -18,6 +21,10 @@ import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraft.world.level.block.entity.BlockEntityType;
+import net.minecraft.world.level.block.entity.HangingSignBlockEntity;
+import net.minecraft.world.level.block.entity.SignBlockEntity;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.client.model.generators.BlockModelProvider;
@@ -106,7 +113,7 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
             NonNullUnaryOperator<Item.Properties> signIP
     ) {// modid:a_planks  -> modid:a
         T self = ww_ag$self();
-        return setWallSign(self.registrate.block(self.name + "_wall_sign",__ -> {
+        return setWallSign(self.registrate.block(self.name + "_wall_sign", __ -> {
                     BlockBehaviour.Properties p =
                             copyWallSign != null
                                     ?
@@ -208,7 +215,7 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
             NonNullUnaryOperator<Item.Properties> signIP
     ) {// modid:a_planks  -> modid:a
         T self = ww_ag$self();
-        return setWallHangingSign(self.registrate.block(self.name + "_wall_hanging_sign",__ -> {
+        return setWallHangingSign(self.registrate.block(self.name + "_wall_hanging_sign", __ -> {
                     BlockBehaviour.Properties p =
                             copyWallSign != null
                                     ?
