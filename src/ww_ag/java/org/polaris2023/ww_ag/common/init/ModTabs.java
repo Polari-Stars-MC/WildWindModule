@@ -7,11 +7,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.neoforged.fml.ModList;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 
 import java.lang.reflect.Field;
+import java.util.Optional;
 import java.util.function.Consumer;
 
 import static org.polaris2023.ww_ag.WWAgMod.REGISTRATE;
@@ -51,12 +54,25 @@ public class ModTabs {
     public static final SimpleEntry<CreativeModeTab> FOOD_AND_DRINK =
             REGISTRATE
                     .buildWWCreativeTab("food_and_drink", "Wild Wind: Food And Drink",
-                            b -> b.icon(ModItems.BAKED_APPLE::asStack), 3,
+                            b -> b.icon(ModItems.BAKED_CARROT::asStack), 3,
                             l -> {
                                 l.ww_ag$zh_cn("原野之风：食物与饮品");
                                 l.ww_ag$zh_tw("風靈荒野：食物與飲料");
                                 l.ww_ag$zh_hk("風與草之詩：食物同飲品");
                             });
+    public static final SimpleEntry<CreativeModeTab> TOOLS_AND_UTILITIES =
+            REGISTRATE.buildWWCreativeTab("tools_and_utilities", "Wild Wind: Tools & Utilities",
+                    b -> {
+                        Optional<Item> bucket = ModFluids.HONEY.getBucket();
+                        bucket.ifPresentOrElse(item -> b.icon(item::getDefaultInstance), () -> {
+                            b.icon(Items.DIAMOND_PICKAXE::getDefaultInstance);
+                        });
+                    }, 4,
+                    l -> {
+                        l.ww_ag$zh_cn("原野之风：工具");
+                        l.ww_ag$zh_tw("風靈荒野：工具");
+                        l.ww_ag$zh_hk("風與草之詩：工具");
+                    });
 
 
 

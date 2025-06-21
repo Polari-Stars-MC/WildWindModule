@@ -1,6 +1,7 @@
 package org.polaris2023.ww_deco.common.init;
 
 import lombok.experimental.ExtensionMethod;
+import net.minecraft.world.damagesource.DamageEffects;
 import net.minecraft.world.level.block.Blocks;
 import org.polaris2023.ww_ag.common.init.ModTabs;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
@@ -22,7 +23,7 @@ public class ModBlocks {
 
     static {
         AZALEA = REGISTRATE
-                .planks("azalea")
+                .planks("azalea", () -> ModEnumExtensions.AZALEA)
                 .zhCn("杜鹃树").zhTw("杜鵑樹").zhHk("杜鵑樹")
                 .defTag(ModTabs.BUILDING_BLOCK.key())
                 .planks(() -> Blocks.MANGROVE_PLANKS)
@@ -39,10 +40,14 @@ public class ModBlocks {
                 .hangingSign(() -> Blocks.MANGROVE_HANGING_SIGN, () -> Blocks.MANGROVE_WALL_HANGING_SIGN)
                 .pressurePlate(() -> Blocks.MANGROVE_PRESSURE_PLATE)
                 .slab(() -> Blocks.MANGROVE_SLAB)
-                .stairs(() -> Blocks.MANGROVE_STAIRS);
+                .stairs(() -> Blocks.MANGROVE_STAIRS)
+                .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
+                .boat()
+                .chestBoat();
         BAOBAB = REGISTRATE
-                .planks("baobab")
+                .planks("baobab", () -> ModEnumExtensions.BAOBAB)
                 .zhCn("猴面包树").zhTw("猴麵包樹").zhHk("猴麵包樹")
+                .defTag(ModTabs.BUILDING_BLOCK.key())
                 .planks(() -> Blocks.ACACIA_PLANKS)
                 .strippedLog(() -> Blocks.STRIPPED_ACACIA_LOG)
                 .log(() -> Blocks.ACACIA_LOG)
@@ -58,7 +63,10 @@ public class ModBlocks {
                 .hangingSign(() -> Blocks.ACACIA_HANGING_SIGN, () -> Blocks.ACACIA_WALL_HANGING_SIGN)
                 .pressurePlate(() -> Blocks.ACACIA_PRESSURE_PLATE)
                 .slab(() -> Blocks.ACACIA_SLAB)
-                .stairs(() -> Blocks.ACACIA_STAIRS);
+                .stairs(() -> Blocks.ACACIA_STAIRS)
+                .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
+                .boat()
+                .chestBoat();
 
     }
     public static void register() {}
