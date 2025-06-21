@@ -19,7 +19,7 @@ import static org.polaris2023.ww_deco.WWDecoMod.REGISTRATE;
 public class ModBlocks {
 
     public static final PlanksEntry<WWRegistrate, ?>
-            AZALEA, BAOBAB;
+            AZALEA, BAOBAB, PALM;
 
     static {
         AZALEA = REGISTRATE
@@ -67,7 +67,29 @@ public class ModBlocks {
                 .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
                 .boat()
                 .chestBoat();
-
+        PALM = REGISTRATE
+                .planks("palm", () -> ModEnumExtensions.PALM)
+                .zhCn("棕桐").zhTw("棕桐").zhHk("棕桐")
+                .defTag(ModTabs.BUILDING_BLOCK.key())
+                .planks(() -> Blocks.SPRUCE_PLANKS)
+                .strippedLog(() -> Blocks.STRIPPED_SPRUCE_LOG)
+                .log(() -> Blocks.SPRUCE_LOG)
+                .strippedWood(() -> Blocks.STRIPPED_SPRUCE_WOOD)
+                .wood(() -> Blocks.SPRUCE_WOOD)
+                .leaves(() -> Blocks.SPRUCE_LEAVES)
+                .button(() -> Blocks.SPRUCE_BUTTON)
+                .door(() -> Blocks.SPRUCE_DOOR)
+                .trapDoor(() -> Blocks.SPRUCE_TRAPDOOR)
+                .fence(() -> Blocks.SPRUCE_FENCE)
+                .fenceGate(() -> Blocks.SPRUCE_FENCE_GATE)
+                .sign(() -> Blocks.SPRUCE_SIGN, () -> Blocks.SPRUCE_WALL_SIGN)
+                .hangingSign(() -> Blocks.SPRUCE_HANGING_SIGN, () -> Blocks.SPRUCE_WOOD)
+                .slab(() -> Blocks.SPRUCE_SLAB)
+                .stairs(() -> Blocks.SPRUCE_STAIRS)
+                .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
+                .boat()
+                .chestBoat()
+        ;
     }
     public static void register() {}
 }

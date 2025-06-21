@@ -18,6 +18,7 @@ import java.util.function.Supplier;
 public class ModEnumExtensions {
     public static final EnumProxy<Boat.Type> AZALEA = boat(WWDecoMod.MODID,"azalea",() -> ModBlocks.AZALEA);
     public static final EnumProxy<Boat.Type> BAOBAB = boat(WWDecoMod.MODID,"baobab",() -> ModBlocks.BAOBAB);
+    public static final EnumProxy<Boat.Type> PALM = boat(WWDecoMod.MODID,"palm",() -> ModBlocks.PALM);
 
 
     public static EnumProxy<Boat.Type> boat(String modid,String name, Supplier<PlanksEntry<WWRegistrate, ?>> supplier) {
