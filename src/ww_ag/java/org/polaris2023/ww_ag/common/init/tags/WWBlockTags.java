@@ -19,6 +19,7 @@ public enum WWBlockTags implements Supplier<TagKey<Block>> {
     FUNGUS,
     MILK,
     AZALEA_LOGS,
+    LOG_CROWN
     ;
     private final TagKey<Block> tag;
 

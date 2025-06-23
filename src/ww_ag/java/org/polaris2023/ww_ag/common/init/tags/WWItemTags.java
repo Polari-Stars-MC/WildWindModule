@@ -18,6 +18,7 @@ public enum WWItemTags implements Supplier<TagKey<Item>> {
     ORES$SALT,
     FUNGUS,
     AZALEA_LOGS,
+    LOG_CROWM
     ;
     private final TagKey<Item> tag;
 

@@ -50,7 +50,8 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
         IPressurePlate<T,E>,
         ISlab<T, E>,
         IStairs<T, E>,
-        IBoat<T, E>{
+        IBoat<T, E>,
+        IWW<T, E>{
     public final T registrate;
 
     public final WoodType wt;
@@ -69,7 +70,8 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
             stripped_log,
             log,
             stripped_wood,
-            wood;
+            wood,
+            crown;
     public BlockEntry<DoorBlock> door;
     public BlockEntry<TrapDoorBlock> trapDoor;
     public BlockEntry<ButtonBlock> button;
@@ -262,6 +264,13 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
                     wall_hanging_sign.get());
         });
 
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setCrown(BlockEntry<RotatedPillarBlock> entry) {
+        if (crown != null) throw new IllegalArgumentException("%s_crown is registered!".formatted(name));
+        crown = entry;
         return ww_ag$self();
     }
 }

@@ -91,6 +91,7 @@ public class ModBlocks {
                 .defTag(ModTabs.TOOLS_AND_UTILITIES.key())
                 .boat()
                 .chestBoat()
+                .crown(() -> Blocks.SPRUCE_LOG)
                 .register()
         ;
     }
