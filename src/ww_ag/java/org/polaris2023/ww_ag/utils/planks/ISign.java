@@ -19,6 +19,7 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntity;
@@ -134,6 +135,15 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 })
                                 .item((b, p) -> new SignItem(signIP.apply(p), b, self.wall_sign.get()))
                                 .model((c, p) -> p.basicItem(c.get()))
+                                .recipe((c, p) -> {
+                                    DataIngredient planks = DataIngredient.items(self.planks.get());
+                                    DataIngredient stick = DataIngredient.items(Items.STICK);
+                                    RegistrateRecipeProvider.signBuilder(c.get(), planks.toVanilla())
+                                            .unlockedBy("has_" + p.safeName(planks), planks.getCriterion(p))
+                                            .unlockedBy("has_stick", stick.getCriterion(p))
+                                            .save(p, p.safeId(c.get()));
+                                    ;
+                                })
                                 .build()
                                 .blockstate((c, p) -> {
                                     var model = p.models().sign(c.getId().getPath(), TextureMapping.getBlockTexture(self.planks.get()));
@@ -236,6 +246,9 @@ public interface ISign<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 })
                                 .item((b, p) -> new HangingSignItem(b, self.wall_hanging_sign.get(), signIP.apply(p)))
                                 .model((c, p) -> p.basicItem(c.get()))
+                                .recipe((c, p) -> {
+                                    RegistrateRecipeProvider.hangingSign(p, c.get(), self.stripped_log);
+                                })
                                 .build()
                                 .blockstate((c, p) -> {
                                     var model = p.models().sign(c.getId().getPath(), TextureMapping.getBlockTexture(self.stripped_log.get()));

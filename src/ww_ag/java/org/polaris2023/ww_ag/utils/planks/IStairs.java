@@ -1,8 +1,10 @@
 package org.polaris2023.ww_ag.utils.planks;
 
+import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -52,7 +54,13 @@ public interface IStairs<E extends WWRegistrate, T extends PlanksEntry<E, T>> ex
                     p.simpleBlockItem(c.get(), stairs);
                 })
                 .recipe((c, p) -> {
-
+                    p.stairs(
+                            DataIngredient.items(self.planks.get()),
+                            RecipeCategory.BUILDING_BLOCKS,
+                            c,
+                            null,
+                            false
+                    );
                 })
                 .lang(self.firstUpName()+" Stairs")
                 .register());

@@ -1,10 +1,17 @@
 package org.polaris2023.ww_ag.utils.planks;
 
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.entry.ItemEntry;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.ShapedRecipeBuilder;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.world.item.BoatItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.ShapelessRecipe;
+import net.minecraft.world.level.ItemLike;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
 import org.polaris2023.ww_ag.utils.ILanguage;
@@ -26,6 +33,10 @@ public interface IBoat<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 .ww_ag$self()
                 .lang(self.firstUpName() + " Boat")
                 .tag(ItemTags.BOATS)
+                .recipe((c, p) -> {
+                    RegistrateRecipeProvider
+                            .woodenBoat(p, c.get(), self.planks.get());
+                })
                 .defaultModel();
         return setBoat(b.register());
     }
@@ -39,6 +50,9 @@ public interface IBoat<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 .ww_ag$self()
                 .lang(self.firstUpName() + " Chest Boat")
                 .tag(ItemTags.CHEST_BOATS)
+                .recipe((c, p) -> {
+                    RegistrateRecipeProvider.chestBoat(p, c.get(), self.planks.get());
+                })
                 .defaultModel();
         return setChestBoat(b.register());
     }
