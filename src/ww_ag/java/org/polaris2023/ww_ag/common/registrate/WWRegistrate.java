@@ -20,11 +20,14 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.EnumProperty;
+import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
 import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import org.polaris2023.ww_ag.WWAgMod;
@@ -37,6 +40,7 @@ import javax.annotation.ParametersAreNonnullByDefault;
 import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
 * @author baka4n
@@ -163,11 +167,11 @@ public class WWRegistrate extends L2Registrate {
         }
     }
 
-    public PlanksEntry<WWRegistrate, ?> planks(String name) {
-        return new PlanksEntry<>(this, name);
+    public PlanksEntry<WWRegistrate, ?> planks(String name, Supplier<EnumProxy<Boat.Type>> btp) {
+        return new PlanksEntry<>(this, name, btp);
     }
-    public PlanksEntry<WWRegistrate, ?> fastPlanks(String name, String zhCn, String zhTw, String zhHk) {
-        return new PlanksEntry<>(this, name)
+    public PlanksEntry<WWRegistrate, ?> fastPlanks(String name, Supplier<EnumProxy<Boat.Type>> btp, String zhCn, String zhTw, String zhHk) {
+        return new PlanksEntry<>(this, name, btp)
                 .zhCn(zhCn).zhTw(zhTw).zhHk(zhHk)
                 .planks()
                 .strippedLog()
@@ -184,7 +188,9 @@ public class WWRegistrate extends L2Registrate {
                 .hangingSign()
                 .pressurePlate()
                 .slab()
-                .stairs();
+                .stairs()
+                .boat()
+                .chestBoat();
 
     }
 

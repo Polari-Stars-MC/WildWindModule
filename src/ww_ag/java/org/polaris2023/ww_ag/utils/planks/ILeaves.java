@@ -49,13 +49,7 @@ public interface ILeaves<E extends WWRegistrate, T extends PlanksEntry<E, T>> ex
                             p.simpleBlockWithItem(c.get(), model);
                 })
                 .tag(BlockTags.LEAVES)
-                .item().tag(ItemTags.LEAVES).build()
-                .recipe((c, p) -> {
-                    DataIngredient items = DataIngredient.items(self.planks.asItem());
-                    RegistrateRecipeProvider.buttonBuilder(c.get(), items.toVanilla())
-                            .unlockedBy(p.safeName(c.getId()), items.getCriterion(p))
-                            .save(p, p.safeId(c.getId()));
-                });
+                .item().tag(ItemTags.LEAVES).build();
         return setLeaves(ILanguage.convert1(b)
                 .ww_ag$zh_cn(self.zhCn+"树叶")
                 .ww_ag$zh_tw(self.zhTw+"樹葉")

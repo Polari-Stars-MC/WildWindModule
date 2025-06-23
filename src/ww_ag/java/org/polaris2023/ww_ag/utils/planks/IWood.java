@@ -3,6 +3,7 @@ package org.polaris2023.ww_ag.utils.planks;
 import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.DataGenContext;
 import com.tterrag.registrate.providers.RegistrateBlockstateProvider;
+import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
@@ -63,8 +64,7 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 }))
                 .tag(self.blockLogs)
                 .item().tag(self.itemLogs).build()
-                .blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.stripped_log.get())))
-                .recipe((c, p) -> p.square(DataIngredient.items(self.stripped_log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build();
+                .blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.stripped_log.get())));
         return setStrippedWood(ILanguage.convert1(b)
                 .ww_ag$zh_cn("去皮"+self.zhCn + "木")
                 .ww_ag$zh_tw("去皮"+self.zhTw + "木")
@@ -145,7 +145,10 @@ public interface IWood<E extends WWRegistrate, T extends PlanksEntry<E, T>> exte
                 .tag(self.blockLogs)
                 .blockstate((c, p) -> woodModelGen(c, p, TextureMapping.logColumn(self.log.get())))
                 .item().tag(self.itemLogs).build()
-                .recipe((c, p) -> p.square(DataIngredient.items(self.log.asItem()), RecipeCategory.BUILDING_BLOCKS, c, true)).tag(self.blockLogs).item().tag(self.itemLogs).build();
+                .recipe((c, p) ->
+                        RegistrateRecipeProvider.woodFromLogs(p, c.get(), self.log.get())
+                )
+                .tag(self.blockLogs).item().tag(self.itemLogs).build();
         return setWood(ILanguage.convert1(b)
                 .ww_ag$zh_cn(self.zhCn + "木")
                 .ww_ag$zh_tw(self.zhTw + "木")

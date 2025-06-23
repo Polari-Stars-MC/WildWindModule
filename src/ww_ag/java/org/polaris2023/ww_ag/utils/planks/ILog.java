@@ -50,7 +50,11 @@ public interface ILog<E extends WWRegistrate, T extends PlanksEntry<E, T>> exten
                             : BlockBehaviour.Properties.of();
             properties.accept(properties1);
             return new RotatedPillarBlock(properties1);
-        })).blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs).item().tag(self.itemLogs).build();
+        }))
+                .blockstate((c, p) -> p.logBlock(c.get())).tag(self.blockLogs)
+                .item()
+                .tag(self.itemLogs)
+                .build();
         return setStrippedLog(ILanguage
                 .convert1(b)
                 .ww_ag$zh_cn("去皮" + self.zhCn + "原木")

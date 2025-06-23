@@ -11,18 +11,24 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.CreativeModeTab;
-import net.minecraft.world.item.HangingSignItem;
-import net.minecraft.world.item.Item;
-import net.minecraft.world.item.SignItem;
+import net.minecraft.world.entity.vehicle.Boat;
+import net.minecraft.world.item.*;
 import net.minecraft.world.level.block.*;
+import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.fml.common.asm.enumextension.EnumProxy;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.utils.planks.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
+import java.util.Objects;
+import java.util.function.Supplier;
 
 /**
  * @author baka4n
@@ -43,11 +49,14 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
         ISign<T, E>,
         IPressurePlate<T,E>,
         ISlab<T, E>,
-        IStairs<T, E> {
+        IStairs<T, E>,
+        IBoat<T, E>,
+        IWW<T, E>{
     public final T registrate;
 
     public final WoodType wt;
     public final BlockSetType bst;
+    public final Supplier<EnumProxy<Boat.Type>> btp;
 
     public final String name;
     final ResourceLocation logsRl;
@@ -61,7 +70,8 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
             stripped_log,
             log,
             stripped_wood,
-            wood;
+            wood,
+            crown;
     public BlockEntry<DoorBlock> door;
     public BlockEntry<TrapDoorBlock> trapDoor;
     public BlockEntry<ButtonBlock> button;
@@ -75,11 +85,13 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
     public BlockEntry<PressurePlateBlock> pressure_plate;
     public BlockEntry<SlabBlock> slab;
     public BlockEntry<StairBlock> stairs;
+    public ItemEntry<BoatItem> boat;
+    public ItemEntry<BoatItem> chest_boat;
 
     public String firstUpName() {
         return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
     }
-    public PlanksEntry(T registrate, String name) {
+    public PlanksEntry(T registrate, String name, Supplier<EnumProxy<Boat.Type>> btp) {
         this.registrate = registrate;
         this.name = name;
         logsRl = ResourceLocation.fromNamespaceAndPath("c", name + "_logs");
@@ -88,6 +100,7 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
         var tName = registrate.getModid() + "_" + name;
         bst = BlockSetType.register(new BlockSetType(tName));
         wt = WoodType.register(new WoodType(tName, bst));
+        this.btp = btp;
     }
 
     @Override
@@ -224,6 +237,40 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
     public E setStairs(BlockEntry<StairBlock> entry) {
         if (stairs != null) throw new IllegalArgumentException("%s_stairs is registered!".formatted(name));
         stairs = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setBoat(ItemEntry<BoatItem> entry) {
+        if (boat != null) throw new IllegalArgumentException("%s_boat is registered!".formatted(name));
+        boat = entry;
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setChestBoat(ItemEntry<BoatItem> entry) {
+        if (chest_boat != null) throw new IllegalArgumentException("%s_chest_boat is registered!".formatted(name));
+        chest_boat = entry;
+        return ww_ag$self();
+    }
+    public E register() {
+        Objects.requireNonNull(registrate.getModEventBus())
+                .addListener((BlockEntityTypeAddBlocksEvent event) -> {
+            event.modify(BlockEntityType.SIGN,
+                    sign.get(),
+                    wall_sign.get());
+            event.modify(BlockEntityType.HANGING_SIGN,
+                    hanging_sign.get(),
+                    wall_hanging_sign.get());
+        });
+
+        return ww_ag$self();
+    }
+
+    @Override
+    public E setCrown(BlockEntry<RotatedPillarBlock> entry) {
+        if (crown != null) throw new IllegalArgumentException("%s_crown is registered!".formatted(name));
+        crown = entry;
         return ww_ag$self();
     }
 }

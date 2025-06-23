@@ -8,6 +8,8 @@ import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import net.minecraft.data.models.model.TextureMapping;
+import net.minecraft.data.recipes.RecipeCategory;
+import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.ItemTags;
@@ -54,10 +56,8 @@ public interface IPressurePlate<E extends WWRegistrate, T extends PlanksEntry<E,
                 })
                 .tag(ItemTags.WOODEN_PRESSURE_PLATES).build()
                 .recipe((c, p) -> {
-                    DataIngredient items = DataIngredient.items(self.planks.asItem());
-                    RegistrateRecipeProvider.doorBuilder(c.get(), items.toVanilla())
-                            .unlockedBy(p.safeName(c.getId()), items.getCriterion(p))
-                            .save(p, p.safeId(c.getId()));
+                    RegistrateRecipeProvider.pressurePlate(p, c.get(), self.planks.asItem());
+
                 });
         return setPressurePlate(ILanguage.convert1(b)
                 .ww_ag$zh_cn(self.zhCn+"木门")

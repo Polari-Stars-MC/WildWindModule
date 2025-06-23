@@ -11,6 +11,7 @@ This is Wild Wind: Deco
 '''
 authors="wdog5734,baka4n,Viola-Siemens,ENC_Euphony"
 logoFile="ww_deco.png"
+enumExtensions="META-INF/enumextensions.json"
 [[mixins]]
 config="META-INF/ww_deco.mixins.json"
 [[dependencies.ww_deco]]
