@@ -4,6 +4,7 @@ import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.providers.RegistrateRecipeProvider;
 import com.tterrag.registrate.util.DataIngredient;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
 import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
@@ -56,7 +57,7 @@ public interface IButton<E extends WWRegistrate, T extends PlanksEntry<E, T>> ex
                 }
                 )
                 .tag(BlockTags.BUTTONS)
-                .item().tag(ItemTags.BUTTONS).build()
+                .item().tag(ItemTags.BUTTONS).model(NonNullBiConsumer.noop()).build()
                 .recipe((c, p) -> {
                     DataIngredient items = DataIngredient.items(self.planks.asItem());
                     RegistrateRecipeProvider.buttonBuilder(c.get(), items.toVanilla())
