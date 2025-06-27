@@ -271,7 +271,7 @@ subprojects {
         implementation(
             group = "com.tterrag.registrate",
             name = "Registrate",
-            version = "[MC1.21-1.3.0+63,)"
+            version = "[MC1.21-1.3.0,)"
         )
         implementation(
             group="dev.xkmc",
