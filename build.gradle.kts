@@ -268,12 +268,11 @@ subprojects {
     )
 
     dependencies {
-        val registrate = "accessCompileOnly"(
+        implementation(
             group = "com.tterrag.registrate",
             name = "Registrate",
             version = "[MC1.21-1.3.0+63,)"
         )
-        runtimeOnly(registrate)
         implementation(
             group="dev.xkmc",
             name= "l2serial",
