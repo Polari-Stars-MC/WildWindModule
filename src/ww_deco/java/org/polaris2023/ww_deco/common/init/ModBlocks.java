@@ -94,6 +94,7 @@ public class ModBlocks {
                 .crown(() -> Blocks.SPRUCE_LOG)
                 .register()
         ;
+
     }
     public static void register() {}
 }
