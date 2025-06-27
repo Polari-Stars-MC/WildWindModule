@@ -1,6 +1,8 @@
 package org.polaris2023.ww_ag.common.init;
 
+import com.tterrag.registrate.providers.loot.RegistrateBlockLootTables;
 import com.tterrag.registrate.util.entry.BlockEntry;
+import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import lombok.experimental.ExtensionMethod;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -36,10 +38,21 @@ public class ModBlocks {
     public static final BlockEntry<LiquidBlock> MILK;
 
     static {
+        NonNullBiConsumer<RegistrateBlockLootTables, DropExperienceBlock> salt_drop
+                = (l, b) -> {
+            HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
+            l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
+                    LootItem.lootTableItem(ModItems.SALT)
+                            .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
+                            .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
+
+        };
         {
             SALT_ORE = REGISTRATE
                     .defTab(ModTabs.NATURAL_BLOCKS.key())
-                    .blockReg("salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .dropExpBlock("salt_ore", (UniformInt.of(2, 5)),
+                            WWBlockTags.ORES$SALT.get(),
+                            WWItemTags.ORES$SALT.get())
                     .ww_ag$zh_cn("盐矿石")
                     .ww_ag$zh_tw("鹽礦石")
                     .ww_ag$zh_hk("鹽礦石")
@@ -50,24 +63,14 @@ public class ModBlocks {
                             .instrument(NoteBlockInstrument.BASEDRUM)
                             .requiresCorrectToolForDrops()
                             .strength(3))
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .defaultBlockstate()
-                    .loot((l, b) -> {
-                        HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                        l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
-                                LootItem.lootTableItem(ModItems.SALT)
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
-                                        .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
-                    })
-                    .tag(WWBlockTags.ORES$SALT.get())
-                    .item()
-                    .tag(WWItemTags.ORES$SALT.get())
-                    .build()
+                    .loot(salt_drop)
                     .register();
         }
         {
             DEEPSLATE_SALT_ORE = REGISTRATE
-                    .blockReg("deepslate_salt_ore", p -> new DropExperienceBlock(UniformInt.of(2, 5), p))
+                    .dropExpBlock("deepslate_salt_ore", UniformInt.of(2, 5),
+                            WWBlockTags.ORES$SALT.get(),
+                            WWItemTags.ORES$SALT.get())
                     .ww_ag$zh_cn("深层盐矿石")
                     .ww_ag$zh_hk("深層鹽礦石")
                     .ww_ag$zh_tw("深層鹽礦石")
@@ -79,19 +82,7 @@ public class ModBlocks {
                             .mapColor(MapColor.DEEPSLATE)
                             .strength(4.5F, 3)
                             .sound(SoundType.DEEPSLATE))
-                    .defaultBlockstate()
-                    .tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                    .loot((l, b) -> {
-                        HolderLookup.RegistryLookup<Enchantment> lookup = l.getRegistries().lookupOrThrow(Registries.ENCHANTMENT);
-                        l.add(b, l.createSilkTouchDispatchTable(b, l.applyExplosionDecay(ModItems.SALT,
-                                LootItem.lootTableItem(ModItems.SALT)
-                                        .apply(SetItemCountFunction.setCount(UniformGenerator.between(2, 5)))
-                                        .apply(ApplyBonusCount.addOreBonusCount(lookup.getOrThrow(Enchantments.FORTUNE))))));
-                    })
-                    .tag(WWBlockTags.ORES$SALT.get())
-                    .item()
-                    .tag(WWItemTags.ORES$SALT.get())
-                    .build()
+                    .loot(salt_drop)
                     .register();
         }
         {
