@@ -93,7 +93,6 @@ public class ModBlocks {
                 .chestBoat()
                 .crown(() -> Blocks.SPRUCE_LOG)
                 .register()
-        
         ;
     }
     public static void register() {}

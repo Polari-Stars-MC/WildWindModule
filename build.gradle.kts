@@ -271,7 +271,7 @@ subprojects {
         val registrate = "accessCompileOnly"(
             group = "com.tterrag.registrate",
             name = "Registrate",
-            version = "MC1.21-1.3.+"
+            version = "MC1.21-1.3.0+66"
         )
         runtimeOnly(registrate)
         implementation(
