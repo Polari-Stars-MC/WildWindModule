@@ -126,7 +126,7 @@ public class ModBlocks {
                     .tag(WWBlockTags.MILK.get())
                     .register();
         }
-        
+
     }
 
     public static void register() {}

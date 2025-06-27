@@ -27,7 +27,7 @@ plugins {
     base
     alias(libs.plugins.mod.dev.gradle)
     id("io.github.jeadyx.sonatype-uploader").version("2.8")
-    id("dev.vfyjxf.modaccessor") version "1.1.1"
+    // id("dev.vfyjxf.modaccessor") version "1.1.1"
 }
 val mcVersion: String by rootProject
 val mcVersionRange: String by rootProject
@@ -91,7 +91,7 @@ val lib = libs
 
 subprojects {
     apply(plugin = lib.plugins.mod.dev.gradle.get().pluginId)
-    apply(plugin = "dev.vfyjxf.modaccessor")
+    //apply(plugin = "dev.vfyjxf.modaccessor")
 	
     val modId: String by project
     val modName: String by project
@@ -253,12 +253,12 @@ subprojects {
         neoForge.setAccessTransformers(atFile)
     }
 
-    modAccessor {
-        createTransformConfiguration(configurations.getAt("compileOnly"))
-        if (atFile.readBytes().isNotEmpty()) {
-            accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
-        }
-    }
+//    modAccessor {
+//        createTransformConfiguration(configurations.getAt("compileOnly"))
+//        if (atFile.readBytes().isNotEmpty()) {
+//            accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
+//        }
+//    }
 
     val projectNames = listOf(
         "Deco",
