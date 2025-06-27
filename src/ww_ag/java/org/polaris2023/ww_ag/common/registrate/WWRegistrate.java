@@ -1,16 +1,10 @@
 package org.polaris2023.ww_ag.common.registrate;
 
 import com.mojang.serialization.MapCodec;
-import com.tterrag.registrate.builders.Builder;
-import com.tterrag.registrate.builders.BuilderCallback;
+import com.tterrag.registrate.builders.BlockBuilder;
 import com.tterrag.registrate.builders.NoConfigBuilder;
-import com.tterrag.registrate.providers.DataGenContext;
-import com.tterrag.registrate.providers.ProviderType;
-import com.tterrag.registrate.providers.RegistrateProvider;
-import com.tterrag.registrate.util.nullness.NonNullBiConsumer;
 import com.tterrag.registrate.util.nullness.NonNullConsumer;
-import com.tterrag.registrate.util.nullness.NonNullFunction;
-import dev.xkmc.l2core.init.L2Core;
+import com.tterrag.registrate.util.nullness.NonNullUnaryOperator;
 import dev.xkmc.l2core.init.reg.registrate.L2Registrate;
 import dev.xkmc.l2core.init.reg.registrate.SimpleEntry;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -20,20 +14,21 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvent;
+import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.world.entity.vehicle.Boat;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.DropExperienceBlock;
 import net.minecraft.world.level.block.state.BlockBehaviour;
-import net.minecraft.world.level.block.state.properties.EnumProperty;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.common.loot.IGlobalLootModifier;
-import net.neoforged.neoforge.fluids.BaseFlowingFluid;
 import org.polaris2023.ww_ag.WWAgMod;
 import org.polaris2023.ww_ag.common.registrate.build.*;
 import org.polaris2023.ww_ag.common.registrate.entry.PlanksEntry;
-import org.polaris2023.ww_ag.datagen.WWLanguage;
 import org.polaris2023.ww_ag.utils.ILanguage;
 
 import javax.annotation.ParametersAreNonnullByDefault;
@@ -41,6 +36,7 @@ import java.util.*;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
+import java.util.stream.Stream;
 
 /**
 * @author baka4n
@@ -48,11 +44,28 @@ import java.util.function.Supplier;
 */
 @MethodsReturnNonnullByDefault
 @ParametersAreNonnullByDefault
-@SuppressWarnings("unused")
+@SuppressWarnings({"unused"})
 public class WWRegistrate extends L2Registrate {
-    private ResourceKey<CreativeModeTab> after = CreativeModeTabs.SPAWN_EGGS;
+    private final ResourceKey<CreativeModeTab> after = CreativeModeTabs.SPAWN_EGGS;
     public WWRegistrate(String modid) {
         super(modid);
+    }
+
+    public
+    ILanguage<Block, DropExperienceBlock, L2Registrate, BlockBuilder<DropExperienceBlock, L2Registrate>> dropExpBlock(
+            String name,
+            IntProvider xp,
+            TagKey<Block> bTag,
+            TagKey<Item> iTqg) {
+
+        return ILanguage.convert1(
+                block(name, p -> new DropExperienceBlock(xp, p))
+                        .tag(BlockTags.MINEABLE_WITH_PICKAXE, bTag)
+                        .defaultBlockstate()
+                        .item()
+                        .tag(iTqg)
+                        .build()
+        );
     }
 
     public SoundBuilder<SoundEvent, L2Registrate> fixRangeSound(String name, float range) {
