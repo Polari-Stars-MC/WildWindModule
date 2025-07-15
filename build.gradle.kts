@@ -56,6 +56,7 @@ allprojects {
             dirs(rootProject.file("libs"))
         }
         maven("https://maven.neoforged.net/releases")
+        maven("https://mvn.devos.one/snapshots")
         maven("https://maven.ithundxr.dev/snapshots")
 //        maven("https://maven.creeperhost.net/")
     }
