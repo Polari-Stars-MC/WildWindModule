@@ -27,7 +27,7 @@ plugins {
     base
     alias(libs.plugins.mod.dev.gradle)
     id("io.github.jeadyx.sonatype-uploader").version("2.8")
-    id("dev.vfyjxf.modaccessor") version "1.1.1"
+    // id("dev.vfyjxf.modaccessor") version "1.1.1"
 }
 val mcVersion: String by rootProject
 val mcVersionRange: String by rootProject
@@ -56,6 +56,7 @@ allprojects {
             dirs(rootProject.file("libs"))
         }
         maven("https://maven.neoforged.net/releases")
+        maven("https://mvn.devos.one/snapshots")
         maven("https://maven.ithundxr.dev/snapshots")
 //        maven("https://maven.creeperhost.net/")
     }
@@ -91,7 +92,7 @@ val lib = libs
 
 subprojects {
     apply(plugin = lib.plugins.mod.dev.gradle.get().pluginId)
-    apply(plugin = "dev.vfyjxf.modaccessor")
+    //apply(plugin = "dev.vfyjxf.modaccessor")
 	
     val modId: String by project
     val modName: String by project
@@ -253,12 +254,12 @@ subprojects {
         neoForge.setAccessTransformers(atFile)
     }
 
-    modAccessor {
-        createTransformConfiguration(configurations.getAt("compileOnly"))
-        if (atFile.readBytes().isNotEmpty()) {
-            accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
-        }
-    }
+//    modAccessor {
+//        createTransformConfiguration(configurations.getAt("compileOnly"))
+//        if (atFile.readBytes().isNotEmpty()) {
+//            accessTransformerFiles = rootProject.files("src/${modId}/resources/META-INF/accesstransformer.cfg")
+//        }
+//    }
 
     val projectNames = listOf(
         "Deco",
@@ -268,12 +269,11 @@ subprojects {
     )
 
     dependencies {
-        val registrate = "accessCompileOnly"(
+        implementation(
             group = "com.tterrag.registrate",
             name = "Registrate",
-            version = "[MC1.21-1.3.0+55,)"
+            version = "[MC1.21-1.3.0,)"
         )
-        runtimeOnly(registrate)
         implementation(
             group="dev.xkmc",
             name= "l2serial",

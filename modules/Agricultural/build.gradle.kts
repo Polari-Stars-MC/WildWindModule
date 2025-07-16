@@ -2,7 +2,7 @@ dependencies {
     jarJar(
         group = "com.tterrag.registrate",
         name = "Registrate",
-        version = "[MC1.21-1.3.0+55,)"
+        version = "[MC1.21-1.3.0,)"
     )
     jarJar(
         group="dev.xkmc",

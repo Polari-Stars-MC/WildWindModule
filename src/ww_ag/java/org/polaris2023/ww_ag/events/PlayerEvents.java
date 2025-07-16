@@ -73,11 +73,4 @@ public class PlayerEvents {
             }
         }
     }
-
-    @SubscribeEvent
-    public static void a(ItemTooltipEvent event) {
-        ItemStack stack = event.getItemStack();
-        ResourceLocation location = stack.getOrDefault(ModDataComponents.MILK_TYPE, ModBlocks.MILK.getId());
-        event.getToolTip().add(Component.literal(location.toString()));
-    }
 }
