@@ -6,6 +6,7 @@ import net.minecraft.MethodsReturnNonnullByDefault;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponentMap;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.PatchedDataComponentMap;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -78,10 +79,12 @@ public class ComponentBlockEntity<T extends ComponentBlockEntity<T>> extends Blo
                         });
                         // 添加新加载的组件
                         builder.addAll(loadedComponents);
+                        
                         this.components.setAll(builder.build());
                     });
         }
     }
+
 
     @SuppressWarnings("unchecked")
     public T self() {
