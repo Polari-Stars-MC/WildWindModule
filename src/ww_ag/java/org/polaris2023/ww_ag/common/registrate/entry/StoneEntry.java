@@ -50,24 +50,20 @@ public class StoneEntry<T extends WWRegistrate, E extends StoneEntry<T, E>> impl
     public static String upFirstName(String name) {
         if (name.isEmpty()) return name;
 
-        StringBuilder sb = new StringBuilder(name.length());
+        char[] chars = name.toCharArray();
         boolean capitalizeNext = true;
 
-        for (int i = 0; i < name.length(); i++) {
-            char c = name.charAt(i);
-            if (c == '_') {
+        for (int i = 0; i < chars.length; i++) {
+            if (chars[i] == '_') {
+                chars[i] = ' '; // 直接替换下划线为空格
                 capitalizeNext = true;
-                sb.append(" ");
-                continue;
-            }
-            if (capitalizeNext) {
-                sb.append(Character.toUpperCase(c));
+            } else if (capitalizeNext) {
+                chars[i] = Character.toUpperCase(chars[i]);
                 capitalizeNext = false;
-            } else {
-                sb.append(c);
             }
+            // 其他字符保持不变
         }
-        return sb.toString();
+        return new String(chars);
     }
 
     public StoneEntry(T registrate, String name) {
