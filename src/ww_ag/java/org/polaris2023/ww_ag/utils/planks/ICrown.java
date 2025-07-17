@@ -22,7 +22,7 @@ import java.util.function.Supplier;
  * @author baka4n
  * @code @Date 2025/6/23 21:59:41
  */
-public interface IWW<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
+public interface ICrown<E extends WWRegistrate, T extends PlanksEntry<E, T>> extends ISelf<T> {
     T setCrown(BlockEntry<RotatedPillarBlock> entry);
     default T crown(
             Supplier<Block> copy,

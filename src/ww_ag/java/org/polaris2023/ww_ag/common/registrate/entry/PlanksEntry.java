@@ -2,7 +2,6 @@ package org.polaris2023.ww_ag.common.registrate.entry;
 
 import com.tterrag.registrate.util.entry.BlockEntry;
 import com.tterrag.registrate.util.entry.ItemEntry;
-import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import net.minecraft.MethodsReturnNonnullByDefault;
@@ -17,18 +16,18 @@ import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraft.world.level.block.state.properties.WoodType;
-import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.asm.enumextension.EnumProxy;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
+import org.apache.commons.lang3.text.StrBuilder;
 import org.polaris2023.ww_ag.common.registrate.WWRegistrate;
 import org.polaris2023.ww_ag.utils.planks.*;
 
 import javax.annotation.ParametersAreNonnullByDefault;
-import java.util.HashMap;
 import java.util.Locale;
-import java.util.Map;
 import java.util.Objects;
 import java.util.function.Supplier;
+
+import static org.polaris2023.ww_ag.common.registrate.entry.StoneEntry.upFirstName;
 
 /**
  * @author baka4n
@@ -51,7 +50,7 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
         ISlab<T, E>,
         IStairs<T, E>,
         IBoat<T, E>,
-        IWW<T, E>{
+        ICrown<T, E> {
     public final T registrate;
 
     public final WoodType wt;
@@ -89,7 +88,7 @@ public class PlanksEntry<T extends WWRegistrate, E extends PlanksEntry<T, E>> im
     public ItemEntry<BoatItem> chest_boat;
 
     public String firstUpName() {
-        return name.substring(0, 1).toUpperCase(Locale.ROOT) + name.substring(1);
+        return upFirstName(name);
     }
     public PlanksEntry(T registrate, String name, Supplier<EnumProxy<Boat.Type>> btp) {
         this.registrate = registrate;

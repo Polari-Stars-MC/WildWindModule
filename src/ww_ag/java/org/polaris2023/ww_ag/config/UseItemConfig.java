@@ -1,6 +1,8 @@
 package org.polaris2023.ww_ag.config;
 
 import dev.xkmc.l2core.util.ConfigInit;
+import lombok.Getter;
+import lombok.experimental.Accessors;
 import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
@@ -9,6 +11,8 @@ import net.neoforged.neoforge.common.ModConfigSpec;
  * @code @Date 2025/6/4 13:06:37
  */
 
+@Accessors(fluent = true)
+@Getter
 public class UseItemConfig extends ConfigInit {
     public final ModConfigSpec.BooleanValue
             popped_chorus_fruit,

@@ -59,7 +59,7 @@ public class PlayerEvents {
                 pos :
                 pos.relative(direction);
 
-        if (ModConfigs.USE_ITEM.milk_block_use.get()) {
+        if (ModConfigs.USE_ITEM.milk_block_use().get()) {
             if (stack.is(Items.MILK_BUCKET)) {
                 BlockPos posNow = canBlockContainFluid(player, level, pos, state) ? pos : getFacePos;
                 stack.shrink(1);

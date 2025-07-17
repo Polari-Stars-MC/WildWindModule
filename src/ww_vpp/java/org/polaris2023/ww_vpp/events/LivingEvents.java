@@ -41,7 +41,7 @@ public class LivingEvents {
         LivingEntity livingEntity = event.getEntity();
 
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
-        if(ModConfigs.USE_ITEM.popped_chorus_fruit.get() && stack.is(Items.POPPED_CHORUS_FRUIT)) {
+        if(ModConfigs.USE_ITEM.popped_chorus_fruit().get() && stack.is(Items.POPPED_CHORUS_FRUIT)) {
             if(livingEntity.tryTeleportToSurface(serverLevel, livingEntity.getOnPos()) || livingEntity.randomTeleportAround(serverLevel)) {
                 serverLevel.gameEvent(GameEvent.TELEPORT, livingEntity.position(), GameEvent.Context.of(livingEntity));
                 SoundSource soundsource;
@@ -62,7 +62,7 @@ public class LivingEvents {
                 player.resetCurrentImpulseContext();
                 player.getCooldowns().addCooldown(stack.getItem(), 20);
             }
-        } else if(ModConfigs.USE_ITEM.glistering_melon_slice.get() && stack.is(Items.GLISTERING_MELON_SLICE)) {
+        } else if(ModConfigs.USE_ITEM.glistering_melon_slice().get() && stack.is(Items.GLISTERING_MELON_SLICE)) {
             livingEntity.heal(1.0F);
         }
 

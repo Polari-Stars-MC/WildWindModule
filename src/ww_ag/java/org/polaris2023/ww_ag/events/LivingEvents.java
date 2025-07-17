@@ -32,7 +32,7 @@ public class LivingEvents {
         if (!(livingEntity.level() instanceof ServerLevel serverLevel)) return;
 
         if(
-                ModConfigs.USE_ITEM.fish_bone_loot.get() && (stack.is(Tags.Items.FOODS_COOKED_FISH) ||
+                ModConfigs.USE_ITEM.fish_bone_loot().get() && (stack.is(Tags.Items.FOODS_COOKED_FISH) ||
                         stack.is(Tags.Items.FOODS_RAW_FISH))
         ) {
             if (livingEntity instanceof Player player) {
