@@ -22,7 +22,7 @@ public class ModModelProvider extends ModelProvider {
 
     private void registerWoodSet(BlockModelGenerators blockModel) {
         for (WoodSet woodSet : ModBlocks.WOOD_SETS) {
-            
+
         }
     }
 }
