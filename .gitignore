@@ -1,36 +1,40 @@
+### Gradle ###
 .gradle
-build/reports/
-**/build/classes/
-**/build/docs/
-**/build/libs/
-**/build/moddev/
-**/build/resources/
-**/build/tmp/
-**/build/generated/jarJar/
-**/build/generated/data/
-!src/**/build/
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
 
-
-# Ignore Gradle GUI config
-gradle-app.setting
-
+### IntelliJ IDEA ###
 .idea/
-run/
-.xcodemap/
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/**/out/
 
+.run/
 
-
-# Avoid ignoring Gradle wrapper jar file (.jar files are usually ignored)
-!gradle-wrapper.jar
-
-# Avoid ignore Gradle wrappper properties
-!gradle-wrapper.properties
-
-# Cache of project
-.gradletasknamecache
-
-# Eclipse Gradle plugin generated files
-# Eclipse Core
-.project
-# JDT-specific (Eclipse Java Development Tools)
+### Eclipse ###
+.apt_generated
 .classpath
+.eclipse/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/**/bin/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Minecraft Modding ###
+run/
+!**/src/**/run/
+**/src/generated/**/.cache/
+repo/
+!**/src/**/repo/

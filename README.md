@@ -1,19 +1,12 @@
-# Wild Wind Mod Modules
+# Wild Wind Modules 原野之风模块包
 
-Wild Wind Mod is a comprehensive mod collection designed for Minecraft, offering a variety of gameplay enhancements and new features. This mod is suitable for Minecraft version 1.21.1 and above, and it depends on NeoForge version 21.1.0 and above.
+### Module List 模块列表
 
-# Module Introduction
+| name |             note             | ch name |  note   |
+|:----:|:----------------------------:|:-------:|:-------:|
+| func |      Wild Wind Function      |   函数    | 原野之风函数库 |
+| deco |     Wild Wind Decoration     |   装饰    | 原野之风装饰库 |
+| adv  |     Wind Wind Adventure      |   冒险    | 原野之风冒险库 |
+| vpp  |     Wild Wind Vanilla++      |  原版修饰   | 原野之风原版库 |
 
-## Agricultural
 
-This module is centered around agriculture. It introduces new crops, items, and world - generation configurations. For example, it adds the Salt item and configures the world generation of salt mines, enhancing the agricultural and resource - gathering aspects of the game.
-
-
-## Adventure
-Adventure monsters, battle series.
-## Deco
-Decorative blocks or items.
-## Vanilla++
-Modify the data of the original version.
-## All in all
-Aggregate the sum of all modules.
