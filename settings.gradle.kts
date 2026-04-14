@@ -8,7 +8,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version("1.0.0")
 }
 
-val let = listOf("func", "deco", "adv", "vpp", "hfas")
+val let = listOf("hfas")
 let.forEach {
     include(it)
 
@@ -17,3 +17,5 @@ let.forEach {
     project(":$it").projectDir = f
 }
 
+
+rootProject.name = "ww"

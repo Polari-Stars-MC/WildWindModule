@@ -1,4 +1,3 @@
-import jdk.internal.net.http.common.TimeSource.source
 import org.slf4j.event.Level.DEBUG
 import java.util.Locale
 
@@ -28,7 +27,7 @@ allprojects {
     apply(plugin = "base")
     val modGroupId: String by project
     val modId: String by project
-    var projectModId = modId + "_" + project.name.lowercase(Locale.ROOT)
+    var projectModId = rootProject.name + "_" + project.name.lowercase(Locale.ROOT)
     val modVersion: String by project
     val neoVersion: String by project
     if (project == rootProject) return@allprojects
@@ -64,7 +63,8 @@ allprojects {
             }
             resources {
                 srcDir(generateModMetadata)
-                srcDir(rootProject.file("build/generated/${project.name}"))
+                srcDir(rootProject.file("build/generated/${project.name}/server"))
+                srcDir(rootProject.file("build/generated/${project.name}/client"))
                 srcDir(rootProject.file("src/${project.name}/resources"))
 
                 exclude("**/*.bbmodel")
@@ -96,13 +96,23 @@ allprojects {
                 systemProperty("neoforge.enabledGameTestNamespaces", projectModId)
                 gameDirectory = layout.buildDirectory.dir("runs/${project.name}/server").get().asFile
             }
-            register("data") {
+            register("clientData") {
                 clientData()
                 gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
                 programArguments.addAll(listOf(
                     "--mod", projectModId,
                     "--all",
-                    "--output", rootProject.file("build/generated/${project.name}").absolutePath,
+                    "--output", rootProject.file("build/generated/${project.name}/client").absolutePath,
+                    "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
+                ))
+            }
+            register("serverData") {
+                serverData()
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
+                programArguments.addAll(listOf(
+                    "--mod", projectModId,
+                    "--all",
+                    "--output", rootProject.file("build/generated/${project.name}/server").absolutePath,
                     "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
                 ))
             }

@@ -5,7 +5,9 @@ build/
 !**/src/**/build/
 
 ### IntelliJ IDEA ###
-.idea/
+.idea/modules
+.idea/*.xml
+.idea/.name
 *.iws
 *.iml
 *.ipr
