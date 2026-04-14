@@ -3,6 +3,7 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import org.polaris2023.wildwind.hfas.HFASMod;
@@ -23,6 +24,16 @@ public class ModModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        // 焚烬木树叶 - 橙色染色
+        blockModels.createTintedLeaves(ModBlocks.BLAZE_LEAVES.get(), TexturedModel.LEAVES, 0xFF8000);
+        // 焚烬木树苗
+        blockModels.createCrossBlock(ModBlocks.BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
+        // 灵焰木树叶 - 青色染色
+        blockModels.createTintedLeaves(ModBlocks.SOUL_LEAVES.get(), TexturedModel.LEAVES, 0x00FFFF);
+        // 灵焰木树苗
+        blockModels.createCrossBlock(ModBlocks.SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
         // 焦灰草方块 - 使用简单的方块模型
         createSimpleBlock(blockModels, ModBlocks.SCORCHED_GRASS_BLOCK.get());
 

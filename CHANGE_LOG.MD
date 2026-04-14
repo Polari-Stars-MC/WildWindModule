@@ -5,6 +5,20 @@ All notable changes to the Wild Wind Module project will be documented in this f
 ## [1.1.0] - 2026.04.15
 
 ### Added
+- **区块加载替换机制** - 使用 `ChunkEvent.Load` 事件在区块加载时替换制箭台
+  - 遍历区块内所有方块，将原版制箭台替换为模组制箭台
+  - 保留原版制箭台的方块状态属性
+  - 使用 `BlockEvent.EntityPlaceEvent` 处理玩家放置的制箭台
+- **制箭台GUI系统**
+  - `FletchingTableBlock` - 实现 `EntityBlock` 接口，支持GUI交互
+  - `FletchingTableBlockEntity` - 制箭台方块实体
+  - `FletchingTableMenu` - 制箭台菜单，包含3个输入槽位和玩家物品栏
+- **数据生成系统**
+  - `HFASDatagen` - 数据生成入口类
+  - `ModModelProvider` - 方块模型和物品模型生成
+  - `ModLootProvider` - 战利品表生成
+  - `BlockLoot` - 方块掉落规则
+
 - **配置文件系统** - 可通过配置文件控制模组行为
   - `worldgen.replaceVanillaFletchingTable` - 控制是否替换原版制箭台
 - **方块放置事件处理器** - 使用 `FletchingTableReplaceHandler` 监听方块放置事件
@@ -115,11 +129,10 @@ All notable changes to the Wild Wind Module project will be documented in this f
 
 ## 开发计划
 
-### 待实现功能
-- [ ] 去除焚烬树和灵焰树的错误自然生成（已完成）
-- [ ] 模组制箭台GUI功能（已完成）
-- [ ] 世界生成时替换结构内制箭台（已完成）
-- [ ] 创造模式物品栏排序（已完成）
+### 已完成功能
+- [x] 模组制箭台GUI功能
+- [x] 世界生成时替换结构内制箭台（区块加载事件）
+- [x] 创造模式物品栏排序
 
 ### 创造模式物品栏排序规划
 
@@ -144,4 +157,3 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - 泥巴（原版方块）、焦土、黏土（原版方块）
 - 仙人掌（原版方块）、仙人球、绯红菌索（原版方块）
 
-> **备注**: 模组新增制箭台不需要放入创造模式物品栏
