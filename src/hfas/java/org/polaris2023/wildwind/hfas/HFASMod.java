@@ -6,6 +6,7 @@ import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
 import org.polaris2023.wildwind.hfas.block.entity.ModBlockEntities;
+import org.polaris2023.wildwind.hfas.component.ModDataComponents;
 import org.polaris2023.wildwind.hfas.config.ModCommonConfig;
 import org.polaris2023.wildwind.hfas.menu.ModMenus;
 
@@ -21,6 +22,9 @@ public class HFASMod {
         ModBlockEntities.register(bus);
         // 注册菜单
         ModMenus.register(bus);
+        // 注册数据组件
+        ModDataComponents.register(bus);
+
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
     }

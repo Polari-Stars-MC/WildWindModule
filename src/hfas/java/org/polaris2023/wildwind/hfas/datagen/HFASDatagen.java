@@ -1,5 +1,7 @@
 package org.polaris2023.wildwind.hfas.datagen;
 
+import net.minecraft.core.HolderLookup;
+import net.minecraft.data.PackOutput;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
@@ -9,6 +11,8 @@ import org.polaris2023.wildwind.hfas.datagen.provider.lang.EnUsLanguageProvider;
 import org.polaris2023.wildwind.hfas.datagen.provider.lang.ZhCnLanguageProvider;
 import org.polaris2023.wildwind.hfas.datagen.provider.tag.ModBlockTagsProvider;
 import org.polaris2023.wildwind.hfas.datagen.provider.tag.ModItemTagsProvider;
+
+import java.util.concurrent.CompletableFuture;
 
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class HFASDatagen {
@@ -32,5 +36,7 @@ public class HFASDatagen {
         event.createProvider(ModDatapackProvider::new);
         // 数据映射
         event.createProvider(ModDataMapsProvider::new);
+        // 配方
+        event.createProvider(ModRecipeProvider.Runner::new);
     }
 }
