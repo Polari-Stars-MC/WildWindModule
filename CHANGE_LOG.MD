@@ -50,6 +50,8 @@ All notable changes to the Wild Wind Module project will be documented in this f
 |------------------------|--------------|
 | `HFASDatagen`          | 数据生成入口       |
 | `ModModelProvider`     | 模型生成（支持染色树叶） |
+| `ModBlockTagsProvider` | 方块标签生成       |
+| `ModItemTagsProvider`  | 物品标签生成       |
 | `ModLootProvider`      | 战利品表生成       |
 | `ModDatapackProvider`  | 数据包提供器       |
 | `ModDataMapsProvider`  | 数据映射提供器      |
@@ -99,12 +101,13 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 ├── datagen/                  # 数据生成
 │   ├── HFASDatagen.java
 │   └── provider/
+│       ├── loot/             # 实体掉落
+│       ├── lang/             # 语言系统
+│       ├── tag/              # Tag标签
 │       ├── ModModelProvider.java
 │       ├── ModLootProvider.java
 │       ├── ModDatapackProvider.java
 │       ├── ModDataMapsProvider.java
-│       ├── EnUsLanguageProvider.java
-│       └── ZhCnLanguageProvider.java
 ├── event/                    # 事件处理
 │   ├── FletchingTableReplaceHandler.java
 │   ├── BlockFeaturesHandler.java
@@ -150,6 +153,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **树叶堆肥功能** - 树叶和树苗30%概率增加堆肥等级
 - **木质方块燃料功能** - 木质方块可作为熔炉燃料（300 tick）
 - **模型数据生成** - 使用 `BlockModelGenerators.family()` 和 `woodProvider()` 自动生成方块和物品模型
+- **标签数据生成** - 使用 `ModBlockTagsProvider` 和 `ModItemTagsProvider` 为木质方块添加原版标签（logs、planks、wooden_stairs 等）
 
 ### Changed
 - 移除 `StructureTemplateMixin`，改用事件监听方式
@@ -172,6 +176,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - [x] 树叶堆肥功能
 - [x] 木质方块燃料功能
 - [x] 模型数据生成
+- [x] 标签数据生成
 
 ### 待开发功能
 - [ ] 更多下界植物

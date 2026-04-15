@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.hfas.datagen.provider;
+package org.polaris2023.wildwind.hfas.datagen.provider.lang;
 
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;

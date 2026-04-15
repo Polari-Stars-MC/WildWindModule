@@ -1,11 +1,14 @@
 package org.polaris2023.wildwind.hfas.datagen;
 
-import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.datagen.provider.*;
+import org.polaris2023.wildwind.hfas.datagen.provider.lang.EnUsLanguageProvider;
+import org.polaris2023.wildwind.hfas.datagen.provider.lang.ZhCnLanguageProvider;
+import org.polaris2023.wildwind.hfas.datagen.provider.tag.ModBlockTagsProvider;
+import org.polaris2023.wildwind.hfas.datagen.provider.tag.ModItemTagsProvider;
 
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class HFASDatagen {
@@ -19,8 +22,15 @@ public class HFASDatagen {
 
     @SubscribeEvent
     private static void gatherServer(GatherDataEvent.Server event) {
+        // 方块标签
+        event.createProvider(ModBlockTagsProvider::new);
+        // 物品标签
+        event.createProvider(ModItemTagsProvider::new);
+        // 战利品表
         event.createProvider(ModLootProvider::new);
+        // 数据包
         event.createProvider(ModDatapackProvider::new);
+        // 数据映射
         event.createProvider(ModDataMapsProvider::new);
     }
 }
