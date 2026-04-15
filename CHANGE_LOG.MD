@@ -2,158 +2,122 @@
 
 All notable changes to the Wild Wind Module project will be documented in this file.
 
-## [1.1.0] - 2026.04.15
+## 项目总结 - HFAS 模块
 
-### Added
-- **区块加载替换机制** - 使用 `ChunkEvent.Load` 事件在区块加载时替换制箭台
-  - 遍历区块内所有方块，将原版制箭台替换为模组制箭台
-  - 保留原版制箭台的方块状态属性
-  - 使用 `BlockEvent.EntityPlaceEvent` 处理玩家放置的制箭台
-- **制箭台GUI系统**
-  - `FletchingTableBlock` - 实现 `EntityBlock` 接口，支持GUI交互
-  - `FletchingTableBlockEntity` - 制箭台方块实体
-  - `FletchingTableMenu` - 制箭台菜单，包含3个输入槽位和玩家物品栏
-- **数据生成系统**
-  - `HFASDatagen` - 数据生成入口类
-  - `ModModelProvider` - 方块模型和物品模型生成
-  - `ModLootProvider` - 战利品表生成
-  - `BlockLoot` - 方块掉落规则
+### 模组概述
+**HFAS (Wild Wind - Fletching Table and Saplings)** 是 Wild Wind Module 的子模块，专注于：
+- 制箭台功能扩展
+- 自定义木质方块套件
+- 世界生成增强
 
-- **配置文件系统** - 可通过配置文件控制模组行为
-  - `worldgen.replaceVanillaFletchingTable` - 控制是否替换原版制箭台
-- **方块放置事件处理器** - 使用 `FletchingTableReplaceHandler` 监听方块放置事件
-  - 在结构生成时自动替换原版制箭台为模组制箭台
-  - 使用 HIGHEST 优先级确保第一时间处理
-  - 支持配置文件控制开关
+### 核心功能
 
-### Changed
-- 重构制箭台替换机制，使用 BlockEvent.EntityPlaceEvent 事件监听
-- 配置文件可通过 `config/ww_hfas-common.toml` 进行修改
+#### 1. 制箭台替换系统
+- **区块加载替换** - 使用 `ChunkEvent.Load` 事件自动替换原版制箭台
+- **配置控制** - 通过 `worldgen.replaceVanillaFletchingTable` 配置项控制开关
+- **GUI系统** - 自定义制箭台带有交互界面（3个输入槽位）
+
+#### 2. 木质方块套件
+| 木材类型 | 方块数量 | 特点 |
+|---------|---------|------|
+| 焚烬木 (Blaze) | 16种 | 橙色调，下界风格 |
+| 灵焰木 (Soul) | 16种 | 青色调，灵魂主题 |
+| 杜鹃木 (Azalea) | 13种 | 浅绿色调，繁茂洞穴 |
+
+每种套件包含：原木、木头、去皮原木、去皮木头、木板、楼梯、台阶、栅栏、栅栏门、门、活板门、压力板、按钮、树叶、树苗
+
+#### 3. 世界生成
+- **焚烬木** - 下界废土群系 (Nether Wastes)
+- **灵焰木** - 灵魂沙峡谷群系 (Soul Sand Valley)
+- **杜鹃木** - 繁茂洞穴群系 (Lush Caves)，替换原版杜鹃树
+
+#### 4. 杜鹃树增强
+- **Mixin 注入** - 修改杜鹃花催熟行为，生成杜鹃木原木
+- **生物群系修改** - 移除原版杜鹃树，添加自定义杜鹃树
+- **保留原版树叶** - 使用原版杜鹃树叶和开花杜鹃树叶
+
+### 技术实现
+
+#### 数据生成
+- `HFASDatagen` - 数据生成入口
+- `ModModelProvider` - 模型生成（支持染色树叶）
+- `ModLootProvider` - 战利品表生成
+- `EnUsLanguageProvider` / `ZhCnLanguageProvider` - 语言文件生成
+
+#### 世界生成系统
+- `ModConfiguredFeatures` - 配置特征（树木结构）
+- `ModPlacedFeatures` - 放置特征
+- `ModBiomeModifiers` - 生物群系修改器
+- `ModTreeGrowers` - 树苗生长器
+- `ModDatapackProvider` - 数据包提供器
+
+#### 自定义类型
+- `BlockSetType` - 焚烬木、灵焰木、杜鹃木
+- `WoodType` - 对应木材类型
+- `TreeGrower` - 自定义树木生长逻辑
+
+### 文件结构
+```
+src/hfas/java/org/polaris2023/wildwind/hfas/
+├── block/                    # 方块注册
+│   ├── ModBlocks.java       # 方块定义
+│   ├── FletchingTableBlock.java
+│   └── entity/              # 方块实体
+├── worldgen/                 # 世界生成
+│   ├── ModConfiguredFeatures.java
+│   ├── ModPlacedFeatures.java
+│   ├── ModBiomeModifiers.java
+│   ├── ModTreeGrowers.java
+│   └── ModWorldGen.java
+├── datagen/                  # 数据生成
+│   ├── HFASDatagen.java
+│   └── provider/
+├── event/                    # 事件处理
+│   └── FletchingTableReplaceHandler.java
+├── mixin/                    # Mixin 注入
+│   └── AzaleaBlockMixin.java
+├── config/                   # 配置文件
+│   └── ModCommonConfig.java
+├── menu/                     # GUI 菜单
+└── groups/                   # 创造模式物品栏
+    └── ModCreativeTabs.java
+```
 
 ---
 
 ## [1.0.0] - 2026.04.15
 
 ### Added
-
-#### 新方块
-- **焦灰草方块 (scorched_grass_block)** - 焦灰色的草方块
-- **焦土 (scorched_dirt)** - 焦土方块
-- **焦灰草丛 (scorched_grass)** - 装饰性焦灰草丛
-- **焦灰枝条 (scorched_twig)** - 装饰性焦灰枝条
-- **仙人球 (tiny_cactus)** - 小型仙人球装饰方块
-- **制箭台 (fletching_table)** - 模组版制箭台，带有GUI功能
-
-#### 新功能
-- 制箭台GUI功能 - 右键打开交互界面
-- 世界生成时自动替换原版制箭台为模组制箭台
+- **区块加载替换机制** - 使用 `ChunkEvent.Load` 事件在区块加载时替换制箭台
+- **制箭台GUI系统** - `FletchingTableBlock`、`FletchingTableBlockEntity`、`FletchingTableMenu`
+- **数据生成系统** - 模型、战利品表、语言文件生成
+- **焚烬木套件** - 16种方块（原木、木板、楼梯、门等）
+- **灵焰木套件** - 16种方块
+- **杜鹃木套件** - 13种方块（不含树叶和树苗，使用原版）
+- **树木自然生成** - 焚烬木（下界）、灵焰木（灵魂沙峡谷）、杜鹃木（繁茂洞穴）
+- **杜鹃树增强** - Mixin 修改催熟行为，使用杜鹃木原木
+- **配置文件系统** - `worldgen.replaceVanillaFletchingTable` 配置项
+- **方块放置事件处理器** - `FletchingTableReplaceHandler
+- 焦灰草方块、焦土、焦灰草丛、焦灰枝条、仙人球
+- 制箭台（带GUI功能）
 - 创造模式物品栏自动排序
 
 ### Changed
-- 使用NeoForge 26.1的DeferredRegister注册方式，避免延迟注册bug
-- 修复build.gradle.kts中的错误import
-
-### Removed
-- 删除焚烬树和灵焰树的错误自然生成配置
-- 删除screens和entities文件夹
-
----
-
-## [0.9.0] - 2026.04.14
-
-### Added
-- **杜鹃木类相关木质方块**
-  - 杜鹃木原木
-  - 杜鹃
-  - 去皮杜鹃原木
-  - 去皮杜鹃
-  - 杜鹃木板
-  - 杜鹃楼梯
-  - 杜鹃台阶
-  - 杜鹃栅栏
-  - 杜鹃栅栏门
-  - 杜鹃门
-  - 杜鹃活板门
-  - 杜鹃压力板
-  - 杜鹃按钮
-
-### Changed
-- 实现杜鹃木类相关木质方块的功能（树叶堆肥、原木去皮、作为燃料等）
-
----
-
-## [0.8.0] - 2026.04.10
-
-### Added
-- 实现焚烬木和灵焰木类相关木质方块的功能
-  - 树叶堆肥
-  - 原木去皮
-  - 作为燃料使用
-- 探测方块属性功能（硬度、爆炸抗性等）
-
-### Fixed
-- 焚烬木和灵焰木方块命名错误（已调转命名）
-
----
-
-## [0.7.0] - 2026.04.09
-
-### Changed
-- 修改炽焰木相关木质方块中文译名为"焚烬木"
-- 修改余烬木类相关木质方块中文译名为"灵焰木"
-
----
-
-## [0.6.0] - 2026.04.08
-
-### Added
-- 注册炽焰木和余烬木类相关木质方块
-- 炽焰木和余烬木树苗生成为树木
-
-### Changed
-- 规范了部分贴图文件的命名格式
-
-### Removed
-- 删除screens文件夹
-- 删除entities文件夹
-
----
-
-## [0.5.0] - 2026.04.03
-
-### Added
-- 注册炽焰木和余烬木类相关木质方块
-- 炽焰木和余烬木树苗生成为树木
-
----
+- 移除 `StructureTemplateMixin`，改用事件监听方式
+- 使用 `BiomeModifiers.RemoveFeaturesBiomeModifier` 移除原版杜鹃树
+- 使用自定义 `BlockSetType` 和 `WoodType`
 
 ## 开发计划
 
 ### 已完成功能
 - [x] 模组制箭台GUI功能
-- [x] 世界生成时替换结构内制箭台（区块加载事件）
+- [x] 世界生成时替换结构内制箭台
 - [x] 创造模式物品栏排序
+- [x] 焚烬木/灵焰木/杜鹃木套件
+- [x] 树木自然生成
+- [x] 杜鹃树催熟增强
 
-### 创造模式物品栏排序规划
-
-#### 建筑方块
-- 樱花木按钮（原版方块）
-- 杜鹃木原木、杜鹃、去皮杜鹃原木、去皮杜鹃
-- 杜鹃木板、杜鹃楼梯、杜鹃台阶、杜鹃栅栏、杜鹃栅栏门、杜鹃门、杜鹃活板门、杜鹃压力板、杜鹃按钮
-- 竹块（原版方块）、竹按钮（原版方块）
-- 焚烬木原木、焚烬木、去皮焚烬木原木、去皮焚烬木
-- 焚烬木木板、焚烬木楼梯、焚烬木台阶、焚烬木栅栏、焚烬木栅栏门、焚烬木门、焚烬木活板门、焚烬木压力板、焚烬木按钮
-- 灵焰木原木、灵焰木、去皮灵焰木原木、去皮灵焰木
-- 灵焰木木板、灵焰木楼梯、灵焰木台阶、灵焰木栅栏、灵焰木栅栏门、灵焰木门、灵焰木活板门、灵焰木压力表、灵焰木按钮
-- 绯红菌柄（原版方块）
-
-#### 自然方块
-- 樱花原木（原版方块）、杜鹃木原木、焚烬木原木、灵焰木原木、蘑菇柄（原版方块）
-- 盛开的杜鹃树叶（原版方块）、焚烬树树叶、灵焰树树叶
-- 盛开的杜鹃花丛（原版方块）、焚烬树树苗、灵焰树树苗、棕色蘑菇（原版方块）
-- 矮草丛（原版方块）、焦灰草丛、蕨（原版方块）
-- 枯死的灌木（原版方块）、焦灰枝条、蒲公英（原版方块）
-- 土径（原版方块）、焦灰草方块、泥土（原版方块）
-- 泥巴（原版方块）、焦土、黏土（原版方块）
-- 仙人掌（原版方块）、仙人球、绯红菌索（原版方块）
-
+### 待实现功能
+- [ ] 树叶堆肥功能
+- [ ] 原木去皮功能
+- [ ] 木质方块作为燃料
