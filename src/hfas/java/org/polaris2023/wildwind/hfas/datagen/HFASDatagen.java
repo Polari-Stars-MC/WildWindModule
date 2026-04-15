@@ -21,5 +21,6 @@ public class HFASDatagen {
     private static void gatherServer(GatherDataEvent.Server event) {
         event.createProvider(ModLootProvider::new);
         event.createProvider(ModDatapackProvider::new);
+        event.createProvider(ModDataMapsProvider::new);
     }
 }

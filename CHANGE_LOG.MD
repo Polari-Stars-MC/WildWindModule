@@ -2,6 +2,8 @@
 
 All notable changes to the Wild Wind Module project will be documented in this file.
 
+---
+
 ## 项目总结 - HFAS 模块
 
 ### 模组概述
@@ -18,11 +20,11 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **GUI系统** - 自定义制箭台带有交互界面（3个输入槽位）
 
 #### 2. 木质方块套件
-| 木材类型 | 方块数量 | 特点 |
-|---------|---------|------|
-| 焚烬木 (Blaze) | 16种 | 橙色调，下界风格 |
-| 灵焰木 (Soul) | 16种 | 青色调，灵魂主题 |
-| 杜鹃木 (Azalea) | 13种 | 浅绿色调，繁茂洞穴 |
+| 木材类型         | 方块数量 | 特点        |
+|--------------|------|-----------|
+| 焚烬木 (Blaze)  | 16种  | 橙色调，下界风格  |
+| 灵焰木 (Soul)   | 16种  | 青色调，灵魂主题  |
+| 杜鹃木 (Azalea) | 13种  | 浅绿色调，繁茂洞穴 |
 
 每种套件包含：原木、木头、去皮原木、去皮木头、木板、楼梯、台阶、栅栏、栅栏门、门、活板门、压力板、按钮、树叶、树苗
 
@@ -36,25 +38,50 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **生物群系修改** - 移除原版杜鹃树，添加自定义杜鹃树
 - **保留原版树叶** - 使用原版杜鹃树叶和开花杜鹃树叶
 
+#### 5. 木质方块功能
+- **去皮功能** - 使用斧头可将原木/木头去皮
+- **堆肥功能** - 树叶和树苗可用于堆肥（30%概率）
+- **燃料功能** - 木质方块可作为熔炉燃料（300 tick）
+
 ### 技术实现
 
 #### 数据生成
-- `HFASDatagen` - 数据生成入口
-- `ModModelProvider` - 模型生成（支持染色树叶）
-- `ModLootProvider` - 战利品表生成
-- `EnUsLanguageProvider` / `ZhCnLanguageProvider` - 语言文件生成
+| 提供器                    | 功能           |
+|------------------------|--------------|
+| `HFASDatagen`          | 数据生成入口       |
+| `ModModelProvider`     | 模型生成（支持染色树叶） |
+| `ModLootProvider`      | 战利品表生成       |
+| `ModDatapackProvider`  | 数据包提供器       |
+| `ModDataMapsProvider`  | 数据映射提供器      |
+| `EnUsLanguageProvider` | 英文语言文件       |
+| `ZhCnLanguageProvider` | 中文语言文件       |
 
 #### 世界生成系统
-- `ModConfiguredFeatures` - 配置特征（树木结构）
-- `ModPlacedFeatures` - 放置特征
-- `ModBiomeModifiers` - 生物群系修改器
-- `ModTreeGrowers` - 树苗生长器
-- `ModDatapackProvider` - 数据包提供器
+| 类                       | 功能         |
+|-------------------------|------------|
+| `ModConfiguredFeatures` | 配置特征（树木结构） |
+| `ModPlacedFeatures`     | 放置特征       |
+| `ModBiomeModifiers`     | 生物群系修改器    |
+| `ModTreeGrowers`        | 树苗生长器      |
+
+#### 事件处理
+| 类                              | 功能         |
+|--------------------------------|------------|
+| `FletchingTableReplaceHandler` | 区块加载时替换制箭台 |
+| `BlockFeaturesHandler`         | 方块功能（堆肥等）  |
+| `FuelHandler`                  | 燃料事件处理     |
+
+#### Mixin 注入
+| 类                  | 功能        |
+|--------------------|-----------|
+| `AzaleaBlockMixin` | 修改杜鹃花催熟行为 |
 
 #### 自定义类型
-- `BlockSetType` - 焚烬木、灵焰木、杜鹃木
-- `WoodType` - 对应木材类型
-- `TreeGrower` - 自定义树木生长逻辑
+| 类型             | 用途                     |
+|----------------|------------------------|
+| `BlockSetType` | 焚烬木、灵焰木、杜鹃木的门/活板门/按钮类型 |
+| `WoodType`     | 对应木材类型                 |
+| `TreeGrower`   | 自定义树木生长逻辑              |
 
 ### 文件结构
 ```
@@ -63,25 +90,43 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 │   ├── ModBlocks.java       # 方块定义
 │   ├── FletchingTableBlock.java
 │   └── entity/              # 方块实体
+│       └── FletchingTableBlockEntity.java
 ├── worldgen/                 # 世界生成
 │   ├── ModConfiguredFeatures.java
 │   ├── ModPlacedFeatures.java
 │   ├── ModBiomeModifiers.java
-│   ├── ModTreeGrowers.java
-│   └── ModWorldGen.java
+│   └── ModTreeGrowers.java
 ├── datagen/                  # 数据生成
 │   ├── HFASDatagen.java
 │   └── provider/
+│       ├── ModModelProvider.java
+│       ├── ModLootProvider.java
+│       ├── ModDatapackProvider.java
+│       ├── ModDataMapsProvider.java
+│       ├── EnUsLanguageProvider.java
+│       └── ZhCnLanguageProvider.java
 ├── event/                    # 事件处理
-│   └── FletchingTableReplaceHandler.java
+│   ├── FletchingTableReplaceHandler.java
+│   ├── BlockFeaturesHandler.java
+│   └── FuelHandler.java
 ├── mixin/                    # Mixin 注入
 │   └── AzaleaBlockMixin.java
 ├── config/                   # 配置文件
 │   └── ModCommonConfig.java
 ├── menu/                     # GUI 菜单
+│   └── FletchingTableMenu.java
 └── groups/                   # 创造模式物品栏
     └── ModCreativeTabs.java
 ```
+
+### 生成资源统计
+| 类型   | 数量                        |
+|------|---------------------------|
+| 方块模型 | 118+                      |
+| 物品模型 | 60+                       |
+| 方块状态 | 45+                       |
+| 战利品表 | 45+                       |
+| 语言条目 | 90+ (en_us) / 90+ (zh_cn) |
 
 ---
 
@@ -90,22 +135,29 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 ### Added
 - **区块加载替换机制** - 使用 `ChunkEvent.Load` 事件在区块加载时替换制箭台
 - **制箭台GUI系统** - `FletchingTableBlock`、`FletchingTableBlockEntity`、`FletchingTableMenu`
-- **数据生成系统** - 模型、战利品表、语言文件生成
+- **数据生成系统** - 模型、战利品表、语言文件、数据映射生成
 - **焚烬木套件** - 16种方块（原木、木板、楼梯、门等）
 - **灵焰木套件** - 16种方块
 - **杜鹃木套件** - 13种方块（不含树叶和树苗，使用原版）
 - **树木自然生成** - 焚烬木（下界）、灵焰木（灵魂沙峡谷）、杜鹃木（繁茂洞穴）
 - **杜鹃树增强** - Mixin 修改催熟行为，使用杜鹃木原木
 - **配置文件系统** - `worldgen.replaceVanillaFletchingTable` 配置项
-- **方块放置事件处理器** - `FletchingTableReplaceHandler
-- 焦灰草方块、焦土、焦灰草丛、焦灰枝条、仙人球
-- 制箭台（带GUI功能）
-- 创造模式物品栏自动排序
+- **方块放置事件处理器** - `FletchingTableReplaceHandler`
+- **焦灰草方块、焦土、焦灰草丛、焦灰枝条、仙人球**
+- **制箭台（带GUI功能）**
+- **创造模式物品栏自动排序**
+- **木头去皮功能** - 使用 NeoForge DataMaps 注册去皮映射
+- **树叶堆肥功能** - 树叶和树苗30%概率增加堆肥等级
+- **木质方块燃料功能** - 木质方块可作为熔炉燃料（300 tick）
+- **模型数据生成** - 使用 `BlockModelGenerators.family()` 和 `woodProvider()` 自动生成方块和物品模型
 
 ### Changed
 - 移除 `StructureTemplateMixin`，改用事件监听方式
 - 使用 `BiomeModifiers.RemoveFeaturesBiomeModifier` 移除原版杜鹃树
 - 使用自定义 `BlockSetType` 和 `WoodType`
+- 优化 `ModModelProvider` 使用 `family()` 方法批量生成木质方块模型
+
+---
 
 ## 开发计划
 
@@ -116,8 +168,12 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - [x] 焚烬木/灵焰木/杜鹃木套件
 - [x] 树木自然生成
 - [x] 杜鹃树催熟增强
+- [x] 木头去皮功能
+- [x] 树叶堆肥功能
+- [x] 木质方块燃料功能
+- [x] 模型数据生成
 
-### 待实现功能
-- [ ] 树叶堆肥功能
-- [ ] 原木去皮功能
-- [ ] 木质方块作为燃料
+### 待开发功能
+- [ ] 更多下界植物
+- [ ] 制箭台配方系统
+- [ ] 成就系统

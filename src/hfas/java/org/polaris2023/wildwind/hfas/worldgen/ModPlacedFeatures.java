@@ -7,6 +7,7 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.IntProvider;
 import net.minecraft.util.valueproviders.IntProviders;
 import net.minecraft.util.valueproviders.UniformInt;
@@ -58,6 +59,8 @@ public class ModPlacedFeatures {
                 List.of()
         ));
 
+
+
         // 杜鹃树放置
         context.register(AZALEA_TREE_PLACED_KEY, new PlacedFeature(
                 configuredFeatures.getOrThrow(ModConfiguredFeatures.AZALEA_TREE_KEY),
@@ -66,7 +69,7 @@ public class ModPlacedFeatures {
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(256)),
                         EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.matchesTag(BlockTags.AIR), 12),
-                        RandomOffsetPlacement.ofTriangle(0, -1),
+                        RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                         BiomeFilter.biome()
                 )
         ));
