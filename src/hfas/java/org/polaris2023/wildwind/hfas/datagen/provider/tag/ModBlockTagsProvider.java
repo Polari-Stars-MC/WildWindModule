@@ -1,14 +1,19 @@
 package org.polaris2023.wildwind.hfas.datagen.provider.tag;
 
+import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
 
+import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
 
 /**
@@ -88,13 +93,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // ==================== 其他方块标签 ====================
         // 焦灰草方块 - 泥土类
-        tag(BlockTags.DIRT)
-                .add(ModBlocks.SCORCHED_GRASS_BLOCK.get())
-                .add(ModBlocks.SCORCHED_DIRT.get());
+        addToTag(BlockTags.DIRT, ModBlocks.SCORCHED_GRASS_BLOCK.get(), ModBlocks.SCORCHED_DIRT.get());
 
         // 制箭台 - 工作站
-        tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(ModBlocks.FLETCHING_TABLE.get());
+        addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
     }
 
     /**
@@ -110,93 +112,86 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             Block leaves, Block sapling) {
 
         // 原木标签 - 用于原木类方块
-        tag(BlockTags.LOGS)
-                .add(log)
-                .add(wood)
-                .add(strippedLog)
-                .add(strippedWood);
+        addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);
 
         // 木板标签
-        tag(BlockTags.PLANKS)
-                .add(planks);
+        addToTag(BlockTags.PLANKS, planks);
 
         // 木质楼梯
-        tag(BlockTags.WOODEN_STAIRS)
-                .add(stairs);
+        addToTag(BlockTags.WOODEN_STAIRS, stairs);
 
         // 木质台阶
-        tag(BlockTags.WOODEN_SLABS)
-                .add(slab);
+        addToTag(BlockTags.WOODEN_SLABS, slab);
 
         // 木质栅栏
-        tag(Tags.Blocks.FENCES_WOODEN)
-                .add(fence);
+        addToTag(Tags.Blocks.FENCES_WOODEN, fence);
 
         // 栅栏标签（所有栅栏）
-        tag(Tags.Blocks.FENCES)
-                .add(fence);
+        // 已默认含有引用"#c:fences/wooden"
+//        addToTag(Tags.Blocks.FENCES, fence);
 
-        tag(Tags.Blocks.FENCE_GATES_WOODEN)
-                .add(fenceGate);
+        addToTag(Tags.Blocks.FENCE_GATES_WOODEN, fenceGate);
 
         // 栅栏门标签（所有栅栏门）
-        tag(BlockTags.FENCE_GATES)
-                .add(fenceGate);
+        // 已默认含有引用"#c:fence_gates/wooden"
+        // bugjump你真是个尤物物品tag不引用方块又想起来了
+//        addToTag(BlockTags.FENCE_GATES)
+//                .add(fenceGate);
 
         // 木质门
-        tag(BlockTags.WOODEN_DOORS)
-                .add(door);
+        addToTag(BlockTags.WOODEN_DOORS, door);
 
         // 门标签（所有门）
-        tag(BlockTags.DOORS)
-                .add(door);
+        // byd这又不引用了
+        addToTag(BlockTags.DOORS, door);
 
         // 活板门
-        tag(BlockTags.TRAPDOORS)
-                .add(trapdoor);
+        addToTag(BlockTags.TRAPDOORS, trapdoor);
 
         // 木质活板门
-        tag(BlockTags.WOODEN_TRAPDOORS)
-                .add(trapdoor);
+        addToTag(BlockTags.WOODEN_TRAPDOORS, trapdoor);
 
         // 木质压力板
-        tag(BlockTags.WOODEN_PRESSURE_PLATES)
-                .add(pressurePlate);
+        // 压力板tag已引用
+        addToTag(BlockTags.WOODEN_PRESSURE_PLATES, pressurePlate);
 
         // 木质按钮
-        tag(BlockTags.WOODEN_BUTTONS)
-                .add(button);
+        addToTag(BlockTags.WOODEN_BUTTONS, button);
 
         // 按钮标签（所有按钮）
-        tag(BlockTags.BUTTONS)
-                .add(button);
+        // 已引用"#minecraft:wooden_buttons"
+//        addToTag(BlockTags.BUTTONS)
+//                .add(button);
 
         // 树叶
         if (leaves != null) {
-            tag(BlockTags.LEAVES)
-                    .add(leaves);
+            addToTag(BlockTags.LEAVES, leaves);
         }
 
         // 树苗
         if (sapling != null) {
-            tag(BlockTags.SAPLINGS)
-                    .add(sapling);
+            /*
+              由addToTag方法桥接。
+              TODO: 该block tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
+               ——landis, 2026/9/1
+               */
+            addToTag(BlockItemTags.SAPLINGS.block(), sapling);
         }
 
         // 挖掘工具标签
-        tag(BlockTags.MINEABLE_WITH_AXE)
-                .add(log, wood, strippedLog, strippedWood)
-                .add(planks, stairs, slab, fence, fenceGate)
-                .add(door, trapdoor, pressurePlate, button);
+        addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
 
         // 站立信号（原木可以站立）
-        tag(BlockTags.OVERWORLD_NATURAL_LOGS)
-                .add(log);
+        addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
 
         // 需要工具
-        tag(BlockTags.NEEDS_STONE_TOOL)
-                .add(log, wood, strippedLog, strippedWood)
-                .add(planks, stairs, slab, fence, fenceGate)
-                .add(door, trapdoor, pressurePlate, button);
+        // TODO:正确性需要进一步审查：木制方块是否需要石质工具破坏？
+        addToTag(BlockTags.NEEDS_STONE_TOOL, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
+    }
+
+    @SuppressWarnings("all")
+    public void addToTag(TagKey<Block> tag, Block... items) {
+        if (items.length == 0) return;
+        tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
     }
 }
