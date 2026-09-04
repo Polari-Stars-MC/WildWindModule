@@ -15,7 +15,9 @@ import org.polaris2023.wildwind.hfas.config.ModCommonConfig;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
 import org.polaris2023.wildwind.hfas.menu.ModMenus;
 import org.polaris2023.wildwind.hfas.registry.DatadrivenRegistryKey;
+import org.polaris2023.wildwind.hfas.registry.ModEntities;
 import org.polaris2023.wildwind.hfas.registry.ModEntityDataSerializers;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
 
 @Mod(HFASMod.MOD_ID)
 @Slf4j
@@ -37,6 +39,8 @@ public class HFASMod {
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
 
+        ModEntities.register(bus);
+        ModItems.register(bus);
 
         //-----[实体相关]-----
         //实体信息同步器

@@ -4,6 +4,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.ClientAsset;
 import net.minecraft.core.Holder;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.RegistryFriendlyByteBuf;
@@ -57,6 +58,10 @@ public record MudcrabVariant(ClientAsset.ResourceTexture assetInfo,
         registry.register(TEMPERATE, new MudcrabVariant(new ClientAsset.ResourceTexture(HFASMod.id("entity/mudcrab/temperate")), SpawnPrioritySelectors.fallback(0)));
         registry.register(WARM, new MudcrabVariant(new ClientAsset.ResourceTexture(HFASMod.id("entity/mudcrab/warm")), SpawnPrioritySelectors.single(new BiomeCheck(registry.lookup(Registries.BIOME).getOrThrow(ModBiomeTags.EntityGen.MUDCRABS_WARM)), 1)));
         registry.register(COLD, new MudcrabVariant(new ClientAsset.ResourceTexture(HFASMod.id("entity/mudcrab/cold")), SpawnPrioritySelectors.single(new BiomeCheck(registry.lookup(Registries.BIOME).getOrThrow(ModBiomeTags.EntityGen.MUDCRABS_COLD)), 1)));
+    }
+
+    public static Holder<MudcrabVariant> lookup(RegistryAccess access, ResourceKey<MudcrabVariant> key){
+        return access.getOrThrow(key);
     }
 
 }

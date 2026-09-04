@@ -2,12 +2,15 @@ package org.polaris2023.wildwind.hfas.entity.animal;
 
 import com.geckolib.animatable.GeoEntity;
 import com.geckolib.animatable.instance.AnimatableInstanceCache;
+import com.geckolib.animatable.manager.AnimatableManager;
+import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
+import com.geckolib.animation.object.PlayState;
+import com.geckolib.constant.DefaultAnimations;
 import com.geckolib.util.GeckoLibUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.core.registries.Registries;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
 import net.minecraft.network.syncher.EntityDataAccessor;
@@ -19,6 +22,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.util.RandomSource;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
@@ -34,8 +38,6 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
-import net.minecraft.world.entity.animal.frog.Frog;
-import net.minecraft.world.entity.animal.frog.FrogVariant;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.monster.spider.CaveSpider;
@@ -46,9 +48,9 @@ import net.minecraft.world.entity.variant.VariantUtils;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.component.CustomData;
 import net.minecraft.world.level.*;
-import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.gamerules.GameRules;
 import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
@@ -61,14 +63,16 @@ import org.polaris2023.wildwind.hfas.entity.ModSpawnPlacementTypes;
 import org.polaris2023.wildwind.hfas.entity.WindupAttackMob;
 import org.polaris2023.wildwind.hfas.entity.ai.goal.ChargingMeleeAttackGoal;
 import org.polaris2023.wildwind.hfas.registry.DatadrivenRegistryKey;
+import org.polaris2023.wildwind.hfas.registry.ModEntities;
 import org.polaris2023.wildwind.hfas.registry.ModEntityDataSerializers;
-import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
 import org.polaris2023.wildwind.hfas.tag.ModBlockTags;
 import org.polaris2023.wildwind.hfas.tag.ModItemTags;
 import org.slf4j.Logger;
 
 import javax.annotation.Nullable;
 import java.util.EnumSet;
+import java.util.Optional;
 
 /**
  * 泥沼蟹生物实体<p>
@@ -458,7 +462,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	public SpawnGroupData finalizeSpawn(ServerLevelAccessor level, DifficultyInstance difficulty, EntitySpawnReason spawnType, @Nullable SpawnGroupData spawnGroupData) {
 		if (spawnType == EntitySpawnReason.BUCKET) return spawnGroupData;
 
-		VariantUtils.selectVariantToSpawn(SpawnContext.create(level, this.blockPosition()), DatadrivenRegistryKey.MUDCRAB_VARIANT).ifPresent(this::setVariant);
+		getVariantByPos((ServerLevelAccessor) this.level(),this.blockPosition()).ifPresent(this::setVariant);
 
 		return super.finalizeSpawn(level, difficulty, spawnType, spawnGroupData);
 	}
@@ -466,16 +470,15 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	/**
 	 * 根据生物群系获取默认泥沼蟹变种喵~
 	 *
-	 * @param biome 生物群系喵~
 	 * @return 对应变种喵~
-	 * @deprecated 请使用VariantUtils.selectVariantToSpawn(SpawnContext.create(level, this.blockPosition()), DatadrivenRegistryKey.MUDCRAB_VARIANT).ifPresent(this::setVariant);
 	 */
-	@Deprecated(forRemoval = true)
-	protected static Holder<MudcrabVariant> getVariantByBiome(Holder<Biome> biome, RegistryAccess access) {
-		if (biome.is(ModBiomeTags.EntityGen.MUDCRABS_WARM)) return VariantUtils.getDefaultOrAny(access,MudcrabVariant.WARM);
-		if (biome.is(ModBiomeTags.EntityGen.MUDCRABS_COLD)) return VariantUtils.getDefaultOrAny(access,MudcrabVariant.COLD);
+	protected static Optional<Holder.Reference<MudcrabVariant>> getVariantByPos(ServerLevelAccessor level, BlockPos pos) {
+//		if (biome.is(ModBiomeTags.EntityGen.MUDCRABS_WARM)) return VariantUtils.getDefaultOrAny(access,MudcrabVariant.WARM);
+//		if (biome.is(ModBiomeTags.EntityGen.MUDCRABS_COLD)) return VariantUtils.getDefaultOrAny(access,MudcrabVariant.COLD);
+//
+//		return VariantUtils.getDefaultOrAny(access,MudcrabVariant.TEMPERATE);
 
-		return VariantUtils.getDefaultOrAny(access,MudcrabVariant.TEMPERATE);
+		return VariantUtils.selectVariantToSpawn(SpawnContext.create(level, pos), DatadrivenRegistryKey.MUDCRAB_VARIANT);
 	}
 
 	/**
@@ -528,7 +531,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	public void saveToBucketTag(ItemStack stack) {
 		Bucketable.saveDefaultDataToBucketTag(this, stack);
 		CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, tag ->
-				tag.put("Variant", MudcrabVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.getVariant().value()).getOrThrow()));
+				tag.put("Variant", MudcrabVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.getVariant()).getOrThrow()));
 	}
 
 	/**
@@ -542,7 +545,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 			MudcrabVariant.CODEC
 					.parse(NbtOps.INSTANCE, tag.get("Variant"))
 					.resultOrPartial(LOGGER::error)
-					.ifPresent(variant -> this.setVariant(ModRegistries.MUDCRAB_VARIANTS.wrapAsHolder(variant)));
+					.ifPresent(this::setVariant);
 		}
 	}
 
@@ -614,8 +617,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	@Override
 	protected void ageBoundaryReached() {
 		super.ageBoundaryReached();
-		if (!this.isBaby() && this.level().getGameRules().getBoolean(GameRules.RULE_DOMOBLOOT)) {
-			this.spawnAtLocation(ModItems.CRAB_CLAW.get(), 1);
+		if (!this.isBaby() && ((ServerLevel)this.level()).getServer().getGameRules().get(GameRules.MOB_DROPS)) {
+			this.spawnAtLocation((ServerLevel)this.level(), ModItems.CRAB_CLAW);
 		}
 	}
 
@@ -628,25 +631,26 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 */
 	@Override @Nullable
 	public AgeableMob getBreedOffspring(ServerLevel level, AgeableMob otherParent) {
-		Mudcrab mudcrab = ModEntities.MUDCRAB.get().create(level);
+		Mudcrab mudcrab = ModEntities.MUDCRAB.get().create(level, EntitySpawnReason.BREEDING);
 		if (mudcrab != null) {
-			var variantList = SimpleWeightedRandomList.<Holder<MudcrabVariant>>builder();
+			var variantList = WeightedList.<Holder<MudcrabVariant>>builder();
 			variantList.add(this.getVariant());
 			if (otherParent instanceof Mudcrab otherMudcrab) {
 				variantList.add(otherMudcrab.getVariant());
 			}
-			variantList.add(getVariantByBiome(level.getBiome(this.blockPosition())));
+			getVariantByPos((ServerLevelAccessor) this.level(),this.blockPosition()).ifPresent(variantList::add);
 
 			Holder<MudcrabVariant> variant = variantList
 					.build()
-					.getRandomValue(mudcrab.getRandom())
-					.orElse(ModMudcrabVariants.TEMPERATE);
+					.getRandom(mudcrab.getRandom())
+					.orElse(MudcrabVariant.lookup(this.level().registryAccess(),MudcrabVariant.TEMPERATE));
 			mudcrab.setVariant(variant);
 		}
 
 		return mudcrab;
 	}
 
+	//TODO BEFORE PR 持久化方案组件化重构
 	/**
 	 * 保存额外实体数据喵~
 	 *
@@ -681,7 +685,6 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 *
 	 * @param variant 变种喵~
 	 */
-	@Override
 	public void setVariant(Holder<MudcrabVariant> variant) {
 		this.entityData.set(VARIANT_ID, variant);
 	}
@@ -691,7 +694,6 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 *
 	 * @return 当前变种喵~
 	 */
-	@Override
 	public Holder<MudcrabVariant> getVariant() {
 		return this.entityData.get(VARIANT_ID);
 	}
@@ -713,7 +715,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		);
 	}
 
-	protected PlayState moveAnimController(final AnimationState<Mudcrab> state) {
+	protected PlayState moveAnimController(final AnimationState state) {
 		return this.isInWater()
 				? state.setAndContinue(DefaultAnimations.SWIM)
 				: state.isMoving() || this.isClimbing()
@@ -788,7 +790,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		if (!this.isInWater() && !this.isGreeting() && this.tickCount % 2 == 0 && this.random.nextFloat() <= 0.001) {
 			AABB box = this.getBoundingBox().inflate(6.0, 2.0, 6.0);
 			for (BlockPos pos : BlockPos.betweenClosed(BlockPos.containing(box.minX, box.minY, box.minZ), BlockPos.containing(box.maxX, box.maxY, box.maxZ))) {
-				if (this.level().getBlockState(pos).is(ModBlockTags.MUDCRAB_PREFERRED_WANDER_BLOCKS)) {
+				if (this.level().getBlockState(pos).is(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS)) {
 					this.greetingTicks = 27;
 					this.triggerAnim("Greeting", "greeting");
 				}
@@ -827,8 +829,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 
 		@Override
 		public boolean canUse() {
-			MoveControl moveControl = this.mob.getMoveControl();
-			return this.mob.isInFluidType((fluidType, height) -> height > this.mob.getBbHeight() && this.mob.canSwimInFluidType(fluidType))
+			MoveControl moveControl = this.mob.getMoveControl();//TODO BEFORE PR
+			return this.mob.isInFluidType((entity,fluidType, height) -> height > this.mob.getBbHeight() && this.mob.canSwimInFluidType(fluidType))
 					&& !this.mob.level().getFluidState(new BlockPos((int) moveControl.getWantedX(), (int) moveControl.getWantedY(), (int) moveControl.getWantedZ())).isEmpty();
 		}
 
@@ -956,9 +958,10 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 			Level level = this.mob.level();
 			Vec3 position = null;
 
-			if (level.isNight() || level.isRaining()) {
+			//TODO 时间系统重构使得直接判断是否为夜晚不可行 替换为主世界+时间判断
+			if ((level.dimension().equals(Level.OVERWORLD) && level.getOverworldClockTime() % 24000L >= 13000L) || level.isRaining()) {
 				position = LandRandomPos.getPos(this.mob, 20, 4, pos ->
-						level.getBlockState(pos.above()).is(ModBlockTags.MUDCRAB_PREFERRED_WANDER_BLOCKS)
+						level.getBlockState(pos.above()).is(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS)
 								? 10.0
 								: 0.0
 				);
