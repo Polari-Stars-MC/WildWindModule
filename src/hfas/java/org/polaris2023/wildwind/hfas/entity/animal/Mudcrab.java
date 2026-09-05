@@ -534,8 +534,11 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	@Override
 	public void saveToBucketTag(ItemStack stack) {
 		Bucketable.saveDefaultDataToBucketTag(this, stack);
-		CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, tag ->
-				tag.put("Variant", MudcrabVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.getVariant()).getOrThrow()));
+		CustomData.update(DataComponents.BUCKET_ENTITY_DATA, stack, tag -> {
+			tag.put("Variant", MudcrabVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.getVariant()).getOrThrow());
+			tag.putInt("Age", this.getAge());
+			tag.putBoolean("AgeLocked", this.isAgeLocked());
+		});
 	}
 
 	/**
@@ -545,6 +548,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 */
 	@Override
 	public void loadFromBucketTag(CompoundTag tag) {
+		this.setAge(tag.getIntOr("Age", 0));
+		this.setAgeLocked(tag.getBooleanOr("AgeLocked", false));
 		if (tag.contains("Variant")) {
 			MudcrabVariant.CODEC
 					.parse(NbtOps.INSTANCE, tag.get("Variant"))
