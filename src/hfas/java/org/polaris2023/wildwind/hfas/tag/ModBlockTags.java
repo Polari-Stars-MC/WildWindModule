@@ -8,7 +8,6 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 /**
  * 定义模组方块标签喵~
  */
-//TODO BEFORE PR 数据驱动接线
 public interface ModBlockTags {
 
     interface EntityAbout {

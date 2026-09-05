@@ -1,4 +1,4 @@
-import org.slf4j.event.Level.DEBUG
+import org.slf4j.event.Level.INFO
 import java.util.Locale
 
 plugins {
@@ -136,7 +136,7 @@ allprojects {
             }
             configureEach {
                 systemProperty("forge.logging.markers", "REGISTRIES")
-                logLevel.set(DEBUG)
+                logLevel.set(INFO)
             }
         }
 

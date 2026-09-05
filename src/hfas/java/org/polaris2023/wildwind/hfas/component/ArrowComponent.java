@@ -10,6 +10,7 @@ import net.minecraft.world.item.ItemStack;
 import org.polaris2023.wildwind.hfas.arrow.ArrowFletching;
 import org.polaris2023.wildwind.hfas.arrow.ArrowHead;
 import org.polaris2023.wildwind.hfas.arrow.ArrowShaft;
+import org.polaris2023.wildwind.hfas.registry.ModDataComponents;
 
 /**
  * 箭矢组件数据

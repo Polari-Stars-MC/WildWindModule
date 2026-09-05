@@ -20,6 +20,8 @@ import org.polaris2023.wildwind.hfas.registry.DatadrivenRegistryKey;
 import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
 
 import java.util.List;
+import java.util.function.Function;
+import java.util.function.Supplier;
 
 /**
  * 泥沼蟹变种数据喵~
@@ -53,7 +55,6 @@ public record MudcrabVariant(ClientAsset.ResourceTexture assetInfo,
         return ResourceKey.create(DatadrivenRegistryKey.MUDCRAB_VARIANT, id);
     }
 
-    //TODO BEFORE PR 数据驱动接线
     public static void bootstrapDatagen(BootstrapContext<MudcrabVariant> registry) {
         registry.register(TEMPERATE, new MudcrabVariant(new ClientAsset.ResourceTexture(HFASMod.id("entity/mudcrab/temperate")), SpawnPrioritySelectors.fallback(0)));
         registry.register(WARM, new MudcrabVariant(new ClientAsset.ResourceTexture(HFASMod.id("entity/mudcrab/warm")), SpawnPrioritySelectors.single(new BiomeCheck(registry.lookup(Registries.BIOME).getOrThrow(ModBiomeTags.EntityGen.MUDCRABS_WARM)), 1)));

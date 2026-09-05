@@ -3,11 +3,17 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ModelTemplate;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.data.PackOutput;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
+
+import java.util.function.Supplier;
 
 /**
  * 模型生成器
@@ -101,6 +107,11 @@ public class ModModelProvider extends ModelProvider {
 
         // 制箭台 - 使用简单方块模型
         createSimpleBlock(blockModels, ModBlocks.FLETCHING_TABLE.get());
+
+        // ==================== 独立物品 ====================
+        simpleItem(itemModels, ModItems.CRAB_CLAW);
+        simpleItem(itemModels, ModItems.MUDCRAB_BUCKET);
+        simpleItem(itemModels, ModItems.MUDCRAB_SPAWN_EGG);
     }
 
     /**
@@ -147,5 +158,9 @@ public class ModModelProvider extends ModelProvider {
      */
     private void createCrossBlock(BlockModelGenerators blockModels, Block block) {
         blockModels.createCrossBlock(block, BlockModelGenerators.PlantType.NOT_TINTED);
+    }
+
+    private void simpleItem(ItemModelGenerators itemModels, Supplier<? extends Item> item){
+        itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM);
     }
 }

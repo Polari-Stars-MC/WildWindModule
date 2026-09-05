@@ -6,10 +6,13 @@ import com.geckolib.animatable.manager.AnimatableManager;
 import com.geckolib.animation.AnimationController;
 import com.geckolib.animation.RawAnimation;
 import com.geckolib.animation.object.PlayState;
+import com.geckolib.animation.state.AnimationTest;
 import com.geckolib.constant.DefaultAnimations;
 import com.geckolib.util.GeckoLibUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.*;
+import net.minecraft.core.component.DataComponentGetter;
+import net.minecraft.core.component.DataComponentType;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.nbt.NbtOps;
@@ -38,6 +41,7 @@ import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.entity.ai.util.DefaultRandomPos;
 import net.minecraft.world.entity.ai.util.LandRandomPos;
 import net.minecraft.world.entity.animal.Animal;
+import net.minecraft.world.entity.animal.rabbit.Rabbit;
 import net.minecraft.world.entity.monster.Endermite;
 import net.minecraft.world.entity.monster.Silverfish;
 import net.minecraft.world.entity.monster.spider.CaveSpider;
@@ -55,6 +59,8 @@ import net.minecraft.world.level.pathfinder.AmphibiousNodeEvaluator;
 import net.minecraft.world.level.pathfinder.Path;
 import net.minecraft.world.level.pathfinder.PathFinder;
 import net.minecraft.world.level.pathfinder.PathType;
+import net.minecraft.world.level.storage.ValueInput;
+import net.minecraft.world.level.storage.ValueOutput;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
 import net.neoforged.neoforge.common.Tags;
@@ -62,10 +68,7 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.polaris2023.wildwind.hfas.entity.ModSpawnPlacementTypes;
 import org.polaris2023.wildwind.hfas.entity.WindupAttackMob;
 import org.polaris2023.wildwind.hfas.entity.ai.goal.ChargingMeleeAttackGoal;
-import org.polaris2023.wildwind.hfas.registry.DatadrivenRegistryKey;
-import org.polaris2023.wildwind.hfas.registry.ModEntities;
-import org.polaris2023.wildwind.hfas.registry.ModEntityDataSerializers;
-import org.polaris2023.wildwind.hfas.registry.ModItems;
+import org.polaris2023.wildwind.hfas.registry.*;
 import org.polaris2023.wildwind.hfas.tag.ModBlockTags;
 import org.polaris2023.wildwind.hfas.tag.ModItemTags;
 import org.slf4j.Logger;
@@ -316,7 +319,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 				.add(Attributes.MAX_HEALTH, 10.0d)
 				.add(Attributes.MOVEMENT_SPEED, 0.22d)
 				.add(Attributes.ATTACK_DAMAGE, 10.0d)
-				.add(Attributes.STEP_HEIGHT, 1.0d);
+				.add(Attributes.STEP_HEIGHT, 1.0d)
+				.add(Attributes.TEMPT_RANGE, 16d);
 	}
 
 	/**
@@ -650,34 +654,40 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		return mudcrab;
 	}
 
-	//TODO BEFORE PR 持久化方案组件化重构
-	/**
-	 * 保存额外实体数据喵~
-	 *
-	 * @param tag 保存目标标签喵~
-	 */
+	//TODO 持久化方案组件化重构 仅将变种组件化，是否来自桶未进行组件化处理
 	@Override
-	public void addAdditionalSaveData(CompoundTag tag) {
-		super.addAdditionalSaveData(tag);
-		tag.putBoolean("FromBucket", this.entityData.get(FROM_BUCKET));
-		tag.put("Variant", MudcrabVariant.CODEC.encodeStart(NbtOps.INSTANCE, this.getVariant().value()).getOrThrow());
+	public @Nullable <T> T get(DataComponentType<? extends T> type) {
+		return type.equals(ModDataComponents.MUDCRAB_VARIANT.get()) ? (T) getVariant() : super.get(type);
 	}
 
-	/**
-	 * 读取额外实体数据喵~
-	 *
-	 * @param tag 源数据标签喵~
-	 */
 	@Override
-	public void readAdditionalSaveData(CompoundTag tag) {
-		super.readAdditionalSaveData(tag);
-		if (tag.contains("Variant")) {
-			MudcrabVariant.CODEC
-					.parse(NbtOps.INSTANCE, tag.get("Variant"))
-					.resultOrPartial(LOGGER::error)
-					.ifPresent(variant -> this.setVariant(ModRegistries.MUDCRAB_VARIANTS.wrapAsHolder(variant)));
+	protected void applyImplicitComponents(DataComponentGetter components) {
+		this.applyImplicitComponentIfPresent(components, ModDataComponents.MUDCRAB_VARIANT.get());
+		super.applyImplicitComponents(components);
+	}
+
+	@Override
+	protected <T> boolean applyImplicitComponent(DataComponentType<T> type, T value) {
+		if (type == ModDataComponents.MUDCRAB_VARIANT.get()) {
+			this.setVariant((Holder<MudcrabVariant>) value);
+			return true;
+		} else {
+			return super.applyImplicitComponent(type, value);
 		}
-		this.setFromBucket(tag.getBoolean("FromBucket"));
+	}
+
+	@Override
+	protected void addAdditionalSaveData(ValueOutput output) {
+		super.addAdditionalSaveData(output);
+		output.store("MudcarbVariant", MudcrabVariant.CODEC, this.getVariant());
+		output.putBoolean("FromBucket", this.fromBucket());
+	}
+
+	@Override
+	protected void readAdditionalSaveData(ValueInput input) {
+		super.readAdditionalSaveData(input);
+		this.setVariant(input.read("MudcarbVariant", MudcrabVariant.CODEC).orElse(MudcrabVariant.lookup(this.level().registryAccess(),MudcrabVariant.TEMPERATE)));
+		this.setFromBucket(input.getBooleanOr("FromBucket", false));
 	}
 
 	/**
@@ -705,17 +715,17 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 */
 	@Override
 	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>(this, "Move", 3, this::moveAnimController));
-		controllers.add(new AnimationController<>(this, "Hurt", this::hurtAnimController));
-		controllers.add(new AnimationController<>(this, "Attack", state -> PlayState.STOP)
+		controllers.add(new AnimationController<>("Move", 3, this::moveAnimController));
+		controllers.add(new AnimationController<>("Hurt", this::hurtAnimController));
+		controllers.add(new AnimationController<>("Attack", state -> PlayState.STOP)
 				.triggerableAnim("attack", DefaultAnimations.ATTACK_SWING)
 		);
-		controllers.add(new AnimationController<>(this, "Greeting", state -> PlayState.STOP)
+		controllers.add(new AnimationController<>("Greeting", state -> PlayState.STOP)
 				.triggerableAnim("greeting", GREETING_ANIM)
 		);
 	}
 
-	protected PlayState moveAnimController(final AnimationState state) {
+	protected PlayState moveAnimController(final AnimationTest<Mudcrab> state) {
 		return this.isInWater()
 				? state.setAndContinue(DefaultAnimations.SWIM)
 				: state.isMoving() || this.isClimbing()
@@ -723,12 +733,13 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 				  : state.setAndContinue(DefaultAnimations.IDLE);
 	}
 
-	protected PlayState hurtAnimController(final AnimationState<Mudcrab> state) {
+	protected PlayState hurtAnimController(final AnimationTest<Mudcrab> state) {
 		if (this.isAlive() && this.hurtTime > 0) {
 			return state.setAndContinue(HURT_ANIM);
 		}
 
-		state.resetCurrentAnimation();
+		//TODO stop语义：Stop the currently playing animation, resetting the animation time to 0，已包含重置，且原方法已删除
+//		state.resetCurrentAnimation();
 		return PlayState.STOP;
 	}
 
@@ -778,7 +789,6 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 
 		this.setClimbing(this.horizontalCollision);
 
-		//TODO BEFORE PR 检测是否为纯服务端触发
 		processPreparingAttack((ServerLevel)this.level() ,this);
 
 		if (this.greetingTicks > 0) {
@@ -829,7 +839,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 
 		@Override
 		public boolean canUse() {
-			MoveControl moveControl = this.mob.getMoveControl();//TODO BEFORE PR
+			MoveControl moveControl = this.mob.getMoveControl();
 			return this.mob.isInFluidType((entity,fluidType, height) -> height > this.mob.getBbHeight() && this.mob.canSwimInFluidType(fluidType))
 					&& !this.mob.level().getFluidState(new BlockPos((int) moveControl.getWantedX(), (int) moveControl.getWantedY(), (int) moveControl.getWantedZ())).isEmpty();
 		}
@@ -847,7 +857,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		}
 	}
 
-	protected static class MudcrabMoveControl extends MoveControl {
+	protected static class MudcrabMoveControl extends MoveControl<Mudcrab> {
 		private final Mudcrab mudcrab;
 
 		public MudcrabMoveControl(Mudcrab mudcrab) {

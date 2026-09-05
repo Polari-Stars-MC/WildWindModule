@@ -10,14 +10,10 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
 import org.polaris2023.wildwind.hfas.block.entity.ModBlockEntities;
-import org.polaris2023.wildwind.hfas.component.ModDataComponents;
 import org.polaris2023.wildwind.hfas.config.ModCommonConfig;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
 import org.polaris2023.wildwind.hfas.menu.ModMenus;
-import org.polaris2023.wildwind.hfas.registry.DatadrivenRegistryKey;
-import org.polaris2023.wildwind.hfas.registry.ModEntities;
-import org.polaris2023.wildwind.hfas.registry.ModEntityDataSerializers;
-import org.polaris2023.wildwind.hfas.registry.ModItems;
+import org.polaris2023.wildwind.hfas.registry.*;
 
 @Mod(HFASMod.MOD_ID)
 @Slf4j
@@ -39,12 +35,16 @@ public class HFASMod {
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
 
-        ModEntities.register(bus);
+        //注册物品
         ModItems.register(bus);
+        //注册创造模式物品栏
+        ModCreativeTabs.register(bus);
 
         //-----[实体相关]-----
         //实体信息同步器
         ModEntityDataSerializers.register(bus);
+        //注册实体类型
+        ModEntities.register(bus);
     }
 
     public static Identifier id(String path){
@@ -54,6 +54,6 @@ public class HFASMod {
     //数据驱动项注册
     @SubscribeEvent
     public static void datapackRegistry(DataPackRegistryEvent.NewRegistry event){
-        event.dataPackRegistry(DatadrivenRegistryKey.MUDCRAB_VARIANT, MudcrabVariant.DIRECT_CODEC);
+        event.dataPackRegistry(DatadrivenRegistryKey.MUDCRAB_VARIANT, MudcrabVariant.DIRECT_CODEC, MudcrabVariant.NETWORK_CODEC);
     }
 }

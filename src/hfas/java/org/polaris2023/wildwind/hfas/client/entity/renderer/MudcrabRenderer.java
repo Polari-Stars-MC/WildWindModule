@@ -28,11 +28,11 @@ public class MudcrabRenderer extends GeoEntityRenderer<Mudcrab, MudcrabRenderSta
 		super(renderManager, new MudcrabModel());
 	}
 
-	//TODO BEFORE PR 前端报错 需要监测编译时是否报错 GeoRenderState由geocklib注入到EntityRenderState类，不由用户开发者自行实现
+	//TODO 泛型退化：GeoRenderState由geocklib在运行时注入到EntityRenderState类，不由用户开发者自行实现，但直接使用EntityRenderState子类会编译报错。退化为RenderPassInfo基础形态绕过编译检查
 	//TODO 含需要验证的内容:ai提到该方法存在注释"excluding when re-rendering the model as part of a GeoRenderLayer or external render call"，表示重渲染不会经过这一步，因此不必考虑ReRender情况。
 	@Override
-	public void scaleModelForRender(RenderPassInfo<MudcrabRenderState> renderPassInfo, float widthScale, float heightScale) {
-		if (renderPassInfo.renderState().isBaby) {
+	public void scaleModelForRender(RenderPassInfo renderPassInfo, float widthScale, float heightScale) {
+		if (((MudcrabRenderState) renderPassInfo.renderState()).isBaby) {
 			widthScale *= 0.6f;
 			heightScale *= 0.6f;
 		}
@@ -41,8 +41,8 @@ public class MudcrabRenderer extends GeoEntityRenderer<Mudcrab, MudcrabRenderSta
 	}
 
 	@Override
-	public void adjustRenderPose(RenderPassInfo<MudcrabRenderState> renderPassInfo) {
-		MudcrabRenderState renderState = renderPassInfo.renderState();
+	public void adjustRenderPose(RenderPassInfo renderPassInfo) {
+		MudcrabRenderState renderState = (MudcrabRenderState) renderPassInfo.renderState();
 		PoseStack poseStack = renderPassInfo.poseStack();
 
 		poseStack.mulPose(Axis.YN.rotationDegrees(renderState.modelYRotOffset));

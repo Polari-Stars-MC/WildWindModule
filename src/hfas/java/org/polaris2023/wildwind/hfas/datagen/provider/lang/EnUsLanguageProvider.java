@@ -78,5 +78,10 @@ public class EnUsLanguageProvider extends LanguageProvider {
 
         // GUI
         add("container.fletching_table", "Fletching Table");
+
+        //创造模式物品栏
+        add("mod.wild_wind.name", "Wild Wind");
+
+        ZhEnCombineLangProvider.addLang(this, "en_us");
     }
 }

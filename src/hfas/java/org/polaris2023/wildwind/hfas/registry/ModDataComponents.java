@@ -1,0 +1,33 @@
+package org.polaris2023.wildwind.hfas.registry;
+
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentType;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.Identifier;
+import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredHolder;
+import net.neoforged.neoforge.registries.DeferredRegister;
+import org.polaris2023.wildwind.hfas.HFASMod;
+import org.polaris2023.wildwind.hfas.component.ArrowComponent;
+import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
+
+public class ModDataComponents {
+    public static final DeferredRegister.DataComponents REGISTER = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, HFASMod.MOD_ID);
+
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<Holder<MudcrabVariant>>> MUDCRAB_VARIANT =
+            REGISTER.registerComponentType("mubcrab_variant", builder ->
+                    builder.persistent(MudcrabVariant.CODEC).networkSynchronized(MudcrabVariant.STREAM_CODEC)
+            );
+
+    /**
+     * 箭矢组件 - 存储箭羽、箭杆、箭头类型
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<ArrowComponent>> ARROW_COMPONENT =
+            REGISTER.registerComponentType("arrow_component", builder ->
+                    builder.persistent(ArrowComponent.CODEC).networkSynchronized(ArrowComponent.STREAM_CODEC)
+            );
+
+    public static void register(IEventBus modBus) {
+        REGISTER.register(modBus);
+    }
+}
