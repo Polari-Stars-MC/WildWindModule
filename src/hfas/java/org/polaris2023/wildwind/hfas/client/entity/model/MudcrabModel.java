@@ -24,8 +24,6 @@ public class MudcrabModel extends DefaultedEntityGeoModel<Mudcrab> {
 	/**
 	 * 获取当前泥沼蟹变种对应的材质资源喵~
 	 * <p>
-	 * TODO 需要审查 需要测试 将GeoRenderState强转为EntityRenderState获取实体数据。<p>
-	 *     该接口javadoc内表示This class should be safely castable to the RenderState for your renderer。
 	 */
 	@Override
 	public Identifier getTextureResource(GeoRenderState state) {

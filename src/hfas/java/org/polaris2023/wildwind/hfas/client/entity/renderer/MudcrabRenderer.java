@@ -28,8 +28,8 @@ public class MudcrabRenderer extends GeoEntityRenderer<Mudcrab, MudcrabRenderSta
 		super(renderManager, new MudcrabModel());
 	}
 
-	//TODO 泛型退化：GeoRenderState由geocklib在运行时注入到EntityRenderState类，不由用户开发者自行实现，但直接使用EntityRenderState子类会编译报错。退化为RenderPassInfo基础形态绕过编译检查
-	//TODO 含需要验证的内容:ai提到该方法存在注释"excluding when re-rendering the model as part of a GeoRenderLayer or external render call"，表示重渲染不会经过这一步，因此不必考虑ReRender情况。
+	//泛型退化：GeoRenderState由geocklib在运行时注入到EntityRenderState类，不由用户开发者自行实现，但直接使用EntityRenderState子类会编译报错。退化为RenderPassInfo基础形态绕过编译检查
+	//含需要验证的内容:ai提到该方法存在注释"excluding when re-rendering the model as part of a GeoRenderLayer or external render call"，表示重渲染不会经过这一步，因此不必考虑ReRender情况。
 	@Override
 	public void scaleModelForRender(RenderPassInfo renderPassInfo, float widthScale, float heightScale) {
 		if (((MudcrabRenderState) renderPassInfo.renderState()).isBaby) {
@@ -63,7 +63,7 @@ public class MudcrabRenderer extends GeoEntityRenderer<Mudcrab, MudcrabRenderSta
 		super.adjustRenderPose(renderPassInfo);
 	}
 
-	//TODO 需要审查 考虑下面方法覆写的正确性与必要性 疑似存在使用GeoRenderState添加专用ticket实现信息处理的方案
+	//TODO 考虑下面方法覆写的正确性与必要性 疑似存在使用GeoRenderState添加专用ticket实现信息处理的方案
 	@Override
 	public MudcrabRenderState createRenderState(Mudcrab animatable, @Nullable Void relatedObject) {
 		return new MudcrabRenderState();

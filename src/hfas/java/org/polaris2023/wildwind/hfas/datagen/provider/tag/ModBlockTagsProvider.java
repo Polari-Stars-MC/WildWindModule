@@ -198,7 +198,6 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
 
         // 需要工具
-        // TODO:正确性需要进一步审查：木制方块是否需要石质工具破坏？
         addToTag(BlockTags.NEEDS_STONE_TOOL, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
     }
 

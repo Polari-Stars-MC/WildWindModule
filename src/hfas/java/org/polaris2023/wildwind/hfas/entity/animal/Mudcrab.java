@@ -79,7 +79,6 @@ import java.util.Optional;
 
 /**
  * 泥沼蟹生物实体<p>
- * TODO 版本更新疑似删除了VariantHolder<>内容，已相应清理，需要进一步审查。标记[VariantHolder]。
  */
 public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoEntity {
 	/**
@@ -659,7 +658,6 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		return mudcrab;
 	}
 
-	//TODO 持久化方案组件化重构 仅将变种组件化，是否来自桶未进行组件化处理
 	@Override
 	public @Nullable <T> T get(DataComponentType<? extends T> type) {
 		return type.equals(ModDataComponents.MUDCRAB_VARIANT.get()) ? (T) getVariant() : super.get(type);
@@ -743,7 +741,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 			return state.setAndContinue(HURT_ANIM);
 		}
 
-		//TODO stop语义：Stop the currently playing animation, resetting the animation time to 0，已包含重置，且原方法已删除
+		//stop语义：Stop the currently playing animation, resetting the animation time to 0，已包含重置，且原方法已删除
 //		state.resetCurrentAnimation();
 		return PlayState.STOP;
 	}
@@ -973,7 +971,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 			Level level = this.mob.level();
 			Vec3 position = null;
 
-			//TODO 时间系统重构使得直接判断是否为夜晚不可行 替换为主世界+时间判断
+			//时间系统重构使得直接判断是否为夜晚不可行 替换为主世界+时间判断
 			if ((level.dimension().equals(Level.OVERWORLD) && level.getOverworldClockTime() % 24000L >= 13000L) || level.isRaining()) {
 				position = LandRandomPos.getPos(this.mob, 20, 4, pos ->
 						level.getBlockState(pos.above()).is(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS)
