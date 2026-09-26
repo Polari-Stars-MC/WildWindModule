@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.component.ArrowComponent;
+import org.polaris2023.wildwind.hfas.component.OmniClawTools;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
 
 public class ModDataComponents {
@@ -25,6 +26,14 @@ public class ModDataComponents {
     public static final DeferredHolder<DataComponentType<?>, DataComponentType<ArrowComponent>> ARROW_COMPONENT =
             REGISTER.registerComponentType("arrow_component", builder ->
                     builder.persistent(ArrowComponent.CODEC).networkSynchronized(ArrowComponent.STREAM_CODEC)
+            );
+
+    /**
+     * 万用蟹钳工具集合数据组件喵~
+     */
+    public static final DeferredHolder<DataComponentType<?>, DataComponentType<OmniClawTools>> OMNI_CLAW_TOOLS =
+            REGISTER.registerComponentType("omni_claw_tools", builder ->
+                    builder.persistent(OmniClawTools.CODEC).networkSynchronized(OmniClawTools.STREAM_CODEC)
             );
 
     public static void register(IEventBus modBus) {

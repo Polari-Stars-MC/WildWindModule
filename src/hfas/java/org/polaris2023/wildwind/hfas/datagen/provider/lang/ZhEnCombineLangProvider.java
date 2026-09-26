@@ -39,6 +39,7 @@ public class ZhEnCombineLangProvider {
         addItem(ModItems.MUDCRAB_SPAWN_EGG, "Mudcrab Spawn Egg", "泥沼蟹刷怪蛋");
         addItem(ModItems.MUDCRAB_BUCKET, "Bucket of Mudcrab", "泥沼蟹桶");
         addItem(ModItems.CRAB_CLAW, "Crab Claw", "蟹钳");
+        addItem(ModItems.OMNI_CLAW, "Omni Craw", "万用蟹钳");
     }
 
     private static void addBlocks() {

@@ -19,7 +19,6 @@ import org.polaris2023.wildwind.hfas.registry.*;
 @Slf4j
 @EventBusSubscriber
 public class HFASMod {
-    //TODO 对于该模块化项目，考虑分配专属ID
     public static final String MOD_ID = "ww_hfas";
 
     public HFASMod(IEventBus bus, ModContainer container) {
@@ -31,6 +30,8 @@ public class HFASMod {
         ModMenus.register(bus);
         // 注册数据组件
         ModDataComponents.register(bus);
+        // 注册属性
+        ModAttributes.register(bus);
 
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);

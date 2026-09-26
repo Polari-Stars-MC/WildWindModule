@@ -3,6 +3,8 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ItemModelUtils;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TexturedModel;
@@ -110,6 +112,12 @@ public class ModModelProvider extends ModelProvider {
 
         // ==================== 独立物品 ====================
         simpleItem(itemModels, ModItems.CRAB_CLAW);
+
+        // 万用蟹钳 - 使用手写 3D 模型（resources 下的 models/item/omni_claw.json），仅生成物品模型定义
+        itemModels.itemModelOutput.accept(
+                ModItems.OMNI_CLAW.get(),
+                ItemModelUtils.plainModel(ModelLocationUtils.getModelLocation(ModItems.OMNI_CLAW.get()))
+        );
         simpleItem(itemModels, ModItems.MUDCRAB_BUCKET);
         simpleItem(itemModels, ModItems.MUDCRAB_SPAWN_EGG);
     }

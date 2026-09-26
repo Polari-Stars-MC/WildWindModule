@@ -96,7 +96,7 @@ allprojects {
     neoForge {
         version = neoVersion
 
-        // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+        accessTransformers.from(rootProject.file("src/${project.name}/resources/META-INF/accesstransformer.cfg"))
 
         runs {
             register("client") {

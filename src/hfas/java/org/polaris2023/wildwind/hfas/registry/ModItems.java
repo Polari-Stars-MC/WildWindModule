@@ -11,6 +11,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
+import org.polaris2023.wildwind.hfas.component.OmniClawTools;
+import org.polaris2023.wildwind.hfas.item.OmniClawItem;
 
 import java.util.function.Function;
 
@@ -26,15 +28,14 @@ public class ModItems {
     //蟹钳
     public static final DeferredItem<Item> CRAB_CLAW = register("crab_claw");
 
-//    //万用蟹钳
-//    public static final DeferredItem<Item> OMNI_CLAW =
-//            ITEMS.register("omni_claw",
-//                    () -> new OmniClawItem(
-//                            new Item.Properties()
-//                                    .stacksTo(1)
-//                                    .attributes(OmniClawItem.createAttributes())
-//                                    .component(ModDataComponents.OMNI_CLAW_TOOLS, OmniClawTools.EMPTY)
-//                    ));
+
+    //万用蟹钳
+    public static final DeferredItem<OmniClawItem> OMNI_CLAW =
+            register("omni_claw", p -> new OmniClawItem(
+                    p.stacksTo(1)
+                            .attributes(OmniClawItem.createAttributes())
+                            .component(ModDataComponents.OMNI_CLAW_TOOLS.get(), OmniClawTools.EMPTY)
+            ));
 
     public static void register(IEventBus modBus) {
         ITEMS.register(modBus);

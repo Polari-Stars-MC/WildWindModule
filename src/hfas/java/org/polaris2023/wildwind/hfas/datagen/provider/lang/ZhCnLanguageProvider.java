@@ -79,6 +79,8 @@ public class ZhCnLanguageProvider extends LanguageProvider {
 
         // GUI
         add("container.fletching_table", "制箭台");
+        // 属性
+        add("attributes.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");

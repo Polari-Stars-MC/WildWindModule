@@ -36,5 +36,6 @@ public class ModCreativeTabs {
         output.accept(ModItems.MUDCRAB_BUCKET);
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.CRAB_CLAW);
+        output.accept(ModItems.OMNI_CLAW);
     }
 }
