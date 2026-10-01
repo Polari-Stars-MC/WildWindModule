@@ -34,6 +34,10 @@ public final class FlammableWoodBlocks {
         private final int fireSpreadSpeed;
         private final int flammability;
 
+        public Pillar(Properties properties) {
+            this(properties, 5, 5);
+        }
+
         public Pillar(Properties properties, int fireSpreadSpeed, int flammability) {
             super(properties);
             this.fireSpreadSpeed = fireSpreadSpeed;
@@ -64,6 +68,10 @@ public final class FlammableWoodBlocks {
     public static class Basic extends Block implements FireValues {
         private final int fireSpreadSpeed;
         private final int flammability;
+
+        public Basic(Properties properties) {
+            this(properties, 5, 20);
+        }
 
         public Basic(Properties properties, int fireSpreadSpeed, int flammability) {
             super(properties);
@@ -96,6 +104,10 @@ public final class FlammableWoodBlocks {
         private final int fireSpreadSpeed;
         private final int flammability;
 
+        public Stairs(BlockState baseState, Properties properties) {
+            this(baseState, properties, 5, 20);
+        }
+
         public Stairs(BlockState baseState, Properties properties, int fireSpreadSpeed, int flammability) {
             super(baseState, properties);
             this.fireSpreadSpeed = fireSpreadSpeed;
@@ -126,6 +138,10 @@ public final class FlammableWoodBlocks {
     public static class Slab extends SlabBlock implements FireValues {
         private final int fireSpreadSpeed;
         private final int flammability;
+
+        public Slab(Properties properties) {
+            this(properties, 5, 20);
+        }
 
         public Slab(Properties properties, int fireSpreadSpeed, int flammability) {
             super(properties);
@@ -158,6 +174,10 @@ public final class FlammableWoodBlocks {
         private final int fireSpreadSpeed;
         private final int flammability;
 
+        public Fence(Properties properties) {
+            this(properties, 5, 20);
+        }
+
         public Fence(Properties properties, int fireSpreadSpeed, int flammability) {
             super(properties);
             this.fireSpreadSpeed = fireSpreadSpeed;
@@ -189,6 +209,10 @@ public final class FlammableWoodBlocks {
         private final int fireSpreadSpeed;
         private final int flammability;
 
+        public Gate(WoodType woodType, Properties properties) {
+            this(woodType, properties, 5, 20);
+        }
+
         public Gate(WoodType woodType, Properties properties, int fireSpreadSpeed, int flammability) {
             super(woodType, properties);
             this.fireSpreadSpeed = fireSpreadSpeed;
@@ -219,6 +243,10 @@ public final class FlammableWoodBlocks {
     public static class Leaves extends TintedParticleLeavesBlock implements FireValues {
         private final int fireSpreadSpeed;
         private final int flammability;
+
+        public Leaves(float leafParticleChance, Properties properties) {
+            this(leafParticleChance, properties, 30, 60);
+        }
 
         public Leaves(float leafParticleChance, Properties properties, int fireSpreadSpeed, int flammability) {
             super(leafParticleChance, properties);
