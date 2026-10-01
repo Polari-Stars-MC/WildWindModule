@@ -18,7 +18,7 @@ public final class ModBoatEntities {
                     "blaze_boat",
                     (type, level) -> new Boat(type, level, () -> ModBlocks.BLAZE_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     public static final DeferredHolder<EntityType<?>, EntityType<ChestBoat>> BLAZE_CHEST_BOAT =
@@ -26,7 +26,7 @@ public final class ModBoatEntities {
                     "blaze_chest_boat",
                     (type, level) -> new ChestBoat(type, level, () -> ModBlocks.BLAZE_CHEST_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     public static final DeferredHolder<EntityType<?>, EntityType<Boat>> SOUL_BOAT =
@@ -34,7 +34,7 @@ public final class ModBoatEntities {
                     "soul_boat",
                     (type, level) -> new Boat(type, level, () -> ModBlocks.SOUL_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     public static final DeferredHolder<EntityType<?>, EntityType<ChestBoat>> SOUL_CHEST_BOAT =
@@ -42,7 +42,7 @@ public final class ModBoatEntities {
                     "soul_chest_boat",
                     (type, level) -> new ChestBoat(type, level, () -> ModBlocks.SOUL_CHEST_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     public static final DeferredHolder<EntityType<?>, EntityType<Boat>> AZALEA_BOAT =
@@ -50,7 +50,7 @@ public final class ModBoatEntities {
                     "azalea_boat",
                     (type, level) -> new Boat(type, level, () -> ModBlocks.AZALEA_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     public static final DeferredHolder<EntityType<?>, EntityType<ChestBoat>> AZALEA_CHEST_BOAT =
@@ -58,7 +58,7 @@ public final class ModBoatEntities {
                     "azalea_chest_boat",
                     (type, level) -> new ChestBoat(type, level, () -> ModBlocks.AZALEA_CHEST_BOAT.get()),
                     MobCategory.MISC,
-                    builder -> builder.sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
+                    builder -> builder.noLootTable().sized(1.375F, 0.5625F).eyeHeight(0.5625F).clientTrackingRange(10)
             );
 
     private ModBoatEntities() {
