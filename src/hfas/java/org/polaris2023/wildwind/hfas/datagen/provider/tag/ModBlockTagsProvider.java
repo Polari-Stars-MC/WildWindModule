@@ -50,7 +50,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.BLAZE_PRESSURE_PLATE.get(),
                 ModBlocks.BLAZE_BUTTON.get(),
                 ModBlocks.BLAZE_LEAVES.get(),
-                ModBlocks.BLAZE_SAPLING.get()
+                ModBlocks.BLAZE_SAPLING.get(),
+                ModBlocks.BLAZE_SIGN.get(),
+                ModBlocks.BLAZE_WALL_SIGN.get(),
+                ModBlocks.BLAZE_HANGING_SIGN.get(),
+                ModBlocks.BLAZE_WALL_HANGING_SIGN.get()
         );
 
         // ==================== 灵焰木标签 ====================
@@ -69,7 +73,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.SOUL_PRESSURE_PLATE.get(),
                 ModBlocks.SOUL_BUTTON.get(),
                 ModBlocks.SOUL_LEAVES.get(),
-                ModBlocks.SOUL_SAPLING.get()
+                ModBlocks.SOUL_SAPLING.get(),
+                ModBlocks.SOUL_SIGN.get(),
+                ModBlocks.SOUL_WALL_SIGN.get(),
+                ModBlocks.SOUL_HANGING_SIGN.get(),
+                ModBlocks.SOUL_WALL_HANGING_SIGN.get()
         );
 
         // ==================== 杜鹃木标签 ====================
@@ -88,7 +96,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.AZALEA_PRESSURE_PLATE.get(),
                 ModBlocks.AZALEA_BUTTON.get(),
                 null, // 杜鹃木使用原版树叶
-                null  // 杜鹃木使用原版树苗
+                null  // 杜鹃木使用原版树苗,
+                ModBlocks.AZALEA_SIGN.get(),
+                ModBlocks.AZALEA_WALL_SIGN.get(),
+                ModBlocks.AZALEA_HANGING_SIGN.get(),
+                ModBlocks.AZALEA_WALL_HANGING_SIGN.get()
         );
 
         // ==================== 其他方块标签 ====================
@@ -109,7 +121,9 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             Block fence, Block fenceGate,
             Block door, Block trapdoor,
             Block pressurePlate, Block button,
-            Block leaves, Block sapling) {
+            Block leaves, Block sapling,
+            Block sign, Block wallSign,
+            Block hangingSign, Block wallHangingSign) {
 
         // 原木标签 - 用于原木类方块
         addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);
@@ -163,6 +177,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 //        addToTag(BlockTags.BUTTONS)
 //                .add(button);
 
+        addToTag(BlockTags.STANDING_SIGNS, sign);
+        addToTag(BlockTags.WALL_SIGNS, wallSign);
+        addToTag(BlockTags.CEILING_HANGING_SIGNS, hangingSign);
+        addToTag(BlockTags.WALL_HANGING_SIGNS, wallHangingSign);
+
         // 树叶
         if (leaves != null) {
             addToTag(BlockTags.LEAVES, leaves);
@@ -179,7 +198,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         }
 
         // 挖掘工具标签
-        addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
+        addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button, sign, wallSign, hangingSign, wallHangingSign);
 
         // 站立信号（原木可以站立）
         addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
