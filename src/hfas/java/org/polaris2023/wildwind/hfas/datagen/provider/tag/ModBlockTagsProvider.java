@@ -51,6 +51,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.BLAZE_BUTTON.get(),
                 ModBlocks.BLAZE_LEAVES.get(),
                 ModBlocks.BLAZE_SAPLING.get(),
+                ModBlocks.POTTED_BLAZE_SAPLING.get(),
                 ModBlocks.BLAZE_SIGN.get(),
                 ModBlocks.BLAZE_WALL_SIGN.get(),
                 ModBlocks.BLAZE_HANGING_SIGN.get(),
@@ -74,6 +75,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.SOUL_BUTTON.get(),
                 ModBlocks.SOUL_LEAVES.get(),
                 ModBlocks.SOUL_SAPLING.get(),
+                ModBlocks.POTTED_SOUL_SAPLING.get(),
                 ModBlocks.SOUL_SIGN.get(),
                 ModBlocks.SOUL_WALL_SIGN.get(),
                 ModBlocks.SOUL_HANGING_SIGN.get(),
@@ -97,6 +99,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.AZALEA_BUTTON.get(),
                 null, // 杜鹃木使用原版树叶
                 null, // 杜鹃木使用原版树苗
+                null, // 杜鹃木无自定义盆栽树苗
                 ModBlocks.AZALEA_SIGN.get(),
                 ModBlocks.AZALEA_WALL_SIGN.get(),
                 ModBlocks.AZALEA_HANGING_SIGN.get(),
@@ -121,12 +124,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             Block fence, Block fenceGate,
             Block door, Block trapdoor,
             Block pressurePlate, Block button,
-            Block leaves, Block sapling,
+            Block leaves, Block sapling, Block pottedSapling,
             Block sign, Block wallSign,
             Block hangingSign, Block wallHangingSign) {
 
         // 原木标签 - 用于原木类方块
         addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);
+
+        addToTag(BlockTags.LOGS_THAT_BURN, log, wood, strippedLog, strippedWood);
+        addToTag(Tags.Blocks.STRIPPED_LOGS, strippedLog);
+        addToTag(Tags.Blocks.STRIPPED_WOODS, strippedWood);
 
         // 木板标签
         addToTag(BlockTags.PLANKS, planks);
@@ -179,8 +186,10 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         addToTag(BlockTags.STANDING_SIGNS, sign);
         addToTag(BlockTags.WALL_SIGNS, wallSign);
+        addToTag(BlockTags.ALL_SIGNS, sign, wallSign);
         addToTag(BlockTags.CEILING_HANGING_SIGNS, hangingSign);
         addToTag(BlockTags.WALL_HANGING_SIGNS, wallHangingSign);
+        addToTag(BlockTags.ALL_HANGING_SIGNS, hangingSign, wallHangingSign);
 
         // 树叶
         if (leaves != null) {
@@ -189,23 +198,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // 树苗
         if (sapling != null) {
-            /*
-              由addToTag方法桥接。
-              TODO: 该block tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
-               ——landis, 2026/9/1
-               */
             addToTag(BlockItemTags.SAPLINGS.block(), sapling);
+            addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
+        }
+        if (pottedSapling != null) {
+            addToTag(BlockTags.FLOWER_POTS, pottedSapling);
         }
 
         // 挖掘工具标签
         addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button, sign, wallSign, hangingSign, wallHangingSign);
 
-        // 站立信号（原木可以站立）
-        addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
-
-        // 需要工具
-        // TODO:正确性需要进一步审查：木制方块是否需要石质工具破坏？
-        addToTag(BlockTags.NEEDS_STONE_TOOL, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
     }
 
     @SuppressWarnings("all")
