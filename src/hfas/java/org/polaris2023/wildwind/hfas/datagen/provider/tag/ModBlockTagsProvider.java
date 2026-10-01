@@ -96,7 +96,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 ModBlocks.AZALEA_PRESSURE_PLATE.get(),
                 ModBlocks.AZALEA_BUTTON.get(),
                 null, // 杜鹃木使用原版树叶
-                null  // 杜鹃木使用原版树苗,
+                null, // 杜鹃木使用原版树苗
                 ModBlocks.AZALEA_SIGN.get(),
                 ModBlocks.AZALEA_WALL_SIGN.get(),
                 ModBlocks.AZALEA_HANGING_SIGN.get(),
