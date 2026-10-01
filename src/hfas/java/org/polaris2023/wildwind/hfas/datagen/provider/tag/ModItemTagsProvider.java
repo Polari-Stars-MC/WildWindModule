@@ -96,6 +96,15 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
                 null, // 杜鹃木使用原版树叶
                 null  // 杜鹃木使用原版树苗
         );
+
+        addItemsToTag(ItemTags.SIGNS,
+                ModBlocks.BLAZE_SIGN_ITEM.get(), ModBlocks.SOUL_SIGN_ITEM.get(), ModBlocks.AZALEA_SIGN_ITEM.get());
+        addItemsToTag(ItemTags.HANGING_SIGNS,
+                ModBlocks.BLAZE_HANGING_SIGN_ITEM.get(), ModBlocks.SOUL_HANGING_SIGN_ITEM.get(), ModBlocks.AZALEA_HANGING_SIGN_ITEM.get());
+        addItemsToTag(ItemTags.BOATS,
+                ModBlocks.BLAZE_BOAT.get(), ModBlocks.SOUL_BOAT.get(), ModBlocks.AZALEA_BOAT.get());
+        addItemsToTag(ItemTags.CHEST_BOATS,
+                ModBlocks.BLAZE_CHEST_BOAT.get(), ModBlocks.SOUL_CHEST_BOAT.get(), ModBlocks.AZALEA_CHEST_BOAT.get());
     }
 
     /**
@@ -177,6 +186,12 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         if (sapling != null) {
             addToTag(ItemTags.SAPLINGS, sapling);
         }
+    }
+
+    @SuppressWarnings("all")
+    public void addItemsToTag(TagKey<Item> tag, Item... items) {
+        if (items.length == 0) return;
+        tag(tag).addAll(Arrays.stream(items).map(Item::builtInRegistryHolder).map(Holder.Reference::getKey));
     }
 
     @SuppressWarnings("all")
