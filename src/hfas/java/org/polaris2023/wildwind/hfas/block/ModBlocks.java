@@ -1,7 +1,10 @@
 package org.polaris2023.wildwind.hfas.block;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BoatItem;
+import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -169,6 +172,26 @@ public class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    public static final DeferredBlock<StandingSignBlock> BLAZE_SIGN = BLOCKS.registerBlock(
+            "blaze_sign",
+            p -> new StandingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> BLAZE_WALL_SIGN = BLOCKS.registerBlock(
+            "blaze_wall_sign",
+            p -> new WallSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> BLAZE_HANGING_SIGN = BLOCKS.registerBlock(
+            "blaze_hanging_sign",
+            p -> new CeilingHangingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> BLAZE_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "blaze_wall_hanging_sign",
+            p -> new WallHangingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
     // 焚烬木树叶
     public static final DeferredBlock<LeavesBlock> BLAZE_LEAVES = BLOCKS.registerBlock(
             "blaze_leaves",
@@ -189,6 +212,11 @@ public class ModBlocks {
                     .instabreak()
                     .sound(SoundType.GRASS)
                     .randomTicks())
+    );
+
+    public static final DeferredBlock<FlowerPotBlock> POTTED_BLAZE_SAPLING = BLOCKS.registerBlock(
+            "potted_blaze_sapling",
+            p -> new FlowerPotBlock(BLAZE_SAPLING.get(), p.noOcclusion().instabreak())
     );
 
     // ==================== 灵焰木套件 (soul_wood) ====================
@@ -310,6 +338,26 @@ public class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    public static final DeferredBlock<StandingSignBlock> SOUL_SIGN = BLOCKS.registerBlock(
+            "soul_sign",
+            p -> new StandingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> SOUL_WALL_SIGN = BLOCKS.registerBlock(
+            "soul_wall_sign",
+            p -> new WallSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> SOUL_HANGING_SIGN = BLOCKS.registerBlock(
+            "soul_hanging_sign",
+            p -> new CeilingHangingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> SOUL_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "soul_wall_hanging_sign",
+            p -> new WallHangingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
     // 灵焰木树叶
     public static final DeferredBlock<LeavesBlock> SOUL_LEAVES = BLOCKS.registerBlock(
             "soul_leaves",
@@ -330,6 +378,11 @@ public class ModBlocks {
                     .instabreak()
                     .sound(SoundType.GRASS)
                     .randomTicks())
+    );
+
+    public static final DeferredBlock<FlowerPotBlock> POTTED_SOUL_SAPLING = BLOCKS.registerBlock(
+            "potted_soul_sapling",
+            p -> new FlowerPotBlock(SOUL_SAPLING.get(), p.noOcclusion().instabreak())
     );
 
     // ==================== 杜鹃木套件 (azalea_wood) ====================
@@ -449,6 +502,70 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(0.5F)
                     .sound(SoundType.WOOD))
+    );
+
+    public static final DeferredBlock<StandingSignBlock> AZALEA_SIGN = BLOCKS.registerBlock(
+            "azalea_sign",
+            p -> new StandingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> AZALEA_WALL_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_sign",
+            p -> new WallSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> AZALEA_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_hanging_sign",
+            p -> new CeilingHangingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> AZALEA_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_hanging_sign",
+            p -> new WallHangingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredItem<SignItem> BLAZE_SIGN_ITEM = ITEMS.registerItem(
+            "blaze_sign",
+            p -> new SignItem(BLAZE_SIGN.get(), BLAZE_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> BLAZE_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "blaze_hanging_sign",
+            p -> new HangingSignItem(BLAZE_HANGING_SIGN.get(), BLAZE_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<SignItem> SOUL_SIGN_ITEM = ITEMS.registerItem(
+            "soul_sign",
+            p -> new SignItem(SOUL_SIGN.get(), SOUL_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> SOUL_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "soul_hanging_sign",
+            p -> new HangingSignItem(SOUL_HANGING_SIGN.get(), SOUL_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<SignItem> AZALEA_SIGN_ITEM = ITEMS.registerItem(
+            "azalea_sign",
+            p -> new SignItem(AZALEA_SIGN.get(), AZALEA_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> AZALEA_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "azalea_hanging_sign",
+            p -> new HangingSignItem(AZALEA_HANGING_SIGN.get(), AZALEA_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+
+    public static final DeferredItem<BoatItem> BLAZE_BOAT = ITEMS.registerItem(
+            "blaze_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.BLAZE_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> BLAZE_CHEST_BOAT = ITEMS.registerItem(
+            "blaze_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.BLAZE_CHEST_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> SOUL_BOAT = ITEMS.registerItem(
+            "soul_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.SOUL_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> SOUL_CHEST_BOAT = ITEMS.registerItem(
+            "soul_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.SOUL_CHEST_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> AZALEA_BOAT = ITEMS.registerItem(
+            "azalea_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.AZALEA_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> AZALEA_CHEST_BOAT = ITEMS.registerItem(
+            "azalea_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.AZALEA_CHEST_BOAT.get(), p)
     );
 
     // ==================== 其他方块 ====================
