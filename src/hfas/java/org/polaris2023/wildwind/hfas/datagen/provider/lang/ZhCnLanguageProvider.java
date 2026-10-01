@@ -35,6 +35,12 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BLAZE_BUTTON, "焚烬木按钮");
         addBlock(ModBlocks.BLAZE_LEAVES, "焚烬木树叶");
         addBlock(ModBlocks.BLAZE_SAPLING, "焚烬木树苗");
+        addBlock(ModBlocks.BLAZE_SIGN, "焚烬木告示牌");
+        addBlock(ModBlocks.BLAZE_WALL_SIGN, "焚烬木告示牌");
+        addBlock(ModBlocks.BLAZE_HANGING_SIGN, "焚烬木悬挂告示牌");
+        addBlock(ModBlocks.BLAZE_WALL_HANGING_SIGN, "焚烬木悬挂告示牌");
+        addItem(ModBlocks.BLAZE_BOAT, "焚烬木船");
+        addItem(ModBlocks.BLAZE_CHEST_BOAT, "焚烬木运输船");
 
         // 灵焰木套件
         addBlock(ModBlocks.SOUL_LOG, "灵焰木原木");
@@ -52,6 +58,12 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_BUTTON, "灵焰木按钮");
         addBlock(ModBlocks.SOUL_LEAVES, "灵焰木树叶");
         addBlock(ModBlocks.SOUL_SAPLING, "灵焰木树苗");
+        addBlock(ModBlocks.SOUL_SIGN, "灵焰木告示牌");
+        addBlock(ModBlocks.SOUL_WALL_SIGN, "灵焰木告示牌");
+        addBlock(ModBlocks.SOUL_HANGING_SIGN, "灵焰木悬挂告示牌");
+        addBlock(ModBlocks.SOUL_WALL_HANGING_SIGN, "灵焰木悬挂告示牌");
+        addItem(ModBlocks.SOUL_BOAT, "灵焰木船");
+        addItem(ModBlocks.SOUL_CHEST_BOAT, "灵焰木运输船");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "杜鹃木原木");
@@ -67,6 +79,12 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.AZALEA_TRAPDOOR, "杜鹃木活板门");
         addBlock(ModBlocks.AZALEA_PRESSURE_PLATE, "杜鹃木压力板");
         addBlock(ModBlocks.AZALEA_BUTTON, "杜鹃木按钮");
+        addBlock(ModBlocks.AZALEA_SIGN, "杜鹃木告示牌");
+        addBlock(ModBlocks.AZALEA_WALL_SIGN, "杜鹃木告示牌");
+        addBlock(ModBlocks.AZALEA_HANGING_SIGN, "杜鹃木悬挂告示牌");
+        addBlock(ModBlocks.AZALEA_WALL_HANGING_SIGN, "杜鹃木悬挂告示牌");
+        addItem(ModBlocks.AZALEA_BOAT, "杜鹃木船");
+        addItem(ModBlocks.AZALEA_CHEST_BOAT, "杜鹃木运输船");
 
         // 其他方块
         addBlock(ModBlocks.SCORCHED_GRASS_BLOCK, "焦灰草方块");
