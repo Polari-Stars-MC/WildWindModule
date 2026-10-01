@@ -39,7 +39,12 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.BLAZE_SAPLING.get());
         // 门需要特殊处理
         add(ModBlocks.BLAZE_DOOR.get(), createDoorTable(ModBlocks.BLAZE_DOOR.get()));
-        add(ModBlocks.BLAZE_TRAPDOOR.get(), createDoorTable(ModBlocks.BLAZE_TRAPDOOR.get()));
+        dropSelf(ModBlocks.BLAZE_TRAPDOOR.get());
+        dropOther(ModBlocks.BLAZE_SIGN.get(), ModBlocks.BLAZE_SIGN_ITEM.get());
+        dropOther(ModBlocks.BLAZE_WALL_SIGN.get(), ModBlocks.BLAZE_SIGN_ITEM.get());
+        dropOther(ModBlocks.BLAZE_HANGING_SIGN.get(), ModBlocks.BLAZE_HANGING_SIGN_ITEM.get());
+        dropOther(ModBlocks.BLAZE_WALL_HANGING_SIGN.get(), ModBlocks.BLAZE_HANGING_SIGN_ITEM.get());
+        dropPottedContents(ModBlocks.POTTED_BLAZE_SAPLING.get());
 
         // 灵焰木套件
         dropSelf(ModBlocks.SOUL_LOG.get());
@@ -58,7 +63,12 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.SOUL_SAPLING.get());
         // 门需要特殊处理
         add(ModBlocks.SOUL_DOOR.get(), createDoorTable(ModBlocks.SOUL_DOOR.get()));
-        add(ModBlocks.SOUL_TRAPDOOR.get(), createDoorTable(ModBlocks.SOUL_TRAPDOOR.get()));
+        dropSelf(ModBlocks.SOUL_TRAPDOOR.get());
+        dropOther(ModBlocks.SOUL_SIGN.get(), ModBlocks.SOUL_SIGN_ITEM.get());
+        dropOther(ModBlocks.SOUL_WALL_SIGN.get(), ModBlocks.SOUL_SIGN_ITEM.get());
+        dropOther(ModBlocks.SOUL_HANGING_SIGN.get(), ModBlocks.SOUL_HANGING_SIGN_ITEM.get());
+        dropOther(ModBlocks.SOUL_WALL_HANGING_SIGN.get(), ModBlocks.SOUL_HANGING_SIGN_ITEM.get());
+        dropPottedContents(ModBlocks.POTTED_SOUL_SAPLING.get());
 
         // 杜鹃木套件
         dropSelf(ModBlocks.AZALEA_LOG.get());
@@ -74,7 +84,11 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.AZALEA_BUTTON.get());
         // 门需要特殊处理
         add(ModBlocks.AZALEA_DOOR.get(), createDoorTable(ModBlocks.AZALEA_DOOR.get()));
-        add(ModBlocks.AZALEA_TRAPDOOR.get(), createDoorTable(ModBlocks.AZALEA_TRAPDOOR.get()));
+        dropSelf(ModBlocks.AZALEA_TRAPDOOR.get());
+        dropOther(ModBlocks.AZALEA_SIGN.get(), ModBlocks.AZALEA_SIGN_ITEM.get());
+        dropOther(ModBlocks.AZALEA_WALL_SIGN.get(), ModBlocks.AZALEA_SIGN_ITEM.get());
+        dropOther(ModBlocks.AZALEA_HANGING_SIGN.get(), ModBlocks.AZALEA_HANGING_SIGN_ITEM.get());
+        dropOther(ModBlocks.AZALEA_WALL_HANGING_SIGN.get(), ModBlocks.AZALEA_HANGING_SIGN_ITEM.get());
 
         // 其他方块
         dropSelf(ModBlocks.SCORCHED_GRASS_BLOCK.get());
