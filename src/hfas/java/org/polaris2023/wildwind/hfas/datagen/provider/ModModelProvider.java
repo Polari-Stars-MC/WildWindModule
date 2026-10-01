@@ -3,6 +3,7 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
@@ -38,12 +39,16 @@ public class ModModelProvider extends ModelProvider {
                 ModBlocks.BLAZE_DOOR.get(),
                 ModBlocks.BLAZE_TRAPDOOR.get(),
                 ModBlocks.BLAZE_PRESSURE_PLATE.get(),
-                ModBlocks.BLAZE_BUTTON.get()
+                ModBlocks.BLAZE_BUTTON.get(),
+                ModBlocks.BLAZE_SIGN.get(),
+                ModBlocks.BLAZE_WALL_SIGN.get(),
+                ModBlocks.BLAZE_HANGING_SIGN.get(),
+                ModBlocks.BLAZE_WALL_HANGING_SIGN.get()
         );
         // 焚烬木树叶 - 橙色染色
         blockModels.createTintedLeaves(ModBlocks.BLAZE_LEAVES.get(), TexturedModel.LEAVES, 0xFF8000);
-        // 焚烬木树苗
-        blockModels.createCrossBlock(ModBlocks.BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        // 焚烬木树苗与盆栽
+        blockModels.createPlantWithDefaultItem(ModBlocks.BLAZE_SAPLING.get(), ModBlocks.POTTED_BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // ==================== 灵焰木套件 ====================
         registerWoodModels(blockModels, itemModels,
@@ -59,12 +64,16 @@ public class ModModelProvider extends ModelProvider {
                 ModBlocks.SOUL_DOOR.get(),
                 ModBlocks.SOUL_TRAPDOOR.get(),
                 ModBlocks.SOUL_PRESSURE_PLATE.get(),
-                ModBlocks.SOUL_BUTTON.get()
+                ModBlocks.SOUL_BUTTON.get(),
+                ModBlocks.SOUL_SIGN.get(),
+                ModBlocks.SOUL_WALL_SIGN.get(),
+                ModBlocks.SOUL_HANGING_SIGN.get(),
+                ModBlocks.SOUL_WALL_HANGING_SIGN.get()
         );
         // 灵焰木树叶 - 青色染色
         blockModels.createTintedLeaves(ModBlocks.SOUL_LEAVES.get(), TexturedModel.LEAVES, 0x00FFFF);
-        // 灵焰木树苗
-        blockModels.createCrossBlock(ModBlocks.SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        // 灵焰木树苗与盆栽
+        blockModels.createPlantWithDefaultItem(ModBlocks.SOUL_SAPLING.get(), ModBlocks.POTTED_SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // ==================== 杜鹃木套件 ====================
         registerWoodModels(blockModels, itemModels,
@@ -80,8 +89,19 @@ public class ModModelProvider extends ModelProvider {
                 ModBlocks.AZALEA_DOOR.get(),
                 ModBlocks.AZALEA_TRAPDOOR.get(),
                 ModBlocks.AZALEA_PRESSURE_PLATE.get(),
-                ModBlocks.AZALEA_BUTTON.get()
+                ModBlocks.AZALEA_BUTTON.get(),
+                ModBlocks.AZALEA_SIGN.get(),
+                ModBlocks.AZALEA_WALL_SIGN.get(),
+                ModBlocks.AZALEA_HANGING_SIGN.get(),
+                ModBlocks.AZALEA_WALL_HANGING_SIGN.get()
         );
+
+        itemModels.generateFlatItem(ModBlocks.BLAZE_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModBlocks.BLAZE_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModBlocks.SOUL_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModBlocks.SOUL_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModBlocks.AZALEA_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModBlocks.AZALEA_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
 
         // ==================== 其他方块 ====================
         // 焦灰草方块 - 使用简单的方块模型
@@ -112,7 +132,9 @@ public class ModModelProvider extends ModelProvider {
                                      Block planks, Block stairs, Block slab,
                                      Block fence, Block fenceGate,
                                      Block door, Block trapdoor,
-                                     Block pressurePlate, Block button) {
+                                     Block pressurePlate, Block button,
+                                     Block sign, Block wallSign,
+                                     Block hangingSign, Block wallHangingSign) {
         // 原木 - 使用 WoodProvider（自动生成物品模型）
         blockModels.woodProvider(log).logWithHorizontal(log).wood(wood);
 
@@ -126,7 +148,9 @@ public class ModModelProvider extends ModelProvider {
                 .fence(fence)
                 .fenceGate(fenceGate)
                 .pressurePlate(pressurePlate)
-                .button(button);
+                .button(button)
+                .sign(sign, wallSign)
+                .hangingSign(hangingSign, wallHangingSign);
 
         // 门（自动生成物品模型）
         blockModels.createDoor(door);
