@@ -3,7 +3,6 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
-import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.data.BlockFamily;
@@ -140,9 +139,9 @@ public class ModModelProvider extends ModelProvider {
         // 原木 - 使用 WoodProvider（自动生成物品模型）
         blockModels.woodProvider(log).logWithHorizontal(log).wood(wood);
 
-        // 26.2 的 sign/hangingSign 模型生成依赖 BlockFamily 中的墙体变种和 stripped_log。
-        // stripped_log 交给 family 生成，stripped_wood 仍使用 WoodProvider。
-        blockModels.woodProvider(strippedLog).wood(strippedWood);
+        // 26.2 的 hangingSign 需要 BlockFamily 中存在 stripped_log，
+        // 但 STRIPPED_LOG 本身没有 BlockFamily 模型生成器，因此必须单独生成 blockstate/model。
+        blockModels.woodProvider(strippedLog).logWithHorizontal(strippedLog).wood(strippedWood);
 
         BlockFamily family = new BlockFamily.Builder(planks)
                 .strippedLog(strippedLog)
@@ -159,7 +158,6 @@ public class ModModelProvider extends ModelProvider {
                 .getFamily();
 
         blockModels.family(planks).generateFor(family);
-        blockModels.registerSimpleItemModel(strippedLog, ModelLocationUtils.getModelLocation(strippedLog));
     }
 
     /**
