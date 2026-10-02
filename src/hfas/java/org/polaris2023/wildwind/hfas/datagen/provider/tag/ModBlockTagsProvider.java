@@ -2,7 +2,9 @@ package org.polaris2023.wildwind.hfas.datagen.provider.tag;
 
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
@@ -34,6 +36,16 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        registerWoodLogTag("blaze",
+                ModBlocks.BLAZE_LOG.get(), ModBlocks.BLAZE_WOOD.get(),
+                ModBlocks.STRIPPED_BLAZE_LOG.get(), ModBlocks.STRIPPED_BLAZE_WOOD.get());
+        registerWoodLogTag("soul",
+                ModBlocks.SOUL_LOG.get(), ModBlocks.SOUL_WOOD.get(),
+                ModBlocks.STRIPPED_SOUL_LOG.get(), ModBlocks.STRIPPED_SOUL_WOOD.get());
+        registerWoodLogTag("azalea",
+                ModBlocks.AZALEA_LOG.get(), ModBlocks.AZALEA_WOOD.get(),
+                ModBlocks.STRIPPED_AZALEA_LOG.get(), ModBlocks.STRIPPED_AZALEA_WOOD.get());
+
         // ==================== 焚烬木标签 ====================
         registerWoodTags(
                 ModBlocks.BLAZE_LOG.get(),
@@ -151,6 +163,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addToTag(Tags.Blocks.FENCES, fence);
 
         addToTag(Tags.Blocks.FENCE_GATES_WOODEN, fenceGate);
+        addToTag(BlockTags.FENCE_GATES, fenceGate);
 
         // 栅栏门标签（所有栅栏门）
         // 已默认含有引用"#c:fence_gates/wooden"
@@ -207,6 +220,14 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 挖掘工具标签
         addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button, sign, wallSign, hangingSign, wallHangingSign);
 
+    }
+
+    private void registerWoodLogTag(String name, Block log, Block wood, Block strippedLog, Block strippedWood) {
+        TagKey<Block> logsTag = TagKey.create(
+                Registries.BLOCK,
+                Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, name + "_logs")
+        );
+        addToTag(logsTag, log, wood, strippedLog, strippedWood);
     }
 
     @SuppressWarnings("all")
