@@ -60,8 +60,10 @@ public class ModBlocks {
             "blaze_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木
@@ -69,8 +71,10 @@ public class ModBlocks {
             "blaze_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮焚烬木原木
@@ -78,8 +82,10 @@ public class ModBlocks {
             "stripped_blaze_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮焚烬木
@@ -87,8 +93,10 @@ public class ModBlocks {
             "stripped_blaze_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木木板
@@ -96,8 +104,10 @@ public class ModBlocks {
             "blaze_planks",
             p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木楼梯
@@ -105,8 +115,10 @@ public class ModBlocks {
             "blaze_stairs",
             p -> new FlammableWoodBlocks.Stairs(BLAZE_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木台阶
@@ -114,8 +126,10 @@ public class ModBlocks {
             "blaze_slab",
             p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木栅栏
@@ -123,8 +137,10 @@ public class ModBlocks {
             "blaze_fence",
             p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木栅栏门
@@ -132,8 +148,10 @@ public class ModBlocks {
             "blaze_fence_gate",
             p -> new FlammableWoodBlocks.Gate(BLAZE_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木门
@@ -141,8 +159,10 @@ public class ModBlocks {
             "blaze_door",
             p -> new DoorBlock(BLAZE_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木活板门
@@ -150,8 +170,10 @@ public class ModBlocks {
             "blaze_trapdoor",
             p -> new TrapDoorBlock(BLAZE_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木压力板
@@ -226,8 +248,10 @@ public class ModBlocks {
             "soul_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木
@@ -235,8 +259,10 @@ public class ModBlocks {
             "soul_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮灵焰木原木
@@ -244,8 +270,10 @@ public class ModBlocks {
             "stripped_soul_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮灵焰木
@@ -253,8 +281,10 @@ public class ModBlocks {
             "stripped_soul_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木木板
@@ -262,8 +292,10 @@ public class ModBlocks {
             "soul_planks",
             p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木楼梯
@@ -271,8 +303,10 @@ public class ModBlocks {
             "soul_stairs",
             p -> new FlammableWoodBlocks.Stairs(SOUL_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木台阶
@@ -280,8 +314,10 @@ public class ModBlocks {
             "soul_slab",
             p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木栅栏
@@ -289,8 +325,10 @@ public class ModBlocks {
             "soul_fence",
             p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木栅栏门
@@ -298,8 +336,10 @@ public class ModBlocks {
             "soul_fence_gate",
             p -> new FlammableWoodBlocks.Gate(SOUL_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木门
@@ -307,8 +347,10 @@ public class ModBlocks {
             "soul_door",
             p -> new DoorBlock(SOUL_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木活板门
@@ -316,8 +358,10 @@ public class ModBlocks {
             "soul_trapdoor",
             p -> new TrapDoorBlock(SOUL_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木压力板
@@ -392,8 +436,10 @@ public class ModBlocks {
             "azalea_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木
@@ -401,8 +447,10 @@ public class ModBlocks {
             "azalea_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮杜鹃木原木
@@ -410,8 +458,10 @@ public class ModBlocks {
             "stripped_azalea_log",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮杜鹃木
@@ -419,8 +469,10 @@ public class ModBlocks {
             "stripped_azalea_wood",
             p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木木板
@@ -428,8 +480,10 @@ public class ModBlocks {
             "azalea_planks",
             p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木楼梯
@@ -437,8 +491,10 @@ public class ModBlocks {
             "azalea_stairs",
             p -> new FlammableWoodBlocks.Stairs(AZALEA_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木台阶
@@ -446,8 +502,10 @@ public class ModBlocks {
             "azalea_slab",
             p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木栅栏
@@ -455,8 +513,10 @@ public class ModBlocks {
             "azalea_fence",
             p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木栅栏门
@@ -464,8 +524,10 @@ public class ModBlocks {
             "azalea_fence_gate",
             p -> new FlammableWoodBlocks.Gate(AZALEA_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木门
@@ -473,8 +535,10 @@ public class ModBlocks {
             "azalea_door",
             p -> new DoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木活板门
@@ -482,8 +546,10 @@ public class ModBlocks {
             "azalea_trapdoor",
             p -> new TrapDoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木压力板
