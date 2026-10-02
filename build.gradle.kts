@@ -1,4 +1,4 @@
-import org.slf4j.event.Level.DEBUG
+import org.slf4j.event.Level.INFO
 import java.util.Locale
 
 plugins {
@@ -96,7 +96,7 @@ allprojects {
     neoForge {
         version = neoVersion
 
-        // accessTransformers = project.files('src/main/resources/META-INF/accesstransformer.cfg')
+        accessTransformers.from(rootProject.file("src/${project.name}/resources/META-INF/accesstransformer.cfg"))
 
         runs {
             register("client") {
@@ -136,7 +136,7 @@ allprojects {
             }
             configureEach {
                 systemProperty("forge.logging.markers", "REGISTRIES")
-                logLevel.set(DEBUG)
+                logLevel.set(INFO)
             }
         }
 

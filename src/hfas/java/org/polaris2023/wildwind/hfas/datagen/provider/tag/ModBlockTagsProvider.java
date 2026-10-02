@@ -3,15 +3,17 @@ package org.polaris2023.wildwind.hfas.datagen.provider.tag;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.tag.ModBlockTags;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -97,6 +99,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // 制箭台 - 工作站
         addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
+
+
+        // ==================== 实体生成有关 ====================
+
+        addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON, Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS);
+
+        addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND, Blocks.CLAY, Blocks.MUD, Blocks.DIRT, Blocks.MUDDY_MANGROVE_ROOTS)
+                .addTag(BlockTags.SAND)
+                .addTag(Tags.Blocks.GRAVELS);
+
+        addToTag(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS,Blocks.MANGROVE_LOG, Blocks.MANGROVE_ROOTS, Blocks.MUDDY_MANGROVE_ROOTS);
     }
 
     /**
@@ -172,7 +185,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         if (sapling != null) {
             /*
               由addToTag方法桥接。
-              TODO: 该block tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
+              TODO_FINISHED: 该block tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
                ——landis, 2026/9/1
                */
             addToTag(BlockItemTags.SAPLINGS.block(), sapling);
@@ -185,13 +198,12 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
 
         // 需要工具
-        // TODO:正确性需要进一步审查：木制方块是否需要石质工具破坏？
         addToTag(BlockTags.NEEDS_STONE_TOOL, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
     }
 
     @SuppressWarnings("all")
-    public void addToTag(TagKey<Block> tag, Block... items) {
-        if (items.length == 0) return;
-        tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
+    public TagAppender<Block> addToTag(TagKey<Block> tag, Block... items) {
+        if (items.length == 0) return tag(tag);
+        return tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
     }
 }

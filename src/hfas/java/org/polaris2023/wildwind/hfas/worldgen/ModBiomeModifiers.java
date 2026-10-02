@@ -8,13 +8,17 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.data.worldgen.placement.CavePlacements;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.util.random.WeightedList;
 import net.minecraft.world.level.biome.Biomes;
+import net.minecraft.world.level.biome.MobSpawnSettings;
 import net.minecraft.world.level.levelgen.GenerationStep;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.world.BiomeModifier;
 import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.wildwind.hfas.HFASMod;
+import org.polaris2023.wildwind.hfas.registry.ModEntities;
 
 /**
  * 生物群系修改器
@@ -24,27 +28,18 @@ import org.polaris2023.wildwind.hfas.HFASMod;
  */
 public class ModBiomeModifiers {
 
-    public static final ResourceKey<BiomeModifier> ADD_BLAZE_TREE = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "add_blaze_tree")
-    );
+    public static final ResourceKey<BiomeModifier> ADD_BLAZE_TREE = createKey("add_blaze_tree");
 
-    public static final ResourceKey<BiomeModifier> ADD_SOUL_TREE = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "add_soul_tree")
-    );
+    public static final ResourceKey<BiomeModifier> ADD_SOUL_TREE = createKey("add_soul_tree");
 
     // 杜鹃树生成
-    public static final ResourceKey<BiomeModifier> ADD_AZALEA_TREE = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "add_azalea_tree")
-    );
+    public static final ResourceKey<BiomeModifier> ADD_AZALEA_TREE = createKey("add_azalea_tree");
 
     // 移除原版杜鹃树
-    public static final ResourceKey<BiomeModifier> REMOVE_VANILLA_AZALEA_TREE = ResourceKey.create(
-            NeoForgeRegistries.Keys.BIOME_MODIFIERS,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "remove_vanilla_azalea_tree")
-    );
+    public static final ResourceKey<BiomeModifier> REMOVE_VANILLA_AZALEA_TREE = createKey("remove_vanilla_azalea_tree");
+
+    //那啥蟹生成
+    public static final ResourceKey<BiomeModifier> ADD_MUDCRAB_SPAWNS = createKey("add_mudcrab_spawns");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -77,5 +72,20 @@ public class ModBiomeModifiers {
                 HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.AZALEA_TREE_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
+
+        context.register(ADD_MUDCRAB_SPAWNS, new BiomeModifiers.AddSpawnsBiomeModifier(
+                        biomes.getOrThrow(Tags.Biomes.IS_SWAMP),
+                        WeightedList.of(
+                                new MobSpawnSettings.SpawnerData(ModEntities.MUDCRAB.get(), 1, 2)
+                        )
+                )
+        );
+    }
+
+    private static ResourceKey<BiomeModifier> createKey(String name) {
+        return ResourceKey.create(
+                NeoForgeRegistries.Keys.BIOME_MODIFIERS,
+                HFASMod.id(name)
+        );
     }
 }

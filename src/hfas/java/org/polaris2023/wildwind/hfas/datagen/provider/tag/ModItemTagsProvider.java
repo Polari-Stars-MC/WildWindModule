@@ -11,10 +11,12 @@ import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.tag.ModItemTags;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -24,7 +26,7 @@ import java.util.concurrent.CompletableFuture;
  * 为木质物品添加原版和模组标签
  * <p>
  * 迁移至26.2时旧有的IntrinsicHolderTagsProvider已被移除。改为父类TagsProvider并由addToTag方法桥接。
- * TODO: 部分item tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
+ * TODO_FINISHED: 部分item tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
  *  见[Need Check]注释部分。
  *  ——landis, 2026/9/1
  *
@@ -96,6 +98,10 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
                 null, // 杜鹃木使用原版树叶
                 null  // 杜鹃木使用原版树苗
         );
+
+        tag(Tags.Items.ANIMAL_FOODS)
+                .addTag(ModItemTags.MUDCRAB_FOOD);
+        addToTag(ModItemTags.MUDCRAB_FOOD, Items.SPIDER_EYE);
     }
 
     /**
@@ -183,5 +189,11 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
     public void addToTag(TagKey<Item> tag, Block... items){
         if(items.length == 0) return;
         tag(tag).addAll(Arrays.stream(items).map(Block::asItem).map(Item::builtInRegistryHolder).map(Holder.Reference::getKey));
+    }
+
+    @SuppressWarnings("all")
+    public void addToTag(TagKey<Item> tag, Item... items){
+        if(items.length == 0) return;
+        tag(tag).addAll(Arrays.stream(items).map(Item::builtInRegistryHolder).map(Holder.Reference::getKey));
     }
 }
