@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "ww_hfas:block/blaze_pressure_plate"
+    },
+    "powered=true": {
+      "model": "ww_hfas:block/blaze_pressure_plate_down"
+    }
+  }
+}

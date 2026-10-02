@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_0",
+  "textures": {
+    "all": "ww_hfas:block/blaze_sign",
+    "particle": "ww_hfas:block/blaze_planks"
+  }
+}

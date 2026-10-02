@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ww_hfas:block/stripped_soul_log",
+    "side": "ww_hfas:block/stripped_soul_log"
+  }
+}
