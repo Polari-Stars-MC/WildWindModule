@@ -3,8 +3,10 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Block;
 import org.polaris2023.wildwind.hfas.HFASMod;
@@ -138,25 +140,26 @@ public class ModModelProvider extends ModelProvider {
         // 原木 - 使用 WoodProvider（自动生成物品模型）
         blockModels.woodProvider(log).logWithHorizontal(log).wood(wood);
 
-        // 去皮原木（自动生成物品模型）
-        blockModels.woodProvider(strippedLog).logWithHorizontal(strippedLog).wood(strippedWood);
+        // 26.2 的 sign/hangingSign 模型生成依赖 BlockFamily 中的墙体变种和 stripped_log。
+        // stripped_log 交给 family 生成，stripped_wood 仍使用 WoodProvider。
+        blockModels.woodProvider(strippedLog).wood(strippedWood);
 
-        // 使用 family 创建木质方块套件（包括木板，自动生成物品模型）
-        blockModels.family(planks)
+        BlockFamily family = new BlockFamily.Builder(planks)
+                .strippedLog(strippedLog)
                 .stairs(stairs)
                 .slab(slab)
                 .fence(fence)
                 .fenceGate(fenceGate)
+                .door(door)
+                .trapdoor(trapdoor)
                 .pressurePlate(pressurePlate)
                 .button(button)
                 .sign(sign, wallSign)
-                .hangingSign(hangingSign, wallHangingSign);
+                .hangingSign(hangingSign, wallHangingSign)
+                .getFamily();
 
-        // 门（自动生成物品模型）
-        blockModels.createDoor(door);
-
-        // 活板门（自动生成物品模型）
-        blockModels.createTrapdoor(trapdoor);
+        blockModels.family(planks).generateFor(family);
+        blockModels.registerSimpleItemModel(strippedLog, ModelLocationUtils.getModelLocation(strippedLog));
     }
 
     /**
