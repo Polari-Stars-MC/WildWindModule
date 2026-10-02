@@ -131,7 +131,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 原木标签 - 用于原木类方块
         addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);
 
-        addToTag(BlockTags.LOGS_THAT_BURN, log, wood, strippedLog, strippedWood);
+        addToTag(BlockItemTags.LOGS_THAT_BURN.block(), log, wood, strippedLog, strippedWood);
         addToTag(Tags.Blocks.STRIPPED_LOGS, strippedLog);
         addToTag(Tags.Blocks.STRIPPED_WOODS, strippedWood);
 
