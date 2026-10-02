@@ -4,6 +4,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.tags.BlockItemTagId;
@@ -40,6 +41,16 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
+        registerWoodLogItemTag("blaze",
+                ModBlocks.BLAZE_LOG.get(), ModBlocks.BLAZE_WOOD.get(),
+                ModBlocks.STRIPPED_BLAZE_LOG.get(), ModBlocks.STRIPPED_BLAZE_WOOD.get());
+        registerWoodLogItemTag("soul",
+                ModBlocks.SOUL_LOG.get(), ModBlocks.SOUL_WOOD.get(),
+                ModBlocks.STRIPPED_SOUL_LOG.get(), ModBlocks.STRIPPED_SOUL_WOOD.get());
+        registerWoodLogItemTag("azalea",
+                ModBlocks.AZALEA_LOG.get(), ModBlocks.AZALEA_WOOD.get(),
+                ModBlocks.STRIPPED_AZALEA_LOG.get(), ModBlocks.STRIPPED_AZALEA_WOOD.get());
+
         // ==================== 焚烬木物品标签 ====================
         registerWoodItemTags(
                 ModBlocks.BLAZE_LOG.get(),
@@ -121,6 +132,9 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
 
         // 原木物品标签
         addToTag(ItemTags.LOGS, log, wood, strippedLog, strippedWood);
+        addToTag(ItemTags.LOGS_THAT_BURN, log, wood, strippedLog, strippedWood);
+        addToTag(Tags.Items.STRIPPED_LOGS, strippedLog);
+        addToTag(Tags.Items.STRIPPED_WOODS, strippedWood);
 //        tag(ItemTags.LOGS)
 //                .add(log.asItem())
 //                .add(wood.asItem())
@@ -137,6 +151,7 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         addToTag(ItemTags.WOODEN_SLABS, slab);
 
         // 木质栅栏物品标签
+        addToTag(ItemTags.WOODEN_FENCES, fence);
         addToTag(Tags.Items.FENCES_WOODEN, fence);
 
         // 栅栏物品标签
@@ -186,6 +201,14 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         if (sapling != null) {
             addToTag(ItemTags.SAPLINGS, sapling);
         }
+    }
+
+    private void registerWoodLogItemTag(String name, Block log, Block wood, Block strippedLog, Block strippedWood) {
+        TagKey<Item> logsTag = TagKey.create(
+                Registries.ITEM,
+                Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, name + "_logs")
+        );
+        addToTag(logsTag, log, wood, strippedLog, strippedWood);
     }
 
     @SuppressWarnings("all")
