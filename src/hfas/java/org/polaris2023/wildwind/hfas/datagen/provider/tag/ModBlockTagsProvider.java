@@ -144,12 +144,11 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 木质台阶
         addToTag(BlockTags.WOODEN_SLABS, slab);
 
-        // 木质栅栏
+        // 木质栅栏：26.2 FenceBlock.isSameFence() 实际检查 minecraft:fences 和 minecraft:wooden_fences
+        addToTag(BlockTags.WOODEN_FENCES, fence);
+        addToTag(BlockTags.FENCES, fence);
         addToTag(Tags.Blocks.FENCES_WOODEN, fence);
-
-        // 栅栏标签（所有栅栏）
-        // 已默认含有引用"#c:fences/wooden"
-//        addToTag(Tags.Blocks.FENCES, fence);
+        addToTag(Tags.Blocks.FENCES, fence);
 
         addToTag(Tags.Blocks.FENCE_GATES_WOODEN, fenceGate);
 
