@@ -1,0 +1,6 @@
+{
+  "type": "neoforge:add_features",
+  "biomes": "minecraft:lush_caves",
+  "features": "ww_hfas:azalea_tree_placed",
+  "step": "vegetal_decoration"
+}

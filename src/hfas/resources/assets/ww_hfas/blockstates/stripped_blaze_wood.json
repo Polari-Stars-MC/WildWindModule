@@ -1,0 +1,16 @@
+{
+  "variants": {
+    "axis=x": {
+      "model": "ww_hfas:block/stripped_blaze_wood",
+      "x": 90,
+      "y": 90
+    },
+    "axis=y": {
+      "model": "ww_hfas:block/stripped_blaze_wood"
+    },
+    "axis=z": {
+      "model": "ww_hfas:block/stripped_blaze_wood",
+      "x": 90
+    }
+  }
+}
