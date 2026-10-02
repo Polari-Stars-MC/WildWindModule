@@ -51,6 +51,11 @@ public class ModCreativeTabs {
                 ItemStack trapdoorStack = ModBlocks.AZALEA_TRAPDOOR.toStack();
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), ModBlocks.AZALEA_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.AZALEA_BUTTON.toStack(), ModBlocks.AZALEA_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.AZALEA_SIGN_ITEM.toStack(), ModBlocks.AZALEA_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.AZALEA_HANGING_SIGN_ITEM.toStack(), ModBlocks.AZALEA_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.AZALEA_BOAT.toStack(), ModBlocks.AZALEA_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
             // 焚烬系列
             {
@@ -77,6 +82,11 @@ public class ModCreativeTabs {
                 ItemStack trapdoorStack = ModBlocks.BLAZE_TRAPDOOR.toStack();
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), ModBlocks.BLAZE_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_BUTTON.toStack(), ModBlocks.BLAZE_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_SIGN_ITEM.toStack(), ModBlocks.BLAZE_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_HANGING_SIGN_ITEM.toStack(), ModBlocks.BLAZE_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_BOAT.toStack(), ModBlocks.BLAZE_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
             // 灵焰系列
             {
@@ -103,6 +113,11 @@ public class ModCreativeTabs {
                 ItemStack trapdoorStack = ModBlocks.SOUL_TRAPDOOR.toStack();
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.SOUL_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.SOUL_PRESSURE_PLATE.toStack(), ModBlocks.SOUL_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.SOUL_BUTTON.toStack(), ModBlocks.SOUL_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.SOUL_SIGN_ITEM.toStack(), ModBlocks.SOUL_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.SOUL_HANGING_SIGN_ITEM.toStack(), ModBlocks.SOUL_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.SOUL_BOAT.toStack(), ModBlocks.SOUL_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
 
 
@@ -119,6 +134,10 @@ public class ModCreativeTabs {
             ItemStack blazeLogStack = ModBlocks.BLAZE_LOG.toStack();
             event.insertAfter(azaleaLogStack, blazeLogStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             event.insertAfter(blazeLogStack, ModBlocks.SOUL_LOG.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(ModBlocks.SOUL_LOG.toStack(), ModBlocks.BLAZE_LEAVES.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(ModBlocks.BLAZE_LEAVES.toStack(), ModBlocks.SOUL_LEAVES.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(ModBlocks.SOUL_LEAVES.toStack(), ModBlocks.BLAZE_SAPLING.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+            event.insertAfter(ModBlocks.BLAZE_SAPLING.toStack(), ModBlocks.SOUL_SAPLING.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             // 焦灰草丛
 //            event.accept(ModBlocks.SCORCHED_GRASS.get());
 //            // 焦灰枝条
