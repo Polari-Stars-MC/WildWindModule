@@ -1,0 +1,12 @@
+{
+  "asset_id": "ww_hfas:entity/mudcrab/cold",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#ww_hfas:entity_spawn/mudcrab/cold"
+      },
+      "priority": 1
+    }
+  ]
+}

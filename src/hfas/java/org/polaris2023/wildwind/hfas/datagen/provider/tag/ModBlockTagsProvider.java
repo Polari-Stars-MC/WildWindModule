@@ -4,16 +4,18 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import net.minecraft.data.tags.TagAppender;
 import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
-import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.tag.ModBlockTags;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -29,22 +31,40 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     public static ModBlockTagsProvider INSTANCE;
 
-    public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public ModBlockTagsProvider(
+            PackOutput output,
+            CompletableFuture<HolderLookup.Provider> lookupProvider
+    ) {
         super(output, lookupProvider, HFASMod.MOD_ID);
         INSTANCE = this;
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        registerWoodLogTag("blaze",
-                ModBlocks.BLAZE_LOG.get(), ModBlocks.BLAZE_WOOD.get(),
-                ModBlocks.STRIPPED_BLAZE_LOG.get(), ModBlocks.STRIPPED_BLAZE_WOOD.get());
-        registerWoodLogTag("soul",
-                ModBlocks.SOUL_LOG.get(), ModBlocks.SOUL_WOOD.get(),
-                ModBlocks.STRIPPED_SOUL_LOG.get(), ModBlocks.STRIPPED_SOUL_WOOD.get());
-        registerWoodLogTag("azalea",
-                ModBlocks.AZALEA_LOG.get(), ModBlocks.AZALEA_WOOD.get(),
-                ModBlocks.STRIPPED_AZALEA_LOG.get(), ModBlocks.STRIPPED_AZALEA_WOOD.get());
+        // ==================== 三套木材独立原木标签 ====================
+        registerWoodLogTag(
+                "blaze",
+                ModBlocks.BLAZE_LOG.get(),
+                ModBlocks.BLAZE_WOOD.get(),
+                ModBlocks.STRIPPED_BLAZE_LOG.get(),
+                ModBlocks.STRIPPED_BLAZE_WOOD.get()
+        );
+
+        registerWoodLogTag(
+                "soul",
+                ModBlocks.SOUL_LOG.get(),
+                ModBlocks.SOUL_WOOD.get(),
+                ModBlocks.STRIPPED_SOUL_LOG.get(),
+                ModBlocks.STRIPPED_SOUL_WOOD.get()
+        );
+
+        registerWoodLogTag(
+                "azalea",
+                ModBlocks.AZALEA_LOG.get(),
+                ModBlocks.AZALEA_WOOD.get(),
+                ModBlocks.STRIPPED_AZALEA_LOG.get(),
+                ModBlocks.STRIPPED_AZALEA_WOOD.get()
+        );
 
         // ==================== 焚烬木标签 ====================
         registerWoodTags(
@@ -120,50 +140,149 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         // ==================== 其他方块标签 ====================
         // 焦灰草方块 - 泥土类
-        addToTag(BlockTags.DIRT, ModBlocks.SCORCHED_GRASS_BLOCK.get(), ModBlocks.SCORCHED_DIRT.get());
+        addToTag(
+                BlockTags.DIRT,
+                ModBlocks.SCORCHED_GRASS_BLOCK.get(),
+                ModBlocks.SCORCHED_DIRT.get()
+        );
 
         // 制箭台 - 工作站
-        addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
+        addToTag(
+                BlockTags.MINEABLE_WITH_AXE,
+                ModBlocks.FLETCHING_TABLE.get()
+        );
+
+        // ==================== 实体生成有关 ====================
+
+        addToTag(
+                ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON,
+                Blocks.MUD,
+                Blocks.MUDDY_MANGROVE_ROOTS
+        );
+
+        addToTag(
+                ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND,
+                Blocks.CLAY,
+                Blocks.MUD,
+                Blocks.DIRT,
+                Blocks.MUDDY_MANGROVE_ROOTS
+        )
+                .addTag(BlockTags.SAND)
+                .addTag(Tags.Blocks.GRAVELS);
+
+        addToTag(
+                ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS,
+                Blocks.MANGROVE_LOG,
+                Blocks.MANGROVE_ROOTS,
+                Blocks.MUDDY_MANGROVE_ROOTS
+        );
     }
 
     /**
      * 注册木质方块标签
      */
     private void registerWoodTags(
-            Block log, Block wood,
-            Block strippedLog, Block strippedWood,
-            Block planks, Block stairs, Block slab,
-            Block fence, Block fenceGate,
-            Block door, Block trapdoor,
-            Block pressurePlate, Block button,
-            Block leaves, Block sapling, Block pottedSapling,
-            Block sign, Block wallSign,
-            Block hangingSign, Block wallHangingSign) {
-
+            Block log,
+            Block wood,
+            Block strippedLog,
+            Block strippedWood,
+            Block planks,
+            Block stairs,
+            Block slab,
+            Block fence,
+            Block fenceGate,
+            Block door,
+            Block trapdoor,
+            Block pressurePlate,
+            Block button,
+            Block leaves,
+            Block sapling,
+            Block pottedSapling,
+            Block sign,
+            Block wallSign,
+            Block hangingSign,
+            Block wallHangingSign
+    ) {
         // 原木标签 - 用于原木类方块
-        addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);
+        addToTag(
+                BlockTags.LOGS,
+                log,
+                wood,
+                strippedLog,
+                strippedWood
+        );
 
-        addToTag(BlockItemTags.LOGS_THAT_BURN.block(), log, wood, strippedLog, strippedWood);
-        addToTag(Tags.Blocks.STRIPPED_LOGS, strippedLog);
-        addToTag(Tags.Blocks.STRIPPED_WOODS, strippedWood);
+        // 可燃烧原木
+        addToTag(
+                BlockItemTags.LOGS_THAT_BURN.block(),
+                log,
+                wood,
+                strippedLog,
+                strippedWood
+        );
+
+        // 去皮原木
+        addToTag(
+                Tags.Blocks.STRIPPED_LOGS,
+                strippedLog
+        );
+
+        // 去皮木
+        addToTag(
+                Tags.Blocks.STRIPPED_WOODS,
+                strippedWood
+        );
 
         // 木板标签
-        addToTag(BlockTags.PLANKS, planks);
+        addToTag(
+                BlockTags.PLANKS,
+                planks
+        );
 
         // 木质楼梯
-        addToTag(BlockTags.WOODEN_STAIRS, stairs);
+        addToTag(
+                BlockTags.WOODEN_STAIRS,
+                stairs
+        );
 
         // 木质台阶
-        addToTag(BlockTags.WOODEN_SLABS, slab);
+        addToTag(
+                BlockTags.WOODEN_SLABS,
+                slab
+        );
 
-        // 木质栅栏：26.2 FenceBlock.isSameFence() 实际检查 minecraft:fences 和 minecraft:wooden_fences
-        addToTag(BlockTags.WOODEN_FENCES, fence);
-        addToTag(BlockTags.FENCES, fence);
-        addToTag(Tags.Blocks.FENCES_WOODEN, fence);
-        addToTag(Tags.Blocks.FENCES, fence);
+        // 木质栅栏：
+        // 26.2 FenceBlock.isSameFence() 实际检查 minecraft:fences 和 minecraft:wooden_fences
+        addToTag(
+                BlockTags.WOODEN_FENCES,
+                fence
+        );
 
-        addToTag(Tags.Blocks.FENCE_GATES_WOODEN, fenceGate);
-        addToTag(BlockTags.FENCE_GATES, fenceGate);
+        addToTag(
+                BlockTags.FENCES,
+                fence
+        );
+
+        addToTag(
+                Tags.Blocks.FENCES_WOODEN,
+                fence
+        );
+
+        addToTag(
+                Tags.Blocks.FENCES,
+                fence
+        );
+
+        // 木质栅栏门
+        addToTag(
+                Tags.Blocks.FENCE_GATES_WOODEN,
+                fenceGate
+        );
+
+        addToTag(
+                BlockTags.FENCE_GATES,
+                fenceGate
+        );
 
         // 栅栏门标签（所有栅栏门）
         // 已默认含有引用"#c:fence_gates/wooden"
@@ -172,67 +291,198 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 //                .add(fenceGate);
 
         // 木质门
-        addToTag(BlockTags.WOODEN_DOORS, door);
+        addToTag(
+                BlockTags.WOODEN_DOORS,
+                door
+        );
 
         // 门标签（所有门）
         // byd这又不引用了
-        addToTag(BlockTags.DOORS, door);
+        addToTag(
+                BlockTags.DOORS,
+                door
+        );
 
         // 活板门
-        addToTag(BlockTags.TRAPDOORS, trapdoor);
+        addToTag(
+                BlockTags.TRAPDOORS,
+                trapdoor
+        );
 
         // 木质活板门
-        addToTag(BlockTags.WOODEN_TRAPDOORS, trapdoor);
+        addToTag(
+                BlockTags.WOODEN_TRAPDOORS,
+                trapdoor
+        );
 
         // 木质压力板
         // 压力板tag已引用
-        addToTag(BlockTags.WOODEN_PRESSURE_PLATES, pressurePlate);
+        addToTag(
+                BlockTags.WOODEN_PRESSURE_PLATES,
+                pressurePlate
+        );
 
         // 木质按钮
-        addToTag(BlockTags.WOODEN_BUTTONS, button);
+        addToTag(
+                BlockTags.WOODEN_BUTTONS,
+                button
+        );
 
         // 按钮标签（所有按钮）
         // 已引用"#minecraft:wooden_buttons"
 //        addToTag(BlockTags.BUTTONS)
 //                .add(button);
 
-        addToTag(BlockTags.STANDING_SIGNS, sign);
-        addToTag(BlockTags.WALL_SIGNS, wallSign);
-        addToTag(BlockTags.ALL_SIGNS, sign, wallSign);
-        addToTag(BlockTags.CEILING_HANGING_SIGNS, hangingSign);
-        addToTag(BlockTags.WALL_HANGING_SIGNS, wallHangingSign);
-        addToTag(BlockTags.ALL_HANGING_SIGNS, hangingSign, wallHangingSign);
+        // 站立告示牌
+        addToTag(
+                BlockTags.STANDING_SIGNS,
+                sign
+        );
+
+        // 墙上告示牌
+        addToTag(
+                BlockTags.WALL_SIGNS,
+                wallSign
+        );
+
+        // 所有普通告示牌
+        addToTag(
+                BlockTags.ALL_SIGNS,
+                sign,
+                wallSign
+        );
+
+        // 天花板悬挂告示牌
+        addToTag(
+                BlockTags.CEILING_HANGING_SIGNS,
+                hangingSign
+        );
+
+        // 墙上悬挂告示牌
+        addToTag(
+                BlockTags.WALL_HANGING_SIGNS,
+                wallHangingSign
+        );
+
+        // 所有悬挂告示牌
+        addToTag(
+                BlockTags.ALL_HANGING_SIGNS,
+                hangingSign,
+                wallHangingSign
+        );
 
         // 树叶
         if (leaves != null) {
-            addToTag(BlockTags.LEAVES, leaves);
+            addToTag(
+                    BlockTags.LEAVES,
+                    leaves
+            );
         }
 
         // 树苗
         if (sapling != null) {
-            addToTag(BlockItemTags.SAPLINGS.block(), sapling);
-            addToTag(BlockTags.OVERWORLD_NATURAL_LOGS, log);
+            /*
+              由addToTag方法桥接。
+              TODO_FINISHED: 该block tag key存在缺失问题，已模仿原版行为进行处理，但无法确定这种缺失是否系系统性删除，无法确保对应功能一定可以正常工作。请求测试阶段重点检查。
+               ——landis, 2026/9/1
+             */
+            addToTag(
+                    BlockItemTags.SAPLINGS.block(),
+                    sapling
+            );
+
+            // 只有拥有自定义树苗的木材才加入自然生成原木标签
+            addToTag(
+                    BlockTags.OVERWORLD_NATURAL_LOGS,
+                    log
+            );
         }
+
+        // 盆栽树苗
         if (pottedSapling != null) {
-            addToTag(BlockTags.FLOWER_POTS, pottedSapling);
+            addToTag(
+                    BlockTags.FLOWER_POTS,
+                    pottedSapling
+            );
         }
 
         // 挖掘工具标签
-        addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button, sign, wallSign, hangingSign, wallHangingSign);
+        addToTag(
+                BlockTags.MINEABLE_WITH_AXE,
+                log,
+                wood,
+                strippedLog,
+                strippedWood,
+                planks,
+                stairs,
+                slab,
+                fence,
+                fenceGate,
+                door,
+                trapdoor,
+                pressurePlate,
+                button,
+                sign,
+                wallSign,
+                hangingSign,
+                wallHangingSign
+        );
 
+        // 注意：
+        // 木材不应加入 NEEDS_STONE_TOOL。
+        // 上游旧逻辑中的 NEEDS_STONE_TOOL 不在这里恢复。
     }
 
-    private void registerWoodLogTag(String name, Block log, Block wood, Block strippedLog, Block strippedWood) {
+    /**
+     * 注册每套木材自己的原木标签。
+     *
+     * 例如：
+     * ww_hfas:blaze_logs
+     * ww_hfas:soul_logs
+     * ww_hfas:azalea_logs
+     */
+    private void registerWoodLogTag(
+            String name,
+            Block log,
+            Block wood,
+            Block strippedLog,
+            Block strippedWood
+    ) {
         TagKey<Block> logsTag = TagKey.create(
                 Registries.BLOCK,
-                Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, name + "_logs")
+                Identifier.fromNamespaceAndPath(
+                        HFASMod.MOD_ID,
+                        name + "_logs"
+                )
         );
-        addToTag(logsTag, log, wood, strippedLog, strippedWood);
+
+        addToTag(
+                logsTag,
+                log,
+                wood,
+                strippedLog,
+                strippedWood
+        );
     }
 
+    /**
+     * 向指定方块标签中添加方块。
+     *
+     * 返回 TagAppender 是为了允许调用位置继续链式使用 addTag()。
+     */
     @SuppressWarnings("all")
-    public void addToTag(TagKey<Block> tag, Block... items) {
-        if (items.length == 0) return;
-        tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
+    public TagAppender<Block> addToTag(
+            TagKey<Block> tag,
+            Block... items
+    ) {
+        if (items.length == 0) {
+            return tag(tag);
+        }
+
+        return tag(tag).addAll(
+                Arrays.stream(items)
+                        .map(Block::builtInRegistryHolder)
+                        .map(Holder.Reference::getKey)
+        );
     }
 }

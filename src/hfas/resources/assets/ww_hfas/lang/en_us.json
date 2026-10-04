@@ -1,4 +1,5 @@
 {
+  "attributes.ww_hfas.extra_item_pickup_range": "Extra Item Pickup Range",
   "block.ww_hfas.azalea_button": "Azalea Button",
   "block.ww_hfas.azalea_door": "Azalea Door",
   "block.ww_hfas.azalea_fence": "Azalea Fence",
@@ -61,10 +62,16 @@
   "block.ww_hfas.stripped_soul_wood": "Stripped Soul Wood",
   "block.ww_hfas.tiny_cactus": "Tiny Cactus",
   "container.fletching_table": "Fletching Table",
+  "entity.ww_hfas.mudcrab": "Mudcrab",
   "item.ww_hfas.azalea_boat": "Azalea Boat",
   "item.ww_hfas.azalea_chest_boat": "Azalea Chest Boat",
   "item.ww_hfas.blaze_boat": "Blaze Boat",
   "item.ww_hfas.blaze_chest_boat": "Blaze Chest Boat",
+  "item.ww_hfas.crab_claw": "Crab Claw",
+  "item.ww_hfas.mudcrab_bucket": "Bucket of Mudcrab",
+  "item.ww_hfas.mudcrab_spawn_egg": "Mudcrab Spawn Egg",
+  "item.ww_hfas.omni_claw": "Omni Craw",
   "item.ww_hfas.soul_boat": "Soul Boat",
-  "item.ww_hfas.soul_chest_boat": "Soul Chest Boat"
+  "item.ww_hfas.soul_chest_boat": "Soul Chest Boat",
+  "mod.wild_wind.name": "Wild Wind"
 }

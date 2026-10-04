@@ -30,6 +30,7 @@ import java.util.function.Supplier;
  * @author baka4n
  * @since 2026/04/15
  */
+//TODO 考虑迁移至registry目录下，或将registry目录下的注册条目分散到各目录下
 public class ModBlocks {
     // 方块注册器
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(HFASMod.MOD_ID);

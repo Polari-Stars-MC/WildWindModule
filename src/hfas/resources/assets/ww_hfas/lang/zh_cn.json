@@ -1,4 +1,5 @@
 {
+  "attributes.ww_hfas.extra_item_pickup_range": "额外物品拾取距离",
   "block.ww_hfas.azalea_button": "杜鹃木按钮",
   "block.ww_hfas.azalea_door": "杜鹃木门",
   "block.ww_hfas.azalea_fence": "杜鹃木栅栏",
@@ -61,10 +62,16 @@
   "block.ww_hfas.stripped_soul_wood": "去皮灵焰木",
   "block.ww_hfas.tiny_cactus": "仙人球",
   "container.fletching_table": "制箭台",
+  "entity.ww_hfas.mudcrab": "泥沼蟹",
   "item.ww_hfas.azalea_boat": "杜鹃木船",
   "item.ww_hfas.azalea_chest_boat": "杜鹃木运输船",
   "item.ww_hfas.blaze_boat": "焚烬木船",
   "item.ww_hfas.blaze_chest_boat": "焚烬木运输船",
+  "item.ww_hfas.crab_claw": "蟹钳",
+  "item.ww_hfas.mudcrab_bucket": "泥沼蟹桶",
+  "item.ww_hfas.mudcrab_spawn_egg": "泥沼蟹刷怪蛋",
+  "item.ww_hfas.omni_claw": "万用蟹钳",
   "item.ww_hfas.soul_boat": "灵焰木船",
-  "item.ww_hfas.soul_chest_boat": "灵焰木运输船"
+  "item.ww_hfas.soul_chest_boat": "灵焰木运输船",
+  "mod.wild_wind.name": "原野之风"
 }

@@ -4,6 +4,7 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
 
 /**
  * 中文语言文件生成器
@@ -96,5 +97,15 @@ public class ZhCnLanguageProvider extends LanguageProvider {
 
         // GUI
         add("container.fletching_table", "制箭台");
+        // 属性
+        add("attributes.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
+
+        //创造模式物品栏
+        add("mod.wild_wind.name", "原野之风");
+
+        ZhEnCombineLangProvider.addLang(this, "zh_cn");
+
     }
+
+
 }

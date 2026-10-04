@@ -18,6 +18,7 @@ import org.polaris2023.wildwind.hfas.block.ModBlocks;
  * @author baka4n
  * @since 2026/04/15
  */
+//TODO 考虑统一迁移至registry下，同时考虑合入自定义tab
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class ModCreativeTabs {
 

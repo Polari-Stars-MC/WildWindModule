@@ -96,5 +96,12 @@ public class EnUsLanguageProvider extends LanguageProvider {
 
         // GUI
         add("container.fletching_table", "Fletching Table");
+        // 属性
+        add("attributes.ww_hfas.extra_item_pickup_range", "Extra Item Pickup Range");
+
+        //创造模式物品栏
+        add("mod.wild_wind.name", "Wild Wind");
+
+        ZhEnCombineLangProvider.addLang(this, "en_us");
     }
 }
