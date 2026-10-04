@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_1",
+  "textures": {
+    "all": "ww_hfas:block/soul_sign",
+    "particle": "ww_hfas:block/soul_planks"
+  }
+}

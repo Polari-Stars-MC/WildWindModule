@@ -8,6 +8,7 @@ import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.random.WeightedList;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
+import net.minecraft.world.level.biome.Biome;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
@@ -53,13 +54,17 @@ public class ModConfiguredFeatures {
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
         HolderGetter<net.minecraft.world.level.block.Block> blocks = context.lookup(Registries.BLOCK);
 
+        HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
+        BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomes);
+
         // 焚烬木树
         register(context, BLAZE_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
                 BlockStateProvider.simple(ModBlocks.BLAZE_LOG.get()),
                 new StraightTrunkPlacer(4, 2, 0),
                 BlockStateProvider.simple(ModBlocks.BLAZE_LEAVES.get()),
                 new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
-                new TwoLayersFeatureSize(1, 0, 1)
+                new TwoLayersFeatureSize(1, 0, 1),
+                belowTrunkProvider
         ).build());
 
         // 灵焰木树
@@ -68,7 +73,8 @@ public class ModConfiguredFeatures {
                 new StraightTrunkPlacer(4, 2, 0),
                 BlockStateProvider.simple(ModBlocks.SOUL_LEAVES.get()),
                 new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
-                new TwoLayersFeatureSize(1, 0, 1)
+                new TwoLayersFeatureSize(1, 0, 1),
+                belowTrunkProvider
         ).build());
 
         // 杜鹃树 - 使用杜鹃木原木和原版杜鹃树叶

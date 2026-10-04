@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ww_hfas:block/blaze_slab"
+    },
+    "type=double": {
+      "model": "ww_hfas:block/blaze_planks"
+    },
+    "type=top": {
+      "model": "ww_hfas:block/blaze_slab_top"
+    }
+  }
+}

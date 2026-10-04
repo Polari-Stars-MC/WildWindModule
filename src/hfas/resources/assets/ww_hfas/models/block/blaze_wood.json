@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/cube_column",
+  "textures": {
+    "end": "ww_hfas:block/blaze_log",
+    "side": "ww_hfas:block/blaze_log"
+  }
+}

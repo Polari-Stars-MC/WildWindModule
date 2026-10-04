@@ -35,6 +35,12 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BLAZE_BUTTON, "Blaze Button");
         addBlock(ModBlocks.BLAZE_LEAVES, "Blaze Leaves");
         addBlock(ModBlocks.BLAZE_SAPLING, "Blaze Sapling");
+        addBlock(ModBlocks.BLAZE_SIGN, "Blaze Sign");
+        addBlock(ModBlocks.BLAZE_WALL_SIGN, "Blaze Sign");
+        addBlock(ModBlocks.BLAZE_HANGING_SIGN, "Blaze Hanging Sign");
+        addBlock(ModBlocks.BLAZE_WALL_HANGING_SIGN, "Blaze Hanging Sign");
+        addItem(ModBlocks.BLAZE_BOAT, "Blaze Boat");
+        addItem(ModBlocks.BLAZE_CHEST_BOAT, "Blaze Chest Boat");
 
         // 灵焰木套件
         addBlock(ModBlocks.SOUL_LOG, "Soul Log");
@@ -52,6 +58,12 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_BUTTON, "Soul Button");
         addBlock(ModBlocks.SOUL_LEAVES, "Soul Leaves");
         addBlock(ModBlocks.SOUL_SAPLING, "Soul Sapling");
+        addBlock(ModBlocks.SOUL_SIGN, "Soul Sign");
+        addBlock(ModBlocks.SOUL_WALL_SIGN, "Soul Sign");
+        addBlock(ModBlocks.SOUL_HANGING_SIGN, "Soul Hanging Sign");
+        addBlock(ModBlocks.SOUL_WALL_HANGING_SIGN, "Soul Hanging Sign");
+        addItem(ModBlocks.SOUL_BOAT, "Soul Boat");
+        addItem(ModBlocks.SOUL_CHEST_BOAT, "Soul Chest Boat");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "Azalea Log");
@@ -67,6 +79,12 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.AZALEA_TRAPDOOR, "Azalea Trapdoor");
         addBlock(ModBlocks.AZALEA_PRESSURE_PLATE, "Azalea Pressure Plate");
         addBlock(ModBlocks.AZALEA_BUTTON, "Azalea Button");
+        addBlock(ModBlocks.AZALEA_SIGN, "Azalea Sign");
+        addBlock(ModBlocks.AZALEA_WALL_SIGN, "Azalea Sign");
+        addBlock(ModBlocks.AZALEA_HANGING_SIGN, "Azalea Hanging Sign");
+        addBlock(ModBlocks.AZALEA_WALL_HANGING_SIGN, "Azalea Hanging Sign");
+        addItem(ModBlocks.AZALEA_BOAT, "Azalea Boat");
+        addItem(ModBlocks.AZALEA_CHEST_BOAT, "Azalea Chest Boat");
 
         // 其他方块
         addBlock(ModBlocks.SCORCHED_GRASS_BLOCK, "Scorched Grass Block");
@@ -78,5 +96,12 @@ public class EnUsLanguageProvider extends LanguageProvider {
 
         // GUI
         add("container.fletching_table", "Fletching Table");
+        // 属性
+        add("attributes.ww_hfas.extra_item_pickup_range", "Extra Item Pickup Range");
+
+        //创造模式物品栏
+        add("mod.wild_wind.name", "Wild Wind");
+
+        ZhEnCombineLangProvider.addLang(this, "en_us");
     }
 }

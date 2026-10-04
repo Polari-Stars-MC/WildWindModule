@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "C": "ww_hfas:crab_claw",
+    "I": "minecraft:copper_ingot"
+  },
+  "pattern": [
+    "ICC",
+    "IIC",
+    "III"
+  ],
+  "result": {
+    "id": "ww_hfas:omni_claw"
+  }
+}

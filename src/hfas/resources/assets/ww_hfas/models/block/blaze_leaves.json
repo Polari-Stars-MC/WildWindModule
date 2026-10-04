@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "ww_hfas:block/blaze_leaves"
+  }
+}

@@ -1,7 +1,10 @@
 package org.polaris2023.wildwind.hfas.block;
 
 import net.minecraft.world.item.BlockItem;
+import net.minecraft.world.item.BoatItem;
+import net.minecraft.world.item.HangingSignItem;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -27,6 +30,7 @@ import java.util.function.Supplier;
  * @author baka4n
  * @since 2026/04/15
  */
+//TODO 考虑迁移至registry目录下，或将registry目录下的注册条目分散到各目录下
 public class ModBlocks {
     // 方块注册器
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(HFASMod.MOD_ID);
@@ -55,82 +59,94 @@ public class ModBlocks {
     // 焚烬木原木
     public static final DeferredBlock<RotatedPillarBlock> BLAZE_LOG = BLOCKS.registerBlock(
             "blaze_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木
     public static final DeferredBlock<RotatedPillarBlock> BLAZE_WOOD = BLOCKS.registerBlock(
             "blaze_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮焚烬木原木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_BLAZE_LOG = BLOCKS.registerBlock(
             "stripped_blaze_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮焚烬木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_BLAZE_WOOD = BLOCKS.registerBlock(
             "stripped_blaze_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木木板
     public static final DeferredBlock<Block> BLAZE_PLANKS = BLOCKS.registerBlock(
             "blaze_planks",
-            p -> new Block(p
+            p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木楼梯
     public static final DeferredBlock<StairBlock> BLAZE_STAIRS = BLOCKS.registerBlock(
             "blaze_stairs",
-            p -> new StairBlock(BLAZE_PLANKS.get().defaultBlockState(), p
+            p -> new FlammableWoodBlocks.Stairs(BLAZE_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木台阶
     public static final DeferredBlock<SlabBlock> BLAZE_SLAB = BLOCKS.registerBlock(
             "blaze_slab",
-            p -> new SlabBlock(p
+            p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木栅栏
     public static final DeferredBlock<FenceBlock> BLAZE_FENCE = BLOCKS.registerBlock(
             "blaze_fence",
-            p -> new FenceBlock(p
+            p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 焚烬木栅栏门
     public static final DeferredBlock<FenceGateBlock> BLAZE_FENCE_GATE = BLOCKS.registerBlock(
             "blaze_fence_gate",
-            p -> new FenceGateBlock(BLAZE_WOOD_TYPE, p
+            p -> new FlammableWoodBlocks.Gate(BLAZE_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava()
+                    .noOcclusion())
     );
 
     // 焚烬木门
@@ -138,8 +154,11 @@ public class ModBlocks {
             "blaze_door",
             p -> new DoorBlock(BLAZE_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY))
     );
 
     // 焚烬木活板门
@@ -147,8 +166,11 @@ public class ModBlocks {
             "blaze_trapdoor",
             p -> new TrapDoorBlock(BLAZE_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .isValidSpawn(Blocks::never)
+                    .ignitedByLava())
     );
 
     // 焚烬木压力板
@@ -169,10 +191,30 @@ public class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    public static final DeferredBlock<StandingSignBlock> BLAZE_SIGN = BLOCKS.registerBlock(
+            "blaze_sign",
+            p -> new StandingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> BLAZE_WALL_SIGN = BLOCKS.registerBlock(
+            "blaze_wall_sign",
+            p -> new WallSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> BLAZE_HANGING_SIGN = BLOCKS.registerBlock(
+            "blaze_hanging_sign",
+            p -> new CeilingHangingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> BLAZE_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "blaze_wall_hanging_sign",
+            p -> new WallHangingSignBlock(BLAZE_WOOD_TYPE, p.mapColor(MapColor.COLOR_ORANGE).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
     // 焚烬木树叶
     public static final DeferredBlock<LeavesBlock> BLAZE_LEAVES = BLOCKS.registerBlock(
             "blaze_leaves",
-            p -> new TintedParticleLeavesBlock(0.01F,p
+            p -> new FlammableWoodBlocks.Leaves(0.01F,p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(0.2F)
                     .sound(SoundType.GRASS)
@@ -191,87 +233,104 @@ public class ModBlocks {
                     .randomTicks())
     );
 
+    public static final DeferredBlock<FlowerPotBlock> POTTED_BLAZE_SAPLING = BLOCKS.registerBlock(
+            "potted_blaze_sapling",
+            p -> new FlowerPotBlock(BLAZE_SAPLING.get(), p.noOcclusion().instabreak())
+    );
+
     // ==================== 灵焰木套件 (soul_wood) ====================
 
     // 灵焰木原木
     public static final DeferredBlock<RotatedPillarBlock> SOUL_LOG = BLOCKS.registerBlock(
             "soul_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木
     public static final DeferredBlock<RotatedPillarBlock> SOUL_WOOD = BLOCKS.registerBlock(
             "soul_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮灵焰木原木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_SOUL_LOG = BLOCKS.registerBlock(
             "stripped_soul_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮灵焰木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_SOUL_WOOD = BLOCKS.registerBlock(
             "stripped_soul_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木木板
     public static final DeferredBlock<Block> SOUL_PLANKS = BLOCKS.registerBlock(
             "soul_planks",
-            p -> new Block(p
+            p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木楼梯
     public static final DeferredBlock<StairBlock> SOUL_STAIRS = BLOCKS.registerBlock(
             "soul_stairs",
-            p -> new StairBlock(SOUL_PLANKS.get().defaultBlockState(), p
+            p -> new FlammableWoodBlocks.Stairs(SOUL_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木台阶
     public static final DeferredBlock<SlabBlock> SOUL_SLAB = BLOCKS.registerBlock(
             "soul_slab",
-            p -> new SlabBlock(p
+            p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木栅栏
     public static final DeferredBlock<FenceBlock> SOUL_FENCE = BLOCKS.registerBlock(
             "soul_fence",
-            p -> new FenceBlock(p
+            p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 灵焰木栅栏门
     public static final DeferredBlock<FenceGateBlock> SOUL_FENCE_GATE = BLOCKS.registerBlock(
             "soul_fence_gate",
-            p -> new FenceGateBlock(SOUL_WOOD_TYPE, p
+            p -> new FlammableWoodBlocks.Gate(SOUL_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava()
+                    .noOcclusion())
     );
 
     // 灵焰木门
@@ -279,8 +338,11 @@ public class ModBlocks {
             "soul_door",
             p -> new DoorBlock(SOUL_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY))
     );
 
     // 灵焰木活板门
@@ -288,8 +350,11 @@ public class ModBlocks {
             "soul_trapdoor",
             p -> new TrapDoorBlock(SOUL_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .isValidSpawn(Blocks::never)
+                    .ignitedByLava())
     );
 
     // 灵焰木压力板
@@ -310,10 +375,30 @@ public class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    public static final DeferredBlock<StandingSignBlock> SOUL_SIGN = BLOCKS.registerBlock(
+            "soul_sign",
+            p -> new StandingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> SOUL_WALL_SIGN = BLOCKS.registerBlock(
+            "soul_wall_sign",
+            p -> new WallSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> SOUL_HANGING_SIGN = BLOCKS.registerBlock(
+            "soul_hanging_sign",
+            p -> new CeilingHangingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> SOUL_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "soul_wall_hanging_sign",
+            p -> new WallHangingSignBlock(SOUL_WOOD_TYPE, p.mapColor(MapColor.COLOR_CYAN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
     // 灵焰木树叶
     public static final DeferredBlock<LeavesBlock> SOUL_LEAVES = BLOCKS.registerBlock(
             "soul_leaves",
-            p -> new TintedParticleLeavesBlock(0.01F, p
+            p -> new FlammableWoodBlocks.Leaves(0.01F, p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(0.2F)
                     .sound(SoundType.GRASS)
@@ -332,87 +417,104 @@ public class ModBlocks {
                     .randomTicks())
     );
 
+    public static final DeferredBlock<FlowerPotBlock> POTTED_SOUL_SAPLING = BLOCKS.registerBlock(
+            "potted_soul_sapling",
+            p -> new FlowerPotBlock(SOUL_SAPLING.get(), p.noOcclusion().instabreak())
+    );
+
     // ==================== 杜鹃木套件 (azalea_wood) ====================
 
     // 杜鹃木原木
     public static final DeferredBlock<RotatedPillarBlock> AZALEA_LOG = BLOCKS.registerBlock(
             "azalea_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木
     public static final DeferredBlock<RotatedPillarBlock> AZALEA_WOOD = BLOCKS.registerBlock(
             "azalea_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮杜鹃木原木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_LOG = BLOCKS.registerBlock(
             "stripped_azalea_log",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 去皮杜鹃木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_WOOD = BLOCKS.registerBlock(
             "stripped_azalea_wood",
-            p -> new RotatedPillarBlock(p
+            p -> new FlammableWoodBlocks.Pillar(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木木板
     public static final DeferredBlock<Block> AZALEA_PLANKS = BLOCKS.registerBlock(
             "azalea_planks",
-            p -> new Block(p
+            p -> new FlammableWoodBlocks.Basic(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木楼梯
     public static final DeferredBlock<StairBlock> AZALEA_STAIRS = BLOCKS.registerBlock(
             "azalea_stairs",
-            p -> new StairBlock(AZALEA_PLANKS.get().defaultBlockState(), p
+            p -> new FlammableWoodBlocks.Stairs(AZALEA_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木台阶
     public static final DeferredBlock<SlabBlock> AZALEA_SLAB = BLOCKS.registerBlock(
             "azalea_slab",
-            p -> new SlabBlock(p
+            p -> new FlammableWoodBlocks.Slab(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木栅栏
     public static final DeferredBlock<FenceBlock> AZALEA_FENCE = BLOCKS.registerBlock(
             "azalea_fence",
-            p -> new FenceBlock(p
+            p -> new FlammableWoodBlocks.Fence(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava())
     );
 
     // 杜鹃木栅栏门
     public static final DeferredBlock<FenceGateBlock> AZALEA_FENCE_GATE = BLOCKS.registerBlock(
             "azalea_fence_gate",
-            p -> new FenceGateBlock(AZALEA_WOOD_TYPE, p
+            p -> new FlammableWoodBlocks.Gate(AZALEA_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .forceSolidOn()
+                    .strength(2.0F, 3.0F)
+                    .sound(SoundType.WOOD)
+                    .ignitedByLava()
+                    .noOcclusion())
     );
 
     // 杜鹃木门
@@ -420,8 +522,11 @@ public class ModBlocks {
             "azalea_door",
             p -> new DoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .ignitedByLava()
+                    .pushReaction(PushReaction.DESTROY))
     );
 
     // 杜鹃木活板门
@@ -429,8 +534,11 @@ public class ModBlocks {
             "azalea_trapdoor",
             p -> new TrapDoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
+                    .strength(3.0F)
+                    .sound(SoundType.WOOD)
+                    .noOcclusion()
+                    .isValidSpawn(Blocks::never)
+                    .ignitedByLava())
     );
 
     // 杜鹃木压力板
@@ -449,6 +557,70 @@ public class ModBlocks {
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
                     .strength(0.5F)
                     .sound(SoundType.WOOD))
+    );
+
+    public static final DeferredBlock<StandingSignBlock> AZALEA_SIGN = BLOCKS.registerBlock(
+            "azalea_sign",
+            p -> new StandingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallSignBlock> AZALEA_WALL_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_sign",
+            p -> new WallSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.WOOD).noOcclusion())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> AZALEA_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_hanging_sign",
+            p -> new CeilingHangingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> AZALEA_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_hanging_sign",
+            p -> new WallHangingSignBlock(AZALEA_WOOD_TYPE, p.mapColor(MapColor.COLOR_LIGHT_GREEN).strength(1.0F).sound(SoundType.HANGING_SIGN).noOcclusion())
+    );
+
+    public static final DeferredItem<SignItem> BLAZE_SIGN_ITEM = ITEMS.registerItem(
+            "blaze_sign",
+            p -> new SignItem(BLAZE_SIGN.get(), BLAZE_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> BLAZE_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "blaze_hanging_sign",
+            p -> new HangingSignItem(BLAZE_HANGING_SIGN.get(), BLAZE_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<SignItem> SOUL_SIGN_ITEM = ITEMS.registerItem(
+            "soul_sign",
+            p -> new SignItem(SOUL_SIGN.get(), SOUL_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> SOUL_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "soul_hanging_sign",
+            p -> new HangingSignItem(SOUL_HANGING_SIGN.get(), SOUL_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<SignItem> AZALEA_SIGN_ITEM = ITEMS.registerItem(
+            "azalea_sign",
+            p -> new SignItem(AZALEA_SIGN.get(), AZALEA_WALL_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+    public static final DeferredItem<HangingSignItem> AZALEA_HANGING_SIGN_ITEM = ITEMS.registerItem(
+            "azalea_hanging_sign",
+            p -> new HangingSignItem(AZALEA_HANGING_SIGN.get(), AZALEA_WALL_HANGING_SIGN.get(), p.stacksTo(16).useBlockDescriptionPrefix())
+    );
+
+    public static final DeferredItem<BoatItem> BLAZE_BOAT = ITEMS.registerItem(
+            "blaze_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.BLAZE_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> BLAZE_CHEST_BOAT = ITEMS.registerItem(
+            "blaze_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.BLAZE_CHEST_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> SOUL_BOAT = ITEMS.registerItem(
+            "soul_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.SOUL_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> SOUL_CHEST_BOAT = ITEMS.registerItem(
+            "soul_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.SOUL_CHEST_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> AZALEA_BOAT = ITEMS.registerItem(
+            "azalea_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.AZALEA_BOAT.get(), p)
+    );
+    public static final DeferredItem<BoatItem> AZALEA_CHEST_BOAT = ITEMS.registerItem(
+            "azalea_chest_boat", p -> new BoatItem(org.polaris2023.wildwind.hfas.entity.ModBoatEntities.AZALEA_CHEST_BOAT.get(), p)
     );
 
     // ==================== 其他方块 ====================
