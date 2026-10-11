@@ -33,6 +33,10 @@ public class HFASMod {
         // 注册属性
         ModAttributes.register(bus);
 
+        // 注册状态效果、药水
+        ModMobEffects.register(bus);
+        ModPotions.register(bus);
+
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
 

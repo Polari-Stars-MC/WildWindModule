@@ -82,6 +82,17 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         // 属性
         add("attributes.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
 
+        // 延展（reach）效果与药水
+        add("effect.ww_hfas.reach", "延展");
+        add("item.minecraft.potion.effect.reach", "延展药水");
+        add("item.minecraft.splash_potion.effect.reach", "喷溅型延展药水");
+        add("item.minecraft.lingering_potion.effect.reach", "滞留型延展药水");
+        add("item.minecraft.tipped_arrow.effect.reach", "延展之箭");
+        add("item.minecraft.potion.effect.long_reach", "延展药水");
+        add("item.minecraft.splash_potion.effect.long_reach", "喷溅型延展药水");
+        add("item.minecraft.lingering_potion.effect.long_reach", "滞留型延展药水");
+        add("item.minecraft.tipped_arrow.effect.long_reach", "延展之箭");
+
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");
 
