@@ -93,6 +93,10 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         add("item.minecraft.lingering_potion.effect.long_reach", "滞留型延展药水");
         add("item.minecraft.tipped_arrow.effect.long_reach", "延展之箭");
 
+        // 食人鱼音效字幕
+        add("subtitles.entity.piranha.attack", "食人鱼袭击");
+        add("subtitles.entity.piranha.death", "食人鱼死亡");
+
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");
 

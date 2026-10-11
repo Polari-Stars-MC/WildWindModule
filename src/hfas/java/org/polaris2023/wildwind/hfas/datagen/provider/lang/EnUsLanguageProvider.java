@@ -92,6 +92,10 @@ public class EnUsLanguageProvider extends LanguageProvider {
         add("item.minecraft.lingering_potion.effect.long_reach", "Lingering Potion of Reach");
         add("item.minecraft.tipped_arrow.effect.long_reach", "Arrow of Reach");
 
+        // Piranha sound subtitles
+        add("subtitles.entity.piranha.attack", "Piranha attacks");
+        add("subtitles.entity.piranha.death", "Piranha dies");
+
         //创造模式物品栏
         add("mod.wild_wind.name", "Wild Wind");
 

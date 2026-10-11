@@ -47,5 +47,8 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
                 .add(Biomes.SNOWY_TAIGA)
                 .add(Biomes.SNOWY_BEACH)
                 .addTag(BiomeTags.IS_END);
+        tag(ModBiomeTags.EntityGen.PIRANHA_SPAWNS)
+                .add(Biomes.JUNGLE)
+                .addTag(Tags.Biomes.IS_SWAMP);
     }
 }

@@ -19,6 +19,10 @@ public interface ModBiomeTags {
 		 * 会生成冷色变种泥沼蟹的群系标签喵~
 		 */
 		TagKey<Biome> MUDCRABS_COLD = create("entity_spawn/mudcrab/cold");
+		/**
+		 * 会生成食人鱼的群系标签喵~
+		 */
+		TagKey<Biome> PIRANHA_SPAWNS = create("entity_spawn/piranha");
 	}
 
 	/**

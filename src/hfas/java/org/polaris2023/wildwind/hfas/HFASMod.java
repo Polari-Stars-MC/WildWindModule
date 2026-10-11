@@ -37,6 +37,9 @@ public class HFASMod {
         ModMobEffects.register(bus);
         ModPotions.register(bus);
 
+        // 注册食人鱼音效
+        ModSoundEvents.register(bus);
+
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
 
