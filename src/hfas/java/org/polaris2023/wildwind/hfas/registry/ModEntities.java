@@ -8,6 +8,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.client.eventsub.EntitiesClientHandler;
 import org.polaris2023.wildwind.hfas.entity.animal.Mudcrab;
+import org.polaris2023.wildwind.hfas.entity.animal.Piranha;
 
 
 public class ModEntities {
@@ -21,6 +22,12 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Mudcrab>> MUDCRAB =
             ENTITY_TYPES.registerEntityType("mudcrab", Mudcrab::new, MobCategory.WATER_CREATURE,
                     builder -> builder.sized(0.5F, 0.55F).clientTrackingRange(8)
+            );
+
+    //食人鱼实体类型
+    public static final DeferredHolder<EntityType<?>, EntityType<Piranha>> PIRANHA =
+            ENTITY_TYPES.registerEntityType("piranha", Piranha::new, MobCategory.WATER_AMBIENT,
+                    builder -> builder.sized(0.7F, 0.4F).eyeHeight(0.26F)
             );
 
     /**

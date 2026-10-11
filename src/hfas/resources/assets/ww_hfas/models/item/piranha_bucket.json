@@ -1,0 +1,6 @@
+﻿{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "ww_hfas:item/piranha_bucket"
+  }
+}

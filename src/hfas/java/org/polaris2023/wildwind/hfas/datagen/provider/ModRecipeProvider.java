@@ -4,10 +4,12 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.RecipeOutput;
 import net.minecraft.data.recipes.ShapedRecipeBuilder;
+import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.RecipeCategory;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
 import net.minecraft.world.item.crafting.Recipe;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
@@ -37,6 +39,10 @@ public class ModRecipeProvider extends RecipeProvider {
     protected void buildRecipes() {
         // 生成所有箭矢组合配方
         generateArrowRecipes();
+        // 生食人鱼 -> 熟食人鱼（熔炉）
+        SimpleCookingRecipeBuilder.smelting(Ingredient.of(ModItems.PIRANHA.get()), RecipeCategory.FOOD, CookingBookCategory.FOOD, ModItems.COOKED_PIRANHA.get(), 0.35F, 200)
+                .unlockedBy("has_" + ModItems.PIRANHA.getId().getPath(), this.has(ModItems.PIRANHA.get()))
+                .save(this.output);
         // 万用蟹钳：铜锭x6 + 蟹钳x3
         ShapedRecipeBuilder.shaped(this.items, RecipeCategory.TOOLS, ModItems.OMNI_CLAW.get())
                 .define('I', Items.COPPER_INGOT)
