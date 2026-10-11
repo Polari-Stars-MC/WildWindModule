@@ -19,6 +19,7 @@ import net.minecraft.world.level.storage.loot.providers.number.ConstantValue;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import org.polaris2023.wildwind.hfas.datagen.provider.loot.BlockLoot;
 import org.polaris2023.wildwind.hfas.registry.ModEntities;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
 
 import java.util.List;
 import java.util.Set;
@@ -52,6 +53,28 @@ public class ModLootProvider extends LootTableProvider {
         @Override
         public void generate() {
             this.emptyLoot(ModEntities.MUDCRAB);
+            this.add(
+                    ModEntities.PIRANHA.get(),
+                    LootTable.lootTable()
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(ConstantValue.exactly(1.0F))
+                                            .add(LootItem.lootTableItem(ModItems.PIRANHA.get())
+                                                    .apply(SmeltItemFunction.smelted().when(this.shouldSmeltLoot())))
+                            )
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(ConstantValue.exactly(1.0F))
+                                            .add(LootItem.lootTableItem(Items.BONE_MEAL))
+                                            .when(LootItemRandomChanceCondition.randomChance(0.05F))
+                            )
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(ConstantValue.exactly(1.0F))
+                                            .add(LootItem.lootTableItem(ModItems.FANG.get()))
+                                            .when(LootItemRandomChanceCondition.randomChance(0.05F))
+                            )
+            );
         }
 
         private <T extends Entity> void emptyLoot(DeferredHolder<EntityType<?>, EntityType<T>> entityType) {

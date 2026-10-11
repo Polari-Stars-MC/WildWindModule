@@ -16,6 +16,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.registry.ModItems;
 import org.polaris2023.wildwind.hfas.tag.ModItemTags;
 
 import java.util.Arrays;
@@ -102,6 +103,17 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         tag(Tags.Items.ANIMAL_FOODS)
                 .addTag(ModItemTags.MUDCRAB_FOOD);
         addToTag(ModItemTags.MUDCRAB_FOOD, Items.SPIDER_EYE);
+
+        // ==================== 食人鱼相关物品标签 ====================
+        // 猫、豹猫以生食人鱼为食
+        addToTag(ItemTags.CAT_FOOD, ModItems.PIRANHA.get());
+        addToTag(ItemTags.OCELOT_FOOD, ModItems.PIRANHA.get());
+        // 狼以生/熟食人鱼为食
+        addToTag(ItemTags.WOLF_FOOD, ModItems.PIRANHA.get(), ModItems.COOKED_PIRANHA.get());
+        // 原版鱼类标签
+        addToTag(ItemTags.FISHES, ModItems.PIRANHA.get(), ModItems.COOKED_PIRANHA.get());
+        // 熟鱼食物标签
+        addToTag(Tags.Items.FOODS_COOKED_FISH, ModItems.COOKED_PIRANHA.get());
     }
 
     /**

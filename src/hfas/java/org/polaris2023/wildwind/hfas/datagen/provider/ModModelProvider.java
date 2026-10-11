@@ -120,6 +120,9 @@ public class ModModelProvider extends ModelProvider {
         );
         simpleItem(itemModels, ModItems.MUDCRAB_BUCKET);
         simpleItem(itemModels, ModItems.MUDCRAB_SPAWN_EGG);
+
+        // ==================== 食人鱼 ====================
+        registerPiranhaModels(itemModels);
     }
 
     /**
@@ -170,5 +173,13 @@ public class ModModelProvider extends ModelProvider {
 
     private void simpleItem(ItemModelGenerators itemModels, Supplier<? extends Item> item){
         itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM);
+    }
+
+    private void registerPiranhaModels(ItemModelGenerators itemModels) {
+        simpleItem(itemModels, ModItems.PIRANHA);
+        simpleItem(itemModels, ModItems.COOKED_PIRANHA);
+        simpleItem(itemModels, ModItems.PIRANHA_BUCKET);
+        simpleItem(itemModels, ModItems.PIRANHA_SPAWN_EGG);
+        simpleItem(itemModels, ModItems.FANG);
     }
 }

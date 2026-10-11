@@ -40,6 +40,11 @@ public class ZhEnCombineLangProvider {
         addItem(ModItems.MUDCRAB_BUCKET, "Bucket of Mudcrab", "泥沼蟹桶");
         addItem(ModItems.CRAB_CLAW, "Crab Claw", "蟹钳");
         addItem(ModItems.OMNI_CLAW, "Omni Craw", "万用蟹钳");
+        addItem(ModItems.PIRANHA_SPAWN_EGG, "Piranha Spawn Egg", "食人鱼刷怪蛋");
+        addItem(ModItems.PIRANHA, "Raw Piranha", "生食人鱼");
+        addItem(ModItems.COOKED_PIRANHA, "Cooked Piranha", "熟食人鱼");
+        addItem(ModItems.FANG, "Fang", "尖牙");
+        addItem(ModItems.PIRANHA_BUCKET, "Bucket of Piranha", "食人鱼桶");
     }
 
     private static void addBlocks() {
@@ -47,6 +52,7 @@ public class ZhEnCombineLangProvider {
 
     private static void addEntities() {
         addEntity(ModEntities.MUDCRAB, "Mudcrab", "泥沼蟹");
+        addEntity(ModEntities.PIRANHA, "Piranha", "食人鱼");
     }
 
     private static void addItem(Supplier<? extends Item> s, String en, String zh){
