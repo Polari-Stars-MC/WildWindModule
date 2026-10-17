@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.hfas.datagen.provider.lang;
+﻿package org.polaris2023.wildwind.hfas.datagen.provider.lang;
 
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -20,39 +20,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        // 焚烬木套件
-        addBlock(ModBlocks.BLAZE_LOG, "焚烬木原木");
-        addBlock(ModBlocks.BLAZE_WOOD, "焚烬木");
-        addBlock(ModBlocks.STRIPPED_BLAZE_LOG, "去皮焚烬木原木");
-        addBlock(ModBlocks.STRIPPED_BLAZE_WOOD, "去皮焚烬木");
-        addBlock(ModBlocks.BLAZE_PLANKS, "焚烬木木板");
-        addBlock(ModBlocks.BLAZE_STAIRS, "焚烬木楼梯");
-        addBlock(ModBlocks.BLAZE_SLAB, "焚烬木台阶");
-        addBlock(ModBlocks.BLAZE_FENCE, "焚烬木栅栏");
-        addBlock(ModBlocks.BLAZE_FENCE_GATE, "焚烬木栅栏门");
-        addBlock(ModBlocks.BLAZE_DOOR, "焚烬木门");
-        addBlock(ModBlocks.BLAZE_TRAPDOOR, "焚烬木活板门");
-        addBlock(ModBlocks.BLAZE_PRESSURE_PLATE, "焚烬木压力板");
-        addBlock(ModBlocks.BLAZE_BUTTON, "焚烬木按钮");
-        addBlock(ModBlocks.BLAZE_LEAVES, "焚烬木树叶");
-        addBlock(ModBlocks.BLAZE_SAPLING, "焚烬木树苗");
 
-        // 灵焰木套件
-        addBlock(ModBlocks.SOUL_LOG, "灵焰木原木");
-        addBlock(ModBlocks.SOUL_WOOD, "灵焰木");
-        addBlock(ModBlocks.STRIPPED_SOUL_LOG, "去皮灵焰木原木");
-        addBlock(ModBlocks.STRIPPED_SOUL_WOOD, "去皮灵焰木");
-        addBlock(ModBlocks.SOUL_PLANKS, "灵焰木木板");
-        addBlock(ModBlocks.SOUL_STAIRS, "灵焰木楼梯");
-        addBlock(ModBlocks.SOUL_SLAB, "灵焰木台阶");
-        addBlock(ModBlocks.SOUL_FENCE, "灵焰木栅栏");
-        addBlock(ModBlocks.SOUL_FENCE_GATE, "灵焰木栅栏门");
-        addBlock(ModBlocks.SOUL_DOOR, "灵焰木门");
-        addBlock(ModBlocks.SOUL_TRAPDOOR, "灵焰木活板门");
-        addBlock(ModBlocks.SOUL_PRESSURE_PLATE, "灵焰木压力板");
-        addBlock(ModBlocks.SOUL_BUTTON, "灵焰木按钮");
-        addBlock(ModBlocks.SOUL_LEAVES, "灵焰木树叶");
-        addBlock(ModBlocks.SOUL_SAPLING, "灵焰木树苗");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "杜鹃木原木");
@@ -106,3 +74,34 @@ public class ZhCnLanguageProvider extends LanguageProvider {
 
 
 }
+
+        addBlock(ModBlocks.CINDER_LOG, "����ľԭľ");
+        addBlock(ModBlocks.CINDER_WOOD, "����ľ");
+        addBlock(ModBlocks.STRIPPED_CINDER_LOG, "ȥƤ����ľԭľ");
+        addBlock(ModBlocks.STRIPPED_CINDER_WOOD, "ȥƤ����ľ");
+        addBlock(ModBlocks.CINDER_PLANKS, "����ľľ��");
+        addBlock(ModBlocks.CINDER_STAIRS, "����ľ¥��");
+        addBlock(ModBlocks.CINDER_SLAB, "����ľ̨��");
+        addBlock(ModBlocks.CINDER_FENCE, "����ľդ��");
+        addBlock(ModBlocks.CINDER_FENCE_GATE, "����ľդ����");
+        addBlock(ModBlocks.CINDER_DOOR, "����ľ��");
+        addBlock(ModBlocks.CINDER_TRAPDOOR, "����ľ�����");
+        addBlock(ModBlocks.CINDER_PRESSURE_PLATE, "����ľѹ����");
+        addBlock(ModBlocks.CINDER_BUTTON, "����ľ��ť");
+        addBlock(ModBlocks.CINDER_LEAVES, "����ľ��Ҷ");
+        addBlock(ModBlocks.CINDER_SAPLING, "����ľ����");
+        addBlock(ModBlocks.EMBER_LOG, "���ľԭľ");
+        addBlock(ModBlocks.EMBER_WOOD, "���ľ");
+        addBlock(ModBlocks.STRIPPED_EMBER_LOG, "ȥƤ���ľԭľ");
+        addBlock(ModBlocks.STRIPPED_EMBER_WOOD, "ȥƤ���ľ");
+        addBlock(ModBlocks.EMBER_PLANKS, "���ľľ��");
+        addBlock(ModBlocks.EMBER_STAIRS, "���ľ¥��");
+        addBlock(ModBlocks.EMBER_SLAB, "���ľ̨��");
+        addBlock(ModBlocks.EMBER_FENCE, "���ľդ��");
+        addBlock(ModBlocks.EMBER_FENCE_GATE, "���ľդ����");
+        addBlock(ModBlocks.EMBER_DOOR, "���ľ��");
+        addBlock(ModBlocks.EMBER_TRAPDOOR, "���ľ�����");
+        addBlock(ModBlocks.EMBER_PRESSURE_PLATE, "���ľѹ����");
+        addBlock(ModBlocks.EMBER_BUTTON, "���ľ��ť");
+        addBlock(ModBlocks.EMBER_LEAVES, "���ľ��Ҷ");
+        addBlock(ModBlocks.EMBER_SAPLING, "���ľ����");

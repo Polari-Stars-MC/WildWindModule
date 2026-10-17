@@ -25,10 +25,7 @@ public class ModDataMapsProvider extends DataMapProvider {
         builder(NeoForgeDataMaps.STRIPPABLES)
                 .add(ModBlocks.AZALEA_LOG.getKey(), new Strippable(ModBlocks.STRIPPED_AZALEA_LOG.get()), false)
                 .add(ModBlocks.AZALEA_WOOD.getKey(), new Strippable(ModBlocks.STRIPPED_AZALEA_WOOD.get()), false)
-                .add(ModBlocks.BLAZE_LOG.getKey(), new Strippable(ModBlocks.STRIPPED_BLAZE_LOG.get()), false)
-                .add(ModBlocks.BLAZE_WOOD.getKey(), new Strippable(ModBlocks.STRIPPED_BLAZE_WOOD.get()), false)
-                .add(ModBlocks.SOUL_LOG.getKey(), new Strippable(ModBlocks.STRIPPED_SOUL_LOG.get()), false)
-                .add(ModBlocks.SOUL_WOOD.getKey(), new Strippable(ModBlocks.STRIPPED_SOUL_WOOD.get()), false)
+
         ;
     }
 }

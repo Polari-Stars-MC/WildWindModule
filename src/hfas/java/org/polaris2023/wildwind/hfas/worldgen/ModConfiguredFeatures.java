@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.hfas.worldgen;
+﻿﻿package org.polaris2023.wildwind.hfas.worldgen;
 
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
@@ -35,20 +35,21 @@ import java.util.Optional;
  */
 public class ModConfiguredFeatures {
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BLAZE_TREE_KEY = ResourceKey.create(
-            Registries.CONFIGURED_FEATURE,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "blaze_tree")
-    );
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SOUL_TREE_KEY = ResourceKey.create(
-            Registries.CONFIGURED_FEATURE,
-            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "soul_tree")
-    );
 
     // 杜鹃树 - 使用杜鹃木原木
     public static final ResourceKey<ConfiguredFeature<?, ?>> AZALEA_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
             Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "azalea_tree")
+    );
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_TREE_KEY = ResourceKey.create(
+            Registries.CONFIGURED_FEATURE,
+            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "cinder_tree")
+    );
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EMBER_TREE_KEY = ResourceKey.create(
+            Registries.CONFIGURED_FEATURE,
+            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "ember_tree")
     );
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
@@ -57,25 +58,7 @@ public class ModConfiguredFeatures {
         HolderGetter<Biome> biomes = context.lookup(Registries.BIOME);
         BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomes);
 
-        // 焚烬木树
-        register(context, BLAZE_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.BLAZE_LOG.get()),
-                new StraightTrunkPlacer(4, 2, 0),
-                BlockStateProvider.simple(ModBlocks.BLAZE_LEAVES.get()),
-                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
-                new TwoLayersFeatureSize(1, 0, 1),
-                belowTrunkProvider
-        ).build());
 
-        // 灵焰木树
-        register(context, SOUL_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
-                BlockStateProvider.simple(ModBlocks.SOUL_LOG.get()),
-                new StraightTrunkPlacer(4, 2, 0),
-                BlockStateProvider.simple(ModBlocks.SOUL_LEAVES.get()),
-                new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
-                new TwoLayersFeatureSize(1, 0, 1),
-                belowTrunkProvider
-        ).build());
 
         // 杜鹃树 - 使用杜鹃木原木和原版杜鹃树叶
         register(context, AZALEA_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
@@ -103,3 +86,19 @@ public class ModConfiguredFeatures {
         context.register(key, new ConfiguredFeature<>(feature, config));
     }
 }
+
+        // ����ľ��
+        register(context, CINDER_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.CINDER_LOG.get()),
+                new net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer(4, 2, 0),
+                new org.polaris2023.wildwind.hfas.worldgen.feature.foliageplacers.AcaciaFoliagePlacer(net.minecraft.util.valueproviders.UniformInt.of(2, 3), net.minecraft.util.valueproviders.ConstantInt.of(0)),
+                new net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize(1, 0, 1)
+        ).ignoreVines().build());
+
+        // ���ľ��
+        register(context, EMBER_TREE_KEY, Feature.TREE, new TreeConfiguration.TreeConfigurationBuilder(
+                BlockStateProvider.simple(ModBlocks.EMBER_LOG.get()),
+                new net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer(5, 2, 0),
+                new org.polaris2023.wildwind.hfas.worldgen.feature.foliageplacers.PalmFoliagePlacer(net.minecraft.util.valueproviders.ConstantInt.of(2), net.minecraft.util.valueproviders.ConstantInt.of(0), 2),
+                new net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize(1, 0, 2)
+        ).ignoreVines().dirt(BlockStateProvider.simple(ModBlocks.SCORCHED_DIRT.get())).build());

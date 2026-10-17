@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.hfas.datagen.provider.lang;
+﻿package org.polaris2023.wildwind.hfas.datagen.provider.lang;
 
 import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
@@ -19,39 +19,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
 
     @Override
     protected void addTranslations() {
-        // 焚烬木套件
-        addBlock(ModBlocks.BLAZE_LOG, "Blaze Log");
-        addBlock(ModBlocks.BLAZE_WOOD, "Blaze Wood");
-        addBlock(ModBlocks.STRIPPED_BLAZE_LOG, "Stripped Blaze Log");
-        addBlock(ModBlocks.STRIPPED_BLAZE_WOOD, "Stripped Blaze Wood");
-        addBlock(ModBlocks.BLAZE_PLANKS, "Blaze Planks");
-        addBlock(ModBlocks.BLAZE_STAIRS, "Blaze Stairs");
-        addBlock(ModBlocks.BLAZE_SLAB, "Blaze Slab");
-        addBlock(ModBlocks.BLAZE_FENCE, "Blaze Fence");
-        addBlock(ModBlocks.BLAZE_FENCE_GATE, "Blaze Fence Gate");
-        addBlock(ModBlocks.BLAZE_DOOR, "Blaze Door");
-        addBlock(ModBlocks.BLAZE_TRAPDOOR, "Blaze Trapdoor");
-        addBlock(ModBlocks.BLAZE_PRESSURE_PLATE, "Blaze Pressure Plate");
-        addBlock(ModBlocks.BLAZE_BUTTON, "Blaze Button");
-        addBlock(ModBlocks.BLAZE_LEAVES, "Blaze Leaves");
-        addBlock(ModBlocks.BLAZE_SAPLING, "Blaze Sapling");
 
-        // 灵焰木套件
-        addBlock(ModBlocks.SOUL_LOG, "Soul Log");
-        addBlock(ModBlocks.SOUL_WOOD, "Soul Wood");
-        addBlock(ModBlocks.STRIPPED_SOUL_LOG, "Stripped Soul Log");
-        addBlock(ModBlocks.STRIPPED_SOUL_WOOD, "Stripped Soul Wood");
-        addBlock(ModBlocks.SOUL_PLANKS, "Soul Planks");
-        addBlock(ModBlocks.SOUL_STAIRS, "Soul Stairs");
-        addBlock(ModBlocks.SOUL_SLAB, "Soul Slab");
-        addBlock(ModBlocks.SOUL_FENCE, "Soul Fence");
-        addBlock(ModBlocks.SOUL_FENCE_GATE, "Soul Fence Gate");
-        addBlock(ModBlocks.SOUL_DOOR, "Soul Door");
-        addBlock(ModBlocks.SOUL_TRAPDOOR, "Soul Trapdoor");
-        addBlock(ModBlocks.SOUL_PRESSURE_PLATE, "Soul Pressure Plate");
-        addBlock(ModBlocks.SOUL_BUTTON, "Soul Button");
-        addBlock(ModBlocks.SOUL_LEAVES, "Soul Leaves");
-        addBlock(ModBlocks.SOUL_SAPLING, "Soul Sapling");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "Azalea Log");
@@ -102,3 +70,34 @@ public class EnUsLanguageProvider extends LanguageProvider {
         ZhEnCombineLangProvider.addLang(this, "en_us");
     }
 }
+
+        addBlock(ModBlocks.CINDER_LOG, "Cinder Log");
+        addBlock(ModBlocks.CINDER_WOOD, "Cinder Wood");
+        addBlock(ModBlocks.STRIPPED_CINDER_LOG, "Stripped Cinder Log");
+        addBlock(ModBlocks.STRIPPED_CINDER_WOOD, "Stripped Cinder Wood");
+        addBlock(ModBlocks.CINDER_PLANKS, "Cinder Planks");
+        addBlock(ModBlocks.CINDER_STAIRS, "Cinder Stairs");
+        addBlock(ModBlocks.CINDER_SLAB, "Cinder Slab");
+        addBlock(ModBlocks.CINDER_FENCE, "Cinder Fence");
+        addBlock(ModBlocks.CINDER_FENCE_GATE, "Cinder Fence Gate");
+        addBlock(ModBlocks.CINDER_DOOR, "Cinder Door");
+        addBlock(ModBlocks.CINDER_TRAPDOOR, "Cinder Trapdoor");
+        addBlock(ModBlocks.CINDER_PRESSURE_PLATE, "Cinder Pressure Plate");
+        addBlock(ModBlocks.CINDER_BUTTON, "Cinder Button");
+        addBlock(ModBlocks.CINDER_LEAVES, "Cinder Leaves");
+        addBlock(ModBlocks.CINDER_SAPLING, "Cinder Sapling");
+        addBlock(ModBlocks.EMBER_LOG, "Ember Log");
+        addBlock(ModBlocks.EMBER_WOOD, "Ember Wood");
+        addBlock(ModBlocks.STRIPPED_EMBER_LOG, "Stripped Ember Log");
+        addBlock(ModBlocks.STRIPPED_EMBER_WOOD, "Stripped Ember Wood");
+        addBlock(ModBlocks.EMBER_PLANKS, "Ember Planks");
+        addBlock(ModBlocks.EMBER_STAIRS, "Ember Stairs");
+        addBlock(ModBlocks.EMBER_SLAB, "Ember Slab");
+        addBlock(ModBlocks.EMBER_FENCE, "Ember Fence");
+        addBlock(ModBlocks.EMBER_FENCE_GATE, "Ember Fence Gate");
+        addBlock(ModBlocks.EMBER_DOOR, "Ember Door");
+        addBlock(ModBlocks.EMBER_TRAPDOOR, "Ember Trapdoor");
+        addBlock(ModBlocks.EMBER_PRESSURE_PLATE, "Ember Pressure Plate");
+        addBlock(ModBlocks.EMBER_BUTTON, "Ember Button");
+        addBlock(ModBlocks.EMBER_LEAVES, "Ember Leaves");
+        addBlock(ModBlocks.EMBER_SAPLING, "Ember Sapling");

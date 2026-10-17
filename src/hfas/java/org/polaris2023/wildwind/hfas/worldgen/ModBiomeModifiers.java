@@ -29,9 +29,7 @@ import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
  */
 public class ModBiomeModifiers {
 
-    public static final ResourceKey<BiomeModifier> ADD_BLAZE_TREE = createKey("add_blaze_tree");
 
-    public static final ResourceKey<BiomeModifier> ADD_SOUL_TREE = createKey("add_soul_tree");
 
     // 杜鹃树生成
     public static final ResourceKey<BiomeModifier> ADD_AZALEA_TREE = createKey("add_azalea_tree");
@@ -49,19 +47,7 @@ public class ModBiomeModifiers {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
-        // 焚烬木树生成 - 在下界废土群系
-        context.register(ADD_BLAZE_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
-                HolderSet.direct(biomes.getOrThrow(Biomes.NETHER_WASTES)),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.BLAZE_TREE_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION
-        ));
 
-        // 灵焰木树生成 - 在灵魂沙峡谷群系
-        context.register(ADD_SOUL_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
-                HolderSet.direct(biomes.getOrThrow(Biomes.SOUL_SAND_VALLEY)),
-                HolderSet.direct(placedFeatures.getOrThrow(ModPlacedFeatures.SOUL_TREE_PLACED_KEY)),
-                GenerationStep.Decoration.VEGETAL_DECORATION
-        ));
 
         // 移除原版杜鹃树 - 在繁茂洞穴群系
         context.register(REMOVE_VANILLA_AZALEA_TREE, new BiomeModifiers.RemoveFeaturesBiomeModifier(

@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.hfas.block;
+﻿﻿﻿﻿﻿﻿﻿package org.polaris2023.wildwind.hfas.block;
 
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
@@ -36,58 +36,18 @@ public class ModBlocks {
 
     // ==================== 方块类型定义 ====================
 
-    // 焚烬木方块类型
-    public static final BlockSetType BLAZE_BLOCK_SET = BlockSetType.register(new BlockSetType("blaze"));
-    // 焚烬木木材类型
-    public static final WoodType BLAZE_WOOD_TYPE = WoodType.register(new WoodType("blaze", BLAZE_BLOCK_SET));
 
-    // 灵焰木方块类型
-    public static final BlockSetType SOUL_BLOCK_SET = BlockSetType.register(new BlockSetType("soul"));
-    // 灵焰木木材类型
-    public static final WoodType SOUL_WOOD_TYPE = WoodType.register(new WoodType("soul", SOUL_BLOCK_SET));
 
     // 杜鹃木方块类型
     public static final BlockSetType AZALEA_BLOCK_SET = BlockSetType.register(new BlockSetType("azalea"));
     // 杜鹃木木材类型
     public static final WoodType AZALEA_WOOD_TYPE = WoodType.register(new WoodType("azalea", AZALEA_BLOCK_SET));
 
-    // ==================== 焚烬木套件 (blaze_wood) ====================
 
-    // 焚烬木原木
-    public static final DeferredBlock<RotatedPillarBlock> BLAZE_LOG = BLOCKS.registerBlock(
-            "blaze_log",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
 
-    // 焚烬木
-    public static final DeferredBlock<RotatedPillarBlock> BLAZE_WOOD = BLOCKS.registerBlock(
-            "blaze_wood",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
 
-    // 去皮焚烬木原木
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_BLAZE_LOG = BLOCKS.registerBlock(
-            "stripped_blaze_log",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
 
-    // 去皮焚烬木
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_BLAZE_WOOD = BLOCKS.registerBlock(
-            "stripped_blaze_wood",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_ORANGE)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
+
 
     // 焚烬木木板
     public static final DeferredBlock<Block> BLAZE_PLANKS = BLOCKS.registerBlock(
@@ -192,25 +152,7 @@ public class ModBlocks {
                     .randomTicks())
     );
 
-    // ==================== 灵焰木套件 (soul_wood) ====================
 
-    // 灵焰木原木
-    public static final DeferredBlock<RotatedPillarBlock> SOUL_LOG = BLOCKS.registerBlock(
-            "soul_log",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
-
-    // 灵焰木
-    public static final DeferredBlock<RotatedPillarBlock> SOUL_WOOD = BLOCKS.registerBlock(
-            "soul_wood",
-            p -> new RotatedPillarBlock(p
-                    .mapColor(MapColor.COLOR_CYAN)
-                    .strength(2.0F)
-                    .sound(SoundType.WOOD))
-    );
 
     // 去皮灵焰木原木
     public static final DeferredBlock<RotatedPillarBlock> STRIPPED_SOUL_LOG = BLOCKS.registerBlock(
@@ -451,6 +393,283 @@ public class ModBlocks {
                     .strength(0.5F)
                     .sound(SoundType.WOOD))
     );
+    // ����ľԭľ
+    public static final DeferredBlock<RotatedPillarBlock> CINDER_LOG = BLOCKS.registerBlock(
+            "cinder_log",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ
+    public static final DeferredBlock<RotatedPillarBlock> CINDER_WOOD = BLOCKS.registerBlock(
+            "cinder_wood",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ȥƤ����ľԭľ
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_CINDER_LOG = BLOCKS.registerBlock(
+            "stripped_cinder_log",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ȥƤ����ľ
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_CINDER_WOOD = BLOCKS.registerBlock(
+            "stripped_cinder_wood",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľľ��
+    public static final DeferredBlock<Block> CINDER_PLANKS = BLOCKS.registerBlock(
+            "cinder_planks",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľԭľ
+    public static final DeferredBlock<RotatedPillarBlock> EMBER_LOG = BLOCKS.registerBlock(
+            "ember_log",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ
+    public static final DeferredBlock<RotatedPillarBlock> EMBER_WOOD = BLOCKS.registerBlock(
+            "ember_wood",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ȥƤ���ľԭľ
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_EMBER_LOG = BLOCKS.registerBlock(
+            "stripped_ember_log",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ȥƤ���ľ
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_EMBER_WOOD = BLOCKS.registerBlock(
+            "stripped_ember_wood",
+            p -> new RotatedPillarBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľľ��
+    public static final DeferredBlock<Block> EMBER_PLANKS = BLOCKS.registerBlock(
+            "ember_planks",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ¥��
+    public static final DeferredBlock<StairBlock> CINDER_STAIRS = BLOCKS.registerBlock(
+            "cinder_stairs",
+            p -> new StairBlock(CINDER_PLANKS.get().defaultBlockState(), p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ̨��
+    public static final DeferredBlock<SlabBlock> CINDER_SLAB = BLOCKS.registerBlock(
+            "cinder_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľդ��
+    public static final DeferredBlock<FenceBlock> CINDER_FENCE = BLOCKS.registerBlock(
+            "cinder_fence",
+            p -> new FenceBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľդ����
+    public static final DeferredBlock<FenceGateBlock> CINDER_FENCE_GATE = BLOCKS.registerBlock(
+            "cinder_fence_gate",
+            p -> new FenceGateBlock(CINDER_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ��
+    public static final DeferredBlock<DoorBlock> CINDER_DOOR = BLOCKS.registerBlock(
+            "cinder_door",
+            p -> new DoorBlock(CINDER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ�����
+    public static final DeferredBlock<TrapDoorBlock> CINDER_TRAPDOOR = BLOCKS.registerBlock(
+            "cinder_trapdoor",
+            p -> new TrapDoorBlock(CINDER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľѹ����
+    public static final DeferredBlock<PressurePlateBlock> CINDER_PRESSURE_PLATE = BLOCKS.registerBlock(
+            "cinder_pressure_plate",
+            p -> new PressurePlateBlock(CINDER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ��ť
+    public static final DeferredBlock<ButtonBlock> CINDER_BUTTON = BLOCKS.registerBlock(
+            "cinder_button",
+            p -> new ButtonBlock(CINDER_BLOCK_SET, 30, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ����ľ��Ҷ
+    public static final DeferredBlock<LeavesBlock> CINDER_LEAVES = BLOCKS.registerBlock(
+            "cinder_leaves",
+            p -> new LeavesBlock(p
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .strength(0.2F)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .randomTicks())
+    );
+
+    // ����ľ����
+    public static final DeferredBlock<SaplingBlock> CINDER_SAPLING = BLOCKS.registerBlock(
+            "cinder_sapling",
+            p -> new SaplingBlock(org.polaris2023.wildwind.hfas.worldgen.ModTreeGrowers.CINDER, p
+                    .mapColor(MapColor.COLOR_GREEN)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .randomTicks())
+    );
+
+    // ���ľ¥��
+    public static final DeferredBlock<StairBlock> EMBER_STAIRS = BLOCKS.registerBlock(
+            "ember_stairs",
+            p -> new StairBlock(EMBER_PLANKS.get().defaultBlockState(), p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ̨��
+    public static final DeferredBlock<SlabBlock> EMBER_SLAB = BLOCKS.registerBlock(
+            "ember_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľդ��
+    public static final DeferredBlock<FenceBlock> EMBER_FENCE = BLOCKS.registerBlock(
+            "ember_fence",
+            p -> new FenceBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľդ����
+    public static final DeferredBlock<FenceGateBlock> EMBER_FENCE_GATE = BLOCKS.registerBlock(
+            "ember_fence_gate",
+            p -> new FenceGateBlock(EMBER_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ��
+    public static final DeferredBlock<DoorBlock> EMBER_DOOR = BLOCKS.registerBlock(
+            "ember_door",
+            p -> new DoorBlock(EMBER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ�����
+    public static final DeferredBlock<TrapDoorBlock> EMBER_TRAPDOOR = BLOCKS.registerBlock(
+            "ember_trapdoor",
+            p -> new TrapDoorBlock(EMBER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(2.0F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľѹ����
+    public static final DeferredBlock<PressurePlateBlock> EMBER_PRESSURE_PLATE = BLOCKS.registerBlock(
+            "ember_pressure_plate",
+            p -> new PressurePlateBlock(EMBER_BLOCK_SET, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ��ť
+    public static final DeferredBlock<ButtonBlock> EMBER_BUTTON = BLOCKS.registerBlock(
+            "ember_button",
+            p -> new ButtonBlock(EMBER_BLOCK_SET, 30, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(0.5F)
+                    .sound(SoundType.WOOD))
+    );
+
+    // ���ľ��Ҷ
+    public static final DeferredBlock<LeavesBlock> EMBER_LEAVES = BLOCKS.registerBlock(
+            "ember_leaves",
+            p -> new LeavesBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(0.2F)
+                    .sound(SoundType.GRASS)
+                    .noOcclusion()
+                    .randomTicks())
+    );
+
+    // ���ľ����
+    public static final DeferredBlock<SaplingBlock> EMBER_SAPLING = BLOCKS.registerBlock(
+            "ember_sapling",
+            p -> new SaplingBlock(org.polaris2023.wildwind.hfas.worldgen.ModTreeGrowers.EMBER, p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .randomTicks())
+    );
 
     // ==================== 其他方块 ====================
 
@@ -516,39 +735,9 @@ public class ModBlocks {
     );
 
     public static void blockItems() {
-        // 焚烬木套件物品
-        ITEMS.registerSimpleBlockItem(BLAZE_LOG);
-        ITEMS.registerSimpleBlockItem(BLAZE_WOOD);
-        ITEMS.registerSimpleBlockItem(STRIPPED_BLAZE_LOG);
-        ITEMS.registerSimpleBlockItem(STRIPPED_BLAZE_WOOD);
-        ITEMS.registerSimpleBlockItem(BLAZE_PLANKS);
-        ITEMS.registerSimpleBlockItem(BLAZE_STAIRS);
-        ITEMS.registerSimpleBlockItem(BLAZE_SLAB);
-        ITEMS.registerSimpleBlockItem(BLAZE_FENCE);
-        ITEMS.registerSimpleBlockItem(BLAZE_FENCE_GATE);
-        ITEMS.registerSimpleBlockItem(BLAZE_DOOR);
-        ITEMS.registerSimpleBlockItem(BLAZE_TRAPDOOR);
-        ITEMS.registerSimpleBlockItem(BLAZE_PRESSURE_PLATE);
-        ITEMS.registerSimpleBlockItem(BLAZE_BUTTON);
-        ITEMS.registerSimpleBlockItem(BLAZE_LEAVES);
-        ITEMS.registerSimpleBlockItem(BLAZE_SAPLING);
+    
 
-        // 灵焰木套件物品
-        ITEMS.registerSimpleBlockItem(SOUL_LOG);
-        ITEMS.registerSimpleBlockItem(SOUL_WOOD);
-        ITEMS.registerSimpleBlockItem(STRIPPED_SOUL_LOG);
-        ITEMS.registerSimpleBlockItem(STRIPPED_SOUL_WOOD);
-        ITEMS.registerSimpleBlockItem(SOUL_PLANKS);
-        ITEMS.registerSimpleBlockItem(SOUL_STAIRS);
-        ITEMS.registerSimpleBlockItem(SOUL_SLAB);
-        ITEMS.registerSimpleBlockItem(SOUL_FENCE);
-        ITEMS.registerSimpleBlockItem(SOUL_FENCE_GATE);
-        ITEMS.registerSimpleBlockItem(SOUL_DOOR);
-        ITEMS.registerSimpleBlockItem(SOUL_TRAPDOOR);
-        ITEMS.registerSimpleBlockItem(SOUL_PRESSURE_PLATE);
-        ITEMS.registerSimpleBlockItem(SOUL_BUTTON);
-        ITEMS.registerSimpleBlockItem(SOUL_LEAVES);
-        ITEMS.registerSimpleBlockItem(SOUL_SAPLING);
+    
 
         // 杜鹃木套件物品
         ITEMS.registerSimpleBlockItem(AZALEA_LOG);

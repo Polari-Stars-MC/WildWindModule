@@ -36,43 +36,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        // ==================== 焚烬木标签 ====================
-        registerWoodTags(
-                ModBlocks.BLAZE_LOG.get(),
-                ModBlocks.BLAZE_WOOD.get(),
-                ModBlocks.STRIPPED_BLAZE_LOG.get(),
-                ModBlocks.STRIPPED_BLAZE_WOOD.get(),
-                ModBlocks.BLAZE_PLANKS.get(),
-                ModBlocks.BLAZE_STAIRS.get(),
-                ModBlocks.BLAZE_SLAB.get(),
-                ModBlocks.BLAZE_FENCE.get(),
-                ModBlocks.BLAZE_FENCE_GATE.get(),
-                ModBlocks.BLAZE_DOOR.get(),
-                ModBlocks.BLAZE_TRAPDOOR.get(),
-                ModBlocks.BLAZE_PRESSURE_PLATE.get(),
-                ModBlocks.BLAZE_BUTTON.get(),
-                ModBlocks.BLAZE_LEAVES.get(),
-                ModBlocks.BLAZE_SAPLING.get()
-        );
 
-        // ==================== 灵焰木标签 ====================
-        registerWoodTags(
-                ModBlocks.SOUL_LOG.get(),
-                ModBlocks.SOUL_WOOD.get(),
-                ModBlocks.STRIPPED_SOUL_LOG.get(),
-                ModBlocks.STRIPPED_SOUL_WOOD.get(),
-                ModBlocks.SOUL_PLANKS.get(),
-                ModBlocks.SOUL_STAIRS.get(),
-                ModBlocks.SOUL_SLAB.get(),
-                ModBlocks.SOUL_FENCE.get(),
-                ModBlocks.SOUL_FENCE_GATE.get(),
-                ModBlocks.SOUL_DOOR.get(),
-                ModBlocks.SOUL_TRAPDOOR.get(),
-                ModBlocks.SOUL_PRESSURE_PLATE.get(),
-                ModBlocks.SOUL_BUTTON.get(),
-                ModBlocks.SOUL_LEAVES.get(),
-                ModBlocks.SOUL_SAPLING.get()
-        );
 
         // ==================== 杜鹃木标签 ====================
         registerWoodTags(
