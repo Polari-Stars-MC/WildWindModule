@@ -1,4 +1,4 @@
-﻿package org.polaris2023.wildwind.hfas.datagen.provider.loot;
+package org.polaris2023.wildwind.hfas.datagen.provider.loot;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.loot.BlockLootSubProvider;
@@ -22,7 +22,43 @@ public class BlockLoot extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
+        // 焚烬木套件
+        dropSelf(ModBlocks.BLAZE_LOG.get());
+        dropSelf(ModBlocks.BLAZE_WOOD.get());
+        dropSelf(ModBlocks.STRIPPED_BLAZE_LOG.get());
+        dropSelf(ModBlocks.STRIPPED_BLAZE_WOOD.get());
+        dropSelf(ModBlocks.BLAZE_PLANKS.get());
+        dropSelf(ModBlocks.BLAZE_STAIRS.get());
+        dropSelf(ModBlocks.BLAZE_SLAB.get());
+        dropSelf(ModBlocks.BLAZE_FENCE.get());
+        dropSelf(ModBlocks.BLAZE_FENCE_GATE.get());
+        dropSelf(ModBlocks.BLAZE_PRESSURE_PLATE.get());
+        dropSelf(ModBlocks.BLAZE_BUTTON.get());
+        // 树叶 - 使用树叶掉落逻辑
+        add(ModBlocks.BLAZE_LEAVES.get(), createLeavesDrops(ModBlocks.BLAZE_LEAVES.get(), ModBlocks.BLAZE_SAPLING.get(), 0.05F));
+        dropSelf(ModBlocks.BLAZE_SAPLING.get());
+        // 门需要特殊处理
+        add(ModBlocks.BLAZE_DOOR.get(), createDoorTable(ModBlocks.BLAZE_DOOR.get()));
+        add(ModBlocks.BLAZE_TRAPDOOR.get(), createDoorTable(ModBlocks.BLAZE_TRAPDOOR.get()));
 
+        // 灵焰木套件
+        dropSelf(ModBlocks.SOUL_LOG.get());
+        dropSelf(ModBlocks.SOUL_WOOD.get());
+        dropSelf(ModBlocks.STRIPPED_SOUL_LOG.get());
+        dropSelf(ModBlocks.STRIPPED_SOUL_WOOD.get());
+        dropSelf(ModBlocks.SOUL_PLANKS.get());
+        dropSelf(ModBlocks.SOUL_STAIRS.get());
+        dropSelf(ModBlocks.SOUL_SLAB.get());
+        dropSelf(ModBlocks.SOUL_FENCE.get());
+        dropSelf(ModBlocks.SOUL_FENCE_GATE.get());
+        dropSelf(ModBlocks.SOUL_PRESSURE_PLATE.get());
+        dropSelf(ModBlocks.SOUL_BUTTON.get());
+        // 树叶 - 使用树叶掉落逻辑
+        add(ModBlocks.SOUL_LEAVES.get(), createLeavesDrops(ModBlocks.SOUL_LEAVES.get(), ModBlocks.SOUL_SAPLING.get(), 0.05F));
+        dropSelf(ModBlocks.SOUL_SAPLING.get());
+        // 门需要特殊处理
+        add(ModBlocks.SOUL_DOOR.get(), createDoorTable(ModBlocks.SOUL_DOOR.get()));
+        add(ModBlocks.SOUL_TRAPDOOR.get(), createDoorTable(ModBlocks.SOUL_TRAPDOOR.get()));
 
         // 杜鹃木套件
         dropSelf(ModBlocks.AZALEA_LOG.get());
@@ -49,34 +85,3 @@ public class BlockLoot extends BlockLootSubProvider {
         dropOther(ModBlocks.FLETCHING_TABLE.get(), Items.FLETCHING_TABLE);
     }
 }
-
-        this.dropSelf(ModBlocks.CINDER_LOG.get());
-        this.dropSelf(ModBlocks.CINDER_WOOD.get());
-        this.dropSelf(ModBlocks.STRIPPED_CINDER_LOG.get());
-        this.dropSelf(ModBlocks.STRIPPED_CINDER_WOOD.get());
-        this.dropSelf(ModBlocks.CINDER_PLANKS.get());
-        this.dropSelf(ModBlocks.CINDER_STAIRS.get());
-        this.dropSelf(ModBlocks.CINDER_SLAB.get());
-        this.dropSelf(ModBlocks.CINDER_FENCE.get());
-        this.dropSelf(ModBlocks.CINDER_FENCE_GATE.get());
-        this.dropSelf(ModBlocks.CINDER_DOOR.get());
-        this.dropSelf(ModBlocks.CINDER_TRAPDOOR.get());
-        this.dropSelf(ModBlocks.CINDER_PRESSURE_PLATE.get());
-        this.dropSelf(ModBlocks.CINDER_BUTTON.get());
-        this.add(ModBlocks.CINDER_LEAVES.get(), block -> this.createLeavesDrops(block, ModBlocks.CINDER_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-        this.dropSelf(ModBlocks.CINDER_SAPLING.get());
-        this.dropSelf(ModBlocks.EMBER_LOG.get());
-        this.dropSelf(ModBlocks.EMBER_WOOD.get());
-        this.dropSelf(ModBlocks.STRIPPED_EMBER_LOG.get());
-        this.dropSelf(ModBlocks.STRIPPED_EMBER_WOOD.get());
-        this.dropSelf(ModBlocks.EMBER_PLANKS.get());
-        this.dropSelf(ModBlocks.EMBER_STAIRS.get());
-        this.dropSelf(ModBlocks.EMBER_SLAB.get());
-        this.dropSelf(ModBlocks.EMBER_FENCE.get());
-        this.dropSelf(ModBlocks.EMBER_FENCE_GATE.get());
-        this.dropSelf(ModBlocks.EMBER_DOOR.get());
-        this.dropSelf(ModBlocks.EMBER_TRAPDOOR.get());
-        this.dropSelf(ModBlocks.EMBER_PRESSURE_PLATE.get());
-        this.dropSelf(ModBlocks.EMBER_BUTTON.get());
-        this.add(ModBlocks.EMBER_LEAVES.get(), block -> this.createLeavesDrops(block, ModBlocks.EMBER_SAPLING.get(), NORMAL_LEAVES_SAPLING_CHANCES));
-        this.dropSelf(ModBlocks.EMBER_SAPLING.get());

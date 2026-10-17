@@ -28,7 +28,15 @@ import java.util.List;
  */
 public class ModPlacedFeatures {
 
+    public static final ResourceKey<PlacedFeature> BLAZE_TREE_PLACED_KEY = ResourceKey.create(
+            Registries.PLACED_FEATURE,
+            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "blaze_tree_placed")
+    );
 
+    public static final ResourceKey<PlacedFeature> SOUL_TREE_PLACED_KEY = ResourceKey.create(
+            Registries.PLACED_FEATURE,
+            Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "soul_tree_placed")
+    );
 
     // 杜鹃树放置
     public static final ResourceKey<PlacedFeature> AZALEA_TREE_PLACED_KEY = ResourceKey.create(
@@ -39,7 +47,17 @@ public class ModPlacedFeatures {
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
+        // 焚烬木树放置
+        context.register(BLAZE_TREE_PLACED_KEY, new PlacedFeature(
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.BLAZE_TREE_KEY),
+                List.of()
+        ));
 
+        // 灵焰木树放置
+        context.register(SOUL_TREE_PLACED_KEY, new PlacedFeature(
+                configuredFeatures.getOrThrow(ModConfiguredFeatures.SOUL_TREE_KEY),
+                List.of()
+        ));
 
 
 

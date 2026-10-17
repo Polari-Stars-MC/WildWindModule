@@ -1,4 +1,4 @@
-﻿package org.polaris2023.wildwind.hfas.worldgen;
+package org.polaris2023.wildwind.hfas.worldgen;
 
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.block.grower.TreeGrower;
@@ -15,28 +15,27 @@ import java.util.Optional;
  */
 public class ModTreeGrowers {
 
+    // 焚烬木树苗生长器
+    public static final TreeGrower BLAZE = new TreeGrower(
+            "blaze",
+            Optional.empty(),
+            Optional.of(ModConfiguredFeatures.BLAZE_TREE_KEY),
+            Optional.empty()
+    );
 
+    // 灵焰木树苗生长器
+    public static final TreeGrower SOUL = new TreeGrower(
+            "soul",
+            Optional.empty(),
+            Optional.of(ModConfiguredFeatures.SOUL_TREE_KEY),
+            Optional.empty()
+    );
 
     // 杜鹃木树苗生长器
     public static final TreeGrower AZALEA = new TreeGrower(
             "azalea",
             Optional.empty(),
             Optional.of(ModConfiguredFeatures.AZALEA_TREE_KEY),
-            Optional.empty()
-    );
-    // ����ľ����������
-    public static final TreeGrower CINDER = new TreeGrower(
-            "cinder",
-            Optional.empty(),
-            Optional.of(ModConfiguredFeatures.CINDER_TREE_KEY),
-            Optional.empty()
-    );
-
-    // ���ľ����������
-    public static final TreeGrower EMBER = new TreeGrower(
-            "ember",
-            Optional.empty(),
-            Optional.of(ModConfiguredFeatures.EMBER_TREE_KEY),
             Optional.empty()
     );
 }

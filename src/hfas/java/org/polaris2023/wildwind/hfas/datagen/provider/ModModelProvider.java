@@ -1,4 +1,4 @@
-﻿﻿package org.polaris2023.wildwind.hfas.datagen.provider;
+package org.polaris2023.wildwind.hfas.datagen.provider;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
@@ -32,7 +32,47 @@ public class ModModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
+        // ==================== 焚烬木套件 ====================
+        registerWoodModels(blockModels, itemModels,
+                ModBlocks.BLAZE_LOG.get(),
+                ModBlocks.BLAZE_WOOD.get(),
+                ModBlocks.STRIPPED_BLAZE_LOG.get(),
+                ModBlocks.STRIPPED_BLAZE_WOOD.get(),
+                ModBlocks.BLAZE_PLANKS.get(),
+                ModBlocks.BLAZE_STAIRS.get(),
+                ModBlocks.BLAZE_SLAB.get(),
+                ModBlocks.BLAZE_FENCE.get(),
+                ModBlocks.BLAZE_FENCE_GATE.get(),
+                ModBlocks.BLAZE_DOOR.get(),
+                ModBlocks.BLAZE_TRAPDOOR.get(),
+                ModBlocks.BLAZE_PRESSURE_PLATE.get(),
+                ModBlocks.BLAZE_BUTTON.get()
+        );
+        // 焚烬木树叶 - 橙色染色
+        blockModels.createTintedLeaves(ModBlocks.BLAZE_LEAVES.get(), TexturedModel.LEAVES, 0xFF8000);
+        // 焚烬木树苗
+        blockModels.createCrossBlock(ModBlocks.BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
+        // ==================== 灵焰木套件 ====================
+        registerWoodModels(blockModels, itemModels,
+                ModBlocks.SOUL_LOG.get(),
+                ModBlocks.SOUL_WOOD.get(),
+                ModBlocks.STRIPPED_SOUL_LOG.get(),
+                ModBlocks.STRIPPED_SOUL_WOOD.get(),
+                ModBlocks.SOUL_PLANKS.get(),
+                ModBlocks.SOUL_STAIRS.get(),
+                ModBlocks.SOUL_SLAB.get(),
+                ModBlocks.SOUL_FENCE.get(),
+                ModBlocks.SOUL_FENCE_GATE.get(),
+                ModBlocks.SOUL_DOOR.get(),
+                ModBlocks.SOUL_TRAPDOOR.get(),
+                ModBlocks.SOUL_PRESSURE_PLATE.get(),
+                ModBlocks.SOUL_BUTTON.get()
+        );
+        // 灵焰木树叶 - 青色染色
+        blockModels.createTintedLeaves(ModBlocks.SOUL_LEAVES.get(), TexturedModel.LEAVES, 0x00FFFF);
+        // 灵焰木树苗
+        blockModels.createCrossBlock(ModBlocks.SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // ==================== 杜鹃木套件 ====================
         registerWoodModels(blockModels, itemModels,
@@ -143,8 +183,3 @@ public class ModModelProvider extends ModelProvider {
         simpleItem(itemModels, ModItems.FANG);
     }
 }
-
-        createCrossBlock(blockModels, ModBlocks.CINDER_SAPLING.get());
-        createCrossBlock(blockModels, ModBlocks.EMBER_SAPLING.get());
-        createSimpleBlock(blockModels, ModBlocks.CINDER_LEAVES.get());
-        createSimpleBlock(blockModels, ModBlocks.EMBER_LEAVES.get());
