@@ -1,0 +1,22 @@
+{
+  "values": {
+    "ww_hfas:azalea_log": {
+      "stripped_block": "ww_hfas:stripped_azalea_log"
+    },
+    "ww_hfas:azalea_wood": {
+      "stripped_block": "ww_hfas:stripped_azalea_wood"
+    },
+    "ww_hfas:blaze_log": {
+      "stripped_block": "ww_hfas:stripped_blaze_log"
+    },
+    "ww_hfas:blaze_wood": {
+      "stripped_block": "ww_hfas:stripped_blaze_wood"
+    },
+    "ww_hfas:soul_log": {
+      "stripped_block": "ww_hfas:stripped_soul_log"
+    },
+    "ww_hfas:soul_wood": {
+      "stripped_block": "ww_hfas:stripped_soul_wood"
+    }
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "ww_hfas:azalea_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "ww_hfas:azalea_door"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "ww_hfas:blocks/azalea_door"
+}

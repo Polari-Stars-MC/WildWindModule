@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "ww_hfas:block/soul_slab"
+    },
+    "type=double": {
+      "model": "ww_hfas:block/soul_planks"
+    },
+    "type=top": {
+      "model": "ww_hfas:block/soul_slab_top"
+    }
+  }
+}
