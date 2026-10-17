@@ -37,5 +37,10 @@ public class ModCreativeTabs {
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.CRAB_CLAW);
         output.accept(ModItems.OMNI_CLAW);
+        output.accept(ModItems.PIRANHA_BUCKET);
+        output.accept(ModItems.PIRANHA);
+        output.accept(ModItems.COOKED_PIRANHA);
+        output.accept(ModItems.FANG);
+        output.accept(ModItems.PIRANHA_SPAWN_EGG);
     }
 }

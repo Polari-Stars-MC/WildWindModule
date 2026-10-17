@@ -81,6 +81,21 @@ public class EnUsLanguageProvider extends LanguageProvider {
         // 属性
         add("attributes.ww_hfas.extra_item_pickup_range", "Extra Item Pickup Range");
 
+        // Reach effect & potions
+        add("effect.ww_hfas.reach", "Reach");
+        add("item.minecraft.potion.effect.reach", "Potion of Reach");
+        add("item.minecraft.splash_potion.effect.reach", "Splash Potion of Reach");
+        add("item.minecraft.lingering_potion.effect.reach", "Lingering Potion of Reach");
+        add("item.minecraft.tipped_arrow.effect.reach", "Arrow of Reach");
+        add("item.minecraft.potion.effect.long_reach", "Potion of Reach");
+        add("item.minecraft.splash_potion.effect.long_reach", "Splash Potion of Reach");
+        add("item.minecraft.lingering_potion.effect.long_reach", "Lingering Potion of Reach");
+        add("item.minecraft.tipped_arrow.effect.long_reach", "Arrow of Reach");
+
+        // Piranha sound subtitles
+        add("subtitles.entity.piranha.attack", "Piranha attacks");
+        add("subtitles.entity.piranha.death", "Piranha dies");
+
         //创造模式物品栏
         add("mod.wild_wind.name", "Wild Wind");
 

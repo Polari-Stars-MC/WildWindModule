@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "group": "chest_boat",
+  "ingredients": [
+    "ww_hfas:azalea_boat",
+    "minecraft:chest"
+  ],
+  "result": {
+    "id": "ww_hfas:azalea_chest_boat"
+  }
+}

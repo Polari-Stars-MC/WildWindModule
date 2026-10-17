@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_post",
+  "textures": {
+    "texture": "ww_hfas:block/blaze_planks"
+  }
+}
