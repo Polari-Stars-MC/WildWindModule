@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "ww_hfas:potted_blaze_sapling"
+    },
+    {
+      "required": false,
+      "id": "ww_hfas:potted_soul_sapling"
+    }
+  ]
+}

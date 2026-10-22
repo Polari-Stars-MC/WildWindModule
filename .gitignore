@@ -1,0 +1,63 @@
+### Gradle ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/**/build/
+
+### IntelliJ IDEA ###
+.idea/modules
+.idea/*.xml
+.idea/.name
+*.iws
+*.iml
+*.ipr
+out/
+!**/src/**/out/
+
+.run/
+
+### Eclipse ###
+.apt_generated
+.classpath
+.eclipse/
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+bin/
+!**/src/**/bin/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
+
+### Minecraft Modding ###
+run/
+modules/*/logs/
+!**/src/**/run/
+**/src/generated/**/.cache/
+repo/
+!**/src/**/repo/
+
+### Local-only files and generated caches ###
+.idea/
+.cache/
+.tools/
+.codex/
+*.log
+*.tmp
+*.bak
+*.zip
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+.env
+.env.*
+!.env.example
+logs/
+crash-reports/
+Thumbs.db
+Desktop.ini

@@ -1,0 +1,16 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "ww_hfas:blaze_chest_boat"
+    },
+    {
+      "required": false,
+      "id": "ww_hfas:soul_chest_boat"
+    },
+    {
+      "required": false,
+      "id": "ww_hfas:azalea_chest_boat"
+    }
+  ]
+}

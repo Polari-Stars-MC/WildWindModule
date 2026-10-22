@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "ww_hfas_tests:spawning",
+  "environment": "minecraft:default",
+  "structure": "ww_hfas_tests:empty",
+  "max_ticks": 100
+}

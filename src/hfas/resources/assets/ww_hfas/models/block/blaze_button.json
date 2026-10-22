@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "ww_hfas:block/blaze_planks"
+  }
+}

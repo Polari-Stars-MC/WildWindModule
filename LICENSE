@@ -1,0 +1,32 @@
+# SPDX-License-Identifier: GPL-3.0-only AND CC-BY-SA-4.0
+
+This repository contains both code and resources under different licenses.
+
+## Code (GPL-3.0-only)
+
+All source code files (`java`, `kotlin`, etc.) are licensed under the **GNU General Public License v3.0**.
+a
+See [LICENSE_CODE](LICENSE_CODE) for the full license text.
+
+## Resources/Assets (CC-BY-SA-4.0)
+
+All non-code resources, including but not limited to:
+- Images and graphics
+- Data files (`.json`, `.png`, `.bbmodel`, etc.)
+- Documentation and text
+- Configuration files
+
+are licensed under the **Creative Commons Attribution-ShareAlike 4.0 International**.
+
+See [LICENSE_ASSETS](LICENSE_ASSETS) for the full license text.
+
+## Summary
+
+| Component | License | Key Requirements |
+|-----------|---------|------------------|
+| Code | GPL-3.0-only | Disclose source, same license for derivatives |
+| Assets | CC-BY-SA-4.0 | Attribution, share-alike |
+
+## Questions?
+
+For any licensing questions, please open an issue or contact the repository maintainers.

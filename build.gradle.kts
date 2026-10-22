@@ -1,0 +1,180 @@
+import org.slf4j.event.Level.INFO
+import java.util.Locale
+
+plugins {
+    `java-library`
+    `maven-publish`
+    id("net.neoforged.moddev") version("2.0.148")
+    idea
+    base
+}
+
+
+//tasks.named<Wrapper>("wrapper").configure {
+//    distributionType = Wrapper.DistributionType.BIN
+//}
+
+val minecraftVersion: String by rootProject
+val minecraftVersionRange: String by rootProject
+val modName: String by rootProject
+val modLicense: String by rootProject
+
+val geocklibVersion: String by rootProject
+
+allprojects {
+    apply(plugin = "java-library")
+    apply(plugin = "maven-publish")
+    apply(plugin = "idea")
+    apply(plugin = "net.neoforged.moddev")
+    apply(plugin = "base")
+    val modGroupId: String by project
+    val modId: String by project
+    var projectModId = rootProject.name + "_" + project.name.lowercase(Locale.ROOT)
+    val modVersion: String by project
+    val neoVersion: String by project
+    if (project == rootProject) return@allprojects
+    group = modGroupId
+    version = modVersion
+    configure<BasePluginExtension> {
+        archivesName = "$projectModId-mc$minecraftVersion"
+
+    }
+
+    var generateModMetadata = tasks.register<ProcessResources>("generatedMetadata") {
+        val replaceProperties = mapOf(
+            "minecraft_version" to minecraftVersion,
+            "minecraft_version_range" to minecraftVersionRange,
+            "neo_version" to neoVersion,
+            "mod_id" to projectModId,
+            "mod_name" to modName,
+            "mod_description" to "Wild Wind: plants, materials, muddy pigs and configurable structure generation.",
+            "mod_license" to modLicense,
+            "mod_version" to modVersion,
+            "geocklib_version" to geocklibVersion
+        )
+        inputs.properties(replaceProperties)
+        expand(replaceProperties)
+        from(rootProject.file("src/templates"))
+        into("build/generated/sources/modMetadata")
+    }
+
+
+    sourceSets {
+        rootProject.file("src/${project.name}/java").resolve(modGroupId.replace('.', '/')).mkdirs()
+        main {
+            java {
+                srcDir(rootProject.file("src/${project.name}/java"))
+            }
+            resources {
+                srcDir(generateModMetadata)
+                srcDir(rootProject.file("build/generated/${project.name}/server"))
+                srcDir(rootProject.file("build/generated/${project.name}/client"))
+                srcDir(rootProject.file("src/${project.name}/resources"))
+
+                exclude("**/*.bbmodel")
+                exclude("build/generated/**/.cache")
+                exclude("**/.cache/**")
+            }
+        }
+    }
+
+    repositories {
+        exclusiveContent {
+            forRepository {
+                maven {
+                    name = "GeckoLib"
+                    url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
+                }
+            }
+
+            filter {
+                includeGroupAndSubgroups("com.geckolib")
+            }
+        }
+    }
+
+    java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+    neoForge {
+        version = neoVersion
+
+        accessTransformers.from(rootProject.file("src/${project.name}/resources/META-INF/accesstransformer.cfg"))
+
+        runs {
+            register("client") {
+                client()
+                systemProperty("neoforge.enabledGameTestNamespaces", projectModId)
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/client").get().asFile
+            }
+            register("server") {
+                server()
+                programArgument("--nogui")
+                systemProperty("neoforge.enabledGameTestNamespaces", projectModId)
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/server").get().asFile
+            }
+            register("clientData") {
+                clientData()
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
+                programArguments.addAll(
+                    listOf(
+                        "--mod", projectModId,
+                        "--all",
+                        "--output", rootProject.file("build/generated/${project.name}/client").absolutePath,
+                        "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
+                    )
+                )
+            }
+            register("serverData") {
+                serverData()
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
+                programArguments.addAll(
+                    listOf(
+                        "--mod", projectModId,
+                        "--all",
+                        "--output", rootProject.file("build/generated/${project.name}/server").absolutePath,
+                        "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
+                    )
+                )
+            }
+            configureEach {
+                systemProperty("forge.logging.markers", "REGISTRIES")
+                logLevel.set(INFO)
+            }
+        }
+
+        mods {
+            register(projectModId) {
+                sourceSet(sourceSets["main"])
+            }
+        }
+
+
+    }
+
+    neoForge.ideSyncTask(generateModMetadata)
+
+    val localRuntime by configurations.registering
+
+    configurations {
+        runtimeClasspath {
+            extendsFrom(localRuntime.get())
+        }
+    }
+
+    dependencies {
+        compileOnly("org.projectlombok:lombok:1.18.44")
+        annotationProcessor("org.projectlombok:lombok:1.18.44")
+        implementation("com.geckolib:geckolib-neoforge-$minecraftVersion:$geocklibVersion")
+    }
+
+    tasks.withType<JavaCompile>().configureEach {
+        options.encoding = "UTF-8"
+    }
+
+    idea {
+        module {
+            isDownloadJavadoc = true
+            isDownloadSources = true
+        }
+    }
+}

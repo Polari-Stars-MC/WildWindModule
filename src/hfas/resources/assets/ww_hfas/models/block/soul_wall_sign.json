@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_wall_sign",
+  "textures": {
+    "all": "ww_hfas:block/soul_sign",
+    "particle": "ww_hfas:block/soul_planks"
+  }
+}
