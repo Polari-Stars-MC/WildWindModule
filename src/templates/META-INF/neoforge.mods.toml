@@ -40,7 +40,7 @@ authors="baka4n,viola-Siemens,ENC-Euphony,wdog5734"
 
 # The description text for the mod (multi line!) (#mandatory)
 description='''
-Example mod description.
+${mod_description}
 '''
 
 # The [[mixins]] block allows you to declare your mixin config to FML so that it gets loaded.
