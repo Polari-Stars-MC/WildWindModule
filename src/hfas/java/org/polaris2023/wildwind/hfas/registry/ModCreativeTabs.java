@@ -4,9 +4,11 @@ import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
+import org.polaris2023.wildwind.hfas.block.ModBlocks;
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
@@ -17,8 +19,7 @@ public class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> WILD_WIND =
             CREATIVE_TABS.register("wild_wind", () -> CreativeModeTab.builder()
                     .title(Component.translatable("mod.wild_wind.name"))
-//                    .icon(() -> ModItems.CINDER.log().get().getDefaultInstance()) TODO 换成对应的物品
-                    .icon(() -> ModItems.MUDCRAB_BUCKET.get().getDefaultInstance())
+                    .icon(() -> ModBlocks.BLAZE_LOG.toStack())
                     .displayItems((params, output) -> addStacks(output))
                     .build()
             );
@@ -33,6 +34,34 @@ public class ModCreativeTabs {
     }
 
     private static void addStacks(CreativeModeTab.Output output){
+        // 三种木材的建筑套装（顺序与旧仓库一致）
+        addWoodBuildingSet(output,
+                ModBlocks.AZALEA_LOG, ModBlocks.AZALEA_WOOD,
+                ModBlocks.STRIPPED_AZALEA_LOG, ModBlocks.STRIPPED_AZALEA_WOOD,
+                ModBlocks.AZALEA_PLANKS, ModBlocks.AZALEA_STAIRS, ModBlocks.AZALEA_SLAB,
+                ModBlocks.AZALEA_FENCE, ModBlocks.AZALEA_FENCE_GATE, ModBlocks.AZALEA_DOOR,
+                ModBlocks.AZALEA_TRAPDOOR, ModBlocks.AZALEA_PRESSURE_PLATE, ModBlocks.AZALEA_BUTTON);
+
+        addWoodBuildingSet(output,
+                ModBlocks.BLAZE_LOG, ModBlocks.BLAZE_WOOD,
+                ModBlocks.STRIPPED_BLAZE_LOG, ModBlocks.STRIPPED_BLAZE_WOOD,
+                ModBlocks.BLAZE_PLANKS, ModBlocks.BLAZE_STAIRS, ModBlocks.BLAZE_SLAB,
+                ModBlocks.BLAZE_FENCE, ModBlocks.BLAZE_FENCE_GATE, ModBlocks.BLAZE_DOOR,
+                ModBlocks.BLAZE_TRAPDOOR, ModBlocks.BLAZE_PRESSURE_PLATE, ModBlocks.BLAZE_BUTTON);
+
+        addWoodBuildingSet(output,
+                ModBlocks.SOUL_LOG, ModBlocks.SOUL_WOOD,
+                ModBlocks.STRIPPED_SOUL_LOG, ModBlocks.STRIPPED_SOUL_WOOD,
+                ModBlocks.SOUL_PLANKS, ModBlocks.SOUL_STAIRS, ModBlocks.SOUL_SLAB,
+                ModBlocks.SOUL_FENCE, ModBlocks.SOUL_FENCE_GATE, ModBlocks.SOUL_DOOR,
+                ModBlocks.SOUL_TRAPDOOR, ModBlocks.SOUL_PRESSURE_PLATE, ModBlocks.SOUL_BUTTON);
+
+        // 焚烬木/灵焰木的树叶与树苗（杜鹃木无对应物品）
+        output.accept(ModBlocks.BLAZE_LEAVES.get());
+        output.accept(ModBlocks.SOUL_LEAVES.get());
+        output.accept(ModBlocks.BLAZE_SAPLING.get());
+        output.accept(ModBlocks.SOUL_SAPLING.get());
+
         output.accept(ModItems.MUDCRAB_BUCKET);
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.CRAB_CLAW);
@@ -42,5 +71,11 @@ public class ModCreativeTabs {
         output.accept(ModItems.COOKED_PIRANHA);
         output.accept(ModItems.FANG);
         output.accept(ModItems.PIRANHA_SPAWN_EGG);
+    }
+
+    private static void addWoodBuildingSet(CreativeModeTab.Output output, DeferredBlock<?>... blocks) {
+        for (DeferredBlock<?> block : blocks) {
+            output.accept(block.get());
+        }
     }
 }

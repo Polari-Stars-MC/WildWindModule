@@ -53,10 +53,6 @@ public class ModCreativeTabs {
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), ModBlocks.AZALEA_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.AZALEA_BUTTON.toStack(), ModBlocks.AZALEA_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.AZALEA_SIGN_ITEM.toStack(), ModBlocks.AZALEA_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.AZALEA_HANGING_SIGN_ITEM.toStack(), ModBlocks.AZALEA_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.AZALEA_BOAT.toStack(), ModBlocks.AZALEA_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
             // 焚烬系列
             {
@@ -84,15 +80,11 @@ public class ModCreativeTabs {
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), ModBlocks.BLAZE_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.BLAZE_BUTTON.toStack(), ModBlocks.BLAZE_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.BLAZE_SIGN_ITEM.toStack(), ModBlocks.BLAZE_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.BLAZE_HANGING_SIGN_ITEM.toStack(), ModBlocks.BLAZE_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.BLAZE_BOAT.toStack(), ModBlocks.BLAZE_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
             // 灵焰系列
             {
                 ItemStack logStack = ModBlocks.SOUL_LOG.toStack();
-                event.insertAfter(ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), logStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+                event.insertAfter(ModBlocks.BLAZE_BUTTON.toStack(), logStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 ItemStack woodStack = ModBlocks.SOUL_WOOD.toStack();
                 event.insertAfter(logStack, woodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 ItemStack strippedLogStack = ModBlocks.STRIPPED_SOUL_LOG.toStack();
@@ -115,10 +107,6 @@ public class ModCreativeTabs {
                 event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(trapdoorStack, ModBlocks.SOUL_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
                 event.insertAfter(ModBlocks.SOUL_PRESSURE_PLATE.toStack(), ModBlocks.SOUL_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.SOUL_BUTTON.toStack(), ModBlocks.SOUL_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.SOUL_SIGN_ITEM.toStack(), ModBlocks.SOUL_HANGING_SIGN_ITEM.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.SOUL_HANGING_SIGN_ITEM.toStack(), ModBlocks.SOUL_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.SOUL_BOAT.toStack(), ModBlocks.SOUL_CHEST_BOAT.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
             }
 
 
