@@ -7,7 +7,7 @@
 - 使用 JDK 25；`build.gradle.kts` 为模块设置了 Java 25 工具链。
 - 使用仓库自带的 Gradle Wrapper，无需单独安装 Gradle。
 - Gradle 配置了 Foojay 工具链解析器，但首次依赖下载仍需要可用网络。
-- 当前只有 `hfas` 子项目，模组 ID 为 `ww_hfas`。
+- 当前启用 `hfas`（`ww_hfas`）和 `structures`（`ww_structures`）两个子项目，可分别构建。
 
 以下命令均在仓库根目录执行，Windows 使用 `.\gradlew.bat`，Linux / macOS 使用 `./gradlew`：
 
@@ -20,12 +20,15 @@
 | 启动开发客户端 | `.\gradlew.bat :hfas:runClient` |
 | 启动开发服务端 | `.\gradlew.bat :hfas:runServer` |
 | 清理构建输出 | `.\gradlew.bat clean` |
+| 结构模块单元测试 | `.\gradlew.bat :structures:test` |
+| 结构模块游戏测试 | `.\gradlew.bat :structures:runGameTest` |
+| 仅构建结构模块 | `.\gradlew.bat :structures:build` |
 
 这些运行入口来自构建脚本中的 `client`、`server`、`clientData`、`serverData` 配置。依赖解析成功是运行任务的前提。
 
 ### 数据生成顺序
 
-首次构建、清理后构建，或修改数据生成代码后，按顺序执行客户端数据生成、服务端数据生成、`build`。开发运行前也应先生成所需资源。任一步失败时，先解决失败原因再继续。
+HFAS 首次构建、清理后构建，或修改数据生成代码后，按顺序执行客户端数据生成、服务端数据生成、`build`。开发运行前也应先生成所需资源。任一步失败时，先解决失败原因再继续。结构模块的资源已直接包含在源码中，无需数据生成，配置与测试说明见 [STRUCTURES.md](STRUCTURES.md)。
 
 | 输出目录 | 来源与内容 |
 | --- | --- |

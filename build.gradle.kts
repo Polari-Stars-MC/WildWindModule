@@ -44,8 +44,10 @@ allprojects {
             "minecraft_version_range" to minecraftVersionRange,
             "neo_version" to neoVersion,
             "mod_id" to projectModId,
-            "mod_name" to modName,
-            "mod_license" to modLicense,
+            "mod_name" to if (project.name == "structures") "Wild Wind Structures" else modName,
+            "mod_description" to if (project.name == "structures")
+                "Configurable NBT structures, world generation rules and generated structure coordinates." else "Example mod description.",
+            "mod_license" to if (project.name == "structures") "GPL-3.0-only" else modLicense,
             "mod_version" to modVersion,
         )
         inputs.properties(replaceProperties)

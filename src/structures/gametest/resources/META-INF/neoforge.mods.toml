@@ -1,0 +1,13 @@
+license="GPL-3.0-only"
+[[mods]]
+modId="ww_structures_tests"
+version="1.0"
+displayName="Wild Wind Structure Tests"
+[[mixins]]
+config="ww_structures_tests.mixins.json"
+[[dependencies.ww_structures_tests]]
+modId="ww_structures"
+type="required"
+versionRange="[1.0.0,)"
+ordering="AFTER"
+side="BOTH"

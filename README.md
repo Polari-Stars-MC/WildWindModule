@@ -2,7 +2,7 @@
 
 面向 Minecraft NeoForge 的模块化模组项目，围绕木材、植物、世界生成和制箭玩法扩展原版内容。
 
-> 当前说明对应 `26.1` 分支。项目处于开发阶段，目前仅启用 **HFAS（`ww_hfas`）**；下文区分源码中已有的实现与尚未完成的玩法，具体游戏表现仍需运行验证。
+> 当前说明对应 `26.1` 分支。项目处于开发阶段，已启用 **HFAS（`ww_hfas`）** 和 **结构生成（`ww_structures`）** 两个独立模块。
 
 [开发指南](docs/DEVELOPMENT.md) · [历史变更](CHANGE_LOG.MD) · [问题反馈](https://github.com/Polari-Stars-MC/WildWindModule/issues) · [许可证](LICENSE)
 
@@ -16,6 +16,7 @@
 | Gradle Wrapper | `9.4.1` |
 | 模组版本 | `1.0.0`（构建配置值） |
 | HFAS 模组 ID / 资源命名空间 | `ww_hfas` |
+| 结构生成模组 ID / 资源命名空间 | `ww_structures` |
 
 版本以 [gradle.properties](gradle.properties) 和 [构建脚本](build.gradle.kts) 为准。`1.0.0` 是源码中的版本号，不代表已经发布稳定版。
 
@@ -24,6 +25,7 @@
 | 模块 | 名称 | 当前分支状态 |
 | --- | --- | --- |
 | `hfas` | Wild Wind HFAS | 已接入 Gradle，包含木材、植物、世界生成及制箭系统基础代码 |
+| `structures` | Wild Wind Structures · 结构生成 | 通过 JSON + NBT 模板添加世界结构，支持生成条件与坐标查询 |
 | `deco` | Wild Wind Decoration · 装饰 | 旧版模块规划，尚未在当前分支启用 |
 | `adv` | Wild Wind Adventure · 冒险 | 旧版模块规划，尚未在当前分支启用 |
 | `vpp` | Wild Wind Vanilla++ · 原版修饰 | 旧版模块规划，尚未在当前分支启用 |
@@ -53,6 +55,34 @@
 模型、语言、标签、掉落表和世界生成数据由数据生成器输出；从源码构建前请阅读[开发指南](docs/DEVELOPMENT.md)。纹理与注册 ID 的一致性也仍需整理。
 
 ## 安装与配置
+
+### 结构生成模块
+
+`ww_structures` 可单独安装，不依赖 HFAS。构建命令为 `./gradlew :structures:build`（Windows 使用 `.\gradlew.bat`），产物为 `modules/structures/build/libs/ww_structures-1.0.0.jar`。服务器与客户端使用匹配版本的模块。
+
+首次创建或打开世界后，会在游戏／服务端实例目录创建：
+
+```text
+config/ww_structures/
+├── definitions/                 # 每个结构一个 JSON 配置
+├── templates/                   # 原版结构方块导出的压缩 .nbt 文件
+│   └── example_ruins.nbt         # 随附 7 × 4 × 7 遗迹示例
+└── example_ruins.json.disabled   # 配置示例，默认不参与生成
+```
+
+把示例配置复制为 `definitions/example_ruins.json`，将 `enabled` 改为 `true`，重启世界／服务器后即可在符合条件的新区块生成。可以配置模板文件名、群系与群系标签、生成间距、概率、随机盐、高度、旋转、地形起伏、流体与基础地形方块条件。
+
+```mcfunction
+/wwstructure list
+/wwstructure locate example_ruins
+/wwstructure search example_ruins 16
+```
+
+`locate` 返回当前维度已记录的生成结构中，水平距离最近的一处坐标；记录随存档保存。`search` 使用原版结构搜索，可以查找尚未探索区域中的生成位置。命令需要管理员权限（与原版 `/locate` 一致）。
+
+完整配置、条件含义、结构导出方法、停用规则和测试命令见 **[结构生成模块指南](docs/STRUCTURES.md)**。配置变更需要重启；不会给已生成区块补生成结构。
+
+### HFAS 模块
 
 取得经过验证、与上述 Minecraft / NeoForge 版本匹配的模组 JAR 后，将其放入对应实例的 `mods/` 目录。从源码生成 JAR 的步骤见下方。当前开发状态与待完善项见[开发指南](docs/DEVELOPMENT.md#待完善事项)。
 
@@ -99,11 +129,18 @@ WildWindModule/
 │   ├── hfas/
 │   │   ├── java/                 # HFAS 注册、玩法、配置与数据生成代码
 │   │   └── resources/            # 纹理、Blockbench 源文件、Mixin 配置等
+│   ├── structures/
+│   │   ├── java/                # 配置数据包、结构生成、坐标记录与指令
+│   │   ├── resources/           # 示例配置、NBT 模板、Mixin 配置
+│   │   ├── test/                # JUnit 配置与持久化测试
+│   │   └── gametest/            # 独立游戏测试模组与测试配置
 │   └── templates/                # 各模块共用的模组元数据模板
 ├── modules/hfas/                # Gradle 配置时创建的子项目目录
 │   └── build/                   # HFAS JAR、生成元数据和开发运行目录
+├── modules/structures/          # 结构生成模块构建与测试任务
 ├── build/generated/hfas/        # 数据生成输出（client/、server/）
 ├── docs/DEVELOPMENT.md           # 开发命令、源码导航与待完善项
+├── docs/STRUCTURES.md            # 结构配置与坐标查询指南
 ├── .github/workflows/build.yml  # GitHub Actions 构建流程
 ├── build.gradle.kts             # 共用构建配置与模块任务
 ├── settings.gradle.kts          # 模块启用列表与项目目录映射

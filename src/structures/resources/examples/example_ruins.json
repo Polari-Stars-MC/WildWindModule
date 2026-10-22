@@ -1,0 +1,23 @@
+{
+  "name": "example_ruins",
+  "enabled": false,
+  "template": "example_ruins.nbt",
+  "biomes": ["minecraft:plains", "#minecraft:is_forest"],
+  "placement": {
+    "spacing": 32,
+    "separation": 8,
+    "salt": 18372954,
+    "frequency": 1.0
+  },
+  "heightmap": "WORLD_SURFACE_WG",
+  "y_offset": -1,
+  "rotation": "random",
+  "include_entities": false,
+  "conditions": {
+    "min_y": 60,
+    "max_y": 160,
+    "max_terrain_difference": 6,
+    "avoid_fluids": true,
+    "ground_blocks": ["#minecraft:dirt", "minecraft:stone", "minecraft:sand"]
+  }
+}

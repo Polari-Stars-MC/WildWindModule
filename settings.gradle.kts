@@ -8,7 +8,7 @@ plugins {
     id("org.gradle.toolchains.foojay-resolver-convention") version("1.0.0")
 }
 
-val let = listOf("hfas")
+val let = listOf("hfas", "structures")
 let.forEach {
     include(it)
 

@@ -1,0 +1,6 @@
+{
+  "name": "disabled",
+  "enabled": false,
+  "template": "example_ruins.nbt",
+  "biomes": ["minecraft:plains"]
+}
