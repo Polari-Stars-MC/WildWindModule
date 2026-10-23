@@ -1,0 +1,12 @@
+{
+  "model": {
+    "type": "minecraft:model",
+    "model": "wild_wind_wilderness:block/blaze_leaves",
+    "tints": [
+      {
+        "type": "minecraft:constant",
+        "value": -32768
+      }
+    ]
+  }
+}

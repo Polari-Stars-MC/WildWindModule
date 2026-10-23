@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:blaze_chest_boat"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:soul_chest_boat"
+    }
+  ]
+}

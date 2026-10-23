@@ -1,0 +1,30 @@
+{
+  "values": [
+    "wild_wind_wilderness:blaze_log",
+    "wild_wind_wilderness:blaze_wood",
+    "wild_wind_wilderness:stripped_blaze_log",
+    "wild_wind_wilderness:stripped_blaze_wood",
+    "wild_wind_wilderness:blaze_planks",
+    "wild_wind_wilderness:blaze_stairs",
+    "wild_wind_wilderness:blaze_slab",
+    "wild_wind_wilderness:blaze_fence",
+    "wild_wind_wilderness:blaze_fence_gate",
+    "wild_wind_wilderness:blaze_door",
+    "wild_wind_wilderness:blaze_trapdoor",
+    "wild_wind_wilderness:blaze_pressure_plate",
+    "wild_wind_wilderness:blaze_button",
+    "wild_wind_wilderness:soul_log",
+    "wild_wind_wilderness:soul_wood",
+    "wild_wind_wilderness:stripped_soul_log",
+    "wild_wind_wilderness:stripped_soul_wood",
+    "wild_wind_wilderness:soul_planks",
+    "wild_wind_wilderness:soul_stairs",
+    "wild_wind_wilderness:soul_slab",
+    "wild_wind_wilderness:soul_fence",
+    "wild_wind_wilderness:soul_fence_gate",
+    "wild_wind_wilderness:soul_door",
+    "wild_wind_wilderness:soul_trapdoor",
+    "wild_wind_wilderness:soul_pressure_plate",
+    "wild_wind_wilderness:soul_button"
+  ]
+}

@@ -27,10 +27,27 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Generate client resources
-        run: ./gradlew :hfas:runClientData
+        run: ./gradlew :datagen:runClientData
 
       - name: Generate server resources
-        run: ./gradlew :hfas:runServerData
+        run: ./gradlew :datagen:runServerData
+
+      - name: Verify generated resource snapshots
+        run: |
+          python3 scripts/sync_generated_resources.py
+          git diff --exit-code -- src/core/resources src/wilderness/resources src/barren/resources
 
       - name: Build and run integration tests
-        run: ./gradlew build :hfas:runGameTest
+        run: ./gradlew build collectMods :verification:runGameTest
+
+      - name: Verify supported installations
+        run: |
+          for modules in core core,wilderness core,barren core,wilderness,barren; do
+            ./gradlew :smoke:runGameTest -PtestModules="$modules"
+          done
+
+      - name: Upload distributable mods
+        uses: actions/upload-artifact@v4
+        with:
+          name: WildWind-mc26.2
+          path: build/distributions/mods/*.jar

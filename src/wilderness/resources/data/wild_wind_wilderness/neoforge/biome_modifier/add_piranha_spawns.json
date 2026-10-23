@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#wild_wind_wilderness:entity_spawn/piranha",
+  "spawners": {
+    "type": "wild_wind_wilderness:piranha",
+    "maxCount": 5,
+    "minCount": 1,
+    "weight": 8
+  }
+}

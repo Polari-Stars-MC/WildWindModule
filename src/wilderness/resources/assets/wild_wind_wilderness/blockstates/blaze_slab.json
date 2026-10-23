@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "wild_wind_wilderness:block/blaze_slab"
+    },
+    "type=double": {
+      "model": "wild_wind_wilderness:block/blaze_planks"
+    },
+    "type=top": {
+      "model": "wild_wind_wilderness:block/blaze_slab_top"
+    }
+  }
+}

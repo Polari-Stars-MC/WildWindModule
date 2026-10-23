@@ -1,10 +1,10 @@
-# 结构生成功能 · 内置于 ww_hfas
+# 结构生成功能 · 内置于 wild_wind_core
 
-为 Minecraft **26.2 / NeoForge 26.2.0.93 / Java 25** 添加可配置的世界结构。本功能与新物品、泥猪共用 `ww_hfas` 模组和同一个 JAR；`ww_structures` 仅作为兼容旧配置与存档的资源命名空间保留。每个结构由一个 JSON 配置与一个原版压缩 NBT 模板组成，无需编写 Java 或手工创建数据包。
+为 Minecraft **26.2 / NeoForge 26.2.0.93 / Java 25** 添加可配置的世界结构。本功能与七种普通材料归入核心 `wild_wind_core`，无需荒野模块；`ww_structures` 仅作为兼容旧配置与存档的资源命名空间保留。每个结构由一个 JSON 配置与一个原版压缩 NBT 模板组成，无需编写 Java 或手工创建数据包。
 
 ## 1. 创建第一个结构
 
-1. 安装统一的 `ww_hfas-mc26.2-1.0.1.jar`（更新旧版时移除原来的独立 `ww_structures` JAR），创建或打开世界，使配置目录初始化，然后关闭世界／服务器。
+1. 安装核心 `wild_wind_core-mc26.2-1.0.1.jar`（更新旧版时移除原来的独立 `ww_structures` JAR），创建或打开世界，使配置目录初始化，然后关闭世界／服务器。
 2. 在实例目录中找到 `config/ww_structures/`。专用服务器使用服务器自己的目录；客户端加入服务器时，以服务器配置为准。
 3. 将 `example_ruins.json.disabled` 复制到 `definitions/example_ruins.json`，把 `enabled` 改为 `true`。
 4. 保留随附的 `templates/example_ruins.nbt`，或换成自己的结构方块模板。
@@ -142,9 +142,9 @@ config/ww_structures/
 Windows PowerShell：
 
 ```powershell
-.\gradlew.bat :hfas:test
-.\gradlew.bat :hfas:runGameTest
-.\gradlew.bat :hfas:build
+.\gradlew.bat :core:test :wilderness:test
+.\gradlew.bat :verification:runGameTest
+.\gradlew.bat build collectMods
 ```
 
 Linux / macOS 将 `.\gradlew.bat` 换成 `./gradlew`。单元测试覆盖配置边界、路径越界、关闭生成时保留定义、资源输出、模板尺寸与坐标索引序列化。统一 GameTest 模组联合加载新物品、泥猪与结构功能，检查配置数据包加载、原版搜索、实际区块生成、模板方块、片段 NBT 保存恢复和指令执行；不会打包进发行 JAR。
@@ -153,6 +153,6 @@ GameTest 使用 `modules/hfas/build/runs/hfas/gameTest/` 下的专用临时世�
 
 测试模组在专用 GameTest 世界启用原版默认关闭的结构生成，并为超平坦预设添加测试结构集合。这些改动只存在于测试资源中。普通超平坦世界若指定了 `structure_overrides`，也需将自己的结构集合加入允许列表；常规默认地形世界没有这项超平坦限制。
 
-若中文 Windows 路径下 JUnit 报 `ClassNotFoundException`，但对应 `.class` 已存在，可临时使用 `.\gradlew.bat :hfas:test "-Dorg.gradle.jvmargs=-Xmx1G -Dfile.encoding=GBK"`，使 Gradle 参数文件与本机 Java 启动器编码一致。源码仍以 UTF-8 编译；此参数无需写入仓库配置。
+若中文 Windows 路径下 JUnit 报 `ClassNotFoundException`，但对应 `.class` 已存在，可临时使用 `.\gradlew.bat :core:test :wilderness:test "-Dorg.gradle.jvmargs=-Xmx1G -Dfile.encoding=GBK"`，使 Gradle 参数文件与本机 Java 启动器编码一致。源码仍以 UTF-8 编译；此参数无需写入仓库配置。
 
-实际代码在 `src/structures/java/`，直接编入 HFAS，由 `StructureModule.register` 初始化：`config` 负责配置和不可变资源快照，`worldgen` 注册结构类型／模板片段及坐标索引，`command` 注册查询指令。配置资源通过强制启用的服务器数据包 `ww_structures/config` 接入原版世界生成。
+实际代码在 `src/core/java/org/polaris2023/wildwind/structures/`，直接编入 Core，由 `StructureModule.register` 初始化：`config` 负责配置和不可变资源快照，`worldgen` 注册结构类型／模板片段及坐标索引，`command` 注册查询指令。配置资源通过强制启用的服务器数据包 `ww_structures/config` 接入原版世界生成。

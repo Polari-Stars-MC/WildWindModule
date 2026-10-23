@@ -1,0 +1,23 @@
+{
+  "required": true,
+  "package": "org.polaris2023.wildwind.core.mixin",
+  "compatibilityLevel": "JAVA_25",
+  "mixins": [
+    "FurnaceFuelAccessor",
+    "SinglePoolElementMixin",
+    "AbstractSkeletonMixin",
+    "AzaleaBlockMixin",
+    "CrafterBlockMixin",
+    "SkeletonMeleeMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "overwrites": {
+    "requireAnnotations": true
+  },
+  "client": [
+    "SignRenderStateMixin",
+    "AzaleaSignRendererMixin"
+  ]
+}

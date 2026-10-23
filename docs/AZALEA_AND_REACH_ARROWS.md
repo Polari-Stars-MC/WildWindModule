@@ -1,31 +1,33 @@
+> 模块归属：杜鹃木告示牌、悬挂告示牌、展示架在核心；延展药水与延展之箭在荒野。自定义部件制箭系统已暂时移除。
+
 # 杜鹃木功能方块与延展之箭
 
-适用：Minecraft 26.2 / NeoForge 26.2.0.93，统一模组 `ww_hfas`。所有新增物品在创造模式「原野之风」分页，也可以全局搜索。本文档中的 ID 使用项目实际命名空间 `ww_hfas`；需求稿中的 `wwhfas` 统一为该命名空间。
+适用：Minecraft 26.2 / NeoForge 26.2.0.93。物品集中在创造模式「原野之风」分页，支持全局搜索。本文命令使用拆分后的模块命名空间。
 
 ## 获取与配方
 
 | 内容 | 物品 ID | 配方 | 数量 |
 | --- | --- | --- | --- |
-| 杜鹃木告示牌 | `ww_hfas:azalea_sign` | 前两行各 3 块杜鹃木板，第三行中间 1 根木棍 | 3 |
-| 悬挂式杜鹃木告示牌 | `ww_hfas:azalea_hanging_sign` | 第一行左右各 1 根铁链，后两行各 3 根去皮杜鹃原木 | 6 |
-| 杜鹃木展示架 | `ww_hfas:azalea_shelf` | 第一、三行各 3 根去皮杜鹃原木，中间一行留空 | 6 |
-| 延展之箭 | `ww_hfas:tipped_arrow` | 中央滞留型延展药水，周围 8 支原版箭 | 8 |
+| 杜鹃木告示牌 | `wild_wind_core:azalea_sign` | 前两行各 3 块杜鹃木板，第三行中间 1 根木棍 | 3 |
+| 悬挂式杜鹃木告示牌 | `wild_wind_core:azalea_hanging_sign` | 第一行左右各 1 根铁链，后两行各 3 根去皮杜鹃原木 | 6 |
+| 杜鹃木展示架 | `wild_wind_core:azalea_shelf` | 第一、三行各 3 根去皮杜鹃原木，中间一行留空 | 6 |
+| 延展之箭 | `wild_wind_wilderness:tipped_arrow` | 中央滞留型延展药水，周围 8 支原版箭 | 8 |
 
 ```mcfunction
-/give @s ww_hfas:azalea_sign 3
-/give @s ww_hfas:azalea_hanging_sign 6
-/give @s ww_hfas:azalea_shelf 6
-/give @s ww_hfas:tipped_arrow 64
-/give @s ww_hfas:tipped_arrow[potion_contents={potion:"ww_hfas:long_reach"}] 64
-/give @s minecraft:lingering_potion[potion_contents={potion:"ww_hfas:reach"}]
-/give @s minecraft:lingering_potion[potion_contents={potion:"ww_hfas:long_reach"}]
+/give @s wild_wind_core:azalea_sign 3
+/give @s wild_wind_core:azalea_hanging_sign 6
+/give @s wild_wind_core:azalea_shelf 6
+/give @s wild_wind_wilderness:tipped_arrow 64
+/give @s wild_wind_wilderness:tipped_arrow[potion_contents={potion:"wild_wind_wilderness:long_reach"}] 64
+/give @s minecraft:lingering_potion[potion_contents={potion:"wild_wind_wilderness:reach"}]
+/give @s minecraft:lingering_potion[potion_contents={potion:"wild_wind_wilderness:long_reach"}]
 ```
 
 两种告示牌最大堆叠 16，展示架与箭最大堆叠 64。方块不添加自然生成。
 
 ## 告示牌
 
-普通告示牌有站立和墙面两种方块，悬挂式有吊顶和墙面两种方块。墙面 ID 分别为 `ww_hfas:azalea_wall_sign`、`ww_hfas:azalea_wall_hanging_sign`，由同一对应物品根据放置位置选择。
+普通告示牌有站立和墙面两种方块，悬挂式有吊顶和墙面两种方块。墙面 ID 分别为 `wild_wind_core:azalea_wall_sign`、`wild_wind_core:azalea_wall_hanging_sign`，由同一对应物品根据放置位置选择。
 
 - 继承原版朝向、支撑检查、含水、链条连接与碰撞行为。普通和吊顶告示牌无碰撞，墙面悬挂式仅上方横杆有碰撞。
 - 正反面各四行文字，支持放置时编辑、再次编辑、染料、荧光墨囊、墨囊与蜜脾涂蜡。沿用原版编辑者锁定及服务器文本校验。
@@ -52,7 +54,7 @@
 
 ## 延展之箭
 
-独立物品为 `ww_hfas:tipped_arrow`，射出的实体为 `ww_hfas:arrow`。直接给予该物品时默认带普通延展药水成分。
+独立物品为 `wild_wind_wilderness:tipped_arrow`，射出的实体为 `wild_wind_wilderness:arrow`。直接给予该物品时默认带普通延展药水成分。
 
 | 中央药水 | 箭命中后效果 |
 | --- | --- |
@@ -70,7 +72,7 @@
 
 ## 已执行验证
 
-客户端／服务端数据生成、构建、11 项单元测试、24 组服务端 GameTest 均通过。另启动开发客户端完成资源加载并正常退出，未发现本次新增资源缺失或 Mixin 加载错误；日志仍有原项目制箭台、焦灰草方块及未注册木材资源的既有材质警告，本次未修改这些内容。新增五组测试覆盖：
+模块拆分后的客户端／服务端数据生成、构建、11 项单元测试、24 组服务端 GameTest 均通过。核心单独安装及完整组合的客户端完成资源加载并自动退出。仍有焦灰草方块及未注册木材模型的既有材质警告。新增五组测试覆盖：
 
 1. 四种告示牌的有效方块实体、双面文字／颜色／发光／蜡存档、管理员数据限制、掉落、含水属性、硬度、活塞和燃料。
 2. 展示架所有 8 种比较器组合、主手整组交换、库存与对齐存档、漏斗抽取、物品能力、燃料和可燃性。

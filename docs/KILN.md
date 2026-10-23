@@ -1,14 +1,14 @@
 # 窑炉（Kiln）
 
-窑炉是 Minecraft 26.2 / NeoForge 统一模组 `ww_hfas` 中的功能方块，方块和物品 ID 均为 `ww_hfas:kiln`。目前复用原版熔炉四向模型、点燃模型、界面贴图、烟雾／火焰粒子和燃烧声，显示名称为「窑炉」。后续可以独立替换模型。
+窑炉是 Minecraft 26.2 / NeoForge 核心模组 `wild_wind_core` 中的功能方块，方块和物品 ID 均为 `wild_wind_core:kiln`。目前复用原版熔炉四向模型、点燃模型、界面贴图、烟雾／火焰粒子和燃烧声，显示名称为「窑炉」。后续可以独立替换模型。
 
 ## 获取与合成
 
 位于创造模式「原野之风」分页，沿用本项目所有模组物品集中分页的设置。最大堆叠为 64。
 
 ```mcfunction
-/give @s ww_hfas:kiln
-/setblock ~ ~ ~ ww_hfas:kiln[facing=north]
+/give @s wild_wind_core:kiln
+/setblock ~ ~ ~ wild_wind_core:kiln[facing=north]
 ```
 
 工作台配方如下，红砖使用 `minecraft:brick`，泥坯使用 `minecraft:packed_mud`：
@@ -27,9 +27,9 @@
 
 原料限制由以下规则共同决定：
 
-- `ww_hfas:kiln_excluded` 排除标签默认包含公共的矿石、粗金属、锭、粒、宝石标签。
+- `wild_wind_core:kiln_excluded` 排除标签默认包含公共的矿石、粗金属、锭、粒、宝石标签。
 - 具有高炉配方的原料排除，覆盖原版矿物和金属装备回收。
-- 可损耗耐久的物品若烧炼产物属于 `ww_hfas:kiln_metal_outputs`（默认锭、粒），也会排除。
+- 可损耗耐久的物品若烧炼产物属于 `wild_wind_core:kiln_metal_outputs`（默认锭、粒），也会排除。
 
 上方输入槽和顶部漏斗拒绝不符合条件的物品。即使使用指令强行写入不合格原料也不会烧炼或点火。数据包可扩展这两个物品标签；已有配方随世界配方加载／重载生效。
 

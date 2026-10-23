@@ -1,0 +1,10 @@
+{
+  "values": [
+    "minecraft:clay",
+    "minecraft:mud",
+    "minecraft:dirt",
+    "minecraft:muddy_mangrove_roots",
+    "#minecraft:sand",
+    "#c:gravels"
+  ]
+}

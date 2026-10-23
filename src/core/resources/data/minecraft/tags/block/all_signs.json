@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "wild_wind_core:azalea_sign"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_core:azalea_wall_sign"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom_right_open",
+  "textures": {
+    "bottom": "wild_wind_wilderness:block/blaze_door_bottom",
+    "top": "wild_wind_wilderness:block/blaze_door_top"
+  }
+}

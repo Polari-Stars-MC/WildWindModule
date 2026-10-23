@@ -1,0 +1,10 @@
+{
+  "values": [
+    {
+      "id": "#wild_wind_wilderness:water_breathing",
+      "required": false
+    },
+    "wild_wind_wilderness:mudcrab",
+    "wild_wind_wilderness:piranha"
+  ]
+}

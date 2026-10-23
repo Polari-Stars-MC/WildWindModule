@@ -1,7 +1,0 @@
-{
-  "type": "minecraft:function",
-  "function": "ww_hfas_tests:cobweb_tick_event",
-  "environment": "minecraft:default",
-  "structure": "ww_hfas_tests:empty",
-  "max_ticks": 240
-}

@@ -1,0 +1,10 @@
+{
+  "type": "neoforge:add_spawns",
+  "biomes": "#wild_wind_wilderness:spawns_muddy_pig",
+  "spawners": {
+    "type": "wild_wind_wilderness:muddy_pig",
+    "weight": 10,
+    "minCount": 2,
+    "maxCount": 4
+  }
+}

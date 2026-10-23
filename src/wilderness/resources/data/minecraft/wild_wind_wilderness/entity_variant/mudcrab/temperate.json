@@ -1,0 +1,8 @@
+{
+  "asset_id": "wild_wind_wilderness:entity/mudcrab/temperate",
+  "spawn_conditions": [
+    {
+      "priority": 0
+    }
+  ]
+}

@@ -1,3 +1,15 @@
+# 2026-10-23 · 三模组拆分
+
+- 按最新归属拆分 `wild_wind_core`、`wild_wind_wilderness`、`wild_wind_barren`，各有入口、注册代码、资源与发行 JAR。
+- 荒野／瘠土分别依赖核心；只有荒野需要 GeckoLib。保留共享创造分页和蟹钳／熔炼联动。
+- 杜鹃木、窑炉及通用玩法归核心；两种下界木材、生物、状态效果与焦灰植物归荒野；仙人球归瘠土。
+- 暂时移除自定义部件制箭系统及原版制箭台替换行为，保留已完成的延展药水箭。
+- 数据生成快照随源码保存；更新 README、进度、开发指南和 CI。
+- 本地验证：11 项单元测试、24 组 GameTest、四种服务端安装组合，核心／完整组合客户端资源加载通过。
+- 旧 `ww_hfas:*` 注册 ID 无自动存档迁移；升级前备份并用新世界验证。结构配置与结构资源兼容命名空间保留。
+
+---
+
 # Changelog
 
 All notable changes to the Wild Wind Module project will be documented in this file.

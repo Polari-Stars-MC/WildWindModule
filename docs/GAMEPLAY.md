@@ -1,10 +1,10 @@
 # 新增玩法说明
 
-适用于当前 Minecraft 26.2 / NeoForge 的统一模组 `ww_hfas`。安装文件为 `ww_hfas-mc26.2-1.0.1.jar`，同时包含结构生成、泥猪、七个普通物品及本页玩法。
+适用于 Minecraft 26.2 / NeoForge。羊毛、蜘蛛网、骷髅、耕地、窑炉和熔炼在核心；沉溺、窒息与呼吸规则在荒野，安装组合见 README。
 
 ## 窑炉
 
-`ww_hfas:kiln` 是同一模组内的功能方块，使用原版熔炉外观，每 100 刻烧炼一件非矿物、非金属装备材料。完整获取方式、漏斗、经验、命名、锁定和村庄生成规则见 [窑炉说明](KILN.md)。
+`wild_wind_core:kiln` 是同一模组内的功能方块，使用原版熔炉外观，每 100 刻烧炼一件非矿物、非金属装备材料。完整获取方式、漏斗、经验、命名、锁定和村庄生成规则见 [窑炉说明](KILN.md)。
 
 ## 羊毛拆线
 
@@ -14,7 +14,7 @@
 - 每次合成尝试消耗剪刀 1 点耐久，调用原版耐久规则，因此耐久附魔有概率免除本次损耗。
 - 剪刀的附魔、自定义名称等组件保留；耗尽最后一点耐久时剪刀消失。
 - 每次实际合成都独立判定耐久，连续／Shift 合成同样适用。
-- 配方 ID 与序列化类型均为 `ww_hfas:wool_to_string`。这是自定义特殊配方，直接放入材料即可合成。
+- 配方 ID 与序列化类型均为 `wild_wind_core:wool_to_string`。这是自定义特殊配方，直接放入材料即可合成。
 
 ## 蜘蛛网挣脱
 
@@ -37,8 +37,8 @@
 
 | 效果 | ID | 行为 |
 | --- | --- | --- |
-| 沉溺 | `ww_hfas:sink` | 只对下方沉溺名单生效。接触流体时限制向上位移与向上速度，包括水与熔岩；水平、向下移动仍可进行。更高等级不叠加额外限制。 |
-| 窒息 | `ww_hfas:choke` | 对下方窒息名单中的实体，眼睛浸在水中时加速消耗氧气；I 级 2 倍、II 级 3 倍，依此类推。蝌蚪、美西螈单独在陆地处理。 |
+| 沉溺 | `wild_wind_wilderness:sink` | 只对下方沉溺名单生效。接触流体时限制向上位移与向上速度，包括水与熔岩；水平、向下移动仍可进行。更高等级不叠加额外限制。 |
+| 窒息 | `wild_wind_wilderness:choke` | 对下方窒息名单中的实体，眼睛浸在水中时加速消耗氧气；I 级 2 倍、II 级 3 倍，依此类推。蝌蚪、美西螈单独在陆地处理。 |
 
 窒息名单中的青蛙、海龟、骆驼尸壳及铁傀儡也会消耗水下氧气。水下呼吸、潮涌能量、鹦鹉螺之息的药水效果及气泡柱仍提供呼吸保护，创造模式无敌玩家也不受影响；水下呼吸附魔跳过消耗的刻仍保持零消耗。普通名单内实体离水后正常恢复氧气。
 
@@ -54,7 +54,7 @@
 
 **蝌蚪、美西螈的窒息特例**：不放入 `choke_affected` 标签。代码单独检查 `isInWater()`，在水中不触发；离水后将原版缺氧／干燥消耗提高至 I 级 2 倍、II 级 3 倍。氧气耗尽时继续使用原版伤害与重置规则。美西螈仍保留雨水补水及 NoAI 时不干燥的原版行为。入水后恢复原版补氧。
 
-**模组生物**：泥猪 `ww_hfas:muddy_pig` 继续同时受沉溺和水中窒息影响；泥沼蟹与恐鱼继续免于水下缺氧。
+**模组生物**：泥猪 `wild_wind_wilderness:muddy_pig` 继续同时受沉溺和水中窒息影响；泥沼蟹与恐鱼继续免于水下缺氧。
 
 两份效果名单均按实体 ID 精确匹配。幻翼现不受这两个效果影响；哞菇、行商羊驼现已加入两份名单。所有其他未列入的实体不受相应效果的移动限制或额外氧气消耗，包括用户列出的不生效实体。窒息不生效不等于获得新的水下呼吸能力，未获免缺氧保护的生物仍可能正常溺水。哞兽 `moobloom` 和冻尸 `frosted_zombie` 当前未注册，也未添加任何必需标签引用。
 
@@ -62,18 +62,18 @@
 
 | 生物 | 实体 ID | 状态 |
 | --- | --- | --- |
-| 泥沼蟹 | `ww_hfas:mudcrab` | 已随远端 `26.2` 分支合并，当前版本实际注册并通过水下呼吸测试 |
-| 恐鱼（Direfish，原食人鱼） | `ww_hfas:piranha` | 已实际注册并通过水下呼吸测试；更名后沿用原 ID，兼容已有存档 |
+| 泥沼蟹 | `wild_wind_wilderness:mudcrab` | 已随远端 `26.2` 分支合并，当前版本实际注册并通过水下呼吸测试 |
+| 恐鱼（Direfish，原食人鱼） | `wild_wind_wilderness:piranha` | 已实际注册并通过水下呼吸测试；更名后沿用原 ID，兼容已有存档 |
 
-上述两个 ID 以 `required: false` 加入标签。`1.0.1` 已包含泥沼蟹和恐鱼的完整实现；恐鱼、生恐鱼、熟恐鱼、恐鱼刷怪蛋、恐鱼桶及音效字幕均使用新名称，英文为 Direfish。召唤恐鱼使用 `/summon ww_hfas:piranha`。标签中旧的可选预留项 `ww_hfas:direfish` 保留兼容，但它不是已注册的实体 ID，也不是召唤别名。安装时需要 GeckoLib 5.5.4 的 Minecraft 26.2 NeoForge 版本。
+上述两个 ID 以 `required: false` 加入标签。`1.0.1` 已包含泥沼蟹和恐鱼的完整实现；恐鱼、生恐鱼、熟恐鱼、恐鱼刷怪蛋、恐鱼桶及音效字幕均使用新名称，英文为 Direfish。召唤恐鱼使用 `/summon wild_wind_wilderness:piranha`。标签中旧的可选预留项 `wild_wind_core:direfish` 保留兼容，但它不是已注册的实体 ID，也不是召唤别名。安装时需要 GeckoLib 5.5.4 的 Minecraft 26.2 NeoForge 版本。
 
 ### 用数据包调整名单
 
 | 标签 | 数据包文件 |
 | --- | --- |
-| `ww_hfas:water_breathing` | `data/ww_hfas/tags/entity_type/water_breathing.json` |
-| `ww_hfas:sink_affected` | `data/ww_hfas/tags/entity_type/sink_affected.json` |
-| `ww_hfas:choke_affected` | `data/ww_hfas/tags/entity_type/choke_affected.json` |
+| `wild_wind_wilderness:water_breathing` | `data/wild_wind_wilderness/tags/entity_type/water_breathing.json` |
+| `wild_wind_wilderness:sink_affected` | `data/wild_wind_wilderness/tags/entity_type/sink_affected.json` |
+| `wild_wind_wilderness:choke_affected` | `data/wild_wind_wilderness/tags/entity_type/choke_affected.json` |
 
 在数据包中使用同路径 JSON 即可扩展名单。例如，让自定义生物受到沉溺影响：
 
@@ -90,20 +90,20 @@
 
 ```mcfunction
 # 持续 60 秒，默认 I 级
-/effect give @s ww_hfas:sink 60
-/effect give @s ww_hfas:choke 60
+/effect give @s wild_wind_wilderness:sink 60
+/effect give @s wild_wind_wilderness:choke 60
 # 窒息 II，指令中的等级参数从 0 开始
-/effect give @s ww_hfas:choke 60 1
-/effect clear @s ww_hfas:sink
-/effect clear @s ww_hfas:choke
+/effect give @s wild_wind_wilderness:choke 60 1
+/effect clear @s wild_wind_wilderness:sink
+/effect clear @s wild_wind_wilderness:choke
 ```
 
 ## 熔炼附魔
 
-- ID：`ww_hfas:melting`，中文「熔炼」，英文「Melting」，最高 I 级。
+- ID：`wild_wind_core:melting`，中文「熔炼」，英文「Melting」，最高 I 级。
 - 支持 `minecraft:enchantable/mining` 标签中的工具，包括镐、斧、锹、锄与剪刀。
 - 加入原版非宝藏附魔标签，沿用原版相应的附魔台、附魔书交易及随机附魔入口。
-- 手持工具执行 `/enchant @s ww_hfas:melting 1` 可直接添加。
+- 手持工具执行 `/enchant @s wild_wind_core:melting 1` 可直接添加。
 
 处理顺序如下：
 
@@ -150,11 +150,11 @@
 
 ## 创造模式物品栏
 
-所有已注册的模组方块物品与普通物品集中在「原野之风」分页，ID 为 `ww_hfas:wild_wind`，图标使用泥沼蟹桶。另收录两种延展药水的普通／喷溅／滞留形态、对应药箭和熔炼 I 附魔书。原版分类中的重复入口已移除，全局搜索仍能找到模组内容。以后加入 `ModBlocks.ITEMS` 或 `ModItems.ITEMS` 的物品会自动收录。
+所有已注册的模组方块物品与普通物品集中在「原野之风」分页，ID 为 `wild_wind_core:wild_wind`，图标使用杜鹃木板。另收录两种延展药水的普通／喷溅／滞留形态、对应药箭和熔炼 I 附魔书。原版分类中的重复入口已移除，全局搜索仍能找到模组内容。以后加入 `ModBlocks.ITEMS` 或 `ModItems.ITEMS` 的物品会自动收录。
 
 ## 开发与验证
 
-代码位于 `src/hfas/java/org/polaris2023/wildwind/hfas/`：
+代码分别位于 `src/core/java/org/polaris2023/wildwind/core/` 与 `src/wilderness/java/org/polaris2023/wildwind/wilderness/`：
 
 | 路径 | 用途 |
 | --- | --- |
@@ -168,14 +168,15 @@
 | `event/FarmlandProtection.java` | 摔落缓冲／缓降的耕地踩踏保护 |
 | `registry/ModCreativeTabs.java` | 独立创造分页及原版重复内容移除 |
 
-配方、附魔及附魔标签直接保存在 `src/hfas/resources/data/`；效果图标位于 `assets/ww_hfas/textures/mob_effect/`。中英文翻译同步维护源码备用资源与语言数据生成器。
+配方、附魔及附魔标签直接保存在 `src/core/resources/data/`；效果图标位于 `src/wilderness/resources/assets/wild_wind_wilderness/textures/mob_effect/`。中英文翻译同步维护源码备用资源与语言数据生成器。
 
 在 JDK 25 环境执行：
 
 ```powershell
-.\gradlew.bat :hfas:runClientData
-.\gradlew.bat :hfas:runServerData
-.\gradlew.bat :hfas:build :hfas:runGameTest
+.\gradlew.bat :datagen:runClientData
+.\gradlew.bat :datagen:runServerData
+python scripts/sync_generated_resources.py
+.\gradlew.bat build collectMods :verification:runGameTest
 ```
 
 `GameplayGameTests` 注册 16 组游戏测试：所有颜色羊毛与槽位顺序、手动连续合成及 Shift 转移、剪刀损坏与耐久附魔、红石驱动的自动合成器、水／熔岩中的沉溺、窒息与呼吸保护、蜘蛛网 30／160 刻边界及豁免、实际实体刻事件、精准采集与时运优先级、经验不足、跨等级扣费及原版方块掉落路径。其中 `FluidEntityRulesGameTests` 核对两份效果名单的完整 ID 集合，逐类验证水下免缺氧名单（含泥沼蟹与恐鱼）、沉溺移动限制，以及所有窒息生效实体的实际水中耗氧、等级倍率和呼吸保护。另有 `land_choke` 测试蝌蚪与美西螈的真实陆地耗氧、伤害阈值、移除效果及返回水中的恢复，并确认共享基类中的鳕鱼不受影响。`UpstreamIntegrationGameTests` 检查泥沼蟹变种、生物桶、恐鱼熔炉配方、延展属性，以及万用蟹钳中的熔炼工具通过真实玩家挖掘路径扣费并产生铁锭。`SkeletonAndFarmlandGameTests` 新增四组测试：固定种子下四类骷髅各 200 次真实生成及武器 AI，三种近战效果的时长／等级和失败攻击，真实摔落路径的耕地保护与剩余伤害，以及模组分页完整性、药水去重与全局搜索。`KilnGameTests` 的三组测试验证窑炉的合成与方块属性、100 刻边界、原料排除、燃料及读档、输出阻塞、湿海绵装水、漏斗流向与取出顺序、经验领取、命名锁定、比较器、破坏掉落，以及六种石匠屋各四个旋转方向的真实结构池放置。另有原来的物品、泥猪与结构测试，加上杜鹃木告示牌、展示架、展示架红石联动、延展箭行为及获取途径五组测试，合计 24 组游戏测试。预留的 `direfish` 项只验证不阻断标签加载，无法执行实体行为测试。
@@ -183,4 +184,4 @@
 
 ## 杜鹃木功能方块与延展之箭
 
-普通／悬挂式告示牌、三槽展示架及独立延展之箭已接入同一个模组，全部位于“原野之风”分页。获取命令、配方、红石交换、交易与英雄礼物规则见 [详细说明](AZALEA_AND_REACH_ARROWS.md)。
+普通／悬挂式告示牌和三槽展示架归核心，独立延展之箭归荒野，全部位于“原野之风”分页。获取命令、配方、红石交换、交易与英雄礼物规则见 [详细说明](AZALEA_AND_REACH_ARROWS.md)。

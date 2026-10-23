@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_shelf_unconnected",
-  "textures": {
-    "all": "ww_hfas:block/azalea_shelf",
-    "particle": "ww_hfas:block/stripped_azalea_log"
-  }
-}

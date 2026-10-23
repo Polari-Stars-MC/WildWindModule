@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "wild_wind_wilderness:block/soul_leaves"
+  }
+}

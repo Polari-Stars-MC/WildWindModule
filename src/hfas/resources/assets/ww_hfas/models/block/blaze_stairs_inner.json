@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/inner_stairs",
-  "textures": {
-    "bottom": "ww_hfas:block/blaze_planks",
-    "side": "ww_hfas:block/blaze_planks",
-    "top": "ww_hfas:block/blaze_planks"
-  }
-}
