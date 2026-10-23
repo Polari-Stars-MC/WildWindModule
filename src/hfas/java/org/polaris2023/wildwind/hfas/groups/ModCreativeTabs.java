@@ -4,12 +4,16 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.BuildCreativeModeTabContentsEvent;
+import net.neoforged.neoforge.registries.DeferredBlock;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
+import org.polaris2023.wildwind.hfas.block.WoodFamily;
 
 /**
  * 创造模式物品栏配置
@@ -27,88 +31,10 @@ public class ModCreativeTabs {
         // 建筑方块物品栏
 
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            // 杜鹃系列
-            {
-                ItemStack logStack = ModBlocks.AZALEA_LOG.toStack();
-                event.insertAfter(new ItemStack(Blocks.CHERRY_BUTTON), logStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack woodStack = ModBlocks.AZALEA_WOOD.toStack();
-                event.insertAfter(logStack, woodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedLogStack = ModBlocks.STRIPPED_AZALEA_LOG.toStack();
-                event.insertAfter(woodStack, strippedLogStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedWoodStack = ModBlocks.STRIPPED_AZALEA_WOOD.toStack();
-                event.insertAfter(strippedLogStack, strippedWoodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack planksStack = ModBlocks.AZALEA_PLANKS.toStack();
-                event.insertAfter(strippedWoodStack, planksStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack stairsStack = ModBlocks.AZALEA_STAIRS.toStack();
-                event.insertAfter(planksStack, stairsStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack slabStack = ModBlocks.AZALEA_SLAB.toStack();
-                event.insertAfter(stairsStack, slabStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceStack = ModBlocks.AZALEA_FENCE.toStack();
-                event.insertAfter(slabStack, fenceStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceGateStack = ModBlocks.AZALEA_FENCE_GATE.toStack();
-                event.insertAfter(fenceStack, fenceGateStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack doorStack = ModBlocks.AZALEA_DOOR.toStack();
-                event.insertAfter(fenceGateStack, doorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack trapdoorStack = ModBlocks.AZALEA_TRAPDOOR.toStack();
-                event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(trapdoorStack, ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.AZALEA_PRESSURE_PLATE.toStack(), ModBlocks.AZALEA_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
-            // 焚烬系列
-            {
-                ItemStack logStack = ModBlocks.BLAZE_LOG.toStack();
-                event.insertAfter(new ItemStack(Blocks.BAMBOO_BUTTON), logStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack woodStack = ModBlocks.BLAZE_WOOD.toStack();
-                event.insertAfter(logStack, woodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedLogStack = ModBlocks.STRIPPED_BLAZE_LOG.toStack();
-                event.insertAfter(woodStack, strippedLogStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedWoodStack = ModBlocks.STRIPPED_BLAZE_WOOD.toStack();
-                event.insertAfter(strippedLogStack, strippedWoodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack planksStack = ModBlocks.BLAZE_PLANKS.toStack();
-                event.insertAfter(strippedWoodStack, planksStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack stairsStack = ModBlocks.BLAZE_STAIRS.toStack();
-                event.insertAfter(planksStack, stairsStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack slabStack = ModBlocks.BLAZE_SLAB.toStack();
-                event.insertAfter(stairsStack, slabStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceStack = ModBlocks.BLAZE_FENCE.toStack();
-                event.insertAfter(slabStack, fenceStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceGateStack = ModBlocks.BLAZE_FENCE_GATE.toStack();
-                event.insertAfter(fenceStack, fenceGateStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack doorStack = ModBlocks.BLAZE_DOOR.toStack();
-                event.insertAfter(fenceGateStack, doorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack trapdoorStack = ModBlocks.BLAZE_TRAPDOOR.toStack();
-                event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(trapdoorStack, ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.BLAZE_PRESSURE_PLATE.toStack(), ModBlocks.BLAZE_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
-            // 灵焰系列
-            {
-                ItemStack logStack = ModBlocks.SOUL_LOG.toStack();
-                event.insertAfter(ModBlocks.BLAZE_BUTTON.toStack(), logStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack woodStack = ModBlocks.SOUL_WOOD.toStack();
-                event.insertAfter(logStack, woodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedLogStack = ModBlocks.STRIPPED_SOUL_LOG.toStack();
-                event.insertAfter(woodStack, strippedLogStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack strippedWoodStack = ModBlocks.STRIPPED_SOUL_WOOD.toStack();
-                event.insertAfter(strippedLogStack, strippedWoodStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack planksStack = ModBlocks.SOUL_PLANKS.toStack();
-                event.insertAfter(strippedWoodStack, planksStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack stairsStack = ModBlocks.SOUL_STAIRS.toStack();
-                event.insertAfter(planksStack, stairsStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack slabStack = ModBlocks.SOUL_SLAB.toStack();
-                event.insertAfter(stairsStack, slabStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceStack = ModBlocks.SOUL_FENCE.toStack();
-                event.insertAfter(slabStack, fenceStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack fenceGateStack = ModBlocks.SOUL_FENCE_GATE.toStack();
-                event.insertAfter(fenceStack, fenceGateStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack doorStack = ModBlocks.SOUL_DOOR.toStack();
-                event.insertAfter(fenceGateStack, doorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                ItemStack trapdoorStack = ModBlocks.SOUL_TRAPDOOR.toStack();
-                event.insertAfter(doorStack, trapdoorStack, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(trapdoorStack, ModBlocks.SOUL_PRESSURE_PLATE.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-                event.insertAfter(ModBlocks.SOUL_PRESSURE_PLATE.toStack(), ModBlocks.SOUL_BUTTON.toStack(), CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
-            }
-
+            // 三种木材：按家族顺序插入（以原版/本模组方块作锚点）
+            appendWoodSet(event, new ItemStack(Blocks.CHERRY_BUTTON), ModWoodFamilies.AZALEA);
+            appendWoodSet(event, new ItemStack(Blocks.BAMBOO_BUTTON), ModWoodFamilies.BLAZE);
+            appendWoodSet(event, ModBlocks.BLAZE_BUTTON.toStack(), ModWoodFamilies.SOUL);
 
             // 焦灰草方块
 //            event.accept(ModBlocks.SCORCHED_GRASS_BLOCK.get());
@@ -139,5 +65,24 @@ public class ModCreativeTabs {
 //            event.accept(ModBlocks.SCORCHED_DIRT.get());
         }
 
+    }
+
+    /** 物品栏可见性：主标签页 + 搜索页 */
+    private static final CreativeModeTab.TabVisibility VISIBILITY = CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS;
+
+    /**
+     * 将一个木材家族的建筑套件按顺序插到 {@code anchor} 之后。
+     * <p>
+     * 每插一个就把新 stack 当作下一个锚点，这样整段在标签页里保持连续。
+     *
+     * @param anchor 该家族第一个方块的前一个位置（须已存在于标签页中，否则 {@code insertAfter} 会抛异常）
+     */
+    private static void appendWoodSet(BuildCreativeModeTabContentsEvent event, ItemStack anchor, WoodFamily family) {
+        ItemStack previous = anchor;
+        for (DeferredBlock<? extends Block> block : family.buildingBlocks()) {
+            ItemStack stack = block.toStack();
+            event.insertAfter(previous, stack, VISIBILITY);
+            previous = stack;
+        }
     }
 }

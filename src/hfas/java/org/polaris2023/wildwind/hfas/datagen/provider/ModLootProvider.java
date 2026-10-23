@@ -32,7 +32,9 @@ public class ModLootProvider extends LootTableProvider {
                 output,
                 Set.of(),
                 List.of(
-                        new SubProviderEntry(ModEntityLootSubProvider::new, LootContextParamSets.ENTITY)
+                        new SubProviderEntry(ModEntityLootSubProvider::new, LootContextParamSets.ENTITY),
+                        // 方块战利品表（BlockLoot 之前没挂上，导致方块战利品完全没生成）
+                        new SubProviderEntry(BlockLoot::new, LootContextParamSets.BLOCK)
                 ),
                 lookupProvider
         );

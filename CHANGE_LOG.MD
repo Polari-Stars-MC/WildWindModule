@@ -41,7 +41,7 @@ All notable changes to the Wild Wind Module project will be documented in this f
 #### 5. 木质方块功能
 - **去皮功能** - 使用斧头可将原木/木头去皮
 - **堆肥功能** - 树叶和树苗可用于堆肥（30%概率）
-- **燃料功能** - 木质方块可作为熔炉燃料（300 tick）
+- **燃料功能** - 木质方块可作为熔炉燃料（由 NeoForge `furnace_fuels` 数据地图提供）
 
 ### 技术实现
 
@@ -71,7 +71,6 @@ All notable changes to the Wild Wind Module project will be documented in this f
 |--------------------------------|------------|
 | `FletchingTableReplaceHandler` | 区块加载时替换制箭台 |
 | `BlockFeaturesHandler`         | 方块功能（堆肥等）  |
-| `FuelHandler`                  | 燃料事件处理     |
 
 #### Mixin 注入
 | 类                  | 功能        |
@@ -110,8 +109,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 │       ├── ModDataMapsProvider.java
 ├── event/                    # 事件处理
 │   ├── FletchingTableReplaceHandler.java
-│   ├── BlockFeaturesHandler.java
-│   └── FuelHandler.java
+│   └── BlockFeaturesHandler.java
 ├── mixin/                    # Mixin 注入
 │   └── AzaleaBlockMixin.java
 ├── config/                   # 配置文件
@@ -182,3 +180,34 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - [ ] 更多下界植物
 - [ ] 制箭台配方系统
 - [ ] 成就系统
+
+---
+
+## [Unreleased] - 2026.10.23
+
+### Added
+- **木材家族聚合** - 新增 `WoodFamily` 与 `ModWoodFamilies`，模型、战利品、标签、数据地图、创造物品栏统一遍历，不再各写一份 13~15 参数列表
+- **方块战利品表** - 注册 `BlockLoot`，`ModLootProvider` 此前只挂了实体战利品，方块战利品表完全缺失
+- **燃料数据地图** - 使用 NeoForge `furnace_fuels` 数据地图注册燃料（原木/木头/去皮/木板/楼梯/栅栏/栅栏门/压力板 300 tick，台阶 150，按钮与树苗 100）
+- **补全方块标签** - `logs_that_burn`、`c:stripped_logs`、`c:stripped_woods`、`fences`、`fence_gates`、`wooden_fences`，原先只写在手写 JSON 里
+- **保留唯一贴图素材** - `cinder_*` / `ember_*` 中无 `blaze_*` / `soul_*` 对应版本的 28 张（船、箱船、告示牌、悬挂告示牌、GUI）全部保留，作为后续船 / 告示牌开发的素材
+
+### Changed
+- 模型、战利品、标签、创造物品栏提供器改为遍历 `ModWoodFamilies.ALL`
+- `ModItemTagsProvider` 改继承 `net.neoforged.neoforge.common.data.ItemTagsProvider`
+- 创造物品栏的 62 行 `insertAfter` 链收敛为 `appendWoodSet()`
+- 燃料由 `FurnaceFuelBurnTimeEvent` 事件改为数据地图驱动，移除 `FuelHandler`
+
+### Fixed
+- **活板门不掉落** - 原先误用 `createDoorTable`（带 `half=lower` 条件），天花板上的活板门破坏后无掉落，改为 `dropSelf`，与 `VanillaBlockLoot` 一致
+- **木质方块被误加入 `needs_stone_tool`** - 导致木板、门、按钮等必须石级工具才能挖掘掉落，已移除该标签注册
+- **Gradle 9 下资源重复项报错** - 原 `.cache` 排除模式相对 srcDir 根无效，已修正并显式设置 `duplicatesStrategy`
+
+### Removed
+- **回滚 PR #29 的资源污染** - 删除 438 个与 datagen 产物同名的手写 `blockstates` / `models` / `items` / `data` 文件，以及 130 个未注册方块（sign / boat / potted sapling）的孤儿资源，仅保留 80 个 datagen 无法重建的文件
+- **被提交进 `src` 的 datagen HashCache** - 删除 `src/hfas/resources/.cache/`（9 个文件），它会令 datagen 误判"已生成"而跳过重写
+- **重复的标签与语言文件** - 删除 15 个与 datagen 输出同名的 JSON（datagen 每次重新生成，无信息丢失）
+- **改名前的重复贴图** - 删除 26 张与 `blaze_*` / `soul_*` 逐字节相同的 `cinder_*` / `ember_*`（含 `.mcmeta`），无信息丢失
+- **`ModBlockTagsProvider.INSTANCE`** - 无人使用的静态单例
+
+

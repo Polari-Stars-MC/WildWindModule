@@ -15,8 +15,11 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
+import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
+import org.polaris2023.wildwind.hfas.block.WoodFamily;
 import org.polaris2023.wildwind.hfas.registry.ModItems;
 import org.polaris2023.wildwind.hfas.tag.ModItemTags;
 
@@ -35,81 +38,19 @@ import java.util.concurrent.CompletableFuture;
  * @author baka4n
  * @since 2026/04/15
  */
-public class ModItemTagsProvider extends TagsProvider<Item> {
+public class ModItemTagsProvider extends ItemTagsProvider {
 
     public ModItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-//        super(output, Registries.ITEM, lookupProvider, item -> item.builtInRegistryHolder().key(), HFASMod.MOD_ID);
-        super(output, Registries.ITEM, lookupProvider, HFASMod.MOD_ID);
+        super(output, lookupProvider, HFASMod.MOD_ID);
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        registerWoodLogItemTag("blaze",
-                ModBlocks.BLAZE_LOG.get(), ModBlocks.BLAZE_WOOD.get(),
-                ModBlocks.STRIPPED_BLAZE_LOG.get(), ModBlocks.STRIPPED_BLAZE_WOOD.get());
-        registerWoodLogItemTag("soul",
-                ModBlocks.SOUL_LOG.get(), ModBlocks.SOUL_WOOD.get(),
-                ModBlocks.STRIPPED_SOUL_LOG.get(), ModBlocks.STRIPPED_SOUL_WOOD.get());
-        registerWoodLogItemTag("azalea",
-                ModBlocks.AZALEA_LOG.get(), ModBlocks.AZALEA_WOOD.get(),
-                ModBlocks.STRIPPED_AZALEA_LOG.get(), ModBlocks.STRIPPED_AZALEA_WOOD.get());
-
-        // ==================== 焚烬木物品标签 ====================
-        registerWoodItemTags(
-                ModBlocks.BLAZE_LOG.get(),
-                ModBlocks.BLAZE_WOOD.get(),
-                ModBlocks.STRIPPED_BLAZE_LOG.get(),
-                ModBlocks.STRIPPED_BLAZE_WOOD.get(),
-                ModBlocks.BLAZE_PLANKS.get(),
-                ModBlocks.BLAZE_STAIRS.get(),
-                ModBlocks.BLAZE_SLAB.get(),
-                ModBlocks.BLAZE_FENCE.get(),
-                ModBlocks.BLAZE_FENCE_GATE.get(),
-                ModBlocks.BLAZE_DOOR.get(),
-                ModBlocks.BLAZE_TRAPDOOR.get(),
-                ModBlocks.BLAZE_PRESSURE_PLATE.get(),
-                ModBlocks.BLAZE_BUTTON.get(),
-                ModBlocks.BLAZE_LEAVES.get(),
-                ModBlocks.BLAZE_SAPLING.get()
-        );
-
-        // ==================== 灵焰木物品标签 ====================
-        registerWoodItemTags(
-                ModBlocks.SOUL_LOG.get(),
-                ModBlocks.SOUL_WOOD.get(),
-                ModBlocks.STRIPPED_SOUL_LOG.get(),
-                ModBlocks.STRIPPED_SOUL_WOOD.get(),
-                ModBlocks.SOUL_PLANKS.get(),
-                ModBlocks.SOUL_STAIRS.get(),
-                ModBlocks.SOUL_SLAB.get(),
-                ModBlocks.SOUL_FENCE.get(),
-                ModBlocks.SOUL_FENCE_GATE.get(),
-                ModBlocks.SOUL_DOOR.get(),
-                ModBlocks.SOUL_TRAPDOOR.get(),
-                ModBlocks.SOUL_PRESSURE_PLATE.get(),
-                ModBlocks.SOUL_BUTTON.get(),
-                ModBlocks.SOUL_LEAVES.get(),
-                ModBlocks.SOUL_SAPLING.get()
-        );
-
-        // ==================== 杜鹃木物品标签 ====================
-        registerWoodItemTags(
-                ModBlocks.AZALEA_LOG.get(),
-                ModBlocks.AZALEA_WOOD.get(),
-                ModBlocks.STRIPPED_AZALEA_LOG.get(),
-                ModBlocks.STRIPPED_AZALEA_WOOD.get(),
-                ModBlocks.AZALEA_PLANKS.get(),
-                ModBlocks.AZALEA_STAIRS.get(),
-                ModBlocks.AZALEA_SLAB.get(),
-                ModBlocks.AZALEA_FENCE.get(),
-                ModBlocks.AZALEA_FENCE_GATE.get(),
-                ModBlocks.AZALEA_DOOR.get(),
-                ModBlocks.AZALEA_TRAPDOOR.get(),
-                ModBlocks.AZALEA_PRESSURE_PLATE.get(),
-                ModBlocks.AZALEA_BUTTON.get(),
-                null, // 杜鹃木使用原版树叶
-                null  // 杜鹃木使用原版树苗
-        );
+        // ==================== 三种木材物品标签 ====================
+        for (WoodFamily family : ModWoodFamilies.ALL) {
+            registerWoodLogItemTag(family);
+            registerWoodItemTags(family);
+        }
 
         tag(Tags.Items.ANIMAL_FOODS)
                 .addTag(ModItemTags.MUDCRAB_FOOD);
@@ -128,16 +69,24 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
     }
 
     /**
-     * 注册木质物品标签
+     * 注册一种木材的物品标签
      */
-    private void registerWoodItemTags(
-            Block log, Block wood,
-            Block strippedLog, Block strippedWood,
-            Block planks, Block stairs, Block slab,
-            Block fence, Block fenceGate,
-            Block door, Block trapdoor,
-            Block pressurePlate, Block button,
-            Block leaves, Block sapling) {
+    private void registerWoodItemTags(WoodFamily family) {
+        Block log = family.log().get();
+        Block wood = family.wood().get();
+        Block strippedLog = family.strippedLog().get();
+        Block strippedWood = family.strippedWood().get();
+        Block planks = family.planks().get();
+        Block stairs = family.stairs().get();
+        Block slab = family.slab().get();
+        Block fence = family.fence().get();
+        Block fenceGate = family.fenceGate().get();
+        Block door = family.door().get();
+        Block trapdoor = family.trapdoor().get();
+        Block pressurePlate = family.pressurePlate().get();
+        Block button = family.button().get();
+        Block leaves = family.leaves() == null ? null : family.leaves().get();
+        Block sapling = family.sapling() == null ? null : family.sapling().get();
 
         // 原木物品标签
         addToTag(ItemTags.LOGS, log, wood, strippedLog, strippedWood);
@@ -212,12 +161,14 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
         }
     }
 
-    private void registerWoodLogItemTag(String name, Block log, Block wood, Block strippedLog, Block strippedWood) {
+    private void registerWoodLogItemTag(WoodFamily family) {
         TagKey<Item> logsTag = TagKey.create(
                 Registries.ITEM,
-                Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, name + "_logs")
+                Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, family.name() + "_logs")
         );
-        addToTag(logsTag, log, wood, strippedLog, strippedWood);
+        addToTag(logsTag,
+                family.log().get(), family.wood().get(),
+                family.strippedLog().get(), family.strippedWood().get());
     }
 
     @SuppressWarnings("all")
