@@ -70,7 +70,7 @@ HFAS Java 包根目录为 `src/hfas/java/org/polaris2023/wildwind/hfas/`。
 
 ## 模块维护
 
-模块规划采用编号 **0：原野之风：核心（Wild Wind:Core）**、**1：原野之风：荒野更新（Wild Wind:Wilderness Update）**、**2：原野之风：瘠土更新（Wild Wind:Barren Update）**。功能归属和代码拆分尚待落实，当前构建仍使用 `hfas` 子项目与 `ww_hfas` 模组 ID。
+模块规划采用编号 **0：原野之风：核心（Wild Wind:Core）**、**1：原野之风：荒野更新（Wild Wind:Wilderness Update）**、**2：原野之风：瘠土更新（Wild Wind:Barren Update）**。对应的规划模组 ID 分别为 `wild_wind_core`、`wild_wind_wilderness`、`wild_wind_barren`，统一使用 `wild_wind_` 前缀。功能归属、代码拆分及运行时 ID 迁移尚待落实，当前构建仍使用 `hfas` 子项目与 `ww_hfas` 模组 ID。
 
 当前构建约定将 `src/<模块名>/java/` 和 `src/<模块名>/resources/` 接入相应子项目。`modules/hfas/build.gradle.kts` 额外接入 `src/structures/` 的代码、资源和测试，由 `HFASMod` 调用 `StructureModule.register`；结构功能没有独立 `@Mod` 入口。`modules/<模块名>/` 在配置阶段创建。新增模块需要同步修改 `settings.gradle.kts` 的启用列表，并核对模组入口、资源命名空间、Mixin 配置与共用元数据模板。仅在 README 增加模块名称不会生成可用模块。
 

@@ -26,11 +26,11 @@
 
 ## 模块规划
 
-| 编号 | 中文名称 | 英文名称 |
-| --- | --- | --- |
-| 0 | 原野之风：核心 | Wild Wind:Core |
-| 1 | 原野之风：荒野更新 | Wild Wind:Wilderness Update |
-| 2 | 原野之风：瘠土更新 | Wild Wind:Barren Update |
+| 编号 | 中文名称 | 英文名称 | 规划模组 ID |
+| --- | --- | --- | --- |
+| 0 | 原野之风：核心 | Wild Wind:Core | `wild_wind_core` |
+| 1 | 原野之风：荒野更新 | Wild Wind:Wilderness Update | `wild_wind_wilderness` |
+| 2 | 原野之风：瘠土更新 | Wild Wind:Barren Update | `wild_wind_barren` |
 
 以上为当前模块编号与命名规划，各模块的功能归属和代码拆分待进一步落实。当前实际启用的 Gradle 子项目仍为 `hfas`，以 `ww_hfas` 统一打包；`src/structures/` 仍是其中的内部结构生成功能，不单独安装。模块启用列表见 [settings.gradle.kts](settings.gradle.kts)。
 

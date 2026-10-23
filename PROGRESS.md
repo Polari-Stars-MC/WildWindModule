@@ -20,11 +20,11 @@
 
 ## 模块规划
 
-| 编号 | 中文名称 | 英文名称 |
-| --- | --- | --- |
-| 0 | 原野之风：核心 | Wild Wind:Core |
-| 1 | 原野之风：荒野更新 | Wild Wind:Wilderness Update |
-| 2 | 原野之风：瘠土更新 | Wild Wind:Barren Update |
+| 编号 | 中文名称 | 英文名称 | 规划模组 ID |
+| --- | --- | --- | --- |
+| 0 | 原野之风：核心 | Wild Wind:Core | `wild_wind_core` |
+| 1 | 原野之风：荒野更新 | Wild Wind:Wilderness Update | `wild_wind_wilderness` |
+| 2 | 原野之风：瘠土更新 | Wild Wind:Barren Update | `wild_wind_barren` |
 
 此表记录模块规划；现有已完成功能仍由 `ww_hfas` 统一提供，尚未按这三个模块拆分。编号不表示开发完成顺序。
 
@@ -94,5 +94,6 @@
 | --- | --- |
 | 2026-10-23 | 建立进度文档，汇总当前 18 项已交付功能、测试结果、GitHub 构建状态及未完成事项。 |
 | 2026-10-23 | 模块规划更新为 0「核心」、1「荒野更新」、2「瘠土更新」，同步中英文名称；现有代码与统一打包方式不变。 |
+| 2026-10-23 | 三个规划模组 ID 统一采用 `wild_wind_` 前缀：`wild_wind_core`、`wild_wind_wilderness`、`wild_wind_barren`；运行时 ID 迁移尚未实施。 |
 
 维护约定：每次交付功能后更新对应条目、统计分母、进度条和日期；测试结果注明已验证的提交或构建记录；仅完成注册或占位资源的功能继续标为开发中。
