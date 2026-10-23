@@ -190,7 +190,6 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **方块战利品表** - 注册 `BlockLoot`，`ModLootProvider` 此前只挂了实体战利品，方块战利品表完全缺失
 - **燃料数据地图** - 使用 NeoForge `furnace_fuels` 数据地图注册燃料（原木/木头/去皮/木板/楼梯/栅栏/栅栏门/压力板 300 tick，台阶 150，按钮与树苗 100）
 - **补全方块标签** - `logs_that_burn`、`c:stripped_logs`、`c:stripped_woods`、`fences`、`fence_gates`、`wooden_fences`，原先只写在手写 JSON 里
-- **保留唯一贴图素材** - `cinder_*` / `ember_*` 中无 `blaze_*` / `soul_*` 对应版本的 28 张（船、箱船、告示牌、悬挂告示牌、GUI）全部保留，作为后续船 / 告示牌开发的素材
 
 ### Changed
 - 模型、战利品、标签、创造物品栏提供器改为遍历 `ModWoodFamilies.ALL`
@@ -207,7 +206,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **回滚 PR #29 的资源污染** - 删除 438 个与 datagen 产物同名的手写 `blockstates` / `models` / `items` / `data` 文件，以及 130 个未注册方块（sign / boat / potted sapling）的孤儿资源，仅保留 80 个 datagen 无法重建的文件
 - **被提交进 `src` 的 datagen HashCache** - 删除 `src/hfas/resources/.cache/`（9 个文件），它会令 datagen 误判"已生成"而跳过重写
 - **重复的标签与语言文件** - 删除 15 个与 datagen 输出同名的 JSON（datagen 每次重新生成，无信息丢失）
-- **改名前的重复贴图** - 删除 26 张与 `blaze_*` / `soul_*` 逐字节相同的 `cinder_*` / `ember_*`（含 `.mcmeta`），无信息丢失
+- **改名前的重复贴图** - 删除 26 张与 `blaze_*` / `soul_*` 逐字节相同的 `cinder_*` / `ember_*`（含 `.mcmeta`），无信息丢失；另有 28 张没有对应新命名版本的贴图（船 / 箱船 / 告示牌 / 悬挂告示牌的实体贴图与物品图标、`gui/hanging_signs`、`screens`）全部保留，作为后续船与告示牌开发的素材
 - **`ModBlockTagsProvider.INSTANCE`** - 无人使用的静态单例
 
 
