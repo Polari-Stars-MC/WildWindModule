@@ -26,15 +26,13 @@
 
 ## 模块规划
 
-| 模块 | 名称 | 当前分支状态 |
+| 编号 | 中文名称 | 英文名称 |
 | --- | --- | --- |
-| `hfas` | Wild Wind HFAS | 唯一启用的 Gradle 模组，包含木材、植物、新物品、泥猪、结构生成及制箭系统基础代码 |
-| `structures` | 内部结构生成功能 | 源码保留在 `src/structures/`，由 HFAS 入口注册、编译并打包，不单独安装 |
-| `deco` | Wild Wind Decoration · 装饰 | 旧版模块规划，尚未在当前分支启用 |
-| `adv` | Wild Wind Adventure · 冒险 | 旧版模块规划，尚未在当前分支启用 |
-| `vpp` | Wild Wind Vanilla++ · 原版修饰 | 旧版模块规划，尚未在当前分支启用 |
+| 0 | 原野之风：核心 | Wild Wind:Core |
+| 1 | 原野之风：荒野更新 | Wild Wind:Wilderness Update |
+| 2 | 原野之风：瘠土更新 | Wild Wind:Barren Update |
 
-模块启用列表见 [settings.gradle.kts](settings.gradle.kts)。
+以上为当前模块编号与命名规划，各模块的功能归属和代码拆分待进一步落实。当前实际启用的 Gradle 子项目仍为 `hfas`，以 `ww_hfas` 统一打包；`src/structures/` 仍是其中的内部结构生成功能，不单独安装。模块启用列表见 [settings.gradle.kts](settings.gradle.kts)。
 
 ## HFAS 内容
 
