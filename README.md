@@ -6,7 +6,7 @@
 
 > 当前说明对应 Minecraft `26.2` 适配代码，已合并远端 `26.2` 分支的 `26ad2da`。**结构、新物品、泥猪、泥沼蟹、恐鱼及新增玩法均在同一个 `ww_hfas` 模组中；另需安装 GeckoLib 依赖库。**
 
-[开发指南](docs/DEVELOPMENT.md) · [历史变更](CHANGE_LOG.MD) · [问题反馈](https://github.com/cuccuc377-dev/WildWindMod/issues) · [许可证](LICENSE)
+[项目进度](PROGRESS.md) · [开发指南](docs/DEVELOPMENT.md) · [历史变更](CHANGE_LOG.MD) · [问题反馈](https://github.com/cuccuc377-dev/WildWindMod/issues) · [许可证](LICENSE)
 
 ## 版本与环境
 
