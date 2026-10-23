@@ -64,6 +64,9 @@ public final class GameplayGameTests {
         tests.register("skeleton_melee", () -> SkeletonAndFarmlandGameTests::skeletonMelee);
         tests.register("farmland_protection", () -> SkeletonAndFarmlandGameTests::farmland);
         tests.register("creative_tab", () -> SkeletonAndFarmlandGameTests::creativeTab);
+        tests.register("inspection_blocks", () -> BookInspectionGameTests::blocks);
+        tests.register("inspection_interactions", () -> BookInspectionGameTests::interactions);
+        tests.register("inspection_sulfur", () -> BookInspectionGameTests::sulfur);
         tests.register(bus);
     }
     private static void check(GameTestHelper h, boolean ok, String message) {

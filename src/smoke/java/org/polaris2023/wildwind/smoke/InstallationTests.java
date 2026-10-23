@@ -48,6 +48,13 @@ public final class InstallationTests {
         }
         check(h, BuiltInRegistries.BLOCK.containsKey(Identifier.parse("wild_wind_barren:tiny_cactus")) == expected.contains("barren"), "Cactus belongs only to Barren");
         check(h, BuiltInRegistries.BLOCK.keySet().stream().noneMatch(id -> id.getNamespace().startsWith("wild_wind_") && id.getPath().equals("fletching_table")), "Custom fletching table removed");
+        var inspectionPos = h.absolutePos(new net.minecraft.core.BlockPos(2, 2, 2));
+        h.getLevel().setBlockAndUpdate(inspectionPos, net.minecraft.world.level.block.Blocks.OAK_PLANKS.defaultBlockState());
+        var report = org.polaris2023.wildwind.core.inspection.InspectionReport.block(h.getLevel(), inspectionPos);
+        check(h, report.contains("可再生:是") && report.contains("硫方怪原型:弹性（橡胶球）"), "Inspector works with only Core and its own tags");
+        var book = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITABLE_BOOK);
+        check(h, org.polaris2023.wildwind.core.inspection.BookInspectionHandler.append(book,
+                org.polaris2023.wildwind.core.inspection.BookPages.paginate(report)), "Core can persist complete inspection report");
         h.succeed();
     }
 }

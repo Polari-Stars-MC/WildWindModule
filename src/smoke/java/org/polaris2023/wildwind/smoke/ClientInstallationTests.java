@@ -19,6 +19,16 @@ public final class ClientInstallationTests {
         var client = Minecraft.getInstance();
         if (client.gui.overlay() != null || !(client.gui.screen() instanceof TitleScreen)) return;
         require(client, "wild_wind_core:textures/entity/signs/azalea.png");
+        // Verify conservative server pagination against the actual loaded Minecraft font.
+        var pages = org.polaris2023.wildwind.core.inspection.BookPages.paginate(java.util.List.of(
+                "原野之风·属性记录", "物品ID:wild_wind_wilderness:muddy_pig_spawn_egg",
+                "活塞推动行为:不可推动，不可拉动", "烧炼时间:15秒（300刻）", "空气阻力修正系数:0.01"));
+        for (var page : pages) {
+            if (client.font.wordWrapHeight(net.minecraft.network.chat.Component.literal(page), 114) > 126) throw new IllegalStateException("Inspector page exceeds book height");
+            for (var line : page.split("\n")) {
+                if (client.font.width(line) > 114) throw new IllegalStateException("Inspector line exceeds book width: " + line);
+            }
+        }
         if (ModList.get().isLoaded("wild_wind_wilderness")) {
             require(client, "wild_wind_wilderness:textures/entity/pig/pig_muddy.png");
             require(client, "wild_wind_wilderness:textures/entity/pig/pig_muddy_baby.png");
