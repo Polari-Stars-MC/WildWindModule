@@ -3,6 +3,7 @@ package org.polaris2023.wildwind.hfas.datagen.provider.tag;
 import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import org.polaris2023.wildwind.hfas.datagen.ReleaseModule;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.tags.BlockItemTags;
 import net.minecraft.tags.BlockTags;
@@ -11,7 +12,6 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
-import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.wilderness.tag.ModBlockTags;
 
 import java.util.Arrays;
@@ -25,23 +25,25 @@ import java.util.concurrent.CompletableFuture;
  * @since 2026/04/15
  */
 public class ModBlockTagsProvider extends BlockTagsProvider {
+    private final ReleaseModule module;
 
-    public static ModBlockTagsProvider INSTANCE;
 
-    public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, lookupProvider, HFASMod.MOD_ID);
-        INSTANCE = this;
+    public ModBlockTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ReleaseModule module) {
+        super(output, lookupProvider, module.id());
+        this.module = module;
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        addToTag(BlockTags.MINEABLE_WITH_PICKAXE, org.polaris2023.wildwind.core.block.ModBlocks.KILN.get());
-        addToTag(BlockTags.MINEABLE_WITH_AXE, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_HANGING_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get());
-        addToTag(BlockTags.STANDING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get());
-        addToTag(BlockTags.WALL_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_SIGN.get());
-        addToTag(BlockTags.CEILING_HANGING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get());
-        addToTag(BlockTags.WALL_HANGING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_HANGING_SIGN.get());
-        addToTag(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.withDefaultNamespace("wooden_shelves")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get());
+        if (module == ReleaseModule.CORE) {
+            addToTag(BlockTags.MINEABLE_WITH_PICKAXE, org.polaris2023.wildwind.core.block.ModBlocks.KILN.get());
+            addToTag(BlockTags.MINEABLE_WITH_AXE, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_HANGING_SIGN.get(), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get());
+            addToTag(BlockTags.STANDING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get());
+            addToTag(BlockTags.WALL_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_SIGN.get());
+            addToTag(BlockTags.CEILING_HANGING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get());
+            addToTag(BlockTags.WALL_HANGING_SIGNS, org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_WALL_HANGING_SIGN.get());
+            addToTag(net.minecraft.tags.TagKey.create(net.minecraft.core.registries.Registries.BLOCK, net.minecraft.resources.Identifier.withDefaultNamespace("wooden_shelves")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get());
+        }
         // ==================== 焚烬木标签 ====================
         registerWoodTags(
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_LOG.get(),
@@ -99,22 +101,21 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
                 null  // 杜鹃木使用原版树苗
         );
 
-        // ==================== 其他方块标签 ====================
-        // 焦灰草方块 - 泥土类
-        addToTag(BlockTags.DIRT, org.polaris2023.wildwind.wilderness.block.ModBlocks.SCORCHED_GRASS_BLOCK.get(), org.polaris2023.wildwind.wilderness.block.ModBlocks.SCORCHED_DIRT.get());
+        if (module == ReleaseModule.WILDERNESS) {
+            // ==================== 其他方块标签 ====================
+            // 焦灰草方块 - 泥土类
+            addToTag(BlockTags.DIRT, org.polaris2023.wildwind.wilderness.block.ModBlocks.SCORCHED_GRASS_BLOCK.get(), org.polaris2023.wildwind.wilderness.block.ModBlocks.SCORCHED_DIRT.get());
 
-        // 制箭台 - 工作站
+            // ==================== 实体生成有关 ====================
 
+            addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON, Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS);
 
-        // ==================== 实体生成有关 ====================
+            addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND, Blocks.CLAY, Blocks.MUD, Blocks.DIRT, Blocks.MUDDY_MANGROVE_ROOTS)
+                    .addTag(BlockTags.SAND)
+                    .addTag(Tags.Blocks.GRAVELS);
 
-        addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON, Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS);
-
-        addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND, Blocks.CLAY, Blocks.MUD, Blocks.DIRT, Blocks.MUDDY_MANGROVE_ROOTS)
-                .addTag(BlockTags.SAND)
-                .addTag(Tags.Blocks.GRAVELS);
-
-        addToTag(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS,Blocks.MANGROVE_LOG, Blocks.MANGROVE_ROOTS, Blocks.MUDDY_MANGROVE_ROOTS);
+            addToTag(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS,Blocks.MANGROVE_LOG, Blocks.MANGROVE_ROOTS, Blocks.MUDDY_MANGROVE_ROOTS);
+        }
     }
 
     /**
@@ -128,6 +129,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
             Block door, Block trapdoor,
             Block pressurePlate, Block button,
             Block leaves, Block sapling) {
+        if (!module.owns(log)) return;
 
         // 原木标签 - 用于原木类方块
         addToTag(BlockTags.LOGS, log, wood, strippedLog, strippedWood);

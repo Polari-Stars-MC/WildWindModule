@@ -33,19 +33,19 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      - name: Generate client resources
-        run: ./gradlew :datagen:runClientData
+      - name: Clean build, generate resources and run integration tests
+        run: ./gradlew clean build collectMods :verification:runGameTest
 
-      - name: Generate server resources
-        run: ./gradlew :datagen:runServerData
-
-      - name: Verify generated resource snapshots
+      - name: Verify datagen reproducibility and source isolation
+        shell: bash
         run: |
-          python3 scripts/sync_generated_resources.py
-          git diff --exit-code -- src/core/resources src/wilderness/resources src/barren/resources
-
-      - name: Build and run integration tests
-        run: ./gradlew build collectMods :verification:runGameTest
+          set -euo pipefail
+          find build/generated/datagen -type f -name '*.json' -not -path '*/.cache/*' -print0 | sort -z | xargs -0 sha256sum > "$RUNNER_TEMP/datagen-before.txt"
+          ./gradlew generateResources
+          find build/generated/datagen -type f -name '*.json' -not -path '*/.cache/*' -print0 | sort -z | xargs -0 sha256sum > "$RUNNER_TEMP/datagen-after.txt"
+          diff -u "$RUNNER_TEMP/datagen-before.txt" "$RUNNER_TEMP/datagen-after.txt"
+          git diff --exit-code -- src
+          test -z "$(git ls-files --others --exclude-standard -- src)"
 
       - name: Verify supported installations
         run: |

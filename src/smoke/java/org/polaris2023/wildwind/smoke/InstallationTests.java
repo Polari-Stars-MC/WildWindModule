@@ -51,7 +51,12 @@ public final class InstallationTests {
         var inspectionPos = h.absolutePos(new net.minecraft.core.BlockPos(2, 2, 2));
         h.getLevel().setBlockAndUpdate(inspectionPos, net.minecraft.world.level.block.Blocks.OAK_PLANKS.defaultBlockState());
         var report = org.polaris2023.wildwind.core.inspection.InspectionReport.block(h.getLevel(), inspectionPos);
-        check(h, report.contains("可再生:是") && report.contains("硫方怪原型:弹性（橡胶球）"), "Inspector works with only Core and its own tags");
+        check(h, report.contains(org.polaris2023.wildwind.core.inspection.InspectionText.field("renewable",
+                        org.polaris2023.wildwind.core.inspection.InspectionText.text("yes")))
+                && report.contains(org.polaris2023.wildwind.core.inspection.InspectionText.field("sulfur_archetype",
+                        Component.empty().append(Component.translatableWithFallback(
+                                "sulfur_cube_archetype.minecraft.bouncy", "minecraft:bouncy")))),
+                "Inspector works with only Core and its own tags");
         var book = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITABLE_BOOK);
         var signed = org.polaris2023.wildwind.core.inspection.BookInspectionHandler.sign(book,
                 org.polaris2023.wildwind.core.inspection.BookPages.paginate(report), Component.literal("Oak Planks(minecraft:oak_planks)"), "test");

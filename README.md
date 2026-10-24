@@ -57,6 +57,8 @@ Minecraft **26.2 / NeoForge 26.2.0.93 / Java 25** 模组项目。当前已按功
 
 手持书与笔，**Shift＋右键方块／实体**，直接转换为署名属性书；书名为“目标名称(注册ID)”，作者为玩家，松开 Shift 后右键阅读。记录硬度、抗性、可燃性、活塞行为、挖掘工具、注册 ID、燃料时长、可再生性及硫方怪原型／物理参数等。已有笔记保留，满页不转换；署名后不可追加，下次记录需另一本书与笔。不适用或未知的属性显示“×”，无需管理员权限。
 
+属性书正文和提示支持中英文，保存翻译组件，阅读时按客户端语言和字体重新分页。
+
 使用 `/give @s minecraft:writable_book` 获取测试用书。硫方怪分类和数值读取当前游戏数据，可再生性通过数据包标签扩展。详见 [记录器说明](docs/BOOK_INSPECTION.md)。
 
 ### 主要玩法
@@ -95,7 +97,7 @@ config/ww_structures/
 
 ## 从源码构建
 
-资源快照已随源码保存，普通构建不必先运行数据生成。在仓库根目录执行：
+构建会自动运行各模块的 datagen，再打包生成资源；无需 Python 或手工同步。在仓库根目录执行：
 
 ```powershell
 .\gradlew.bat build collectMods
@@ -111,11 +113,10 @@ wild_wind_barren-mc26.2-1.0.1.jar
 
 `datagen`、`verification`、`smoke` 是开发辅助项目，不安装到玩家实例，也不包含在上述发行目录。代码、资源分别位于 `src/core/`、`src/wilderness/`、`src/barren/`。
 
-修改生成器后运行两类数据生成，再将结果同步回模块资源目录：
+生成资源位于 `build/generated/datagen/{client,server}/{core,wilderness,barren}/`，不提交到 Git。需要单独检查生成结果时执行：
 
 ```powershell
-.\gradlew.bat :datagen:runClientData :datagen:runServerData
-python scripts/sync_generated_resources.py
+.\gradlew.bat generateResources
 .\gradlew.bat build collectMods :verification:runGameTest
 ```
 

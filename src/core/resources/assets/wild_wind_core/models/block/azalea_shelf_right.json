@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_shelf_right",
-  "textures": {
-    "all": "wild_wind_core:block/azalea_shelf",
-    "particle": "wild_wind_core:block/stripped_azalea_log"
-  }
-}

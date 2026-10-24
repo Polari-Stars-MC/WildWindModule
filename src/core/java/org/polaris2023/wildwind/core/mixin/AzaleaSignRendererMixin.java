@@ -16,7 +16,6 @@ import org.polaris2023.wildwind.core.client.AzaleaSignState;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -37,9 +36,9 @@ public abstract class AzaleaSignRendererMixin {
     @Inject(method = "submitSignText", at = @At("HEAD"), cancellable = true)
     private void wildwind$text(SignRenderState state, PoseStack pose, SubmitNodeCollector collector, SignText text, CallbackInfo ci) {
         if (!((AzaleaSignState) state).wildwind$isAzalea()) return;
-        int color = wildwind$color(text.getColor());
+        int color = text.getColor().getTextColor();
         int dark = ((color >> 16 & 255) * 2 / 5 << 16) | ((color >> 8 & 255) * 2 / 5 << 8) | (color & 255) * 2 / 5;
-        int outline = text.hasGlowingText() ? 0xFF000000 | (color == 0 ? 0xF0EBCC : dark) : 0;
+        int outline = text.hasGlowingText() ? 0xFF000000 | (text.getColor() == DyeColor.BLACK ? 0xF0EBCC : dark) : 0;
         var lines = text.getRenderMessages(state.isTextFilteringEnabled, input -> {
             var split = font.split(input, state.maxTextLineWidth);
             return split.isEmpty() ? FormattedCharSequence.EMPTY : split.getFirst();
@@ -52,24 +51,4 @@ public abstract class AzaleaSignRendererMixin {
         ci.cancel();
     }
 
-    @Unique private static int wildwind$color(DyeColor color) {
-        return switch (color) {
-            case BLACK -> 0x000000;
-            case RED -> 0xFF0000;
-            case GREEN -> 0x00FF00;
-            case BROWN -> 0x8B4513;
-            case BLUE -> 0x0000FF;
-            case PURPLE -> 0xA020F0;
-            case CYAN -> 0x00FFFF;
-            case LIGHT_GRAY -> 0xD3D3D3;
-            case GRAY -> 0x808080;
-            case PINK -> 0xFF69B4;
-            case LIME -> 0xBFFF00;
-            case YELLOW -> 0xFFFF00;
-            case LIGHT_BLUE -> 0x9AC0CD;
-            case MAGENTA -> 0xFF00FF;
-            case ORANGE -> 0xFF681F;
-            case WHITE -> 0xFFFFFF;
-        };
-    }
 }

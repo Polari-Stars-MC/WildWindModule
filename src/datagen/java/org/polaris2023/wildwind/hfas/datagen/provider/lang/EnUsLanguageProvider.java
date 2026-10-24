@@ -1,8 +1,7 @@
 package org.polaris2023.wildwind.hfas.datagen.provider.lang;
 
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
-import org.polaris2023.wildwind.hfas.HFASMod;
+import org.polaris2023.wildwind.hfas.datagen.ReleaseModule;
 
 /**
  * 英语语言文件生成器
@@ -10,14 +9,114 @@ import org.polaris2023.wildwind.hfas.HFASMod;
  * @author baka4n
  * @since 2026/04/15
  */
-public class EnUsLanguageProvider extends LanguageProvider {
+public class EnUsLanguageProvider extends ModuleLanguageProvider {
 
-    public EnUsLanguageProvider(PackOutput output) {
-        super(output, HFASMod.MOD_ID, "en_us");
+    public EnUsLanguageProvider(PackOutput output, ReleaseModule module) {
+        super(output, module, "en_us");
     }
 
     @Override
     protected void addTranslations() {
+        add("inspection.wild_wind_core.book_full", "Not enough room. Use another book and quill.");
+        add("inspection.wild_wind_core.book_signed", "Inspection book signed. Stop sneaking and use it to read.");
+        add("inspection.wild_wind_core.datapack", "(Current version / data packs)");
+        add("inspection.wild_wind_core.default", "Default");
+        add("inspection.wild_wind_core.face_range", "%s–%s (by face)");
+        add("inspection.wild_wind_core.field.absorbed_item", "Absorbed item ID: %s");
+        add("inspection.wild_wind_core.field.air", "Air supply: %s");
+        add("inspection.wild_wind_core.field.air_drag", "Air drag modifier: %s");
+        add("inspection.wild_wind_core.field.armor", "Armor: %s");
+        add("inspection.wild_wind_core.field.attack_damage", "Attack damage: %s");
+        add("inspection.wild_wind_core.field.blast_resistance", "Blast resistance: %s");
+        add("inspection.wild_wind_core.field.block", "Block: %s");
+        add("inspection.wild_wind_core.field.block_id", "Block ID: %s");
+        add("inspection.wild_wind_core.field.block_state", "Block state: %s");
+        add("inspection.wild_wind_core.field.blocks_redstone", "Blocks redstone connection: %s");
+        add("inspection.wild_wind_core.field.bounciness", "Bounciness: %s");
+        add("inspection.wild_wind_core.field.buoyant", "Buoyant: %s");
+        add("inspection.wild_wind_core.field.burnable", "Burnable: %s");
+        add("inspection.wild_wind_core.field.cooking_time", "Smelting duration: %s");
+        add("inspection.wild_wind_core.field.dimension", "Dimension: %s");
+        add("inspection.wild_wind_core.field.entity", "Entity: %s");
+        add("inspection.wild_wind_core.field.entity_id", "Entity ID: %s");
+        add("inspection.wild_wind_core.field.fire_immune", "Fire immune: %s");
+        add("inspection.wild_wind_core.field.fire_spread", "Fire spread: %s");
+        add("inspection.wild_wind_core.field.flammability", "Flammability: %s");
+        add("inspection.wild_wind_core.field.friction", "Friction modifier: %s");
+        add("inspection.wild_wind_core.field.fuel_time", "Fuel duration: %s");
+        add("inspection.wild_wind_core.field.hardness", "Hardness: %s");
+        add("inspection.wild_wind_core.field.health", "Health: %s");
+        add("inspection.wild_wind_core.field.height", "Height: %s");
+        add("inspection.wild_wind_core.field.horizontal_knockback", "Horizontal knockback modifier: %s");
+        add("inspection.wild_wind_core.field.ignited_by_lava", "Ignited by lava: %s");
+        add("inspection.wild_wind_core.field.instrument", "Instrument: %s");
+        add("inspection.wild_wind_core.field.item_id", "Item ID: %s");
+        add("inspection.wild_wind_core.field.knockback_resistance", "Knockback resistance: %s");
+        add("inspection.wild_wind_core.field.max_air", "Maximum air: %s");
+        add("inspection.wild_wind_core.field.max_health", "Maximum health: %s");
+        add("inspection.wild_wind_core.field.max_stack", "Maximum stack: %s");
+        add("inspection.wild_wind_core.field.movement_speed", "Movement speed: %s");
+        add("inspection.wild_wind_core.field.piston", "Piston behavior: %s");
+        add("inspection.wild_wind_core.field.position", "Position: %s");
+        add("inspection.wild_wind_core.field.push_scale", "Push scale: %s");
+        add("inspection.wild_wind_core.field.redstone_conductor", "Redstone conductor: %s");
+        add("inspection.wild_wind_core.field.renewable", "Renewable: %s");
+        add("inspection.wild_wind_core.field.requires_tool", "Requires correct tool: %s");
+        add("inspection.wild_wind_core.field.solid", "Solid block: %s");
+        add("inspection.wild_wind_core.field.suffocating", "Suffocates entities: %s");
+        add("inspection.wild_wind_core.field.sulfur_archetype", "Sulfur cube archetype: %s");
+        add("inspection.wild_wind_core.field.tools", "Suitable tools: %s");
+        add("inspection.wild_wind_core.field.vertical_knockback", "Vertical knockback modifier: %s");
+        add("inspection.wild_wind_core.field.width", "Width: %s");
+        add("inspection.wild_wind_core.heading", "Wild Wind · Inspection");
+        add("inspection.wild_wind_core.instrument.banjo", "Banjo");
+        add("inspection.wild_wind_core.instrument.basedrum", "Bass drum");
+        add("inspection.wild_wind_core.instrument.bass", "Bass");
+        add("inspection.wild_wind_core.instrument.bell", "Bell");
+        add("inspection.wild_wind_core.instrument.bit", "Bit");
+        add("inspection.wild_wind_core.instrument.chime", "Chimes");
+        add("inspection.wild_wind_core.instrument.cow_bell", "Cow bell");
+        add("inspection.wild_wind_core.instrument.didgeridoo", "Didgeridoo");
+        add("inspection.wild_wind_core.instrument.flute", "Flute");
+        add("inspection.wild_wind_core.instrument.guitar", "Guitar");
+        add("inspection.wild_wind_core.instrument.harp", "Harp");
+        add("inspection.wild_wind_core.instrument.hat", "Hi-hat");
+        add("inspection.wild_wind_core.instrument.iron_xylophone", "Iron xylophone");
+        add("inspection.wild_wind_core.instrument.pling", "Pling");
+        add("inspection.wild_wind_core.instrument.snare", "Snare drum");
+        add("inspection.wild_wind_core.instrument.xylophone", "Xylophone");
+        add("inspection.wild_wind_core.no", "No");
+        add("inspection.wild_wind_core.page", "%s");
+        add("inspection.wild_wind_core.physics", "Sulfur cube physics");
+        add("inspection.wild_wind_core.piston.block", "Cannot push or pull");
+        add("inspection.wild_wind_core.piston.destroy", "Breaks when pushed; cannot pull");
+        add("inspection.wild_wind_core.piston.normal", "Can push and pull");
+        add("inspection.wild_wind_core.piston.push_only", "Can push; cannot pull");
+        add("inspection.wild_wind_core.separator", ", ");
+        add("inspection.wild_wind_core.time", "%s seconds (%s ticks)");
+        add("inspection.wild_wind_core.tool.axe", "Axe");
+        add("inspection.wild_wind_core.tool.hand", "Hand");
+        add("inspection.wild_wind_core.tool.hoe", "Hoe");
+        add("inspection.wild_wind_core.tool.pickaxe", "Pickaxe");
+        add("inspection.wild_wind_core.tool.shears", "Shears");
+        add("inspection.wild_wind_core.tool.shovel", "Shovel");
+        add("inspection.wild_wind_core.tool.sword", "Sword");
+        add("inspection.wild_wind_core.yes", "Yes");
+        add("sulfur_cube_archetype.minecraft.bouncy", "Bouncy (rubber ball)");
+        add("sulfur_cube_archetype.minecraft.explosive", "Explosive");
+        add("sulfur_cube_archetype.minecraft.fast_flat", "Fast flat (golf ball)");
+        add("sulfur_cube_archetype.minecraft.fast_sliding", "Fast sliding (hockey puck)");
+        add("sulfur_cube_archetype.minecraft.high_resistance", "High resistance");
+        add("sulfur_cube_archetype.minecraft.hot", "Hot");
+        add("sulfur_cube_archetype.minecraft.light", "Light (beach ball)");
+        add("sulfur_cube_archetype.minecraft.regular", "Regular (football)");
+        add("sulfur_cube_archetype.minecraft.slow_bouncy", "Slow bouncy");
+        add("sulfur_cube_archetype.minecraft.slow_flat", "Slow flat (medicine ball)");
+        add("sulfur_cube_archetype.minecraft.slow_sliding", "Slow sliding (curling stone)");
+        add("sulfur_cube_archetype.minecraft.sticky", "Sticky");
+        add("mod.wild_wind.barren", "Wild Wind:Barren Update");
+        add("mod.wild_wind.core", "Wild Wind:Core");
+        add("mod.wild_wind.wilderness", "Wild Wind:Wilderness Update");
         add("effect.wild_wind_wilderness.sink", "Sink");
         add("effect.wild_wind_wilderness.choke", "Choke");
         add("enchantment.wild_wind_core.melting", "Melting");

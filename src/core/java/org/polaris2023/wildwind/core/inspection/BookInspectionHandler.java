@@ -50,29 +50,30 @@ public final class BookInspectionHandler {
         }
     }
 
-    private static void record(ServerPlayer player, InteractionHand hand, Component name, List<String> rows) {
+    private static void record(ServerPlayer player, InteractionHand hand, Component name, List<Component> rows) {
         var pages = BookPages.paginate(rows);
         var signed = sign(player.getItemInHand(hand), pages, name, player.getGameProfile().name());
         if (signed.isEmpty()) {
-            player.sendOverlayMessage(Component.literal("书的剩余页数不足，未写入。请换一本书与笔。"));
+            player.sendOverlayMessage(InspectionText.text("book_full"));
             return;
         }
         player.setItemInHand(hand, signed);
         player.containerMenu.broadcastChanges();
-        player.sendOverlayMessage(Component.literal("已生成署名属性书；松开潜行后右键阅读。"));
+        player.sendOverlayMessage(InspectionText.text("book_signed"));
     }
 
     /** Prepare a signed copy without mutating the source; an empty result means no room or wrong item. */
-    public static ItemStack sign(ItemStack book, List<String> additions, Component name, String author) {
+    public static ItemStack sign(ItemStack book, List<Component> additions, Component name, String author) {
         if (!book.is(Items.WRITABLE_BOOK)) return ItemStack.EMPTY;
         var old = book.getOrDefault(DataComponents.WRITABLE_BOOK_CONTENT, WritableBookContent.EMPTY);
-        if (old.pages().size() + additions.size() > WritableBookContent.MAX_PAGES
-                || additions.stream().anyMatch(page -> page.length() > WritableBookContent.PAGE_EDIT_LENGTH)) return ItemStack.EMPTY;
+        if (old.pages().size() + additions.size() > WritableBookContent.MAX_PAGES) return ItemStack.EMPTY;
+        if (additions.stream().anyMatch(page -> !WrittenBookContent.CONTENT_CODEC
+                .encodeStart(com.mojang.serialization.JsonOps.INSTANCE, page).isSuccess())) return ItemStack.EMPTY;
         var pages = new ArrayList<Filterable<Component>>();
         old.pages().forEach(page -> pages.add(page.map(Component::literal)));
-        additions.forEach(page -> pages.add(Filterable.passThrough(Component.literal(page))));
-        // Vanilla's serialized title is limited to 32 characters. Keep the complete localized
-        // label as the display name and the full ID in the report, even for long mod IDs.
+        additions.forEach(page -> pages.add(Filterable.passThrough(page.copy())));
+        // Vanilla titles are plain strings limited to 32 characters. Only this fallback title
+        // is flattened server-side; the display name and report retain translations and full IDs.
         String title = name.getString();
         if (title.length() > WrittenBookContent.TITLE_MAX_LENGTH) {
             int end = WrittenBookContent.TITLE_MAX_LENGTH;

@@ -4,6 +4,7 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
+import org.polaris2023.wildwind.hfas.datagen.ReleaseModule;
 import net.minecraft.resources.Identifier;
 import net.minecraft.data.tags.TagAppender;
 import net.minecraft.data.tags.TagsProvider;
@@ -34,18 +35,22 @@ import java.util.concurrent.CompletableFuture;
  * @since 2026/04/15
  */
 public class ModItemTagsProvider extends TagsProvider<Item> {
+    private final ReleaseModule module;
 
-    public ModItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+
+    public ModItemTagsProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ReleaseModule module) {
 //        super(output, Registries.ITEM, lookupProvider, item -> item.builtInRegistryHolder().key(), HFASMod.MOD_ID);
-        super(output, Registries.ITEM, lookupProvider, HFASMod.MOD_ID);
+        super(output, Registries.ITEM, lookupProvider, module.id());
+        this.module = module;
     }
 
     @Override
     protected void addTags(HolderLookup.Provider provider) {
-        addToTag(ItemTags.ARROWS, org.polaris2023.wildwind.wilderness.registry.ModItems.TIPPED_ARROW.get());
-        addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("signs")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get().asItem());
-        addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("hanging_signs")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get().asItem());
-        addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("wooden_shelves")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get().asItem());
+        if (module == ReleaseModule.CORE) {
+            addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("signs")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SIGN.get().asItem());
+            addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("hanging_signs")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_HANGING_SIGN.get().asItem());
+            addToTag(TagKey.create(Registries.ITEM, Identifier.withDefaultNamespace("wooden_shelves")), org.polaris2023.wildwind.core.block.ModBlocks.AZALEA_SHELF.get().asItem());
+        }
         registerWoodLogItemTag("blaze",
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_LOG.get(), org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_WOOD.get(),
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.STRIPPED_BLAZE_LOG.get(), org.polaris2023.wildwind.wilderness.block.ModBlocks.STRIPPED_BLAZE_WOOD.get());
@@ -113,20 +118,23 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
                 null  // 杜鹃木使用原版树苗
         );
 
-        tag(Tags.Items.ANIMAL_FOODS)
-                .addTag(ModItemTags.MUDCRAB_FOOD);
-        addToTag(ModItemTags.MUDCRAB_FOOD, Items.SPIDER_EYE);
+        if (module == ReleaseModule.WILDERNESS) {
+            addToTag(ItemTags.ARROWS, org.polaris2023.wildwind.wilderness.registry.ModItems.TIPPED_ARROW.get());
+            tag(Tags.Items.ANIMAL_FOODS)
+                    .addTag(ModItemTags.MUDCRAB_FOOD);
+            addToTag(ModItemTags.MUDCRAB_FOOD, Items.SPIDER_EYE);
 
-        // ==================== 食人鱼相关物品标签 ====================
-        // 猫、豹猫以生食人鱼为食
-        addToTag(ItemTags.CAT_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get());
-        addToTag(ItemTags.OCELOT_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get());
-        // 狼以生/熟食人鱼为食
-        addToTag(ItemTags.WOLF_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get(), org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
-        // 原版鱼类标签
-        addToTag(ItemTags.FISHES, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get(), org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
-        // 熟鱼食物标签
-        addToTag(Tags.Items.FOODS_COOKED_FISH, org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
+            // ==================== 食人鱼相关物品标签 ====================
+            // 猫、豹猫以生食人鱼为食
+            addToTag(ItemTags.CAT_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get());
+            addToTag(ItemTags.OCELOT_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get());
+            // 狼以生/熟食人鱼为食
+            addToTag(ItemTags.WOLF_FOOD, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get(), org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
+            // 原版鱼类标签
+            addToTag(ItemTags.FISHES, org.polaris2023.wildwind.wilderness.registry.ModItems.PIRANHA.get(), org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
+            // 熟鱼食物标签
+            addToTag(Tags.Items.FOODS_COOKED_FISH, org.polaris2023.wildwind.wilderness.registry.ModItems.COOKED_PIRANHA.get());
+        }
     }
 
     /**
@@ -140,6 +148,7 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
             Block door, Block trapdoor,
             Block pressurePlate, Block button,
             Block leaves, Block sapling) {
+        if (!module.owns(log)) return;
 
         // 原木物品标签
         addToTag(ItemTags.LOGS, log, wood, strippedLog, strippedWood);
@@ -215,6 +224,7 @@ public class ModItemTagsProvider extends TagsProvider<Item> {
     }
 
     private void registerWoodLogItemTag(String name, Block log, Block wood, Block strippedLog, Block strippedWood) {
+        if (!module.owns(log)) return;
         TagKey<Item> logsTag = TagKey.create(
                 Registries.ITEM,
                 HFASMod.id(name + "_logs")

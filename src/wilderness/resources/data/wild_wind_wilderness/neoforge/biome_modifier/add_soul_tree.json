@@ -1,6 +1,0 @@
-{
-  "type": "neoforge:add_features",
-  "biomes": "minecraft:soul_sand_valley",
-  "features": "wild_wind_wilderness:soul_tree_placed",
-  "step": "vegetal_decoration"
-}

@@ -2,6 +2,7 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
+import org.polaris2023.wildwind.hfas.datagen.ReleaseModule;
 import net.minecraft.data.loot.EntityLootSubProvider;
 import net.minecraft.data.loot.LootTableProvider;
 import net.minecraft.resources.ResourceKey;
@@ -26,16 +27,20 @@ import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
 
 public class ModLootProvider extends LootTableProvider {
-    public ModLootProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
+    public ModLootProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ReleaseModule module) {
         super(
                 output,
                 Set.of(),
-                List.of(
-                        new SubProviderEntry(BlockLoot::new, LootContextParamSets.BLOCK),
-                        new SubProviderEntry(ModEntityLootSubProvider::new, LootContextParamSets.ENTITY)
-                ),
+                providers(module),
                 lookupProvider
         );
+    }
+
+    private static List<SubProviderEntry> providers(ReleaseModule module) {
+        var providers = new java.util.ArrayList<SubProviderEntry>();
+        providers.add(new SubProviderEntry(lookup -> new BlockLoot(lookup, module), LootContextParamSets.BLOCK));
+        if (module == ReleaseModule.WILDERNESS) providers.add(new SubProviderEntry(ModEntityLootSubProvider::new, LootContextParamSets.ENTITY));
+        return List.copyOf(providers);
     }
 
     private static final class ModEntityLootSubProvider extends EntityLootSubProvider {

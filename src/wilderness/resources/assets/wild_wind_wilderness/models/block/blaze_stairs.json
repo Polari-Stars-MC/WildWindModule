@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "wild_wind_wilderness:block/blaze_planks",
-    "side": "wild_wind_wilderness:block/blaze_planks",
-    "top": "wild_wind_wilderness:block/blaze_planks"
-  }
-}

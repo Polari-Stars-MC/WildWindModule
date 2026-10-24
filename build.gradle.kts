@@ -13,6 +13,10 @@ val modLicense: String by project
 val modGroupId: String by project
 val geocklibVersion: String by project
 val releaseModules = listOf("core", "wilderness", "barren")
+tasks.register("generateResources") {
+    description = "Generate each release module's resources directly into build/generated."
+    dependsOn(":datagen:runClientData", ":datagen:runServerData")
+}
 val smokeModules = providers.gradleProperty("testModules").orElse("core").get().split(",")
 require(smokeModules.contains("core") && smokeModules.all { it in releaseModules }) {
     "testModules must include core and may include wilderness and/or barren"
@@ -41,7 +45,10 @@ subprojects {
         }
     }
     dependencies {
-        moduleDependencies.forEach { implementation(project(":$it")) }
+        moduleDependencies.forEach {
+            if (module == "datagen") implementation(project(mapOf("path" to ":$it", "configuration" to "datagenElements")))
+            else implementation(project(":$it"))
+        }
         compileOnly("org.projectlombok:lombok:1.18.44")
         annotationProcessor("org.projectlombok:lombok:1.18.44")
         if (usesGecko) implementation("com.geckolib:geckolib-neoforge-$minecraftVersion:$geocklibVersion")
@@ -89,9 +96,30 @@ subprojects {
             java.setSrcDirs(listOf(rootProject.file("src/$module/java")))
             resources.setSrcDirs(listOf(rootProject.file("src/$module/resources")))
             resources.srcDir(metadata)
+            if (module in releaseModules) {
+                resources.srcDir(rootProject.layout.buildDirectory.dir("generated/datagen/client/$module"))
+                resources.srcDir(rootProject.layout.buildDirectory.dir("generated/datagen/server/$module"))
+            }
             resources.exclude("**/*.bbmodel", "**/.cache/**")
         }
         test { java.srcDir(rootProject.file("src/$module/test")) }
+    }
+    if (module in releaseModules) {
+        // Datagen loads registration classes and hand-authored assets without requiring its own output.
+        // A separate artifact avoids the cycle: release JAR -> datagen -> release JAR.
+        val bootstrapJar = tasks.register<Jar>("datagenBootstrapJar") {
+            archiveClassifier.set("datagen-bootstrap")
+            from(sourceSets.main.get().output.classesDirs)
+            from(rootProject.file("src/$module/resources"))
+            from(metadata)
+            exclude("**/*.bbmodel", "**/.cache/**")
+        }
+        configurations.create("datagenElements") {
+            isCanBeConsumed = true
+            isCanBeResolved = false
+            outgoing.artifact(bootstrapJar)
+        }
+        tasks.named("processResources") { dependsOn(rootProject.tasks.named("generateResources")) }
     }
     tasks.withType<JavaCompile>().configureEach { options.encoding = "UTF-8" }
     tasks.test {
@@ -142,6 +170,9 @@ subprojects {
             into(layout.buildDirectory.dir("runs/gameTest/config"))
         }
         neoForge.runs.named("gameTest") { taskBefore(prepare) }
+    }
+    if (module == "datagen") {
+        tasks.named("runServerData") { mustRunAfter("runClientData") }
     }
 }
 tasks.register<Sync>("collectMods") {

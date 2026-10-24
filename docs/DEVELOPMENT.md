@@ -24,7 +24,7 @@
 Windows 在仓库根目录执行；其他系统把 `.\gradlew.bat` 改为 `./gradlew`。
 
 ```powershell
-# 资源快照随源码保存，干净检出即可构建
+# 干净检出即可构建；生成资源由构建自动准备
 .\gradlew.bat build collectMods
 # 核心 / 核心+荒野 / 核心+瘠土开发客户端
 .\gradlew.bat :core:runClient
@@ -39,16 +39,19 @@ Windows 在仓库根目录执行；其他系统把 `.\gradlew.bat` 改为 `./gra
 ## 数据生成
 
 ```powershell
-.\gradlew.bat :datagen:runClientData :datagen:runServerData
-python scripts/sync_generated_resources.py
+.\gradlew.bat generateResources
 .\gradlew.bat build collectMods
 ```
 
-需要 Python 3.9+。生成输出在 `build/generated/datagen/{client,server}/`；同步脚本按注册命名空间分配到三个模块资源目录，并拆分原版／公共标签、数据映射和语言文件。手工资源保留；修改生成器时应提交生成后的快照。删除某项生成内容时，同时删除其已提交的旧快照，避免旧资源残留。
+生成器直接写入 `build/generated/datagen/{client,server}/{core,wilderness,barren}/`，发行模块只读取自己的目录。`ReleaseModule` 显式选择模块：模型、配方、掉落、语言、标签与数据映射由对应 Provider 生成，不再使用 Python 后处理，也不向 `src/` 回写生成结果。语言条目统一在 Provider 中声明，包含模块标题及属性书翻译；删除生成项后由数据生成缓存清理过期输出。
+
+`src/<模块>/resources/` 仅保留必要的手工资源，例如模型源文件、纹理、定制模型、配置、Mixin 声明和手工维护的数据标签；已经有生成器的同路径文件不得重复提交。所有三套木材常规配方和对应进度同样通过 datagen 生成。
 
 模型 Provider 检查三个命名空间的所有已注册方块和物品。未注册的船、焚烬木／灵焰木告示牌等源素材保留，不应为它们新增有效配方。`.bbmodel` 源文件不打入发行 JAR。历史占位材质问题见进度文档。
 
-`build` 不会启动游戏数据生成器，避免构建循环；CI 会显式重新生成、同步并检查快照一致性。
+`processResources` 依赖根任务 `generateResources`。为避免“发行 JAR 依赖 datagen，datagen 又依赖发行 JAR”的循环，每个发行模块提供内部 `datagenElements` 配置和 `datagenBootstrapJar`：只包含编译类、元数据与手工资源。生成器通过该内部产物加载注册内容；正式 JAR 再加入生成资源。内部产物不进入 `collectMods`，不能用于玩家安装。
+
+CI 从 `clean build` 验证这条任务链，重复生成并比对 JSON 哈希，检查生成过程没有修改源码，然后运行综合游戏测试和四种安装组合测试。
 
 ## 验证
 
@@ -76,3 +79,5 @@ python scripts/sync_generated_resources.py
 提交前运行 `git diff --check`，按改动范围执行上述测试；服务端自动测试不替代游戏内视觉、多人联机和长期存档验收。
 
 核心 `inspection/` 包提供书与笔记录器，新增字段时同步维护 `BOOK_INSPECTION.md`。实体交互／署名书转换／书本上限／硫方怪物理参数在 `BookInspectionGameTests` 中验证。`EnchantmentTableGameTests` 使用真实附魔台菜单验证熔炼候选、随机预览和最终工具／书本附魔。
+
+属性书在服务端保存 `Component.translatable` 字段及参数；`InspectionBookAccessMixin` 仅对本模组标记的属性页进行客户端排版，保留原始笔记和过滤结果。语言切换后重新打开书时使用当前字体重新分页，不改写书的保存内容。新增文本必须同时更新中英文语言 Provider。
