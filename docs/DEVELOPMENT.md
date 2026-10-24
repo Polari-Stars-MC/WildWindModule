@@ -10,7 +10,7 @@
 | `wilderness` | `src/wilderness/` | 模块 1；依赖 Core 与 GeckoLib 5.5.4 |
 | `barren` | `src/barren/` | 模块 2；只依赖 Core |
 | `datagen` | `src/datagen/` | 开发用数据生成器；加载全部模块 |
-| `verification` | `src/verification/` | 开发用 27 组综合 GameTest；加载全部模块 |
+| `verification` | `src/verification/` | 开发用 28 组综合 GameTest；加载全部模块 |
 | `smoke` | `src/smoke/` | 开发用安装组合测试；由 `testModules` 选择依赖 |
 
 发行模块有各自的入口、注册器、Mixin、资源、元数据与 JAR。`src/templates/` 是元数据模板。辅助项目不放入发行目录。
@@ -75,4 +75,4 @@ python scripts/sync_generated_resources.py
 
 提交前运行 `git diff --check`，按改动范围执行上述测试；服务端自动测试不替代游戏内视觉、多人联机和长期存档验收。
 
-核心 `inspection/` 包提供书与笔记录器，新增字段时同步维护 `BOOK_INSPECTION.md`。实体交互／书本上限／硫方怪物理参数在 `BookInspectionGameTests` 中验证。
+核心 `inspection/` 包提供书与笔记录器，新增字段时同步维护 `BOOK_INSPECTION.md`。实体交互／署名书转换／书本上限／硫方怪物理参数在 `BookInspectionGameTests` 中验证。`EnchantmentTableGameTests` 使用真实附魔台菜单验证熔炼候选、随机预览和最终工具／书本附魔。

@@ -71,7 +71,7 @@ public final class BookInspectionGameTests {
         var pos = h.absolutePos(new BlockPos(2, 2, 2));
         h.getLevel().setBlockAndUpdate(pos, Blocks.CHEST.defaultBlockState());
         var book = new ItemStack(Items.WRITABLE_BOOK);
-        var note = Filterable.passThrough("已有笔记，请保留");
+        var note = new Filterable<>("已有笔记，请保留", java.util.Optional.of("过滤后的笔记"));
         book.set(DataComponents.WRITABLE_BOOK_CONTENT, new WritableBookContent(List.of(note)));
         player.setItemInHand(InteractionHand.MAIN_HAND, book);
         var hit = new BlockHitResult(Vec3.atCenterOf(pos), Direction.UP, pos, false);
@@ -80,22 +80,36 @@ public final class BookInspectionGameTests {
         player.setShiftKeyDown(true);
         var event = NeoForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, InteractionHand.MAIN_HAND, pos, hit));
         check(h, event.isCanceled() && event.getCancellationResult() == InteractionResult.SUCCESS, "Inspector consumes interaction before opening chest/book");
-        var pages = book.get(DataComponents.WRITABLE_BOOK_CONTENT).pages();
-        check(h, pages.size() > 1 && pages.getFirst().equals(note), "Append preserves original page");
-        check(h, pages.stream().allMatch(p -> p.raw().length() <= 1024 && p.raw().split("\n", -1).length <= 12), "Pages fit writable book limits");
+        var signed = player.getItemInHand(InteractionHand.MAIN_HAND);
+        check(h, signed.is(Items.WRITTEN_BOOK) && !signed.has(DataComponents.WRITABLE_BOOK_CONTENT), "Held book becomes signed book without editable pages");
+        var content = signed.get(DataComponents.WRITTEN_BOOK_CONTENT);
+        var pages = content.pages();
+        check(h, pages.size() > 1 && pages.getFirst().equals(note.map(Component::literal)), "Signing preserves raw and filtered notes");
+        check(h, content.author().equals(player.getGameProfile().name()) && content.generation() == 0 && content.resolved(), "Player is author of original literal snapshot");
+        String chestName = Blocks.CHEST.getName().getString() + "(minecraft:chest)";
+        check(h, content.title().raw().equals(chestName) && signed.getHoverName().getString().equals(chestName), "Signed title includes block name and ID");
+        check(h, pages.stream().allMatch(p -> p.raw().getString().length() <= 1024 && p.raw().getString().split("\n", -1).length <= 12), "Pages fit book layout limits");
+        var repeated = NeoForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, InteractionHand.MAIN_HAND, pos, hit));
+        check(h, !repeated.isCanceled() && player.getItemInHand(InteractionHand.MAIN_HAND) == signed, "Signed book is never inspected again");
         var full = new WritableBookContent(IntStream.range(0, 100).mapToObj(i -> Filterable.passThrough("note " + i)).toList());
         book.set(DataComponents.WRITABLE_BOOK_CONTENT, full);
-        check(h, !BookInspectionHandler.append(book, List.of("new")) && book.get(DataComponents.WRITABLE_BOOK_CONTENT).equals(full), "Full book is unchanged");
+        player.setItemInHand(InteractionHand.MAIN_HAND, book);
+        NeoForge.EVENT_BUS.post(new PlayerInteractEvent.RightClickBlock(player, InteractionHand.MAIN_HAND, pos, hit));
+        check(h, player.getItemInHand(InteractionHand.MAIN_HAND) == book && book.get(DataComponents.WRITABLE_BOOK_CONTENT).equals(full), "Full held book is unchanged");
         var almostFull = new WritableBookContent(full.pages().subList(0, 99));
         book.set(DataComponents.WRITABLE_BOOK_CONTENT, almostFull);
-        check(h, !BookInspectionHandler.append(book, List.of("one", "two"))
+        check(h, BookInspectionHandler.sign(book, List.of("one", "two"), Component.literal("test"), "author").isEmpty()
                 && book.get(DataComponents.WRITABLE_BOOK_CONTENT).equals(almostFull), "Insufficient space never partially appends a report");
         player.setItemInHand(InteractionHand.MAIN_HAND, ItemStack.EMPTY);
         var offhand = new ItemStack(Items.WRITABLE_BOOK);
         player.setItemInHand(InteractionHand.OFF_HAND, offhand);
         var cow = h.spawn(EntityTypes.COW, 3, 2, 3);
         var entityEvent = NeoForge.EVENT_BUS.post(new PlayerInteractEvent.EntityInteract(player, InteractionHand.OFF_HAND, cow, Vec3.ZERO));
-        check(h, entityEvent.isCanceled() && !offhand.get(DataComponents.WRITABLE_BOOK_CONTENT).pages().isEmpty(), "Offhand entity interaction writes book");
+        var signedEntity = player.getItemInHand(InteractionHand.OFF_HAND);
+        check(h, entityEvent.isCanceled() && signedEntity.is(Items.WRITTEN_BOOK)
+                && !signedEntity.get(DataComponents.WRITTEN_BOOK_CONTENT).pages().isEmpty()
+                && signedEntity.getHoverName().getString().equals(cow.getType().getDescription().getString() + "(minecraft:cow)")
+                && player.getItemInHand(InteractionHand.MAIN_HAND).isEmpty(), "Offhand entity interaction replaces only the offhand book");
         var report = InspectionReport.entity(h.getLevel(), cow);
         field(h, report, "实体ID:minecraft:cow"); field(h, report, "方块ID:×"); field(h, report, "硬度:×"); field(h, report, "最大生命值:10");
         field(h, report, "物品ID:×"); field(h, report, "可再生:是");
@@ -110,7 +124,17 @@ public final class BookInspectionGameTests {
         field(h, itemReport, "物品ID:minecraft:cobblestone");
         field(h, itemReport, "最大堆叠:64");
         field(h, itemReport, "生命值:×");
-        check(h, !BookInspectionHandler.append(new ItemStack(Items.WRITTEN_BOOK), List.of("overwrite")), "Signed books cannot be changed");
+        check(h, BookInspectionHandler.sign(signedEntity, List.of("overwrite"), Component.literal("test"), "author").isEmpty(), "Signed books cannot be changed");
+        var longName = Component.literal("杜鹃木悬挂式告示牌(wild_wind_core:azalea_hanging_sign)");
+        var longBook = BookInspectionHandler.sign(offhand, List.of("report"), longName, "author");
+        check(h, longBook.getHoverName().equals(longName), "Full name and long ID are preserved for display");
+        var longContent = longBook.get(DataComponents.WRITTEN_BOOK_CONTENT);
+        check(h, longContent.title().raw().length() <= 32
+                && net.minecraft.world.item.component.WrittenBookContent.CODEC.encodeStart(
+                    h.getLevel().registryAccess().createSerializationContext(com.mojang.serialization.JsonOps.INSTANCE), longContent).isSuccess(),
+                "Long titles serialize within vanilla limits");
+        var unicodeBook = BookInspectionHandler.sign(offhand, List.of("report"), Component.literal("x".repeat(31) + "😀(minecraft:stone)"), "author");
+        check(h, unicodeBook.get(DataComponents.WRITTEN_BOOK_CONTENT).title().raw().equals("x".repeat(31)), "Title truncation preserves surrogate pairs");
         h.succeed();
     }
 

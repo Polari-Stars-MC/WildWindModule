@@ -60,6 +60,7 @@ public final class GameplayGameTests {
         tests.register("cobweb_timers", () -> GameplayGameTests::cobwebTimers);
         tests.register("cobweb_tick_event", () -> GameplayGameTests::cobwebTickEvent);
         tests.register("melting", () -> GameplayGameTests::melting);
+        tests.register("melting_table", () -> EnchantmentTableGameTests::melting);
         tests.register("skeleton_spawns", () -> SkeletonAndFarmlandGameTests::skeletonSpawns);
         tests.register("skeleton_melee", () -> SkeletonAndFarmlandGameTests::skeletonMelee);
         tests.register("farmland_protection", () -> SkeletonAndFarmlandGameTests::farmland);

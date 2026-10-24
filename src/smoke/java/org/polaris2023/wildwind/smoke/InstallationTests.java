@@ -53,8 +53,9 @@ public final class InstallationTests {
         var report = org.polaris2023.wildwind.core.inspection.InspectionReport.block(h.getLevel(), inspectionPos);
         check(h, report.contains("可再生:是") && report.contains("硫方怪原型:弹性（橡胶球）"), "Inspector works with only Core and its own tags");
         var book = new net.minecraft.world.item.ItemStack(net.minecraft.world.item.Items.WRITABLE_BOOK);
-        check(h, org.polaris2023.wildwind.core.inspection.BookInspectionHandler.append(book,
-                org.polaris2023.wildwind.core.inspection.BookPages.paginate(report)), "Core can persist complete inspection report");
+        var signed = org.polaris2023.wildwind.core.inspection.BookInspectionHandler.sign(book,
+                org.polaris2023.wildwind.core.inspection.BookPages.paginate(report), Component.literal("Oak Planks(minecraft:oak_planks)"), "test");
+        check(h, signed.is(net.minecraft.world.item.Items.WRITTEN_BOOK), "Core can persist complete signed inspection report");
         h.succeed();
     }
 }

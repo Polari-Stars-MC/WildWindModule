@@ -101,6 +101,7 @@
 ## 熔炼附魔
 
 - ID：`wild_wind_core:melting`，中文「熔炼」，英文「Melting」，最高 I 级。
+- 获取：加入原版 `minecraft:in_enchanting_table` 标签；附魔台可随机给镐、斧、锹、锄等 `#minecraft:enchantable/mining` 工具附加熔炼，也可生成熔炼附魔书。沿用原版书架、等级、青金石和随机抽取规则，不保证每次出现；可使用 15 个有效书架的 30 级选项尝试。附魔权重为 2。
 - 支持 `minecraft:enchantable/mining` 标签中的工具，包括镐、斧、锹、锄与剪刀。
 - 加入原版非宝藏附魔标签，沿用原版相应的附魔台、附魔书交易及随机附魔入口。
 - 手持工具执行 `/enchant @s wild_wind_core:melting 1` 可直接添加。
