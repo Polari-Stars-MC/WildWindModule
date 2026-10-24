@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "ww_hfas:block/scorched_grass"
-  }
-}

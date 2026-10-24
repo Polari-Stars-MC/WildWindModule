@@ -1,3 +1,4 @@
+import org.gradle.api.file.DuplicatesStrategy
 import org.slf4j.event.Level.INFO
 import java.util.Locale
 
@@ -71,7 +72,10 @@ allprojects {
                 srcDir(rootProject.file("src/${project.name}/resources"))
 
                 exclude("**/*.bbmodel")
-                exclude("build/generated/**/.cache")
+                // datagen 的 hash 缓存目录，位于 client/server 两个 srcDir 根下，
+                // 同名 entry 会在 processResources 里触发 duplicate 错误，必须排除
+                exclude("**/.cache/**")
+                exclude(".cache/**")
             }
         }
     }
@@ -92,6 +96,11 @@ allprojects {
     }
 
     java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+    // Gradle 9 对资源重复项默认报错；保持既有语义：先生成的 srcDir（build/generated）优先
+    tasks.withType<ProcessResources>().configureEach {
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    }
 
     neoForge {
         version = neoVersion

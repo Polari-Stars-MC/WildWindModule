@@ -3,7 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    "ww_hfas:azalea_log"
+    "#ww_hfas:azalea_logs"
   ],
   "result": {
     "count": 4,

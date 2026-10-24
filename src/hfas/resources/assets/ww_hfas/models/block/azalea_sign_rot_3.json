@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/template_sign_rot_3",
-  "textures": {
-    "all": "ww_hfas:block/azalea_sign",
-    "particle": "ww_hfas:block/azalea_planks"
-  }
-}

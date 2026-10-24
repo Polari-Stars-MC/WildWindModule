@@ -7,6 +7,8 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.level.block.Block;
 import org.jspecify.annotations.NonNull;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
+import org.polaris2023.wildwind.hfas.block.WoodFamily;
 
 import java.util.Set;
 
@@ -22,59 +24,14 @@ public class BlockLoot extends BlockLootSubProvider {
 
     @Override
     protected void generate() {
-        // 焚烬木套件
-        dropSelf(ModBlocks.BLAZE_LOG.get());
-        dropSelf(ModBlocks.BLAZE_WOOD.get());
-        dropSelf(ModBlocks.STRIPPED_BLAZE_LOG.get());
-        dropSelf(ModBlocks.STRIPPED_BLAZE_WOOD.get());
-        dropSelf(ModBlocks.BLAZE_PLANKS.get());
-        dropSelf(ModBlocks.BLAZE_STAIRS.get());
-        dropSelf(ModBlocks.BLAZE_SLAB.get());
-        dropSelf(ModBlocks.BLAZE_FENCE.get());
-        dropSelf(ModBlocks.BLAZE_FENCE_GATE.get());
-        dropSelf(ModBlocks.BLAZE_PRESSURE_PLATE.get());
-        dropSelf(ModBlocks.BLAZE_BUTTON.get());
-        // 树叶 - 使用树叶掉落逻辑
-        add(ModBlocks.BLAZE_LEAVES.get(), createLeavesDrops(ModBlocks.BLAZE_LEAVES.get(), ModBlocks.BLAZE_SAPLING.get(), 0.05F));
-        dropSelf(ModBlocks.BLAZE_SAPLING.get());
-        // 门需要特殊处理
-        add(ModBlocks.BLAZE_DOOR.get(), createDoorTable(ModBlocks.BLAZE_DOOR.get()));
-        add(ModBlocks.BLAZE_TRAPDOOR.get(), createDoorTable(ModBlocks.BLAZE_TRAPDOOR.get()));
+        // 三种木材质统一按家族生成
+        for (WoodFamily family : ModWoodFamilies.ALL) {
+            generateWood(family);
+        }
 
-        // 灵焰木套件
-        dropSelf(ModBlocks.SOUL_LOG.get());
-        dropSelf(ModBlocks.SOUL_WOOD.get());
-        dropSelf(ModBlocks.STRIPPED_SOUL_LOG.get());
-        dropSelf(ModBlocks.STRIPPED_SOUL_WOOD.get());
-        dropSelf(ModBlocks.SOUL_PLANKS.get());
-        dropSelf(ModBlocks.SOUL_STAIRS.get());
-        dropSelf(ModBlocks.SOUL_SLAB.get());
-        dropSelf(ModBlocks.SOUL_FENCE.get());
-        dropSelf(ModBlocks.SOUL_FENCE_GATE.get());
-        dropSelf(ModBlocks.SOUL_PRESSURE_PLATE.get());
-        dropSelf(ModBlocks.SOUL_BUTTON.get());
-        // 树叶 - 使用树叶掉落逻辑
-        add(ModBlocks.SOUL_LEAVES.get(), createLeavesDrops(ModBlocks.SOUL_LEAVES.get(), ModBlocks.SOUL_SAPLING.get(), 0.05F));
-        dropSelf(ModBlocks.SOUL_SAPLING.get());
-        // 门需要特殊处理
-        add(ModBlocks.SOUL_DOOR.get(), createDoorTable(ModBlocks.SOUL_DOOR.get()));
-        add(ModBlocks.SOUL_TRAPDOOR.get(), createDoorTable(ModBlocks.SOUL_TRAPDOOR.get()));
-
-        // 杜鹃木套件
-        dropSelf(ModBlocks.AZALEA_LOG.get());
-        dropSelf(ModBlocks.AZALEA_WOOD.get());
-        dropSelf(ModBlocks.STRIPPED_AZALEA_LOG.get());
-        dropSelf(ModBlocks.STRIPPED_AZALEA_WOOD.get());
-        dropSelf(ModBlocks.AZALEA_PLANKS.get());
-        dropSelf(ModBlocks.AZALEA_STAIRS.get());
-        dropSelf(ModBlocks.AZALEA_SLAB.get());
-        dropSelf(ModBlocks.AZALEA_FENCE.get());
-        dropSelf(ModBlocks.AZALEA_FENCE_GATE.get());
-        dropSelf(ModBlocks.AZALEA_PRESSURE_PLATE.get());
-        dropSelf(ModBlocks.AZALEA_BUTTON.get());
-        // 门需要特殊处理
-        add(ModBlocks.AZALEA_DOOR.get(), createDoorTable(ModBlocks.AZALEA_DOOR.get()));
-        add(ModBlocks.AZALEA_TRAPDOOR.get(), createDoorTable(ModBlocks.AZALEA_TRAPDOOR.get()));
+        // 树苗花盆：掉落花盆 + 里面的树苗（与原版一致）
+        dropPottedContents(ModBlocks.POTTED_BLAZE_SAPLING.get());
+        dropPottedContents(ModBlocks.POTTED_SOUL_SAPLING.get());
 
         // 其他方块
         dropSelf(ModBlocks.SCORCHED_GRASS_BLOCK.get());
@@ -83,5 +40,34 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.SCORCHED_TWIG.get());
         dropSelf(ModBlocks.TINY_CACTUS.get());
         dropOther(ModBlocks.FLETCHING_TABLE.get(), Items.FLETCHING_TABLE);
+    }
+
+    /**
+     * 一种木材的战利品表。
+     * <p>
+     * 只有「门」需要 {@code createDoorTable}（按 half=lower 去重掉落）；
+     * 活板门是单方块、可挂在天花板（half=top），必须用 {@code dropSelf}，
+     * 否则天花板上的活板门破坏后不掉落。原版 VanillaBlockLoot 亦如此。
+     */
+    private void generateWood(WoodFamily family) {
+        dropSelf(family.log().get());
+        dropSelf(family.wood().get());
+        dropSelf(family.strippedLog().get());
+        dropSelf(family.strippedWood().get());
+        dropSelf(family.planks().get());
+        dropSelf(family.stairs().get());
+        dropSelf(family.slab().get());
+        dropSelf(family.fence().get());
+        dropSelf(family.fenceGate().get());
+        dropSelf(family.pressurePlate().get());
+        dropSelf(family.button().get());
+        dropSelf(family.trapdoor().get());
+        add(family.door().get(), createDoorTable(family.door().get()));
+
+        if (family.hasLeaves()) {
+            Block leaves = family.leaves().get();
+            add(leaves, createLeavesDrops(leaves, family.sapling().get(), 0.05F));
+            dropSelf(family.sapling().get());
+        }
     }
 }

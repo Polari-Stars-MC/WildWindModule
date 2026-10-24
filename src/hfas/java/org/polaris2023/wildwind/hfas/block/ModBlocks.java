@@ -192,6 +192,16 @@ public class ModBlocks {
                     .randomTicks())
     );
 
+    // 焚烬木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
+    @SuppressWarnings("deprecation")
+    public static final DeferredBlock<FlowerPotBlock> POTTED_BLAZE_SAPLING = BLOCKS.registerBlock(
+            "potted_blaze_sapling",
+            p -> new FlowerPotBlock(BLAZE_SAPLING.get(), p
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
     // ==================== 灵焰木套件 (soul_wood) ====================
 
     // 灵焰木原木
@@ -331,6 +341,16 @@ public class ModBlocks {
                     .instabreak()
                     .sound(SoundType.GRASS)
                     .randomTicks())
+    );
+
+    // 灵焰木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
+    @SuppressWarnings("deprecation")
+    public static final DeferredBlock<FlowerPotBlock> POTTED_SOUL_SAPLING = BLOCKS.registerBlock(
+            "potted_soul_sapling",
+            p -> new FlowerPotBlock(SOUL_SAPLING.get(), p
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY))
     );
 
     // ==================== 杜鹃木套件 (azalea_wood) ====================

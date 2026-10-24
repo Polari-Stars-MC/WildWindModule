@@ -67,10 +67,9 @@ public class Piranha extends AbstractSchoolingFish implements WindupAttackMob, G
         return 5;
     }
 
-    // WIP SOUND
     @Override
     protected SoundEvent getFlopSound() {
-        return SoundEvents.SALMON_FLOP;
+        return ModSoundEvents.PIRANHA_FLOP.get();
     }
 
     @Override

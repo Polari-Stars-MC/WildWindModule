@@ -3,7 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    "ww_hfas:blaze_log"
+    "#ww_hfas:blaze_logs"
   ],
   "result": {
     "count": 4,
