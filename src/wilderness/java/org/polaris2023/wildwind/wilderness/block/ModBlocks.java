@@ -145,7 +145,8 @@ public class ModBlocks {
 
     public static final DeferredBlock<LeavesBlock> BLAZE_LEAVES = BLOCKS.registerBlock(
             "blaze_leaves",
-            p -> new TintedParticleLeavesBlock(0.01F,p
+            p -> new UntintedParticleLeavesBlock(0.01F,
+                    net.minecraft.core.particles.ColorParticleOption.create(net.minecraft.core.particles.ParticleTypes.TINTED_LEAVES, 0xFFFF8000), p
                     .mapColor(MapColor.COLOR_ORANGE)
                     .strength(0.2F)
                     .sound(SoundType.GRASS)
@@ -269,7 +270,8 @@ public class ModBlocks {
 
     public static final DeferredBlock<LeavesBlock> SOUL_LEAVES = BLOCKS.registerBlock(
             "soul_leaves",
-            p -> new TintedParticleLeavesBlock(0.01F, p
+            p -> new UntintedParticleLeavesBlock(0.01F,
+                    net.minecraft.core.particles.ColorParticleOption.create(net.minecraft.core.particles.ParticleTypes.TINTED_LEAVES, 0xFF00FFFF), p
                     .mapColor(MapColor.COLOR_CYAN)
                     .strength(0.2F)
                     .sound(SoundType.GRASS)

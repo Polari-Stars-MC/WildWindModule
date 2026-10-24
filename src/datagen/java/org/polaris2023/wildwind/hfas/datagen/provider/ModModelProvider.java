@@ -65,8 +65,8 @@ public class ModModelProvider extends ModelProvider {
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_PRESSURE_PLATE.get(),
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_BUTTON.get()
         );
-        // 焚烬木树叶 - 橙色染色
-        blockModels.createTintedLeaves(org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_LEAVES.get(), TexturedModel.LEAVES, 0xFF8000);
+        // 贴图已包含颜色；方块和物品均不叠加染色。
+        createSimpleBlock(blockModels, org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_LEAVES.get());
         // 焚烬木树苗
         blockModels.createCrossBlock(org.polaris2023.wildwind.wilderness.block.ModBlocks.BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
@@ -86,8 +86,8 @@ public class ModModelProvider extends ModelProvider {
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.SOUL_PRESSURE_PLATE.get(),
                 org.polaris2023.wildwind.wilderness.block.ModBlocks.SOUL_BUTTON.get()
         );
-        // 灵焰木树叶 - 青色染色
-        blockModels.createTintedLeaves(org.polaris2023.wildwind.wilderness.block.ModBlocks.SOUL_LEAVES.get(), TexturedModel.LEAVES, 0x00FFFF);
+        // 与焚烬木树叶一致，保留贴图原色。
+        createSimpleBlock(blockModels, org.polaris2023.wildwind.wilderness.block.ModBlocks.SOUL_LEAVES.get());
         // 灵焰木树苗
         blockModels.createCrossBlock(org.polaris2023.wildwind.wilderness.block.ModBlocks.SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
