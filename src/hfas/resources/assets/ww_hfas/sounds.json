@@ -14,8 +14,12 @@
     ]
   },
   "entity.piranha.flop": {
-    "type": "event",
-    "name": "minecraft:entity.salmon.flop",
-    "subtitle": "subtitles.entity.piranha.flop"
+    "subtitle": "subtitles.entity.piranha.flop",
+    "sounds": [
+      {
+        "type": "event",
+        "name": "minecraft:entity.salmon.flop"
+      }
+    ]
   }
 }
