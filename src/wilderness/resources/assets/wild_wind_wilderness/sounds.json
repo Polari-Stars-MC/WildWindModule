@@ -1,0 +1,16 @@
+{
+  "entity.piranha.attack": {
+    "subtitle": "subtitles.entity.piranha.attack",
+    "sounds": [
+      "wild_wind_wilderness:entity_piranha_attack_1",
+      "wild_wind_wilderness:entity_piranha_attack_2",
+      "wild_wind_wilderness:entity_piranha_attack_3"
+    ]
+  },
+  "entity.piranha.death": {
+    "subtitle": "subtitles.entity.piranha.death",
+    "sounds": [
+      "wild_wind_wilderness:entity_piranha_death"
+    ]
+  }
+}

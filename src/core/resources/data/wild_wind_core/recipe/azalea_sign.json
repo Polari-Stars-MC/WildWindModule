@@ -1,0 +1,16 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "key": {
+    "P": "wild_wind_core:azalea_planks",
+    "S": "minecraft:stick"
+  },
+  "pattern": [
+    "PPP",
+    "PPP",
+    " S "
+  ],
+  "result": {
+    "count": 3,
+    "id": "wild_wind_core:azalea_sign"
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "wild_wind_tests:kiln_villages",
+  "environment": "minecraft:default",
+  "structure": "wild_wind_tests:empty",
+  "max_ticks": 240
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "wild_wind_wilderness:block/blaze_planks"
+  }
+}

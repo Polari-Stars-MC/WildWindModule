@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cube_all",
+  "textures": {
+    "all": "wild_wind_wilderness:block/scorched_grass_block"
+  }
+}

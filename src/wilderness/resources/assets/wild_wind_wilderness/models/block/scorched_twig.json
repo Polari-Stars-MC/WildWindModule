@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/cross",
+  "textures": {
+    "cross": "wild_wind_wilderness:block/scorched_twig"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "wild_wind_core:azalea_hanging_sign"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_core:azalea_wall_hanging_sign"
+    }
+  ]
+}

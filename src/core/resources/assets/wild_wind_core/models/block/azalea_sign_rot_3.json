@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_3",
+  "textures": {
+    "all": "wild_wind_core:block/azalea_sign",
+    "particle": "wild_wind_core:block/azalea_planks"
+  }
+}

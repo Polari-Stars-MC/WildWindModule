@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "wild_wind_tests:skeleton_spawns",
+  "environment": "minecraft:default",
+  "structure": "wild_wind_tests:empty",
+  "max_ticks": 240
+}

@@ -1,0 +1,22 @@
+{
+  "values": [
+    "wild_wind_core:azalea_sign",
+    "wild_wind_core:azalea_wall_sign",
+    "wild_wind_core:azalea_hanging_sign",
+    "wild_wind_core:azalea_wall_hanging_sign",
+    "wild_wind_core:azalea_shelf",
+    "wild_wind_core:azalea_log",
+    "wild_wind_core:azalea_wood",
+    "wild_wind_core:stripped_azalea_log",
+    "wild_wind_core:stripped_azalea_wood",
+    "wild_wind_core:azalea_planks",
+    "wild_wind_core:azalea_stairs",
+    "wild_wind_core:azalea_slab",
+    "wild_wind_core:azalea_fence",
+    "wild_wind_core:azalea_fence_gate",
+    "wild_wind_core:azalea_door",
+    "wild_wind_core:azalea_trapdoor",
+    "wild_wind_core:azalea_pressure_plate",
+    "wild_wind_core:azalea_button"
+  ]
+}

@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "experience": 0.35,
+  "ingredient": "wild_wind_wilderness:piranha",
+  "result": {
+    "id": "wild_wind_wilderness:cooked_piranha"
+  }
+}

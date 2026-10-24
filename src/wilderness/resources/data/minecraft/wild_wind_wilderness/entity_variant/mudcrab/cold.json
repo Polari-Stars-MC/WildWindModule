@@ -1,0 +1,12 @@
+{
+  "asset_id": "wild_wind_wilderness:entity/mudcrab/cold",
+  "spawn_conditions": [
+    {
+      "condition": {
+        "type": "minecraft:biome",
+        "biomes": "#wild_wind_wilderness:entity_spawn/mudcrab/cold"
+      },
+      "priority": 1
+    }
+  ]
+}

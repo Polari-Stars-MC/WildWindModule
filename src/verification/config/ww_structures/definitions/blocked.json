@@ -1,0 +1,7 @@
+{
+  "name": "blocked",
+  "template": "example_ruins.nbt",
+  "biomes": ["minecraft:plains"],
+  "placement": {"spacing": 2, "separation": 1, "salt": 123456},
+  "conditions": {"min_y": 1000, "max_y": 1001}
+}

@@ -1,0 +1,7 @@
+{
+  "replace": false,
+  "values": [
+    { "id": "#c:ingots", "required": false },
+    { "id": "#c:nuggets", "required": false }
+  ]
+}

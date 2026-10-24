@@ -1,0 +1,20 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:blaze_sign"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:blaze_wall_sign"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:soul_sign"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:soul_wall_sign"
+    }
+  ]
+}

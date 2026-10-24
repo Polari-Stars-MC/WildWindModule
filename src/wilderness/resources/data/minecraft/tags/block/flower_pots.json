@@ -1,0 +1,12 @@
+{
+  "values": [
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:potted_blaze_sapling"
+    },
+    {
+      "required": false,
+      "id": "wild_wind_wilderness:potted_soul_sapling"
+    }
+  ]
+}
