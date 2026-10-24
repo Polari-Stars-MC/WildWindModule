@@ -3,7 +3,7 @@
   "category": "building",
   "group": "planks",
   "ingredients": [
-    "ww_hfas:soul_log"
+    "#ww_hfas:soul_logs"
   ],
   "result": {
     "count": 4,

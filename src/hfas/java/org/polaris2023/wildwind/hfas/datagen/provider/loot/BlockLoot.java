@@ -29,6 +29,10 @@ public class BlockLoot extends BlockLootSubProvider {
             generateWood(family);
         }
 
+        // 树苗花盆：掉落花盆 + 里面的树苗（与原版一致）
+        dropPottedContents(ModBlocks.POTTED_BLAZE_SAPLING.get());
+        dropPottedContents(ModBlocks.POTTED_SOUL_SAPLING.get());
+
         // 其他方块
         dropSelf(ModBlocks.SCORCHED_GRASS_BLOCK.get());
         dropSelf(ModBlocks.SCORCHED_DIRT.get());

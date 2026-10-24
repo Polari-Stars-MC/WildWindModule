@@ -36,6 +36,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BLAZE_BUTTON, "焚烬木按钮");
         addBlock(ModBlocks.BLAZE_LEAVES, "焚烬木树叶");
         addBlock(ModBlocks.BLAZE_SAPLING, "焚烬木树苗");
+        addBlock(ModBlocks.POTTED_BLAZE_SAPLING, "焚烬木树苗盆栽");
 
         // 灵焰木套件
         addBlock(ModBlocks.SOUL_LOG, "灵焰木原木");
@@ -53,6 +54,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_BUTTON, "灵焰木按钮");
         addBlock(ModBlocks.SOUL_LEAVES, "灵焰木树叶");
         addBlock(ModBlocks.SOUL_SAPLING, "灵焰木树苗");
+        addBlock(ModBlocks.POTTED_SOUL_SAPLING, "灵焰木树苗盆栽");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "杜鹃木原木");
@@ -96,6 +98,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         // 食人鱼音效字幕
         add("subtitles.entity.piranha.attack", "食人鱼袭击");
         add("subtitles.entity.piranha.death", "食人鱼死亡");
+        add("subtitles.entity.piranha.flop", "食人鱼拍打");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");

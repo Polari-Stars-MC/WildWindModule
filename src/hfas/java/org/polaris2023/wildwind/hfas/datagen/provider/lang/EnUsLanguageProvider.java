@@ -35,6 +35,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BLAZE_BUTTON, "Blaze Button");
         addBlock(ModBlocks.BLAZE_LEAVES, "Blaze Leaves");
         addBlock(ModBlocks.BLAZE_SAPLING, "Blaze Sapling");
+        addBlock(ModBlocks.POTTED_BLAZE_SAPLING, "Potted Blaze Sapling");
 
         // 灵焰木套件
         addBlock(ModBlocks.SOUL_LOG, "Soul Log");
@@ -52,6 +53,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_BUTTON, "Soul Button");
         addBlock(ModBlocks.SOUL_LEAVES, "Soul Leaves");
         addBlock(ModBlocks.SOUL_SAPLING, "Soul Sapling");
+        addBlock(ModBlocks.POTTED_SOUL_SAPLING, "Potted Soul Sapling");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "Azalea Log");
@@ -95,6 +97,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         // Piranha sound subtitles
         add("subtitles.entity.piranha.attack", "Piranha attacks");
         add("subtitles.entity.piranha.death", "Piranha dies");
+        add("subtitles.entity.piranha.flop", "Piranha flops");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "Wild Wind");

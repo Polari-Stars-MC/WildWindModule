@@ -39,6 +39,10 @@ public class ModModelProvider extends ModelProvider {
             registerWoodModels(blockModels, family);
         }
 
+        // 树苗 + 花盆：createPlant 一次生成树苗交叉模型与花盆模型
+        blockModels.createPlant(ModBlocks.BLAZE_SAPLING.get(), ModBlocks.POTTED_BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlant(ModBlocks.SOUL_SAPLING.get(), ModBlocks.POTTED_SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
         // ==================== 其他方块 ====================
         // 焦灰草方块 - 使用简单的方块模型
         createSimpleBlock(blockModels, ModBlocks.SCORCHED_GRASS_BLOCK.get());
@@ -98,10 +102,9 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createDoor(family.door().get());
         blockModels.createTrapdoor(family.trapdoor().get());
 
-        // 树叶（物品图标使用常数染色）与树苗，杜鹃木沿用原版，没有自成套的树叶
+        // 树叶（物品图标使用常数染色），杜鹃木沿用原版，没有自成套的树叶
         if (family.hasLeaves()) {
             blockModels.createTintedLeaves(family.leaves().get(), TexturedModel.LEAVES, family.leavesTint());
-            blockModels.createCrossBlock(family.sapling().get(), BlockModelGenerators.PlantType.NOT_TINTED);
         }
     }
 

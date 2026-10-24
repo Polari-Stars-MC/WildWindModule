@@ -21,6 +21,11 @@ public class ModSoundEvents {
             SoundEvent::createVariableRangeEvent
     );
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> PIRANHA_FLOP = SOUND_EVENTS.register(
+            "entity.piranha.flop",
+            SoundEvent::createVariableRangeEvent
+    );
+
     public static void register(IEventBus modEventBus) {
         SOUND_EVENTS.register(modEventBus);
     }
