@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_sign_rot_1",
+  "textures": {
+    "all": "wild_wind_wilderness:block/blaze_sign",
+    "particle": "wild_wind_wilderness:block/blaze_planks"
+  }
+}

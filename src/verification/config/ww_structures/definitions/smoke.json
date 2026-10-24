@@ -1,0 +1,9 @@
+{
+  "name": "smoke",
+  "template": "wide_ruins.nbt",
+  "biomes": ["minecraft:plains"],
+  "placement": {"spacing": 2, "separation": 1, "salt": 142857, "frequency": 1.0},
+  "y_offset": -1,
+  "rotation": "clockwise_90",
+  "conditions": {"min_y": -2032, "max_y": 2031, "max_terrain_difference": 0, "avoid_fluids": true, "ground_blocks": ["#minecraft:dirt", "minecraft:grass_block"]}
+}

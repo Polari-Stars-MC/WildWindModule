@@ -36,7 +36,28 @@ bin/
 
 ### Minecraft Modding ###
 run/
+modules/*/logs/
 !**/src/**/run/
 **/src/generated/**/.cache/
 repo/
 !**/src/**/repo/
+
+### Local-only files and generated caches ###
+.idea/
+.cache/
+.tools/
+.codex/
+*.log
+*.tmp
+*.bak
+*.zip
+*.class
+*.jar
+!gradle/wrapper/gradle-wrapper.jar
+.env
+.env.*
+!.env.example
+logs/
+crash-reports/
+Thumbs.db
+Desktop.ini

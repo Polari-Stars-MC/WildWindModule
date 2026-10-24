@@ -1,178 +1,182 @@
 import org.slf4j.event.Level.INFO
-import java.util.Locale
 
 plugins {
     `java-library`
-    `maven-publish`
-    id("net.neoforged.moddev") version ("2.0.141")
-    idea
+    id("net.neoforged.moddev") version("2.0.148")
     base
 }
-
-
-//tasks.named<Wrapper>("wrapper").configure {
-//    distributionType = Wrapper.DistributionType.BIN
-//}
-
-val minecraftVersion: String by rootProject
-val minecraftVersionRange: String by rootProject
-val modName: String by rootProject
-val modLicense: String by rootProject
-
-val geocklibVersion: String by rootProject
-
-allprojects {
+val minecraftVersion: String by project
+val minecraftVersionRange: String by project
+val neoVersion: String by project
+val modVersion: String by project
+val modLicense: String by project
+val modGroupId: String by project
+val geocklibVersion: String by project
+val releaseModules = listOf("core", "wilderness", "barren")
+tasks.register("generateResources") {
+    description = "Generate each release module's resources directly into build/generated."
+    dependsOn(":datagen:runClientData", ":datagen:runServerData")
+}
+val smokeModules = providers.gradleProperty("testModules").orElse("core").get().split(",")
+require(smokeModules.contains("core") && smokeModules.all { it in releaseModules }) {
+    "testModules must include core and may include wilderness and/or barren"
+}
+subprojects {
     apply(plugin = "java-library")
-    apply(plugin = "maven-publish")
-    apply(plugin = "idea")
     apply(plugin = "net.neoforged.moddev")
-    apply(plugin = "base")
-    val modGroupId: String by project
-    val modId: String by project
-    var projectModId = rootProject.name + "_" + project.name.lowercase(Locale.ROOT)
-    val modVersion: String by project
-    val neoVersion: String by project
-    if (project == rootProject) return@allprojects
     group = modGroupId
     version = modVersion
-    configure<BasePluginExtension> {
-        archivesName = projectModId
-
+    val module = name
+    val modId = if (module == "verification") "wild_wind_tests" else "wild_wind_$module"
+    val moduleDependencies = when (module) {
+        "core" -> emptyList()
+        "wilderness", "barren" -> listOf("core")
+        "smoke" -> smokeModules
+        else -> releaseModules
     }
-
-    var generateModMetadata = tasks.register<ProcessResources>("generatedMetadata") {
-        val replaceProperties = mapOf(
-            "minecraft_version" to minecraftVersion,
-            "minecraft_version_range" to minecraftVersionRange,
-            "neo_version" to neoVersion,
-            "mod_id" to projectModId,
-            "mod_name" to modName,
-            "mod_license" to modLicense,
-            "mod_version" to modVersion,
-            "geocklib_version" to geocklibVersion
-        )
-        inputs.properties(replaceProperties)
-        expand(replaceProperties)
-        from(rootProject.file("src/templates"))
-        into("build/generated/sources/modMetadata")
-    }
-
-
-    sourceSets {
-        rootProject.file("src/${project.name}/java").resolve(modGroupId.replace('.', '/')).mkdirs()
-        main {
-            java {
-                srcDir(rootProject.file("src/${project.name}/java"))
-            }
-            resources {
-                srcDir(generateModMetadata)
-                srcDir(rootProject.file("build/generated/${project.name}/server"))
-                srcDir(rootProject.file("build/generated/${project.name}/client"))
-                srcDir(rootProject.file("src/${project.name}/resources"))
-
-                exclude("**/*.bbmodel")
-                exclude("build/generated/**/.cache")
-            }
-        }
-    }
-
-    repositories {
-        exclusiveContent {
-            forRepository {
-                maven {
-                    name = "GeckoLib"
-                    url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/")
-                }
-            }
-
-            filter {
-                includeGroupAndSubgroups("com.geckolib")
-            }
-        }
-    }
-
+    val usesGecko = module in listOf("wilderness", "datagen", "verification") || (module == "smoke" && "wilderness" in smokeModules)
+    base { archivesName = "$modId-mc$minecraftVersion" }
     java.toolchain.languageVersion = JavaLanguageVersion.of(25)
-
+    repositories {
+        mavenCentral()
+        exclusiveContent {
+            forRepository { maven { url = uri("https://dl.cloudsmith.io/public/geckolib3/geckolib/maven/") } }
+            filter { includeGroupAndSubgroups("com.geckolib") }
+        }
+    }
+    dependencies {
+        moduleDependencies.forEach {
+            if (module == "datagen") implementation(project(mapOf("path" to ":$it", "configuration" to "datagenElements")))
+            else implementation(project(":$it"))
+        }
+        compileOnly("org.projectlombok:lombok:1.18.44")
+        annotationProcessor("org.projectlombok:lombok:1.18.44")
+        if (usesGecko) implementation("com.geckolib:geckolib-neoforge-$minecraftVersion:$geocklibVersion")
+        testImplementation(platform("org.junit:junit-bom:5.13.4"))
+        testImplementation("org.junit.jupiter:junit-jupiter")
+        testRuntimeOnly("org.junit.platform:junit-platform-launcher")
+    }
+    val metadata = tasks.register<ProcessResources>("generatedMetadata") {
+        val titles = mapOf("core" to "Wild Wind:Core", "wilderness" to "Wild Wind:Wilderness Update", "barren" to "Wild Wind:Barren Update", "datagen" to "Wild Wind Data Generators", "verification" to "Wild Wind Integration Tests", "smoke" to "Wild Wind Installation Tests")
+        val extraDependencies = buildString {
+            moduleDependencies.forEach { dependency ->
+                append("""
+                    [[dependencies.$modId]]
+                    modId="wild_wind_$dependency"
+                    type="required"
+                    versionRange="[$modVersion]"
+                    ordering="AFTER"
+                    side="BOTH"
+                """.trimIndent())
+                append('\n')
+            }
+            if (usesGecko) append("""
+                [[dependencies.$modId]]
+                modId="geckolib"
+                type="required"
+                versionRange="[$geocklibVersion,)"
+                ordering="NONE"
+                side="BOTH"
+            """.trimIndent())
+        }
+        val mixins = when {
+            module in releaseModules -> "[[mixins]]\nconfig=\"$modId.mixins.json\""
+            module == "verification" -> "[[mixins]]\nconfig=\"wild_wind_tests.mixins.json\""
+            module == "smoke" -> ""
+            else -> ""
+        }
+        val properties = mapOf("mod_id" to modId, "mod_name" to titles.getValue(module), "mod_version" to modVersion, "mod_license" to modLicense, "neo_version" to neoVersion, "minecraft_version_range" to minecraftVersionRange, "module_dependencies" to extraDependencies, "module_mixins" to mixins)
+        inputs.properties(properties)
+        expand(properties)
+        from(rootProject.file("src/templates"))
+        into(layout.buildDirectory.dir("generated/sources/modMetadata"))
+    }
+    sourceSets {
+        main {
+            java.setSrcDirs(listOf(rootProject.file("src/$module/java")))
+            resources.setSrcDirs(listOf(rootProject.file("src/$module/resources")))
+            resources.srcDir(metadata)
+            if (module in releaseModules) {
+                resources.srcDir(rootProject.layout.buildDirectory.dir("generated/datagen/client/$module"))
+                resources.srcDir(rootProject.layout.buildDirectory.dir("generated/datagen/server/$module"))
+            }
+            resources.exclude("**/*.bbmodel", "**/.cache/**")
+        }
+        test { java.srcDir(rootProject.file("src/$module/test")) }
+    }
+    if (module in releaseModules) {
+        // Datagen loads registration classes and hand-authored assets without requiring its own output.
+        // A separate artifact avoids the cycle: release JAR -> datagen -> release JAR.
+        val bootstrapJar = tasks.register<Jar>("datagenBootstrapJar") {
+            archiveClassifier.set("datagen-bootstrap")
+            from(sourceSets.main.get().output.classesDirs)
+            from(rootProject.file("src/$module/resources"))
+            from(metadata)
+            exclude("**/*.bbmodel", "**/.cache/**")
+        }
+        configurations.create("datagenElements") {
+            isCanBeConsumed = true
+            isCanBeResolved = false
+            outgoing.artifact(bootstrapJar)
+        }
+        tasks.named("processResources") { dependsOn(rootProject.tasks.named("generateResources")) }
+    }
+    tasks.withType<JavaCompile>().configureEach { options.encoding = "UTF-8" }
+    tasks.test {
+        useJUnitPlatform()
+        val directory = layout.buildDirectory.dir("test-runtime")
+        workingDir(directory)
+        doFirst { directory.get().asFile.mkdirs() }
+    }
     neoForge {
         version = neoVersion
-
-        accessTransformers.from(rootProject.file("src/${project.name}/resources/META-INF/accesstransformer.cfg"))
-
+        if (usesGecko) accessTransformers.from(rootProject.file("src/wilderness/resources/META-INF/accesstransformer.cfg"))
+        addModdingDependenciesTo(sourceSets.test.get())
+        mods { register(modId) { sourceSet(sourceSets.main.get()) } }
         runs {
-            register("client") {
-                client()
-                systemProperty("neoforge.enabledGameTestNamespaces", projectModId)
-                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/client").get().asFile
+            register("client") { client() }
+            register("server") { server(); programArgument("--nogui") }
+            if (module == "datagen") {
+                register("clientData") {
+                    clientData()
+                    programArguments.addAll("--mod", modId, "--all", "--output", rootProject.file("build/generated/datagen/client").absolutePath)
+                }
+                register("serverData") {
+                    serverData()
+                    programArguments.addAll("--mod", modId, "--all", "--output", rootProject.file("build/generated/datagen/server").absolutePath)
+                }
             }
-            register("server") {
-                server()
-                programArgument("--nogui")
-                systemProperty("neoforge.enabledGameTestNamespaces", projectModId)
-                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/server").get().asFile
-            }
-            register("clientData") {
-                clientData()
-                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
-                programArguments.addAll(
-                    listOf(
-                        "--mod", projectModId,
-                        "--all",
-                        "--output", rootProject.file("build/generated/${project.name}/client").absolutePath,
-                        "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
-                    )
-                )
-            }
-            register("serverData") {
-                serverData()
-                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/datagen").get().asFile
-                programArguments.addAll(
-                    listOf(
-                        "--mod", projectModId,
-                        "--all",
-                        "--output", rootProject.file("build/generated/${project.name}/server").absolutePath,
-                        "--existing", rootProject.file("src/${project.name}/resources").absolutePath,
-                    )
-                )
+            if (module in listOf("verification", "smoke")) {
+                register("gameTest") {
+                    type = "gameTestServer"
+                    programArguments.addAll("--tests", "$modId:*", "--report", "results.xml")
+                    if (module == "smoke") systemProperty("wildwind.testModules", smokeModules.joinToString(","))
+                }
             }
             configureEach {
-                systemProperty("forge.logging.markers", "REGISTRIES")
+                if (module == "smoke" && providers.gradleProperty("clientSmoke").orElse("false").get() == "true") {
+                    systemProperty("wildwind.clientSmoke", "true")
+                }
+                val variant = if (module == "smoke") "/${smokeModules.joinToString("-")}" else ""
+                gameDirectory = layout.buildDirectory.dir("runs/$name$variant")
                 logLevel.set(INFO)
             }
         }
-
-        mods {
-            register(projectModId) {
-                sourceSet(sourceSets["main"])
-            }
+    }
+    if (module == "verification") {
+        val prepare by tasks.registering(Sync::class) {
+            from(rootProject.file("src/verification/config"))
+            from(rootProject.file("src/core/resources/examples/example_ruins.nbt")) { into("ww_structures/templates") }
+            into(layout.buildDirectory.dir("runs/gameTest/config"))
         }
-
-
+        neoForge.runs.named("gameTest") { taskBefore(prepare) }
     }
-
-    neoForge.ideSyncTask(generateModMetadata)
-
-    val localRuntime by configurations.registering
-
-    configurations {
-        runtimeClasspath {
-            extendsFrom(localRuntime.get())
-        }
+    if (module == "datagen") {
+        tasks.named("runServerData") { mustRunAfter("runClientData") }
     }
-
-    dependencies {
-        compileOnly("org.projectlombok:lombok:1.18.44")
-        annotationProcessor("org.projectlombok:lombok:1.18.44")
-        implementation("com.geckolib:geckolib-neoforge-26.2:5.5.4")
-    }
-
-    tasks.withType<JavaCompile>().configureEach {
-        options.encoding = "UTF-8"
-    }
-
-    idea {
-        module {
-            isDownloadJavadoc = true
-            isDownloadSources = true
-        }
-    }
+}
+tasks.register<Sync>("collectMods") {
+    description = "Collect only the three distributable mod JARs (no development tools)."
+    releaseModules.forEach { module -> from(project(":$module").tasks.named("jar")) }
+    into(layout.buildDirectory.dir("distributions/mods"))
 }

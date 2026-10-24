@@ -1,0 +1,7 @@
+{
+  "type": "minecraft:function",
+  "function": "wild_wind_smoke:installation",
+  "environment": "minecraft:default",
+  "structure": "wild_wind_smoke:empty",
+  "max_ticks": 100
+}

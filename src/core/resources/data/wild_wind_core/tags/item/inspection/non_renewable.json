@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "minecraft:ancient_debris",
+    "minecraft:netherite_scrap",
+    "minecraft:netherite_ingot",
+    "minecraft:netherite_block",
+    "minecraft:diamond",
+    "minecraft:diamond_block",
+    "minecraft:deepslate",
+    "minecraft:raw_gold_block",
+    "minecraft:raw_iron_block",
+    "minecraft:raw_copper_block"
+  ]
+}

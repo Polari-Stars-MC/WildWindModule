@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/template_hanging_sign_rot_1",
+  "textures": {
+    "all": "wild_wind_wilderness:block/blaze_hanging_sign",
+    "particle": "wild_wind_wilderness:block/stripped_blaze_log"
+  }
+}
