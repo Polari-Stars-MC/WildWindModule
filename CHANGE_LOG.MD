@@ -209,4 +209,23 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **改名前的重复贴图** - 删除 26 张与 `blaze_*` / `soul_*` 逐字节相同的 `cinder_*` / `ember_*`（含 `.mcmeta`），无信息丢失；另有 28 张没有对应新命名版本的贴图（船 / 箱船 / 告示牌 / 悬挂告示牌的实体贴图与物品图标、`gui/hanging_signs`、`screens`）全部保留，作为后续船与告示牌开发的素材
 - **`ModBlockTagsProvider.INSTANCE`** - 无人使用的静态单例
 
+---
+
+## [Unreleased] - 2026.10.25
+
+### Added
+- **树苗花盆方块** - 注册 `potted_blaze_sapling` / `potted_soul_sapling`，使用原版 `FlowerPotBlock(树苗, props)` 构造器，构造时自动把树苗登记进原版空花盆的可放入映射表，无需额外的手工 `addPlant`
+- **花盆模型与战利品表** - `ModModelProvider` 用 `createPlant()` 一次生成树苗交叉模型 + 花盆模型（含 blockstate），`BlockLoot` 用 `dropPottedContents()` 生成「花盆 + 树苗」两池掉落，与原版 `potted_oak_sapling` 一致
+- **花盆方块本地化** - `block.ww_hfas.potted_blaze_sapling` / `potted_soul_sapling`，en_us 为 `Potted Blaze Sapling` / `Potted Soul Sapling`，zh_cn 为 `焚烬木树苗盆栽` / `灵焰木树苗盆栽`
+- **食人鱼拍打音效** - 新增 `entity.piranha.flop` SoundEvent（`createVariableRangeEvent`）与 `subtitles.entity.piranha.flop` 字幕（en_us `Piranha flops` / zh_cn `食人鱼拍打`）
+
+### Changed
+- **食人鱼 `getFlopSound()`** - 由原版 `SoundEvents.SALMON_FLOP` 改为自有 `ModSoundEvents.PIRANHA_FLOP`，移除遗留的 `// WIP SOUND` 标记
+- **`sounds.json` 暂借原版音源** - `entity.piranha.flop` 以 `sounds: [{ "type": "event", "name": "minecraft:entity.salmon.flop" }]` 引用原版鲑鱼拍打声；待有独立 `.ogg` 后把该条目替换为文件列表即可，事件 ID 与字幕键均无需变动
+
+### Fixed
+- **`minecraft:flower_pots` 标签加载失败** - 标签内引用的 `ww_hfas:potted_blaze_sapling` / `ww_hfas:potted_soul_sapling` 此前没有对应注册，`TagLoader` 报 `Couldn't load tag minecraft:flower_pots as it is missing following references`；现两个方块均已注册（BUG-TG-001）
+- **杜鹃木 / 焚烬木 / 灵焰木木板无法合成** - `azalea_planks` / `blaze_planks` / `soul_planks` 的 `ingredients` 误写为单个方块 id（`ww_hfas:blaze_log` 等），改为物品标签 `#ww_hfas:azalea_logs` / `#ww_hfas:blaze_logs` / `#ww_hfas:soul_logs`，原木、木头与两种去皮变体都能参与合成（BUG-TG-002）
+- **食人鱼 flop 无声音且字幕不显示** - `sounds.json` 曾把 `type` / `name` 写在事件层级并缺少 `sounds` 数组，`SoundEventRegistrationSerializer.getSounds()` 解析出空音源，事件播放被丢弃；已改为把 `type: "event"` 内嵌在 sound 条目中
+
 
