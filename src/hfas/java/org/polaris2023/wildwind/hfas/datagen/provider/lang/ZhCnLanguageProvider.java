@@ -36,6 +36,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.BLAZE_BUTTON, "焚烬木按钮");
         addBlock(ModBlocks.BLAZE_LEAVES, "焚烬木树叶");
         addBlock(ModBlocks.BLAZE_SAPLING, "焚烬木树苗");
+        addBlock(ModBlocks.POTTED_BLAZE_SAPLING, "焚烬木树苗盆栽");
 
         // 灵焰木套件
         addBlock(ModBlocks.SOUL_LOG, "灵焰木原木");
@@ -53,6 +54,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_BUTTON, "灵焰木按钮");
         addBlock(ModBlocks.SOUL_LEAVES, "灵焰木树叶");
         addBlock(ModBlocks.SOUL_SAPLING, "灵焰木树苗");
+        addBlock(ModBlocks.POTTED_SOUL_SAPLING, "灵焰木树苗盆栽");
 
         // 杜鹃木套件
         addBlock(ModBlocks.AZALEA_LOG, "杜鹃木原木");
@@ -81,6 +83,22 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         add("container.fletching_table", "制箭台");
         // 属性
         add("attributes.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
+
+        // 延展（reach）效果与药水
+        add("effect.ww_hfas.reach", "延展");
+        add("item.minecraft.potion.effect.reach", "延展药水");
+        add("item.minecraft.splash_potion.effect.reach", "喷溅型延展药水");
+        add("item.minecraft.lingering_potion.effect.reach", "滞留型延展药水");
+        add("item.minecraft.tipped_arrow.effect.reach", "延展之箭");
+        add("item.minecraft.potion.effect.long_reach", "延展药水");
+        add("item.minecraft.splash_potion.effect.long_reach", "喷溅型延展药水");
+        add("item.minecraft.lingering_potion.effect.long_reach", "滞留型延展药水");
+        add("item.minecraft.tipped_arrow.effect.long_reach", "延展之箭");
+
+        // 食人鱼音效字幕
+        add("subtitles.entity.piranha.attack", "食人鱼袭击");
+        add("subtitles.entity.piranha.death", "食人鱼死亡");
+        add("subtitles.entity.piranha.flop", "食人鱼拍打");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");

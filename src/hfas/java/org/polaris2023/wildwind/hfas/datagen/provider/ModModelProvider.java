@@ -13,6 +13,8 @@ import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
+import org.polaris2023.wildwind.hfas.block.WoodFamily;
 import org.polaris2023.wildwind.hfas.registry.ModItems;
 
 import java.util.function.Supplier;
@@ -32,64 +34,14 @@ public class ModModelProvider extends ModelProvider {
 
     @Override
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
-        // ==================== 焚烬木套件 ====================
-        registerWoodModels(blockModels, itemModels,
-                ModBlocks.BLAZE_LOG.get(),
-                ModBlocks.BLAZE_WOOD.get(),
-                ModBlocks.STRIPPED_BLAZE_LOG.get(),
-                ModBlocks.STRIPPED_BLAZE_WOOD.get(),
-                ModBlocks.BLAZE_PLANKS.get(),
-                ModBlocks.BLAZE_STAIRS.get(),
-                ModBlocks.BLAZE_SLAB.get(),
-                ModBlocks.BLAZE_FENCE.get(),
-                ModBlocks.BLAZE_FENCE_GATE.get(),
-                ModBlocks.BLAZE_DOOR.get(),
-                ModBlocks.BLAZE_TRAPDOOR.get(),
-                ModBlocks.BLAZE_PRESSURE_PLATE.get(),
-                ModBlocks.BLAZE_BUTTON.get()
-        );
-        // 焚烬木树叶 - 橙色染色
-        blockModels.createTintedLeaves(ModBlocks.BLAZE_LEAVES.get(), TexturedModel.LEAVES, 0xFF8000);
-        // 焚烬木树苗
-        blockModels.createCrossBlock(ModBlocks.BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        // ==================== 三种木材套件 ====================
+        for (WoodFamily family : ModWoodFamilies.ALL) {
+            registerWoodModels(blockModels, family);
+        }
 
-        // ==================== 灵焰木套件 ====================
-        registerWoodModels(blockModels, itemModels,
-                ModBlocks.SOUL_LOG.get(),
-                ModBlocks.SOUL_WOOD.get(),
-                ModBlocks.STRIPPED_SOUL_LOG.get(),
-                ModBlocks.STRIPPED_SOUL_WOOD.get(),
-                ModBlocks.SOUL_PLANKS.get(),
-                ModBlocks.SOUL_STAIRS.get(),
-                ModBlocks.SOUL_SLAB.get(),
-                ModBlocks.SOUL_FENCE.get(),
-                ModBlocks.SOUL_FENCE_GATE.get(),
-                ModBlocks.SOUL_DOOR.get(),
-                ModBlocks.SOUL_TRAPDOOR.get(),
-                ModBlocks.SOUL_PRESSURE_PLATE.get(),
-                ModBlocks.SOUL_BUTTON.get()
-        );
-        // 灵焰木树叶 - 青色染色
-        blockModels.createTintedLeaves(ModBlocks.SOUL_LEAVES.get(), TexturedModel.LEAVES, 0x00FFFF);
-        // 灵焰木树苗
-        blockModels.createCrossBlock(ModBlocks.SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
-
-        // ==================== 杜鹃木套件 ====================
-        registerWoodModels(blockModels, itemModels,
-                ModBlocks.AZALEA_LOG.get(),
-                ModBlocks.AZALEA_WOOD.get(),
-                ModBlocks.STRIPPED_AZALEA_LOG.get(),
-                ModBlocks.STRIPPED_AZALEA_WOOD.get(),
-                ModBlocks.AZALEA_PLANKS.get(),
-                ModBlocks.AZALEA_STAIRS.get(),
-                ModBlocks.AZALEA_SLAB.get(),
-                ModBlocks.AZALEA_FENCE.get(),
-                ModBlocks.AZALEA_FENCE_GATE.get(),
-                ModBlocks.AZALEA_DOOR.get(),
-                ModBlocks.AZALEA_TRAPDOOR.get(),
-                ModBlocks.AZALEA_PRESSURE_PLATE.get(),
-                ModBlocks.AZALEA_BUTTON.get()
-        );
+        // 树苗 + 花盆：createPlant 一次生成树苗交叉模型与花盆模型
+        blockModels.createPlant(ModBlocks.BLAZE_SAPLING.get(), ModBlocks.POTTED_BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlant(ModBlocks.SOUL_SAPLING.get(), ModBlocks.POTTED_SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // ==================== 其他方块 ====================
         // 焦灰草方块 - 使用简单的方块模型
@@ -120,38 +72,40 @@ public class ModModelProvider extends ModelProvider {
         );
         simpleItem(itemModels, ModItems.MUDCRAB_BUCKET);
         simpleItem(itemModels, ModItems.MUDCRAB_SPAWN_EGG);
+
+        // ==================== 食人鱼 ====================
+        registerPiranhaModels(itemModels);
     }
 
     /**
-     * 注册木质方块模型
+     * 注册一种木材的方块模型（含树叶与树苗）
      */
-    private void registerWoodModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels,
-                                     Block log, Block wood,
-                                     Block strippedLog, Block strippedWood,
-                                     Block planks, Block stairs, Block slab,
-                                     Block fence, Block fenceGate,
-                                     Block door, Block trapdoor,
-                                     Block pressurePlate, Block button) {
-        // 原木 - 使用 WoodProvider（自动生成物品模型）
-        blockModels.woodProvider(log).logWithHorizontal(log).wood(wood);
+    private void registerWoodModels(BlockModelGenerators blockModels, WoodFamily family) {
+        // 原木（自动生成物品模型）
+        blockModels.woodProvider(family.log().get()).logWithHorizontal(family.log().get()).wood(family.wood().get());
 
         // 去皮原木（自动生成物品模型）
-        blockModels.woodProvider(strippedLog).logWithHorizontal(strippedLog).wood(strippedWood);
+        blockModels.woodProvider(family.strippedLog().get())
+                .logWithHorizontal(family.strippedLog().get())
+                .wood(family.strippedWood().get());
 
-        // 使用 family 创建木质方块套件（包括木板，自动生成物品模型）
-        blockModels.family(planks)
-                .stairs(stairs)
-                .slab(slab)
-                .fence(fence)
-                .fenceGate(fenceGate)
-                .pressurePlate(pressurePlate)
-                .button(button);
+        // 木质方块套件（包括木板，自动生成物品模型）
+        blockModels.family(family.planks().get())
+                .stairs(family.stairs().get())
+                .slab(family.slab().get())
+                .fence(family.fence().get())
+                .fenceGate(family.fenceGate().get())
+                .pressurePlate(family.pressurePlate().get())
+                .button(family.button().get());
 
-        // 门（自动生成物品模型）
-        blockModels.createDoor(door);
+        // 门 / 活板门（自动生成物品模型）
+        blockModels.createDoor(family.door().get());
+        blockModels.createTrapdoor(family.trapdoor().get());
 
-        // 活板门（自动生成物品模型）
-        blockModels.createTrapdoor(trapdoor);
+        // 树叶（物品图标使用常数染色），杜鹃木沿用原版，没有自成套的树叶
+        if (family.hasLeaves()) {
+            blockModels.createTintedLeaves(family.leaves().get(), TexturedModel.LEAVES, family.leavesTint());
+        }
     }
 
     /**
@@ -170,5 +124,13 @@ public class ModModelProvider extends ModelProvider {
 
     private void simpleItem(ItemModelGenerators itemModels, Supplier<? extends Item> item){
         itemModels.generateFlatItem(item.get(), ModelTemplates.FLAT_ITEM);
+    }
+
+    private void registerPiranhaModels(ItemModelGenerators itemModels) {
+        simpleItem(itemModels, ModItems.PIRANHA);
+        simpleItem(itemModels, ModItems.COOKED_PIRANHA);
+        simpleItem(itemModels, ModItems.PIRANHA_BUCKET);
+        simpleItem(itemModels, ModItems.PIRANHA_SPAWN_EGG);
+        simpleItem(itemModels, ModItems.FANG);
     }
 }

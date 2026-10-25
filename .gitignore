@@ -38,5 +38,6 @@ bin/
 run/
 !**/src/**/run/
 **/src/generated/**/.cache/
+**/src/hfas/resources/.cache/
 repo/
 !**/src/**/repo/

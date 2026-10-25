@@ -19,6 +19,7 @@ import net.neoforged.neoforge.common.world.BiomeModifiers;
 import net.neoforged.neoforge.registries.NeoForgeRegistries;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.registry.ModEntities;
+import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
 
 /**
  * 生物群系修改器
@@ -40,6 +41,9 @@ public class ModBiomeModifiers {
 
     //那啥蟹生成
     public static final ResourceKey<BiomeModifier> ADD_MUDCRAB_SPAWNS = createKey("add_mudcrab_spawns");
+
+    //食人鱼生成
+    public static final ResourceKey<BiomeModifier> ADD_PIRANHA_SPAWNS = createKey("add_piranha_spawns");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -78,6 +82,15 @@ public class ModBiomeModifiers {
                         WeightedList.of(
                                 new MobSpawnSettings.SpawnerData(ModEntities.MUDCRAB.get(), 1, 2)
                         )
+                )
+        );
+
+        // 食人鱼生成 - 丛林与沼泽群系
+        context.register(ADD_PIRANHA_SPAWNS, new BiomeModifiers.AddSpawnsBiomeModifier(
+                        biomes.getOrThrow(ModBiomeTags.EntityGen.PIRANHA_SPAWNS),
+                        WeightedList.<MobSpawnSettings.SpawnerData>builder()
+                                .add(new MobSpawnSettings.SpawnerData(ModEntities.PIRANHA.get(), 1, 5), 8)
+                                .build()
                 )
         );
     }
