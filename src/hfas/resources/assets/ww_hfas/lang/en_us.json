@@ -62,10 +62,12 @@
   "block.ww_hfas.stripped_soul_wood": "Stripped Soul Wood",
   "block.ww_hfas.tiny_cactus": "Tiny Cactus",
   "container.fletching_table": "Fletching Table",
+  "entity.ww_hfas.spiderling": "Spiderling",
   "item.ww_hfas.azalea_boat": "Azalea Boat",
   "item.ww_hfas.azalea_chest_boat": "Azalea Chest Boat",
   "item.ww_hfas.blaze_boat": "Blaze Boat",
   "item.ww_hfas.blaze_chest_boat": "Blaze Chest Boat",
   "item.ww_hfas.soul_boat": "Soul Boat",
-  "item.ww_hfas.soul_chest_boat": "Soul Chest Boat"
+  "item.ww_hfas.soul_chest_boat": "Soul Chest Boat",
+  "item.ww_hfas.spiderling_spawn_egg": "Spiderling Spawn Egg"
 }

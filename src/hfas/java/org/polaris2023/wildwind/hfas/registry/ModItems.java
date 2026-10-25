@@ -40,6 +40,9 @@ public class ModItems {
     //尖牙（食人鱼掉落物）
     public static final DeferredItem<Item> FANG = register("fang");
 
+    //幼蛛刷怪蛋
+    public static final DeferredItem<SpawnEggItem> SPIDERLING_SPAWN_EGG = registerMobEgg("spiderling_spawn_egg", ModEntities.SPIDERLING);
+
 
     //万用蟹钳
     public static final DeferredItem<OmniClawItem> OMNI_CLAW =

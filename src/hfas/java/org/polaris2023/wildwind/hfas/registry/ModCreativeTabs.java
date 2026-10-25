@@ -71,6 +71,7 @@ public class ModCreativeTabs {
         output.accept(ModItems.COOKED_PIRANHA);
         output.accept(ModItems.FANG);
         output.accept(ModItems.PIRANHA_SPAWN_EGG);
+        output.accept(ModItems.SPIDERLING_SPAWN_EGG);
     }
 
     private static void addWoodBuildingSet(CreativeModeTab.Output output, DeferredBlock<?>... blocks) {
