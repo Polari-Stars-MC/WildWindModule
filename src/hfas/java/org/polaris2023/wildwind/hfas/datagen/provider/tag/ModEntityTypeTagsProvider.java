@@ -37,5 +37,11 @@ public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 				.add(ModEntities.PIRANHA.getKey());
 		tag(EntityTypeTags.AXOLOTL_HUNT_TARGETS)
 				.add(ModEntities.PIRANHA.getKey());
+		tag(EntityTypeTags.ARTHROPOD)
+				.add(ModEntities.SPIDERLING.getKey());
+		tag(EntityTypeTags.DISMOUNTS_UNDERWATER)
+				.add(ModEntities.SPIDERLING.getKey());
+		tag(EntityTypeTags.NO_ANGER_FROM_WIND_CHARGE)
+				.add(ModEntities.SPIDERLING.getKey());
 	}
 }

@@ -9,6 +9,7 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.client.eventsub.EntitiesClientHandler;
 import org.polaris2023.wildwind.hfas.entity.animal.Mudcrab;
 import org.polaris2023.wildwind.hfas.entity.animal.Piranha;
+import org.polaris2023.wildwind.hfas.entity.monster.Spiderling;
 
 
 public class ModEntities {
@@ -28,6 +29,15 @@ public class ModEntities {
     public static final DeferredHolder<EntityType<?>, EntityType<Piranha>> PIRANHA =
             ENTITY_TYPES.registerEntityType("piranha", Piranha::new, MobCategory.WATER_AMBIENT,
                     builder -> builder.sized(0.7F, 0.4F).eyeHeight(0.26F)
+            );
+
+    //幼蛛实体类型
+    public static final DeferredHolder<EntityType<?>, EntityType<Spiderling>> SPIDERLING =
+            ENTITY_TYPES.registerEntityType("spiderling", Spiderling::new, MobCategory.MONSTER,
+                    builder -> builder.sized(0.55F, 0.35F).eyeHeight(0.15F)
+                            .passengerAttachments(0.765F)
+                            .clientTrackingRange(8)
+                            .notInPeaceful()
             );
 
     /**

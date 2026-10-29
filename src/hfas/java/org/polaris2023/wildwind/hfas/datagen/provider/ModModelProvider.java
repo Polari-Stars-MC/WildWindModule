@@ -131,6 +131,7 @@ public class ModModelProvider extends ModelProvider {
         simpleItem(itemModels, ModItems.COOKED_PIRANHA);
         simpleItem(itemModels, ModItems.PIRANHA_BUCKET);
         simpleItem(itemModels, ModItems.PIRANHA_SPAWN_EGG);
+        simpleItem(itemModels, ModItems.SPIDERLING_SPAWN_EGG);
         simpleItem(itemModels, ModItems.FANG);
     }
 }

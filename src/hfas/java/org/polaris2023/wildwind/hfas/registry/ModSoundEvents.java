@@ -26,6 +26,21 @@ public class ModSoundEvents {
             SoundEvent::createVariableRangeEvent
     );
 
+    public static final DeferredHolder<SoundEvent, SoundEvent> SPIDERLING_AMBIENT = SOUND_EVENTS.register(
+            "entity.spiderling.ambient",
+            SoundEvent::createVariableRangeEvent
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SPIDERLING_HURT = SOUND_EVENTS.register(
+            "entity.spiderling.hurt",
+            SoundEvent::createVariableRangeEvent
+    );
+
+    public static final DeferredHolder<SoundEvent, SoundEvent> SPIDERLING_DEATH = SOUND_EVENTS.register(
+            "entity.spiderling.death",
+            SoundEvent::createVariableRangeEvent
+    );
+
     public static void register(IEventBus modEventBus) {
         SOUND_EVENTS.register(modEventBus);
     }

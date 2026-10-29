@@ -29,7 +29,7 @@ public class ModAttributes {
 	 */
 	public static final DeferredHolder<Attribute, Attribute> EXTRA_ITEM_PICKUP_RANGE =
 			ATTRIBUTES.register("extra_item_pickup_range", () -> new RangedAttribute(
-					"attributes.ww_hfas.extra_item_pickup_range",
+					"attribute.name.ww_hfas.extra_item_pickup_range",
 					0.0,
 					0.0,
 					10.0
