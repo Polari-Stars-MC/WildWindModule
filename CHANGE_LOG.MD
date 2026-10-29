@@ -228,4 +228,19 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **杜鹃木 / 焚烬木 / 灵焰木木板无法合成** - `azalea_planks` / `blaze_planks` / `soul_planks` 的 `ingredients` 误写为单个方块 id（`ww_hfas:blaze_log` 等），改为物品标签 `#ww_hfas:azalea_logs` / `#ww_hfas:blaze_logs` / `#ww_hfas:soul_logs`，原木、木头与两种去皮变体都能参与合成（BUG-TG-002）
 - **食人鱼 flop 无声音且字幕不显示** - `sounds.json` 曾把 `type` / `name` 写在事件层级并缺少 `sounds` 数组，`SoundEventRegistrationSerializer.getSounds()` 解析出空音源，事件播放被丢弃；已改为把 `type: "event"` 内嵌在 sound 条目中
 
+---
+## [Unreleased] - 2026.10.29
 
+### Added
+- **幼蛛实体 `Spiderling`** - 从 `patchforsafe` 分支回溯移植：继承原版 `Spider`（保留攀爬与目标选择），实现 `GeoEntity` + `WindupAttackMob`，用 `ChargingMeleeAttackGoal` 替换原版 `MeleeAttackGoal`，蓄力 13 tick 后扑击并把自身弹向目标
+- **实体注册** - `ModEntities.SPIDERLING`（`MobCategory.MONSTER`，0.55×0.35，`notInPeaceful`）、`ModItems.SPIDERLING_SPAWN_EGG`、`EntitiesHandler` 中的属性（8 血 / 1 攻 / 0.25 速）与 `ON_GROUND` 生成规则、创造栏条目
+- **GeckoLib 渲染** - `SpiderlingModel` / `SpiderlingRenderer` / `SpiderlingRenderState`，外加 `SpiderlingEyesLayer`（`AutoGlowingGeoLayer` 发光眼睛）
+- **资源** - `geckolib/animations/entity/spiderling.animation.json`、`geckolib/models/entity/spiderling.geo.json`、`textures/entity/spiderling.png`、`textures/entity/spiderling_eyes.png`、`textures/item/spiderling_spawn_egg.png`
+- **战利品** - `ModLootProvider` 生成：线 0~2（受抢夺加成）、蜘蛛眼 0~1（仅玩家击杀，受抢夺加成）
+- **标签与本地化** - `ModEntityTypeTagsProvider` 追加 `arthropod` / `dismounts_underwater` / `no_anger_from_wind_charge`；`ZhEnCombineLangProvider` 追加实体名与刷怪蛋名
+
+### Changed
+- **数据生成资源不手写** - 上游 diff 中提交到 `src` 的 `assets/ww_hfas/items`、`models/item`、`lang`、`data/**` 均未带入，统一由 `runClientData` / `runServerData` 生成（与 PR #29 的资源去重约定一致）
+
+### Fixed
+- **`SpiderlingEyesLayer` 泛型编译失败** - `GeoRenderLayer` / `AutoGlowingGeoLayer` 要求 `R extends GeoRenderState`，而 `EntityRenderState` 上的该接口是 GeckoLib 运行时 mixin 注入，编译期 `LivingEntityRenderState` 不满足边界；图层改用 `GeoRenderState` 作为 `R`，注册处做一次等价强转并注明原因
