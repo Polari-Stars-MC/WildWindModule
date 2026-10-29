@@ -81,7 +81,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         // GUI
         add("container.fletching_table", "Fletching Table");
         // 属性
-        add("attributes.ww_hfas.extra_item_pickup_range", "Extra Item Pickup Range");
+        add("attribute.name.ww_hfas.extra_item_pickup_range", "Extra Item Pickup Range");
 
         // Reach effect & potions
         add("effect.ww_hfas.reach", "Reach");
@@ -98,6 +98,11 @@ public class EnUsLanguageProvider extends LanguageProvider {
         add("subtitles.entity.piranha.attack", "Piranha attacks");
         add("subtitles.entity.piranha.death", "Piranha dies");
         add("subtitles.entity.piranha.flop", "Piranha flops");
+
+        // Spiderling sound subtitles
+        add("subtitles.entity.spiderling.ambient", "Spiderling hisses");
+        add("subtitles.entity.spiderling.hurt", "Spiderling hurts");
+        add("subtitles.entity.spiderling.death", "Spiderling dies");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "Wild Wind");

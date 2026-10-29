@@ -8,6 +8,8 @@ import com.geckolib.animation.object.PlayState;
 import com.geckolib.constant.DefaultAnimations;
 import com.geckolib.util.GeckoLibUtil;
 import net.minecraft.server.level.ServerLevel;
+import net.minecraft.sounds.SoundEvent;
+import net.minecraft.world.damagesource.DamageSource;
 import net.minecraft.world.entity.EntityType;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.ai.attributes.AttributeSupplier;
@@ -17,6 +19,7 @@ import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.level.Level;
 import org.polaris2023.wildwind.hfas.entity.WindupAttackMob;
 import org.polaris2023.wildwind.hfas.entity.ai.goal.ChargingMeleeAttackGoal;
+import org.polaris2023.wildwind.hfas.registry.ModSoundEvents;
 
 /** 幼蛛；继承原版蜘蛛的攀爬与目标选择，攻击改为蓄力扑击喵~ */
 public class Spiderling extends Spider implements GeoEntity, WindupAttackMob {
@@ -58,6 +61,21 @@ public class Spiderling extends Spider implements GeoEntity, WindupAttackMob {
     @Override
     protected boolean isImmobile() {
         return !this.isPreparingToAttack() && super.isImmobile();
+    }
+
+    @Override
+    protected SoundEvent getAmbientSound() {
+        return ModSoundEvents.SPIDERLING_AMBIENT.get();
+    }
+
+    @Override
+    protected SoundEvent getHurtSound(DamageSource damageSource) {
+        return ModSoundEvents.SPIDERLING_HURT.get();
+    }
+
+    @Override
+    protected SoundEvent getDeathSound() {
+        return ModSoundEvents.SPIDERLING_DEATH.get();
     }
 
     @Override

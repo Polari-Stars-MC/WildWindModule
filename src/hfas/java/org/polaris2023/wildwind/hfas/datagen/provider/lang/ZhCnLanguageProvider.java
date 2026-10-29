@@ -82,7 +82,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         // GUI
         add("container.fletching_table", "制箭台");
         // 属性
-        add("attributes.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
+        add("attribute.name.ww_hfas.extra_item_pickup_range", "额外物品拾取距离");
 
         // 延展（reach）效果与药水
         add("effect.ww_hfas.reach", "延展");
@@ -96,9 +96,14 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         add("item.minecraft.tipped_arrow.effect.long_reach", "延展之箭");
 
         // 食人鱼音效字幕
-        add("subtitles.entity.piranha.attack", "食人鱼袭击");
-        add("subtitles.entity.piranha.death", "食人鱼死亡");
-        add("subtitles.entity.piranha.flop", "食人鱼拍打");
+        add("subtitles.entity.piranha.attack", "食人鱼：袭击");
+        add("subtitles.entity.piranha.death", "食人鱼：死亡");
+        add("subtitles.entity.piranha.flop", "食人鱼：拍打");
+
+        // 幼蛛音效字幕
+        add("subtitles.entity.spiderling.ambient", "幼蛛：嘶嘶");
+        add("subtitles.entity.spiderling.hurt", "幼蛛：受伤");
+        add("subtitles.entity.spiderling.death", "幼蛛：死亡");
 
         //创造模式物品栏
         add("mod.wild_wind.name", "原野之风");
