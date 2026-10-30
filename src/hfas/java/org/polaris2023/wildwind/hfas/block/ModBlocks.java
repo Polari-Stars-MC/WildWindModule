@@ -1,7 +1,9 @@
 package org.polaris2023.wildwind.hfas.block;
 
-import net.minecraft.world.item.BlockItem;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.util.ColorRGBA;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import net.minecraft.world.level.material.MapColor;
@@ -535,6 +537,247 @@ public class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    // 流沙 (quicksand)
+    public static final DeferredBlock<Block> QUICKSAND = BLOCKS.registerBlock(
+            "quicksand",
+            p -> new Block(p
+                    .mapColor(MapColor.SAND)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+
+    );
+
+    // 可疑的红沙 (suspicious_red_sand)
+    public static final DeferredBlock<Block> SUSPICIOUS_RED = BLOCKS.registerBlock(
+            "suspicious_red_sand",
+            p -> new BrushableBlock(
+                    Blocks.RED_SAND,
+                    SoundEvents.BRUSH_SAND,
+                    SoundEvents.BRUSH_SAND_COMPLETED, p
+                    .mapColor(MapColor.SAND)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+
+    );
+    // 灵魂南瓜灯 (soul_jack_o_lantern)
+    public static final DeferredBlock<Block> SOUL_JACK_O_LANTERN = BLOCKS.registerBlock(
+            "soul_jack_o_lantern",
+            p -> new CarvedPumpkinBlock(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(1.0F)
+                    .sound(SoundType.WOOD)
+                    .lightLevel(state -> 10))
+    );
+
+    // ==================== 砂岩 / 沙 / 花套件 ====================
+
+    // 雕纹石英砂岩
+    public static final DeferredBlock<Block> CHISELED_QUARTZ_SANDSTONE = BLOCKS.registerBlock(
+            "chiseled_quartz_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 雕纹灵魂砂岩
+    public static final DeferredBlock<Block> CHISELED_SOUL_SANDSTONE = BLOCKS.registerBlock(
+            "chiseled_soul_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 切制石英砂岩
+    public static final DeferredBlock<Block> CUT_QUARTZ_SANDSTONE = BLOCKS.registerBlock(
+            "cut_quartz_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 切制灵魂砂岩
+    public static final DeferredBlock<Block> CUT_SOUL_SANDSTONE = BLOCKS.registerBlock(
+            "cut_soul_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 硝化石英砂岩
+    public static final DeferredBlock<Block> NITRIFIED_QUARTZ_SANDSTONE = BLOCKS.registerBlock(
+            "nitrified_quartz_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 硝化红色砂岩
+    public static final DeferredBlock<Block> NITRIFIED_RED_SANDSTONE = BLOCKS.registerBlock(
+            "nitrified_red_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_ORANGE)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 硝化砂岩
+    public static final DeferredBlock<Block> NITRIFIED_SANDSTONE = BLOCKS.registerBlock(
+            "nitrified_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.SAND)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 硝化灵魂砂岩
+    public static final DeferredBlock<Block> NITRIFIED_SOUL_SANDSTONE = BLOCKS.registerBlock(
+            "nitrified_soul_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 石英砂岩
+    public static final DeferredBlock<Block> QUARTZ_SANDSTONE = BLOCKS.registerBlock(
+            "quartz_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 灵魂砂岩
+    public static final DeferredBlock<Block> SOUL_SANDSTONE = BLOCKS.registerBlock(
+            "soul_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 平滑砂岩系列 - 六面均为对应砂岩的顶面贴图
+
+    // 平滑石英砂岩
+    public static final DeferredBlock<Block> SMOOTH_QUARTZ_SANDSTONE = BLOCKS.registerBlock(
+            "smooth_quartz_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 平滑灵魂砂岩
+    public static final DeferredBlock<Block> SMOOTH_SOUL_SANDSTONE = BLOCKS.registerBlock(
+            "smooth_soul_sandstone",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // 石英沙子
+    public static final DeferredBlock<SandBlock> QUARTZ_SAND = BLOCKS.registerBlock(
+            "quartz_sand",
+            p -> new SandBlock(new ColorRGBA(0xFFDBD3C0), p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+    );
+
+    // 石英流沙
+    public static final DeferredBlock<Block> QUARTZ_QUICKSAND = BLOCKS.registerBlock(
+            "quartz_quicksand",
+            p -> new Block(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+    );
+
+    // 灵魂流沙
+    public static final DeferredBlock<Block> SOUL_QUICKSAND = BLOCKS.registerBlock(
+            "soul_quicksand",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+    );
+
+    // 玫瑰
+    public static final DeferredBlock<FlowerBlock> ROSE = BLOCKS.registerBlock(
+            "rose",
+            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    // 灵魂玫瑰（单格花）
+    public static final DeferredBlock<FlowerBlock> SOUL_ROSE = BLOCKS.registerBlock(
+            "soul_rose",
+            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    // 灵魂玫瑰丛（双层高花）
+    public static final DeferredBlock<DoublePlantBlock> SOUL_ROSE_BUSH = BLOCKS.registerBlock(
+            "soul_rose_bush",
+            p -> new DoublePlantBlock(p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    // 可疑的石英沙子
+    public static final DeferredBlock<Block> SUSPICIOUS_QUARTZ_SAND = BLOCKS.registerBlock(
+            "suspicious_quartz_sand",
+            p -> new BrushableBlock(
+                    Blocks.SAND,
+                    SoundEvents.BRUSH_SAND,
+                    SoundEvents.BRUSH_SAND_COMPLETED, p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+    );
+
+    // 可疑的灵魂沙子
+    public static final DeferredBlock<Block> SUSPICIOUS_SOUL_SAND = BLOCKS.registerBlock(
+            "suspicious_soul_sand",
+            p -> new BrushableBlock(
+                    Blocks.SOUL_SAND,
+                    SoundEvents.BRUSH_SAND,
+                    SoundEvents.BRUSH_SAND_COMPLETED, p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.SOUL_SAND))
+    );
+
+
     public static void blockItems() {
         // 焚烬木套件物品
         ITEMS.registerSimpleBlockItem(BLAZE_LOG);
@@ -591,6 +834,31 @@ public class ModBlocks {
         ITEMS.registerSimpleBlockItem(SCORCHED_GRASS);
         ITEMS.registerSimpleBlockItem(SCORCHED_TWIG);
         ITEMS.registerSimpleBlockItem(TINY_CACTUS);
+        ITEMS.registerSimpleBlockItem(QUICKSAND);
+        ITEMS.registerSimpleBlockItem(SUSPICIOUS_RED);
+        ITEMS.registerSimpleBlockItem(SOUL_JACK_O_LANTERN);
+
+        // 砂岩 / 沙 / 花套件
+        ITEMS.registerSimpleBlockItem(CHISELED_QUARTZ_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(CHISELED_SOUL_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(CUT_QUARTZ_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(CUT_SOUL_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(NITRIFIED_QUARTZ_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(NITRIFIED_RED_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(NITRIFIED_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(NITRIFIED_SOUL_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(QUARTZ_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(SOUL_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(SMOOTH_QUARTZ_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(SMOOTH_SOUL_SANDSTONE);
+        ITEMS.registerSimpleBlockItem(QUARTZ_SAND);
+        ITEMS.registerSimpleBlockItem(QUARTZ_QUICKSAND);
+        ITEMS.registerSimpleBlockItem(SOUL_QUICKSAND);
+        ITEMS.registerSimpleBlockItem(ROSE);
+        ITEMS.registerSimpleBlockItem(SOUL_ROSE);
+        ITEMS.registerSimpleBlockItem(SOUL_ROSE_BUSH);
+        ITEMS.registerSimpleBlockItem(SUSPICIOUS_QUARTZ_SAND);
+        ITEMS.registerSimpleBlockItem(SUSPICIOUS_SOUL_SAND);
     }
 
     /**

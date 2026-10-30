@@ -77,6 +77,31 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SCORCHED_TWIG, "Scorched Twig");
         addBlock(ModBlocks.TINY_CACTUS, "Tiny Cactus");
         addBlock(ModBlocks.FLETCHING_TABLE, "Fletching Table");
+        addBlock(ModBlocks.QUICKSAND, "§4Quicksand");
+        addBlock(ModBlocks.SUSPICIOUS_RED, "§4Suspicious Red Sand");
+        addBlock(ModBlocks.SOUL_JACK_O_LANTERN, "§4Soul Jack o'Lantern");
+
+        // 砂岩 / 沙 / 花套件
+        addBlock(ModBlocks.CHISELED_QUARTZ_SANDSTONE, "Chiseled Quartz Sandstone");
+        addBlock(ModBlocks.CHISELED_SOUL_SANDSTONE, "Chiseled Soul Sandstone");
+        addBlock(ModBlocks.CUT_QUARTZ_SANDSTONE, "Cut Quartz Sandstone");
+        addBlock(ModBlocks.CUT_SOUL_SANDSTONE, "Cut Soul Sandstone");
+        addBlock(ModBlocks.NITRIFIED_QUARTZ_SANDSTONE, "Nitrified Quartz Sandstone");
+        addBlock(ModBlocks.NITRIFIED_RED_SANDSTONE, "Nitrified Red Sandstone");
+        addBlock(ModBlocks.NITRIFIED_SANDSTONE, "Nitrified Sandstone");
+        addBlock(ModBlocks.NITRIFIED_SOUL_SANDSTONE, "Nitrified Soul Sandstone");
+        addBlock(ModBlocks.QUARTZ_SANDSTONE, "Quartz Sandstone");
+        addBlock(ModBlocks.SOUL_SANDSTONE, "Soul Sandstone");
+        addBlock(ModBlocks.SMOOTH_QUARTZ_SANDSTONE, "Smooth Quartz Sandstone");
+        addBlock(ModBlocks.SMOOTH_SOUL_SANDSTONE, "Smooth Soul Sandstone");
+        addBlock(ModBlocks.QUARTZ_SAND, "Quartz Sand");
+        addBlock(ModBlocks.QUARTZ_QUICKSAND, "Quartz Quicksand");
+        addBlock(ModBlocks.SOUL_QUICKSAND, "Soul Quicksand");
+        addBlock(ModBlocks.ROSE, "Rose");
+        addBlock(ModBlocks.SOUL_ROSE, "Soul Rose");
+        addBlock(ModBlocks.SOUL_ROSE_BUSH, "Soul Rose Bush");
+        addBlock(ModBlocks.SUSPICIOUS_QUARTZ_SAND, "Suspicious Quartz Sand");
+        addBlock(ModBlocks.SUSPICIOUS_SOUL_SAND, "Suspicious Soul Sand");
 
         // GUI
         add("container.fletching_table", "Fletching Table");

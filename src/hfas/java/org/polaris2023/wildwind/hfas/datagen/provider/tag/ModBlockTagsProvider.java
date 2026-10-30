@@ -44,8 +44,45 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         // 焦灰草方块 - 泥土类
         addToTag(BlockTags.DIRT, ModBlocks.SCORCHED_GRASS_BLOCK.get(), ModBlocks.SCORCHED_DIRT.get());
 
-        // 制箭台 - 工作站
+        // 制箭台 - 工作站类
         addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
+
+        // 可疑红沙 - 沙子类
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL, ModBlocks.SUSPICIOUS_RED.get());
+
+        // 灵魂南瓜灯 - 灯具类
+        addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.SOUL_JACK_O_LANTERN.get());
+        addToTag(BlockTags.PIGLIN_REPELLENTS, ModBlocks.SOUL_JACK_O_LANTERN.get());
+
+        // 砂岩 - 砂岩类
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                ModBlocks.CHISELED_QUARTZ_SANDSTONE.get(),
+                ModBlocks.CHISELED_SOUL_SANDSTONE.get(),
+                ModBlocks.CUT_QUARTZ_SANDSTONE.get(),
+                ModBlocks.CUT_SOUL_SANDSTONE.get(),
+                ModBlocks.NITRIFIED_QUARTZ_SANDSTONE.get(),
+                ModBlocks.NITRIFIED_RED_SANDSTONE.get(),
+                ModBlocks.NITRIFIED_SANDSTONE.get(),
+                ModBlocks.NITRIFIED_SOUL_SANDSTONE.get(),
+                ModBlocks.QUARTZ_SANDSTONE.get(),
+                ModBlocks.SOUL_SANDSTONE.get());
+
+        // 平滑砂岩 - 砂岩类
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                ModBlocks.SMOOTH_QUARTZ_SANDSTONE.get(),
+                ModBlocks.SMOOTH_SOUL_SANDSTONE.get());
+
+        // 石英沙 / 流沙 / 可疑沙 - 沙子类
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL,
+                ModBlocks.QUARTZ_SAND.get(),
+                ModBlocks.QUARTZ_QUICKSAND.get(),
+                ModBlocks.SOUL_QUICKSAND.get(),
+                ModBlocks.SUSPICIOUS_QUARTZ_SAND.get(),
+                ModBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 玫瑰 / 灵魂玫瑰 / 灵魂玫瑰丛 - 花类
+        addToTag(BlockTags.SMALL_FLOWERS, ModBlocks.ROSE.get(), ModBlocks.SOUL_ROSE.get());
+        addToTag(BlockTags.FLOWERS, ModBlocks.SOUL_ROSE_BUSH.get());
 
 
         // ==================== 实体生成有关 ====================
