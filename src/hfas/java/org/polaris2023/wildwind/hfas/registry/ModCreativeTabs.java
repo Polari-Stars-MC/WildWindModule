@@ -62,6 +62,43 @@ public class ModCreativeTabs {
         output.accept(ModBlocks.BLAZE_SAPLING.get());
         output.accept(ModBlocks.SOUL_SAPLING.get());
 
+        // 石英岩类
+        output.accept(ModBlocks.QUARTZ_SANDSTONE.get());
+        output.accept(ModBlocks.CHISELED_QUARTZ_SANDSTONE.get());
+        output.accept(ModBlocks.CUT_QUARTZ_SANDSTONE.get());
+        output.accept(ModBlocks.NITRIFIED_QUARTZ_SANDSTONE.get());
+        output.accept(ModBlocks.SMOOTH_QUARTZ_SANDSTONE.get());
+
+        // 灵魂岩类
+        output.accept(ModBlocks.SOUL_SANDSTONE.get());
+        output.accept(ModBlocks.CHISELED_SOUL_SANDSTONE.get());
+        output.accept(ModBlocks.CUT_SOUL_SANDSTONE.get());
+        output.accept(ModBlocks.NITRIFIED_SOUL_SANDSTONE.get());
+        output.accept(ModBlocks.SMOOTH_SOUL_SANDSTONE.get());
+
+        // 硝化岩类
+        output.accept(ModBlocks.NITRIFIED_SANDSTONE.get());
+        output.accept(ModBlocks.NITRIFIED_RED_SANDSTONE.get());
+
+        // 沙类
+        output.accept(ModBlocks.QUARTZ_SAND.get());
+        output.accept(ModBlocks.QUICKSAND.get());
+        output.accept(ModBlocks.QUARTZ_QUICKSAND.get());
+        output.accept(ModBlocks.SOUL_QUICKSAND.get());
+
+        // 可疑沙类
+        output.accept(ModBlocks.SUSPICIOUS_RED.get());
+        output.accept(ModBlocks.SUSPICIOUS_QUARTZ_SAND.get());
+        output.accept(ModBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 花类
+        output.accept(ModBlocks.ROSE.get());
+        output.accept(ModBlocks.SOUL_ROSE.get());
+        output.accept(ModBlocks.SOUL_ROSE_BUSH.get());
+
+        // 灯具类
+        output.accept(ModBlocks.SOUL_JACK_O_LANTERN.get());
+
         output.accept(ModItems.MUDCRAB_BUCKET);
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.CRAB_CLAW);

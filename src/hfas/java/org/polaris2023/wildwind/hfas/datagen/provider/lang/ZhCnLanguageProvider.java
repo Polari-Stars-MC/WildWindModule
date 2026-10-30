@@ -78,6 +78,31 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SCORCHED_TWIG, "焦灰枝条");
         addBlock(ModBlocks.TINY_CACTUS, "仙人球");
         addBlock(ModBlocks.FLETCHING_TABLE, "制箭台");
+        addBlock(ModBlocks.QUICKSAND, "§4流沙");
+        addBlock(ModBlocks.SUSPICIOUS_RED, "§4可疑的红沙");
+        addBlock(ModBlocks.SOUL_JACK_O_LANTERN, "§4灵魂南瓜灯");
+
+        // 砂岩 / 沙 / 花套件
+        addBlock(ModBlocks.CHISELED_QUARTZ_SANDSTONE, "雕纹石英砂岩");
+        addBlock(ModBlocks.CHISELED_SOUL_SANDSTONE, "雕纹灵魂砂岩");
+        addBlock(ModBlocks.CUT_QUARTZ_SANDSTONE, "切制石英砂岩");
+        addBlock(ModBlocks.CUT_SOUL_SANDSTONE, "切制灵魂砂岩");
+        addBlock(ModBlocks.NITRIFIED_QUARTZ_SANDSTONE, "硝化石英砂岩");
+        addBlock(ModBlocks.NITRIFIED_RED_SANDSTONE, "硝化红砂岩");
+        addBlock(ModBlocks.NITRIFIED_SANDSTONE, "硝化砂岩");
+        addBlock(ModBlocks.NITRIFIED_SOUL_SANDSTONE, "硝化灵魂砂岩");
+        addBlock(ModBlocks.QUARTZ_SANDSTONE, "石英砂岩");
+        addBlock(ModBlocks.SOUL_SANDSTONE, "灵魂砂岩");
+        addBlock(ModBlocks.SMOOTH_QUARTZ_SANDSTONE, "平滑石英砂岩");
+        addBlock(ModBlocks.SMOOTH_SOUL_SANDSTONE, "平滑灵魂砂岩");
+        addBlock(ModBlocks.QUARTZ_SAND, "石英沙子");
+        addBlock(ModBlocks.QUARTZ_QUICKSAND, "石英流沙");
+        addBlock(ModBlocks.SOUL_QUICKSAND, "灵魂流沙");
+        addBlock(ModBlocks.ROSE, "玫瑰");
+        addBlock(ModBlocks.SOUL_ROSE, "灵魂玫瑰");
+        addBlock(ModBlocks.SOUL_ROSE_BUSH, "灵魂玫瑰丛");
+        addBlock(ModBlocks.SUSPICIOUS_QUARTZ_SAND, "可疑的石英沙");
+        addBlock(ModBlocks.SUSPICIOUS_SOUL_SAND, "可疑的灵魂沙");
 
         // GUI
         add("container.fletching_table", "制箭台");

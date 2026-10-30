@@ -3,20 +3,27 @@ package org.polaris2023.wildwind.hfas.datagen.provider;
 import net.minecraft.client.data.models.BlockModelGenerators;
 import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.ModelProvider;
+import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.model.ItemModelUtils;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
+import net.minecraft.client.data.models.model.TextureMapping;
+import net.minecraft.client.data.models.model.TextureSlot;
 import net.minecraft.client.data.models.model.TexturedModel;
+import net.minecraft.client.resources.model.sprite.Material;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.Blocks;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
 import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
 import org.polaris2023.wildwind.hfas.block.WoodFamily;
 import org.polaris2023.wildwind.hfas.registry.ModItems;
 
+import java.util.Optional;
 import java.util.function.Supplier;
 
 /**
@@ -27,6 +34,15 @@ import java.util.function.Supplier;
  * @since 2026/04/15
  */
 public class ModModelProvider extends ModelProvider {
+
+    /**
+     * 底面旋转 180 度的砂岩模型模板
+     */
+    private static final ModelTemplate ROTATED_TOP_SANDSTONE = new ModelTemplate(
+            Optional.of(Identifier.fromNamespaceAndPath(HFASMod.MOD_ID, "block/rotated_top_sandstone")),
+            Optional.empty(),
+            TextureSlot.SIDE, TextureSlot.TOP, TextureSlot.BOTTOM
+    );
 
     public ModModelProvider(PackOutput output) {
         super(output, HFASMod.MOD_ID);
@@ -61,6 +77,54 @@ public class ModModelProvider extends ModelProvider {
 
         // 制箭台 - 使用简单方块模型
         createSimpleBlock(blockModels, ModBlocks.FLETCHING_TABLE.get());
+
+        // 流沙 - 使用简单方块模型
+        createSimpleBlock(blockModels, ModBlocks.QUICKSAND.get());
+
+        // 可疑红沙 - 基于原版可疑沙：四个模型
+        blockModels.createBrushableBlock(ModBlocks.SUSPICIOUS_RED.get());
+
+        // 灵魂南瓜灯 - 正面 soul_jack_o_lantern，剩下使用原版南瓜贴图
+        blockModels.createPumpkinVariant(ModBlocks.SOUL_JACK_O_LANTERN.get(), TextureMapping.column(Blocks.PUMPKIN));
+
+        // ==================== 砂岩 / 沙 / 花套件 ====================
+        // 石英砂岩 / 灵魂砂岩 - 侧面 + 顶底三面贴图
+        createSandstone(blockModels, ModBlocks.QUARTZ_SANDSTONE.get());
+        createSandstone(blockModels, ModBlocks.SOUL_SANDSTONE.get());
+
+        // 雕纹 / 切制 / 硝化砂岩 - 侧面自身，顶底用共享贴图
+        Material quartzTop = TextureMapping.getBlockTexture(ModBlocks.QUARTZ_SANDSTONE.get(), "_top");
+        Material soulTop = TextureMapping.getBlockTexture(ModBlocks.SOUL_SANDSTONE.get(), "_top");
+        createRotatedTopSandstone(blockModels, ModBlocks.CHISELED_QUARTZ_SANDSTONE.get(), quartzTop);
+        createRotatedTopSandstone(blockModels, ModBlocks.CUT_QUARTZ_SANDSTONE.get(), quartzTop);
+        createRotatedTopSandstone(blockModels, ModBlocks.NITRIFIED_QUARTZ_SANDSTONE.get(), quartzTop);
+        createRotatedTopSandstone(blockModels, ModBlocks.CHISELED_SOUL_SANDSTONE.get(), soulTop);
+        createRotatedTopSandstone(blockModels, ModBlocks.CUT_SOUL_SANDSTONE.get(), soulTop);
+        createRotatedTopSandstone(blockModels, ModBlocks.NITRIFIED_SOUL_SANDSTONE.get(), soulTop);
+        createVanillaTopBottomSandstone(blockModels, ModBlocks.NITRIFIED_RED_SANDSTONE.get(), Blocks.RED_SANDSTONE);
+        createVanillaTopBottomSandstone(blockModels, ModBlocks.NITRIFIED_SANDSTONE.get(), Blocks.SANDSTONE);
+
+        // 平滑砂岩 - 六面均为对应砂岩的顶面贴图，底面旋转 180 度
+        createSmoothSandstone(blockModels, ModBlocks.SMOOTH_QUARTZ_SANDSTONE.get(), quartzTop);
+        createSmoothSandstone(blockModels, ModBlocks.SMOOTH_SOUL_SANDSTONE.get(), soulTop);
+
+        // 石英沙 / 流沙
+        createSimpleBlock(blockModels, ModBlocks.QUARTZ_SAND.get());
+        createSimpleBlock(blockModels, ModBlocks.QUARTZ_QUICKSAND.get());
+        createSimpleBlock(blockModels, ModBlocks.SOUL_QUICKSAND.get());
+
+        // 玫瑰（单格花）
+        blockModels.createCrossBlockWithDefaultItem(ModBlocks.ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
+        // 灵魂玫瑰（单格花）
+        blockModels.createCrossBlockWithDefaultItem(ModBlocks.SOUL_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
+        // 灵魂玫瑰丛（双层花，纹理 soul_rose_bush_top / soul_rose_bush_bottom）
+        blockModels.createDoublePlantWithDefaultItem(ModBlocks.SOUL_ROSE_BUSH.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+
+        // 可疑的石英沙 / 灵魂沙
+        blockModels.createBrushableBlock(ModBlocks.SUSPICIOUS_QUARTZ_SAND.get());
+        blockModels.createBrushableBlock(ModBlocks.SUSPICIOUS_SOUL_SAND.get());
 
         // ==================== 独立物品 ====================
         simpleItem(itemModels, ModItems.CRAB_CLAW);
@@ -113,6 +177,60 @@ public class ModModelProvider extends ModelProvider {
      */
     private void createSimpleBlock(BlockModelGenerators blockModels, Block block) {
         blockModels.createTrivialCube(block);
+    }
+
+    /**
+     * 创建砂岩模型（侧面 + 顶面 + 底面，纹理命名 xxx / xxx_top / xxx_bottom）
+     */
+    private void createSandstone(BlockModelGenerators blockModels, Block block) {
+        TextureMapping mapping = new TextureMapping()
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(block, "_bottom"))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top"))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block))
+                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(block));
+        MultiVariant model = BlockModelGenerators.plainVariant(
+                ModelTemplates.CUBE_BOTTOM_TOP.create(block, mapping, blockModels.modelOutput));
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
+        blockModels.registerSimpleItemModel(block.asItem(), ModelLocationUtils.getModelLocation(block));
+    }
+
+    /**
+     * 侧面自身，顶底共用同一贴图，底面旋转 180 度
+     */
+    private void createRotatedTopSandstone(BlockModelGenerators blockModels, Block block, Material top) {
+        TextureMapping mapping = new TextureMapping()
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block))
+                .put(TextureSlot.TOP, top)
+                .put(TextureSlot.BOTTOM, top);
+        Identifier model = ROTATED_TOP_SANDSTONE.create(block, mapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(model)));
+        blockModels.registerSimpleItemModel(block.asItem(), model);
+    }
+
+    /**
+     * 六面均为同一砂岩顶面贴图，底面旋转 180 度（平滑砂岩）
+     */
+    private void createSmoothSandstone(BlockModelGenerators blockModels, Block block, Material top) {
+        TextureMapping mapping = new TextureMapping()
+                .put(TextureSlot.SIDE, top)
+                .put(TextureSlot.TOP, top)
+                .put(TextureSlot.BOTTOM, top);
+        Identifier model = ROTATED_TOP_SANDSTONE.create(block, mapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(model)));
+        blockModels.registerSimpleItemModel(block.asItem(), model);
+    }
+
+    /**
+     * 侧面自身，顶底使用指定原版砂岩的顶底贴图
+     */
+    private void createVanillaTopBottomSandstone(BlockModelGenerators blockModels, Block block, Block vanilla) {
+        TextureMapping mapping = new TextureMapping()
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(vanilla, "_top"))
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(vanilla, "_bottom"));
+        Identifier model = ModelTemplates.CUBE_BOTTOM_TOP.create(block, mapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, BlockModelGenerators.plainVariant(model)));
+        blockModels.registerSimpleItemModel(block.asItem(), model);
     }
 
     /**

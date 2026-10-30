@@ -255,3 +255,25 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **脚步声字幕及其载体** - `ModSoundEvents.SPIDERLING_STEP`、`sounds.json` 的 `entity.spiderling.step` 条目、`Spiderling.playStepSound` 覆写；脚步声回落原版 `SoundEvents.SPIDER_STEP`，与原版蜘蛛行为一致
 - **旧属性键** - `attributes.ww_hfas.extra_item_pickup_range`（en_us / zh_cn 各一条），随属性键修正移除
 
+---
+
+## [Unreleased] - 2026.10.30
+
+### Added
+- **砂岩 / 沙 / 花全家桶** - 从 `master/NeoForge-26.2`（`a40d1a4` 添加流沙 → `f5e4c7d` 注册WIP物品 → `ebd3762` 灵魂与石英全家桶）移植 21 种方块：`quicksand`、`suspicious_red_sand`、`soul_jack_o_lantern`、`chiseled` / `cut` / `nitrified` 砂岩八种、`quartz_sandstone`、`soul_sandstone`、`quartz_sand`、`quartz_quicksand`、`soul_quicksand`、`rose`、`soul_rose`、`soul_rose_bush`、`suspicious_quartz_sand`、`suspicious_soul_sand`
+- **平滑砂岩** - `smooth_quartz_sandstone` / `smooth_soul_sandstone`，六面均为对应砂岩的顶面贴图（`quartz_sandstone_top` / `soul_sandstone_top`）、底面旋转 180 度；复用已有 `rotated_top_sandstone` 模板，不新增贴图。硝化系列不做平滑
+- **`BlockEntityTypeMixin`** - 在 `BlockEntityType.isValid` 的 HEAD 放行自定义可疑沙，使它们能绑定原版 `BrushableBlockEntity`（可用刷子刷出物品）；`ww_hfas.mixins.json` 同步登记
+- **砂岩模型生成辅助** - `ModModelProvider` 新增 `ROTATED_TOP_SANDSTONE` 模板与 `createSandstone` / `createRotatedTopSandstone` / `createVanillaTopBottomSandstone` / `createSmoothSandstone`，覆盖「侧面上顶底」「侧面自身上顶底」「顶底借用原版」「六面同图」四种贴图映射
+- **战利品 / 标签 / 本地化** - `BlockLoot` 为 23 种新方块补掉落（三种可疑沙用 `createSilkTouchOnlyTable`）；方块标签补 `mineable_with_pickaxe` / `mineable_with_shovel` / `mineable_with_axe` / `piglin_repellents` / `small_flowers` / `flowers`；`en_us` / `zh_cn` 全量条目（WIP 物品保留上游的 `§4` 红色标记）
+- **创造物品栏分类** - 模组 tab 内新方块改为按材质分组：石英岩类 / 灵魂岩类 / 硝化岩类 / 沙类 / 可疑沙类 / 花类 / 灯具类，类内按「基础 → 雕纹/切制 → 硝化 → 平滑」排列
+- **模型与贴图资源** - 35 张方块贴图、`assets/ww_hfas/models/block/rotated_top_sandstone.json` 与 `BlockEntityTypeMixin.java` 自 `ebd3762` 原样检出，datagen 无法重建这三类文件
+
+### Changed
+- **方块标签注释格式** - `ModBlockTagsProvider` 的说明由「用锹挖掘」等形式改为类型式：制箭台 → 工作站类、可疑红沙 → 沙子类、灵魂南瓜灯 → 灯具类、石英沙/流沙/可疑沙 → 沙子类
+- **数据生成资源不手写** - 模型、blockstate、战利品表、标签、语言文件均由 `runClientData` / `runServerData` 生成，未把上游提交到 `src` 的 `blockstates` / `models` / `data/**` 带入（与 PR #29 的资源去重约定一致）
+- **移植取舍** - 上游 `f5e4c7d` 补挂 `BlockLoot` 的改动未搬，本分支 `ModLootProvider` 早已挂上；上游 `ModModelProvider` 仍为传 13~15 个参数的木材写法，本分支保持 `WoodFamily` / `ModWoodFamilies` 版
+
+### Fixed
+- **中文名用词** - `nitrified_red_sandstone` 由「硝化红色砂岩」改为「硝化红砂岩」；`suspicious_quartz_sand` / `suspicious_soul_sand` 由「可疑的…沙子」改为「可疑的…沙」
+
+

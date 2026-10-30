@@ -40,6 +40,33 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.SCORCHED_TWIG.get());
         dropSelf(ModBlocks.TINY_CACTUS.get());
         dropOther(ModBlocks.FLETCHING_TABLE.get(), Items.FLETCHING_TABLE);
+        dropSelf(ModBlocks.QUICKSAND.get());
+
+        // 可疑红沙
+        add(ModBlocks.SUSPICIOUS_RED.get(), createSilkTouchOnlyTable(ModBlocks.SUSPICIOUS_RED.get()));
+        dropSelf(ModBlocks.SOUL_JACK_O_LANTERN.get());
+
+        // 砂岩 / 沙 / 花套件
+        dropSelf(ModBlocks.CHISELED_QUARTZ_SANDSTONE.get());
+        dropSelf(ModBlocks.CHISELED_SOUL_SANDSTONE.get());
+        dropSelf(ModBlocks.CUT_QUARTZ_SANDSTONE.get());
+        dropSelf(ModBlocks.CUT_SOUL_SANDSTONE.get());
+        dropSelf(ModBlocks.NITRIFIED_QUARTZ_SANDSTONE.get());
+        dropSelf(ModBlocks.NITRIFIED_RED_SANDSTONE.get());
+        dropSelf(ModBlocks.NITRIFIED_SANDSTONE.get());
+        dropSelf(ModBlocks.NITRIFIED_SOUL_SANDSTONE.get());
+        dropSelf(ModBlocks.QUARTZ_SANDSTONE.get());
+        dropSelf(ModBlocks.SOUL_SANDSTONE.get());
+        dropSelf(ModBlocks.SMOOTH_QUARTZ_SANDSTONE.get());
+        dropSelf(ModBlocks.SMOOTH_SOUL_SANDSTONE.get());
+        dropSelf(ModBlocks.QUARTZ_SAND.get());
+        dropSelf(ModBlocks.QUARTZ_QUICKSAND.get());
+        dropSelf(ModBlocks.SOUL_QUICKSAND.get());
+        dropSelf(ModBlocks.ROSE.get());
+        dropSelf(ModBlocks.SOUL_ROSE.get());
+        dropSelf(ModBlocks.SOUL_ROSE_BUSH.get());
+        add(ModBlocks.SUSPICIOUS_QUARTZ_SAND.get(), createSilkTouchOnlyTable(ModBlocks.SUSPICIOUS_QUARTZ_SAND.get()));
+        add(ModBlocks.SUSPICIOUS_SOUL_SAND.get(), createSilkTouchOnlyTable(ModBlocks.SUSPICIOUS_SOUL_SAND.get()));
     }
 
     /**
