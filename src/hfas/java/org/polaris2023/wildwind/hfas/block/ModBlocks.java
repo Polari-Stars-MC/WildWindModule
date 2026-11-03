@@ -193,7 +193,6 @@ public class ModBlocks {
     );
 
     // 焚烬木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
-    @SuppressWarnings("deprecation")
     public static final DeferredBlock<FlowerPotBlock> POTTED_BLAZE_SAPLING = BLOCKS.registerBlock(
             "potted_blaze_sapling",
             p -> new FlowerPotBlock(BLAZE_SAPLING.get(), p
