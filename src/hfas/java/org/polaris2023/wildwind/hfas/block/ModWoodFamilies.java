@@ -72,8 +72,6 @@ public final class ModWoodFamilies {
             ModBlocks.AZALEA_TRAPDOOR,
             ModBlocks.AZALEA_PRESSURE_PLATE,
             ModBlocks.AZALEA_BUTTON,
-            null,
-            null
     );
 
     public static final List<WoodFamily> ALL = List.of(BLAZE, SOUL, AZALEA);
