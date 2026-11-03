@@ -47,6 +47,25 @@ public record WoodFamily(
         @Nullable DeferredBlock<SaplingBlock> sapling
 ) {
 
+    public WoodFamily(
+            String name,
+            int leavesTint,
+            DeferredBlock<RotatedPillarBlock> log,
+            DeferredBlock<RotatedPillarBlock> wood,
+            DeferredBlock<RotatedPillarBlock> strippedLog,
+            DeferredBlock<RotatedPillarBlock> strippedWood,
+            DeferredBlock<Block> planks,
+            DeferredBlock<StairBlock> stairs,
+            DeferredBlock<SlabBlock> slab,
+            DeferredBlock<FenceBlock> fence,
+            DeferredBlock<FenceGateBlock> fenceGate,
+            DeferredBlock<DoorBlock> door,
+            DeferredBlock<TrapDoorBlock> trapdoor,
+            DeferredBlock<PressurePlateBlock> pressurePlate,
+            DeferredBlock<ButtonBlock> button
+    ) {
+        this(name, leavesTint, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button, null, null);
+    }
     /**
      * 建筑套件方块（不含树叶 / 树苗），顺序即物品栏与标签的常规顺序。
      */
