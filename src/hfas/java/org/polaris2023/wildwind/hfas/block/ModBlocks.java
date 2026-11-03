@@ -343,7 +343,6 @@ public class ModBlocks {
     );
 
     // 灵焰木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
-    @SuppressWarnings("deprecation")
     public static final DeferredBlock<FlowerPotBlock> POTTED_SOUL_SAPLING = BLOCKS.registerBlock(
             "potted_soul_sapling",
             p -> new FlowerPotBlock(SOUL_SAPLING.get(), p
