@@ -1,9 +1,10 @@
 package org.polaris2023.wildwind.wilderness.datagen.tag;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -40,9 +41,13 @@ public class WildernessBlockTagsProvider extends BlockTagsProvider {
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS, Blocks.MANGROVE_LOG, Blocks.MANGROVE_ROOTS, Blocks.MUDDY_MANGROVE_ROOTS);
     }
 
-    @SuppressWarnings("all")
     public TagAppender<Block> addToTag(TagKey<Block> tag, Block... items) {
         if (items.length == 0) return tag(tag);
-        return tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
+        return tag(tag).addAll(Arrays.stream(items).map(WildernessBlockTagsProvider::blockKey));
+    }
+
+    private static ResourceKey<Block> blockKey(Block block) {
+        return BuiltInRegistries.BLOCK.getResourceKey(block)
+                .orElseThrow(() -> new IllegalStateException("未注册的方块: " + block));
     }
 }

@@ -267,7 +267,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **字幕中文统一为原版格式** - 副标题由 `实体+动作`（`食人鱼袭击`）改为原版中文的 `实体：动作`（`食人鱼：袭击`、`幼蛛：嘶嘶`）；英文侧保持原版无冒号写法（`Piranha attacks`、`Spiderling hisses`），原版中英文本就不同构
 
 ### Fixed
-- **`SpiderlingEyesLayer` 泛型编译失败** - `GeoRenderLayer` / `AutoGlowingGeoLayer` 要求 `R extends GeoRenderState`，而 `EntityRenderState` 上的该接口由 GeckoLib 运行时 mixin 注入，编译期 `LivingEntityRenderState` 不满足边界；图层改用 `GeoRenderState` 作为 `R`，注册处做一次等价强转（`@SuppressWarnings({"unchecked", "rawtypes"})`）并注明原因
+- **`SpiderlingEyesLayer` 泛型编译失败** - `GeoRenderLayer` / `AutoGlowingGeoLayer` 要求 `R extends GeoRenderState`，而该接口由 GeckoLib mixin 在运行时注入 `EntityRenderState`，编译期不可见；现由 `SpiderlingRenderState` 显式实现 `GeoRenderState`（自持 `DataTicket` 数据表，覆写 `addGeckolibData` / `hasGeckolibData` / `getDataMap`），图层与渲染器统一使用真实类型，注册处的原始类型强转与 `@SuppressWarnings` 一并删除
 - **属性翻译键前缀错误** - `RangedAttribute` 的 `descriptionId` 是构造参数原样保存，不按注册 id 派生；原值为 `attributes.ww_hfas.extra_item_pickup_range`，与 `Attributes` 中的 `attribute.name.armor` 规范不符，属性名会直接显示原始键。现已改为 `attribute.name.ww_hfas.extra_item_pickup_range`，`ModAttributes` 与 en_us / zh_cn 三处同步
 - **字幕格式与原版不一致** - 原版 `entity.spider.step` 没有 subtitle（脚步声不产生字幕），此前为改字幕额外覆写 `playStepSound` 属多余，已连同 `entity.spiderling.step` 字幕一并移除
 
