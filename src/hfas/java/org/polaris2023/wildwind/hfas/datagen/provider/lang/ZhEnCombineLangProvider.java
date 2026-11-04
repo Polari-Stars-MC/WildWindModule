@@ -10,6 +10,10 @@ import org.polaris2023.wildwind.hfas.registry.ModItems;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.function.Supplier;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ZhEnCombineLangProvider {
     private static final Map<Supplier<? extends Item>, String> ITEMS_FOR_ZHCN = new HashMap<>();

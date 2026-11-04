@@ -16,6 +16,10 @@ import org.polaris2023.wildwind.hfas.item.ModFoods;
 import org.polaris2023.wildwind.hfas.item.OmniClawItem;
 
 import java.util.function.Function;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(HFASMod.MOD_ID);

@@ -14,6 +14,7 @@ import org.polaris2023.wildwind.hfas.registry.ModDataComponents;
 /**
  * 客户端通知服务端切换全能蟹钳选中工具的网络负载喵~
  *
+ * @author Mon-Landis
  * @param slot 目标槽位索引喵~
  * @param index 目标工具索引喵~
  */

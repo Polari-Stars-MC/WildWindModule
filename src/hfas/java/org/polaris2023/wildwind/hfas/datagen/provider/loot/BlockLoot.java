@@ -11,6 +11,11 @@ import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
 import org.polaris2023.wildwind.hfas.block.WoodFamily;
 
 import java.util.Set;
+/**
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class BlockLoot extends BlockLootSubProvider {
     public BlockLoot(HolderLookup.Provider registries) {

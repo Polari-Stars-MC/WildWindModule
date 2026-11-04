@@ -9,6 +9,10 @@ import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.block.ModBlocks;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =

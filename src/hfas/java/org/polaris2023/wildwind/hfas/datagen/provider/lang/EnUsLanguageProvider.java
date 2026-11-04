@@ -9,6 +9,9 @@ import org.polaris2023.wildwind.hfas.block.ModBlocks;
  * 英语语言文件生成器
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class EnUsLanguageProvider extends LanguageProvider {

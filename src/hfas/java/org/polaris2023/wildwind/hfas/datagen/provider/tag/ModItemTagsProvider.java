@@ -36,6 +36,10 @@ import java.util.concurrent.CompletableFuture;
  *  ——landis, 2026/9/1
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class ModItemTagsProvider extends ItemTagsProvider {

@@ -12,6 +12,8 @@ import javax.annotation.Nullable;
 
 /**
  * 模组自定义的实体生成位置类型常量喵~
+ *
+ * @author Mon-Landis
  */
 public interface ModSpawnPlacementTypes {
 	/**

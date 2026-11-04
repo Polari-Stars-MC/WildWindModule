@@ -11,6 +11,8 @@ import org.polaris2023.wildwind.hfas.entity.animal.Mudcrab;
 
 /**
  * 泥沼蟹实体的几何模型定义喵~
+ *
+ * @author Mon-Landis
  */
 public class MudcrabModel extends DefaultedEntityGeoModel<Mudcrab> {
 

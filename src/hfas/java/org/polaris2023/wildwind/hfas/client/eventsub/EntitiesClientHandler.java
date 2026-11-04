@@ -7,6 +7,10 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import org.polaris2023.wildwind.hfas.client.entity.renderer.MudcrabRenderer;
 import org.polaris2023.wildwind.hfas.client.entity.renderer.PiranhaRenderer;
 import org.polaris2023.wildwind.hfas.registry.ModEntities;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 @EventBusSubscriber(value = Dist.CLIENT)
 public class EntitiesClientHandler {

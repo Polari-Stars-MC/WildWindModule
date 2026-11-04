@@ -6,6 +6,8 @@ import net.minecraft.world.effect.MobEffectCategory;
 
 /**
  * 用于拓宽 {@link MobEffect} 构造方法的访问权限
+ *
+ * @author mdjfnfn
  */
 public class WildWindMobEffect extends MobEffect {
 	/**

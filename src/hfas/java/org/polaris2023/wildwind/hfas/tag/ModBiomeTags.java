@@ -7,6 +7,9 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 
 /**
  * 定义模组群系标签喵~
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
  */
 public interface ModBiomeTags {
 

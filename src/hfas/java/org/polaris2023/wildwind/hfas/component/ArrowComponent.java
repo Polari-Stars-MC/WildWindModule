@@ -20,6 +20,7 @@ import org.polaris2023.wildwind.hfas.registry.ModDataComponents;
  * @param shaft     箭杆类型
  * @param head      箭头类型
  * @author baka4n
+ * @author Mon-Landis
  * @since 2026/04/15
  */
 public record ArrowComponent(ArrowFletching fletching, ArrowShaft shaft, ArrowHead head) {

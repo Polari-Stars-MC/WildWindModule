@@ -22,6 +22,8 @@ import org.spongepowered.asm.mixin.injection.At;
  * 26.2 迁移说明：destroyBlock 中 getMainHandItem 的调用点增至两处
  * （preventsBlockDrops 分支与主路径），本注入同时包裹两处；
  * BlockState 局部变量 ordinal 1 对应 playerWillDestroy 返回的 adjustedState。
+ *
+ * @author Mon-Landis
  */
 @Mixin(ServerPlayerGameMode.class)
 public abstract class ServerPlayerGameModeMixin {

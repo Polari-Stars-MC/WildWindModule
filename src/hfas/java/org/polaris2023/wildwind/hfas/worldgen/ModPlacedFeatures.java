@@ -24,6 +24,7 @@ import java.util.List;
  * 放置特征注册
  *
  * @author baka4n
+ * @author mdjfnfn
  * @since 2026/04/15
  */
 public class ModPlacedFeatures {

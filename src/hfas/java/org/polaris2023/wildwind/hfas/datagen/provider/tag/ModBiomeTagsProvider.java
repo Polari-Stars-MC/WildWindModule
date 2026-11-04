@@ -11,6 +11,10 @@ import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ModBiomeTagsProvider extends BiomeTagsProvider {
     /**
