@@ -11,6 +11,8 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 
 /**
  * 荒野更新的方块注册。
+ *
+ * @author safe_saffawa
  */
 public final class WildernessBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(WildWindWilderness.MOD_ID);

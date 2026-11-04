@@ -6,6 +6,8 @@ import java.util.List;
 
 /**
  * 瘠土更新的木材家族清单（焚烬木 / 灵焰木）。
+ *
+ * @author safe_saffawa
  */
 public final class BarrenWoodFamilies {
 

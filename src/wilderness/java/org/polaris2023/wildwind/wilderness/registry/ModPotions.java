@@ -16,6 +16,9 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 
 /**
  * 注册模组药水并处理酿造配方喵~
+ *
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public class ModPotions {

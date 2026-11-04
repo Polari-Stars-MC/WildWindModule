@@ -8,6 +8,10 @@ import java.util.Optional;
 
 /**
  * 瘠土更新的树木生长器：焚烬木 / 灵焰木。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenTreeGrowers {
 

@@ -11,6 +11,8 @@ import javax.annotation.Nullable;
 
 /**
  * 幼蛛实体渲染器喵~
+ *
+ * @author safe_saffawa
  */
 public class SpiderlingRenderer extends GeoEntityRenderer<Spiderling, SpiderlingRenderState> {
 

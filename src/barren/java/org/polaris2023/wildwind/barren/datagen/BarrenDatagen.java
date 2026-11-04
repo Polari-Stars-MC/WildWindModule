@@ -11,6 +11,8 @@ import org.polaris2023.wildwind.barren.datagen.tag.BarrenItemTagsProvider;
 
 /**
  * 瘠土更新的数据生成入口。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindBarren.MOD_ID)
 public class BarrenDatagen {

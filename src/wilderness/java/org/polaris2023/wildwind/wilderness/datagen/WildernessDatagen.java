@@ -13,6 +13,8 @@ import org.polaris2023.wildwind.wilderness.datagen.tag.WildernessItemTagsProvide
 
 /**
  * 荒野更新的数据生成入口。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public class WildernessDatagen {

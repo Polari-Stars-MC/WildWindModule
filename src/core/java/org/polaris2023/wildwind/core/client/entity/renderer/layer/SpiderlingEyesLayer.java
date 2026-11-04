@@ -7,7 +7,11 @@ import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.core.client.entity.renderstate.SpiderlingRenderState;
 import org.polaris2023.wildwind.core.entity.monster.Spiderling;
 
-/** 幼蛛发光眼睛图层喵~ */
+/**
+ * 幼蛛发光眼睛图层喵~
+ *
+ * @author safe_saffawa
+ */
 public class SpiderlingEyesLayer extends AutoGlowingGeoLayer<Spiderling, Void, SpiderlingRenderState> {
     private static final Identifier EYES = WildWindCore.id("textures/entity/spiderling_eyes.png");
 

@@ -17,6 +17,9 @@ import javax.annotation.Nullable;
 
 /**
  * 泥沼蟹实体渲染器喵~
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class MudcrabRenderer extends GeoEntityRenderer<Mudcrab, MudcrabRenderState> {
 	/**

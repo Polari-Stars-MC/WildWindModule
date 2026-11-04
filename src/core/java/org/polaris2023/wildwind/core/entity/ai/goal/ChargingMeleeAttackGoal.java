@@ -7,6 +7,9 @@ import org.polaris2023.wildwind.core.entity.WindupAttackMob;
 
 /**
  * 准备近战攻击目标
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  * @param <T> 实体类型
  */
 public class ChargingMeleeAttackGoal<T extends PathfinderMob & WindupAttackMob> extends MeleeAttackGoal {

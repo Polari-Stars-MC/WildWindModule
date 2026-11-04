@@ -7,6 +7,9 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 
 /**
  * 荒野更新的物品标签。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public interface ModItemTags {
 

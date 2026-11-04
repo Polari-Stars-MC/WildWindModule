@@ -6,6 +6,10 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.entity.animal.MudcrabVariant;
 
 //内容请注册到mod主类的Datapack注册事件中
+/**
+ * @author Mon-Landis
+ * @author safe_saffawa
+ */
 public class DatadrivenRegistryKey {
     //---[实体类]---
     //--=[实体变种]=--

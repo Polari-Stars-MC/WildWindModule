@@ -15,6 +15,8 @@ import org.polaris2023.wildwind.core.menu.FletchingTableMenu;
  * 槽位布局与之对齐：三个输入 (8,48)/(26,48)/(44,48)，产物 (98,48)，背包 (8,84) 起。
  * <p>
  * 锻造台贴图左上角自带一个锤子装饰，这里用底色盖掉，换成光灵箭图标。
+ *
+ * @author safe_saffawa
  */
 public class FletchingTableScreen extends AbstractContainerScreen<FletchingTableMenu> {
     private static final Identifier TEXTURE =

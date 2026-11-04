@@ -12,6 +12,10 @@ import java.util.List;
 
 /**
  * 瘠土更新的放置特征：焚烬木树 / 灵焰木树。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenPlacedFeatures {
 

@@ -13,6 +13,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的原版物品栏排序（模组自己的页由 {@link org.polaris2023.wildwind.wilderness.registry.ModCreativeTabs} 注册）。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public final class WildernessCreativeTabs {

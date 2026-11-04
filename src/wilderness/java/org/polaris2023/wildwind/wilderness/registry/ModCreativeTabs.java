@@ -11,6 +11,8 @@ import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
 
 /**
  * 荒野更新自己的创造模式物品栏页。
+ *
+ * @author safe_saffawa
  */
 public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =

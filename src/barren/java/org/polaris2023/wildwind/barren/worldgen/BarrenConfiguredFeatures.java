@@ -18,6 +18,11 @@ import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 
 /**
  * 瘠土更新的配置特征：焚烬木树 / 灵焰木树。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenConfiguredFeatures {
 

@@ -17,6 +17,12 @@ import org.polaris2023.wildwind.core.block.WoodFamily;
 
 /**
  * 瘠土更新的原版物品栏排序（模组自己的页由 {@link org.polaris2023.wildwind.barren.registry.ModCreativeTabs} 注册）。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindBarren.MOD_ID)
 public final class BarrenCreativeTabs {

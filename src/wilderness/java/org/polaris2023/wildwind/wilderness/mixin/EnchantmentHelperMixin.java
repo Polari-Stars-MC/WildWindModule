@@ -12,6 +12,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 /**
  * 为附魔辅助逻辑补充万用蟹钳工具上下文的混入类喵~
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @Mixin(EnchantmentHelper.class)
 public abstract class EnchantmentHelperMixin {

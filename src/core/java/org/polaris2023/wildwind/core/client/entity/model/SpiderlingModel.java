@@ -8,6 +8,8 @@ import org.polaris2023.wildwind.core.entity.monster.Spiderling;
 
 /**
  * 幼蛛实体的几何模型定义喵~
+ *
+ * @author safe_saffawa
  */
 public class SpiderlingModel extends DefaultedEntityGeoModel<Spiderling> {
 

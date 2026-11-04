@@ -16,6 +16,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 荒野更新的数据包内建注册：实体生成 + 泥沼蟹变种。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class WildernessDatapackProvider extends DatapackBuiltinEntriesProvider {
 

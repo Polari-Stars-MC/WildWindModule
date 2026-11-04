@@ -20,6 +20,11 @@ import org.polaris2023.wildwind.core.registry.ModSoundEvents;
  * 原野之风：核心（Wild Wind: Core）
  * <p>
  * 杜鹃木套件 / 制箭台 / 矢术 / 玫瑰 / 幼蛛等基础内容，另两个更新模块均依赖本模块。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @Mod(WildWindCore.MOD_ID)
 @Slf4j

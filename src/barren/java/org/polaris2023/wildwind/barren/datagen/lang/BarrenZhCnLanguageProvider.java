@@ -7,6 +7,8 @@ import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 
 /**
  * 瘠土更新的简体中文语言文件。
+ *
+ * @author safe_saffawa
  */
 public class BarrenZhCnLanguageProvider extends LanguageProvider {
 

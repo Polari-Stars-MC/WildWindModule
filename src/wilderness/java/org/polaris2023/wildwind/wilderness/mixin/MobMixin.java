@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.ModifyVariable;
 
 /**
  * 让生物的物品拾取范围受额外拾取距离属性加成的混入类喵~
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @Mixin(Mob.class)
 public abstract class MobMixin {

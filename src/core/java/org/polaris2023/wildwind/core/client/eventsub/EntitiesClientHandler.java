@@ -10,6 +10,10 @@ import org.polaris2023.wildwind.core.registry.ModEntities;
 
 /**
  * 核心模块的实体渲染器注册。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID, value = Dist.CLIENT)
 public final class EntitiesClientHandler {

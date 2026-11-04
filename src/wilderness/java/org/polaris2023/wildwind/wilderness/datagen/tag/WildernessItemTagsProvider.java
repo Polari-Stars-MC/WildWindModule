@@ -19,6 +19,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 荒野更新的物品标签生成器。
+ *
+ * @author safe_saffawa
  */
 public class WildernessItemTagsProvider extends ItemTagsProvider {
 

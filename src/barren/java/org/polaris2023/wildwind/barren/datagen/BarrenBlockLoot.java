@@ -13,6 +13,10 @@ import java.util.Set;
 
 /**
  * 瘠土更新的方块战利品表。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenBlockLoot extends BlockLootSubProvider {
 

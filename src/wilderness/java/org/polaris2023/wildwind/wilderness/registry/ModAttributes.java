@@ -16,6 +16,9 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
  * <p>
  * 26.2 迁移说明：旧仓库通过 LivingEntityMixin 向全体生物基础属性表追加属性，
  * 现改用 NeoForge 的 EntityAttributeModificationEvent 实现同等效果（涵盖玩家）。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public class ModAttributes {

@@ -23,6 +23,11 @@ import java.util.Optional;
 
 /**
  * 瘠土更新的模型生成器：木材套件 / 砂岩 / 沙 / 焦土。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenModelProvider extends ModelProvider {
 

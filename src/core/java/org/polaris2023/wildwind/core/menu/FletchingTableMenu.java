@@ -22,6 +22,7 @@ import java.util.function.Predicate;
  * 制箭台菜单
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class FletchingTableMenu extends AbstractContainerMenu {

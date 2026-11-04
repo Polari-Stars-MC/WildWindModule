@@ -15,6 +15,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的模型生成器。
+ *
+ * @author safe_saffawa
  */
 public class WildernessModelProvider extends ModelProvider {
 

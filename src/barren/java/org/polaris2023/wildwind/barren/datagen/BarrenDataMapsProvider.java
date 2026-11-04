@@ -18,6 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的数据映射：去皮与燃料。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenDataMapsProvider extends DataMapProvider {
 

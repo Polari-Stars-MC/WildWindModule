@@ -10,6 +10,8 @@ import org.polaris2023.wildwind.barren.registry.ModCreativeTabs;
  * 原野之风：瘠土更新（Wild Wind: Barren Update）
  * <p>
  * 砂岩 / 沙 / 流沙 / 焦土 / 下界木质套件。
+ *
+ * @author safe_saffawa
  */
 @Mod(WildWindBarren.MOD_ID)
 public class WildWindBarren {

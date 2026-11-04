@@ -30,6 +30,10 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 import org.polaris2023.wildwind.wilderness.registry.ModSoundEvents;
 
 import javax.annotation.Nullable;
+/**
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class Piranha extends AbstractSchoolingFish implements WindupAttackMob, GeoEntity {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);

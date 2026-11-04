@@ -18,6 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 核心模块的数据映射：去皮与燃料。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class ModDataMapsProvider extends DataMapProvider {
 

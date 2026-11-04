@@ -8,6 +8,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.entity.animal.Mudcrab;
 import org.polaris2023.wildwind.wilderness.entity.animal.Piranha;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 
 public class ModEntities {

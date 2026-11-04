@@ -12,6 +12,9 @@ import java.util.function.Supplier;
 
 /**
  * 注册模组实体数据序列化器喵~
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class ModEntityDataSerializers {
 	/**

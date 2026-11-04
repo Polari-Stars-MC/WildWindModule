@@ -25,6 +25,11 @@ import org.polaris2023.wildwind.core.WildWindCore;
 
 /**
  * 核心模块的方块注册：杜鹃木套件 / 制箭台 / 玫瑰。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(WildWindCore.MOD_ID);

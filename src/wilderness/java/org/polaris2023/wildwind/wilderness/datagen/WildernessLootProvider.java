@@ -33,6 +33,11 @@ import java.util.stream.Stream;
 
 /**
  * 荒野更新的战利品表：实体掉落 + 方块掉落。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class WildernessLootProvider extends LootTableProvider {
 

@@ -10,6 +10,8 @@ import org.spongepowered.asm.mixin.gen.Invoker;
  * <p>
  * {@code baseDamage} 是私有字段且没有 getter，{@code setPierceLevel} 是私有方法，
  * 矢术的「伤害加成」与「穿透 1 个目标」都要用到。
+ *
+ * @author safe_saffawa
  */
 @Mixin(AbstractArrow.class)
 public interface AbstractArrowAccessor {

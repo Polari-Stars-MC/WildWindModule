@@ -13,6 +13,11 @@ import org.polaris2023.wildwind.barren.WildWindBarren;
 
 /**
  * 瘠土更新的生物群系修改器：下界废土 / 灵魂沙峡谷的焚烬木与灵焰木。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenBiomeModifiers {
 

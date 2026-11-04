@@ -11,6 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 核心模块的实体类型标签生成器。
+ *
+ * @author safe_saffawa
  */
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 

@@ -9,6 +9,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的英文语言文件。
+ *
+ * @author safe_saffawa
  */
 public class WildernessEnUsLanguageProvider extends LanguageProvider {
 

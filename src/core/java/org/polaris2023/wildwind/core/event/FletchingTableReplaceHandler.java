@@ -22,6 +22,7 @@ import org.polaris2023.wildwind.core.config.ModCommonConfig;
  * 把已生成世界（区块加载时）里的原版制箭台换成模组制箭台。
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID)

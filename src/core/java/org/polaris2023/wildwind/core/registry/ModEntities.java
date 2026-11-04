@@ -10,6 +10,10 @@ import org.polaris2023.wildwind.core.entity.monster.Spiderling;
 
 /**
  * 核心模块的实体类型注册。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModEntities {
     public static final DeferredRegister.Entities ENTITY_TYPES =

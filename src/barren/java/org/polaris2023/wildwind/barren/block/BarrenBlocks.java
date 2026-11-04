@@ -32,6 +32,11 @@ import org.polaris2023.wildwind.barren.worldgen.BarrenTreeGrowers;
 
 /**
  * 瘠土更新的方块注册：砂岩 / 沙 / 流沙 / 焦土 / 下界木质套件。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenBlocks {
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(WildWindBarren.MOD_ID);

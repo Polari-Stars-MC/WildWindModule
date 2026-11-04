@@ -21,6 +21,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的方块标签生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenBlockTagsProvider extends BlockTagsProvider {
 

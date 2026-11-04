@@ -10,6 +10,11 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.component.OmniClawTools;
 import org.polaris2023.wildwind.wilderness.entity.animal.MudcrabVariant;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
+ */
 
 public class ModDataComponents {
     public static final DeferredRegister.DataComponents REGISTER = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, WildWindWilderness.MOD_ID);

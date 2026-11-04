@@ -7,6 +7,8 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 
 /**
  * 荒野更新的群系标签。
+ *
+ * @author safe_saffawa
  */
 public interface ModBiomeTags {
 

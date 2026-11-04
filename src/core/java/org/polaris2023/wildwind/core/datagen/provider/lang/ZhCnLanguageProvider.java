@@ -9,6 +9,11 @@ import org.polaris2023.wildwind.core.registry.ModItems;
 
 /**
  * 核心模块的简体中文语言文件。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class ZhCnLanguageProvider extends LanguageProvider {
 

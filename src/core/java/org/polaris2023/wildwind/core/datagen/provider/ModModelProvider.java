@@ -17,6 +17,8 @@ import org.polaris2023.wildwind.core.registry.ModItems;
 
 /**
  * 核心模块的模型生成器。
+ *
+ * @author safe_saffawa
  */
 public class ModModelProvider extends ModelProvider {
 

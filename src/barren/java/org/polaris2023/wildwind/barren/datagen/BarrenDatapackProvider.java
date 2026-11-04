@@ -16,6 +16,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的数据包内建注册：树木特征与群系修改器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class BarrenDatapackProvider extends DatapackBuiltinEntriesProvider {
 

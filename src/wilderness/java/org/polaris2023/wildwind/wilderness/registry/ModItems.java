@@ -16,6 +16,11 @@ import org.polaris2023.wildwind.wilderness.item.ModFoods;
 import org.polaris2023.wildwind.wilderness.item.OmniClawItem;
 
 import java.util.function.Function;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(WildWindWilderness.MOD_ID);

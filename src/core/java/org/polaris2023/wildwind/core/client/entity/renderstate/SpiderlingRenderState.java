@@ -12,6 +12,8 @@ import java.util.Map;
  * <p>
  * GeckoLib 用 mixin 给 {@code EntityRenderState} 注入 {@link GeoRenderState}，编译期不可见，
  * 导致渲染器与图层只能强转。这里显式实现同一契约并自持数据表，让类型在编译期就已成立。
+ *
+ * @author safe_saffawa
  */
 public class SpiderlingRenderState extends LivingEntityRenderState implements GeoRenderState {
     private final Map<DataTicket<?>, Object> geckolibData = new Reference2ObjectOpenHashMap<>();

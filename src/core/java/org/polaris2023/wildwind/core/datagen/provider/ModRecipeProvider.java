@@ -10,6 +10,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 核心模块的配方生成器（箭矢组合配方暂未启用）。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class ModRecipeProvider extends RecipeProvider {
 

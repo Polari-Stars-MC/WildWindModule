@@ -23,6 +23,12 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的物品标签生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenItemTagsProvider extends ItemTagsProvider {
 

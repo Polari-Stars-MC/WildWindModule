@@ -13,6 +13,8 @@ import org.polaris2023.wildwind.core.block.WoodFamily;
 
 /**
  * 瘠土更新自己的创造模式物品栏页。
+ *
+ * @author safe_saffawa
  */
 public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =

@@ -6,6 +6,10 @@ import java.util.Optional;
 
 /**
  * 核心模块的树木生长器：杜鹃树。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModTreeGrowers {
 

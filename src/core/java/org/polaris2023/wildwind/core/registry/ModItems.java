@@ -9,6 +9,8 @@ import org.polaris2023.wildwind.core.WildWindCore;
 
 /**
  * 核心模块的物品注册。
+ *
+ * @author safe_saffawa
  */
 public final class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(WildWindCore.MOD_ID);

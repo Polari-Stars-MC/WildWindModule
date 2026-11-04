@@ -16,6 +16,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 核心模块的数据包内建注册：杜鹃树特征与群系修改器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class ModDatapackProvider extends DatapackBuiltinEntriesProvider {
 

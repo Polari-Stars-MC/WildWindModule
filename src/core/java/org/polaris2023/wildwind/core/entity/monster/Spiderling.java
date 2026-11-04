@@ -21,7 +21,11 @@ import org.polaris2023.wildwind.core.entity.WindupAttackMob;
 import org.polaris2023.wildwind.core.entity.ai.goal.ChargingMeleeAttackGoal;
 import org.polaris2023.wildwind.core.registry.ModSoundEvents;
 
-/** 幼蛛；继承原版蜘蛛的攀爬与目标选择，攻击改为蓄力扑击喵~ */
+/**
+ * 幼蛛；继承原版蜘蛛的攀爬与目标选择，攻击改为蓄力扑击喵~
+ *
+ * @author safe_saffawa
+ */
 public class Spiderling extends Spider implements GeoEntity, WindupAttackMob {
     private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
     private int preparingToAttack;

@@ -16,6 +16,8 @@ import java.util.Set;
  * 警告最近可攻击对象的目标
  * @param <T> 实体类型
  * @author huimanman
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class AlertOthersNearestAttackableTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
     @Nullable

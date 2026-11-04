@@ -13,6 +13,8 @@ import org.polaris2023.wildwind.core.registry.ModDataComponents;
 
 /**
  * 矢术提示框：把箭羽 / 箭杆 / 箭头的效果写进物品说明。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID, value = Dist.CLIENT)
 public final class CoreClientTooltips {

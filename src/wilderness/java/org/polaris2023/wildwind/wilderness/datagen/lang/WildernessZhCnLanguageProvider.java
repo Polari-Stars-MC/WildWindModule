@@ -9,6 +9,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的简体中文语言文件。
+ *
+ * @author safe_saffawa
  */
 public class WildernessZhCnLanguageProvider extends LanguageProvider {
 

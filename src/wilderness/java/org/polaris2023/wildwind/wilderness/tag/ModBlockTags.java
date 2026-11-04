@@ -7,6 +7,9 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 
 /**
  * 荒野更新的方块标签。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public interface ModBlockTags {
 

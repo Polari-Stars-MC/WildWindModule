@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * 没有组件的普通箭走原版逻辑，本 mixin 全部方法都会提前返回。
  *
  * @author baka4n
+ * @author safe_saffawa
  */
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin {

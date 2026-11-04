@@ -9,6 +9,9 @@ import org.polaris2023.wildwind.wilderness.network.payload.ServerBoundSelectOmni
 
 /**
  * 荒野更新的网络负载注册入口
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public class WildernessNetwork {

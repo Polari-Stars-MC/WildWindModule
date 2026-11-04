@@ -11,6 +11,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的战利品表入口（只有方块战利品）。
+ *
+ * @author safe_saffawa
  */
 public class BarrenLootProvider extends LootTableProvider {
 
