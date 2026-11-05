@@ -24,6 +24,9 @@ import java.util.function.Supplier;
  * 用于生成方块和物品的模型文件
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class ModModelProvider extends ModelProvider {

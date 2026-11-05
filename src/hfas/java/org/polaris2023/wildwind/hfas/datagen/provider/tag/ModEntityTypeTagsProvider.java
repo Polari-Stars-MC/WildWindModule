@@ -12,6 +12,9 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 生成模组实体类型标签数据喵~
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
  */
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 	/**

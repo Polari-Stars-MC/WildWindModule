@@ -26,6 +26,8 @@ import java.util.concurrent.CompletableFuture;
  * 箭矢配方数据生成器
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
  * @since 2026/04/15
  */
 public class ModRecipeProvider extends RecipeProvider {

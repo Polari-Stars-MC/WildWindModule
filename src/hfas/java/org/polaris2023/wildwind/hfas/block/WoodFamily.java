@@ -24,6 +24,8 @@ import java.util.List;
  * 让模型 / 战利品 / 标签 / 数据地图 / 物品栏等 provider 只需遍历一次，
  * 不用在每个文件里重复抄 13~15 个参数。
  *
+ * @author safe_saffawa
+ * @author baka4n
  * @param name      木材名（blaze / soul / azalea），用于拼接翻译与自建标签
  * @param leavesTint 树叶物品图标的常数染色（无树叶时忽略）
  */

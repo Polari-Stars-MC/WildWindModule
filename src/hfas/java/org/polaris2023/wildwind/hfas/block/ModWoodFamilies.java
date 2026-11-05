@@ -7,6 +7,9 @@ import java.util.List;
  * <p>
  * 各 datagen provider 统一遍历 {@link #ALL}，避免同一条 13 参数列表在多个文件里重复维护。
  * 这里只是对 {@link ModBlocks} 已注册方块的聚合，不参与注册。
+ *
+ * @author safe_saffawa
+ * @author baka4n
  */
 public final class ModWoodFamilies {
 

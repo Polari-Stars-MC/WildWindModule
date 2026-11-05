@@ -48,6 +48,8 @@ import java.util.function.Supplier;
  * 为 {@link IItemExtension} 的默认方法，父类调用需通过 IItemExtension.super；
  * isCorrectToolForDrops/getDestroySpeed/mineBlock/getTooltipImage 已并入原版 Item；
  * HIDE_TOOLTIP/HIDE_ADDITIONAL_TOOLTIP 组件由 TOOLTIP_DISPLAY 取代。
+ *
+ * @author Mon-Landis
  */
 public class OmniClawItem extends Item {
 	/**

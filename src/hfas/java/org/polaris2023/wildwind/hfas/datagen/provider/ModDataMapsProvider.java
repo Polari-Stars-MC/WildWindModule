@@ -14,6 +14,11 @@ import org.polaris2023.wildwind.hfas.block.ModWoodFamilies;
 import org.polaris2023.wildwind.hfas.block.WoodFamily;
 
 import java.util.concurrent.CompletableFuture;
+/**
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class ModDataMapsProvider extends DataMapProvider {
     /**

@@ -5,6 +5,9 @@ import net.minecraft.world.effect.MobEffects;
 import net.minecraft.world.food.FoodProperties;
 import net.minecraft.world.item.component.Consumable;
 import net.minecraft.world.item.consume_effects.ApplyStatusEffectsConsumeEffect;
+/**
+ * @author mdjfnfn
+ */
 
 public class ModFoods {
     public static final FoodProperties PIRANHA = new FoodProperties.Builder()

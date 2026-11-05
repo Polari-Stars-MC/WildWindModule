@@ -10,6 +10,10 @@ import net.neoforged.neoforge.event.entity.RegisterSpawnPlacementsEvent;
 import org.polaris2023.wildwind.hfas.entity.animal.Mudcrab;
 import org.polaris2023.wildwind.hfas.entity.animal.Piranha;
 import org.polaris2023.wildwind.hfas.registry.ModEntities;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 @EventBusSubscriber
 public class EntitiesHandler {

@@ -9,6 +9,10 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.client.eventsub.EntitiesClientHandler;
 import org.polaris2023.wildwind.hfas.entity.animal.Mudcrab;
 import org.polaris2023.wildwind.hfas.entity.animal.Piranha;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 
 public class ModEntities {

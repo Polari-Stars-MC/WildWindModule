@@ -25,6 +25,9 @@ import java.util.concurrent.CompletableFuture;
  * 为木质方块添加原版和模组标签
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class ModBlockTagsProvider extends BlockTagsProvider {

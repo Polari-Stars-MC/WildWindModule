@@ -25,6 +25,8 @@ import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
  * 生物群系修改器
  *
  * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
  * @since 2026/04/15
  */
 public class ModBiomeModifiers {

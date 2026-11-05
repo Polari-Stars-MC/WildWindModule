@@ -25,6 +25,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.stream.Stream;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class ModLootProvider extends LootTableProvider {
     public ModLootProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {

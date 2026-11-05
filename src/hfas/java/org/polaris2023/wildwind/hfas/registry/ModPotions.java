@@ -16,6 +16,8 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 
 /**
  * 注册模组药水并处理酿造配方喵~
+ *
+ * @author mdjfnfn
  */
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class ModPotions {

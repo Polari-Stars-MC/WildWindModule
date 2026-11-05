@@ -6,6 +6,9 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
 
 //内容请注册到mod主类的Datapack注册事件中
+/**
+ * @author Mon-Landis
+ */
 public class DatadrivenRegistryKey {
     //---[实体类]---
     //--=[实体变种]=--

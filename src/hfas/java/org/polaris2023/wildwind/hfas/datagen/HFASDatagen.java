@@ -20,6 +20,10 @@ import org.polaris2023.wildwind.hfas.datagen.provider.tag.ModItemTagsProvider;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ */
 
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class HFASDatagen {

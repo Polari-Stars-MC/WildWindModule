@@ -9,6 +9,8 @@ import org.polaris2023.wildwind.hfas.network.payload.ServerBoundSelectOmniClawIt
 
 /**
  * 模组网络负载注册入口喵~
+ *
+ * @author Mon-Landis
  */
 @EventBusSubscriber(modid = HFASMod.MOD_ID)
 public class HFASNetwork {

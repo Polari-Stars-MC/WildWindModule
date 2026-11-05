@@ -14,6 +14,8 @@ import org.polaris2023.wildwind.hfas.effect.WildWindMobEffect;
 
 /**
  * 注册模组状态效果喵~
+ *
+ * @author mdjfnfn
  */
 public class ModMobEffects {
 	/**

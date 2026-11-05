@@ -14,6 +14,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 /**
  * 让玩家的物品拾取判定范围受额外拾取距离属性加成的混入类喵~
+ *
+ * @author Mon-Landis
  */
 @Mixin(Player.class)
 public abstract class PlayerMixin {

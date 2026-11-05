@@ -8,6 +8,8 @@ import org.polaris2023.wildwind.hfas.entity.animal.Piranha;
 
 /**
  * 食人鱼实体的几何模型定义喵~
+ *
+ * @author mdjfnfn
  */
 public class PiranhaModel extends DefaultedEntityGeoModel<Piranha> {
 
