@@ -11,6 +11,10 @@ import org.polaris2023.wildwind.hfas.tag.ModBiomeTags;
 
 import javax.annotation.Nullable;
 import java.util.concurrent.CompletableFuture;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ModBiomeTagsProvider extends BiomeTagsProvider {
     /**
@@ -47,5 +51,8 @@ public class ModBiomeTagsProvider extends BiomeTagsProvider {
                 .add(Biomes.SNOWY_TAIGA)
                 .add(Biomes.SNOWY_BEACH)
                 .addTag(BiomeTags.IS_END);
+        tag(ModBiomeTags.EntityGen.PIRANHA_SPAWNS)
+                .add(Biomes.JUNGLE)
+                .addTag(Tags.Biomes.IS_SWAMP);
     }
 }

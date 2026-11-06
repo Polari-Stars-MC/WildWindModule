@@ -28,6 +28,11 @@ import java.util.function.Supplier;
  * @since 2026/04/15
  */
 //TODO 考虑迁移至registry目录下，或将registry目录下的注册条目分散到各目录下
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 public class ModBlocks {
     // 方块注册器
     public static final DeferredRegister.Blocks BLOCKS = DeferredRegister.createBlocks(HFASMod.MOD_ID);
@@ -192,6 +197,15 @@ public class ModBlocks {
                     .randomTicks())
     );
 
+    // 焚烬木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
+    public static final DeferredBlock<FlowerPotBlock> POTTED_BLAZE_SAPLING = BLOCKS.registerBlock(
+            "potted_blaze_sapling",
+            p -> new FlowerPotBlock(BLAZE_SAPLING.get(), p
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
     // ==================== 灵焰木套件 (soul_wood) ====================
 
     // 灵焰木原木
@@ -331,6 +345,15 @@ public class ModBlocks {
                     .instabreak()
                     .sound(SoundType.GRASS)
                     .randomTicks())
+    );
+
+    // 灵焰木树苗花盆（原版构造器，会自动把树苗登记进原版花盆的映射表）
+    public static final DeferredBlock<FlowerPotBlock> POTTED_SOUL_SAPLING = BLOCKS.registerBlock(
+            "potted_soul_sapling",
+            p -> new FlowerPotBlock(SOUL_SAPLING.get(), p
+                    .instabreak()
+                    .noOcclusion()
+                    .pushReaction(PushReaction.DESTROY))
     );
 
     // ==================== 杜鹃木套件 (azalea_wood) ====================

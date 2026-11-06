@@ -7,6 +7,8 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 
 /**
  * 定义模组方块标签喵~
+ *
+ * @author Mon-Landis
  */
 public interface ModBlockTags {
 

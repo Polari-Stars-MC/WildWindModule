@@ -15,6 +15,10 @@ import org.polaris2023.wildwind.hfas.worldgen.ModPlacedFeatures;
 
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ */
 
 public class ModDatapackProvider extends DatapackBuiltinEntriesProvider {
     public ModDatapackProvider(PackOutput output, CompletableFuture<HolderLookup.Provider> registries) {

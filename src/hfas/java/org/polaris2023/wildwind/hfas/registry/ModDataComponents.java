@@ -11,6 +11,10 @@ import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.component.ArrowComponent;
 import org.polaris2023.wildwind.hfas.component.OmniClawTools;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ */
 
 public class ModDataComponents {
     public static final DeferredRegister.DataComponents REGISTER = DeferredRegister.createDataComponents(Registries.DATA_COMPONENT_TYPE, HFASMod.MOD_ID);

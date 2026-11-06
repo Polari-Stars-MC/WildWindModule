@@ -12,6 +12,9 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 生成模组实体类型标签数据喵~
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
  */
 public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 	/**
@@ -27,10 +30,15 @@ public class ModEntityTypeTagsProvider extends EntityTypeTagsProvider {
 	@Override
 	protected void addTags(HolderLookup.Provider provider) {
 		tag(EntityTypeTags.AQUATIC)
-				.add(ModEntities.MUDCRAB.getKey());
+				.add(ModEntities.MUDCRAB.getKey())
+				.add(ModEntities.PIRANHA.getKey());
 		tag(EntityTypeTags.CAN_BREATHE_UNDER_WATER)
-				.add(ModEntities.MUDCRAB.getKey());
+				.add(ModEntities.MUDCRAB.getKey())
+				.add(ModEntities.PIRANHA.getKey());
 		tag(EntityTypeTags.NOT_SCARY_FOR_PUFFERFISH)
-				.add(ModEntities.MUDCRAB.getKey());
+				.add(ModEntities.MUDCRAB.getKey())
+				.add(ModEntities.PIRANHA.getKey());
+		tag(EntityTypeTags.AXOLOTL_HUNT_TARGETS)
+				.add(ModEntities.PIRANHA.getKey());
 	}
 }

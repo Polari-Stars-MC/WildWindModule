@@ -12,9 +12,14 @@ import net.neoforged.neoforge.registries.DeferredItem;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.hfas.HFASMod;
 import org.polaris2023.wildwind.hfas.component.OmniClawTools;
+import org.polaris2023.wildwind.hfas.item.ModFoods;
 import org.polaris2023.wildwind.hfas.item.OmniClawItem;
 
 import java.util.function.Function;
+/**
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 public class ModItems {
     public static final DeferredRegister.Items ITEMS = DeferredRegister.createItems(HFASMod.MOD_ID);
@@ -27,6 +32,17 @@ public class ModItems {
 
     //蟹钳
     public static final DeferredItem<Item> CRAB_CLAW = register("crab_claw");
+
+    //食人鱼
+    public static final DeferredItem<Item> PIRANHA = register("piranha", p -> new Item(p.food(ModFoods.PIRANHA, ModFoods.PIRANHA_CONSUMABLE)));
+    public static final DeferredItem<Item> COOKED_PIRANHA = register("cooked_piranha", p -> new Item(p.food(ModFoods.COOKED_PIRANHA, ModFoods.COOKED_PIRANHA_CONSUMABLE)));
+    public static final DeferredItem<SpawnEggItem> PIRANHA_SPAWN_EGG = registerMobEgg("piranha_spawn_egg", ModEntities.PIRANHA);
+
+    //食人鱼桶
+    public static final DeferredItem<MobBucketItem> PIRANHA_BUCKET = register("piranha_bucket", p -> new MobBucketItem(ModEntities.PIRANHA.get(), Fluids.WATER, SoundEvents.BUCKET_EMPTY_FISH, p));
+
+    //尖牙（食人鱼掉落物）
+    public static final DeferredItem<Item> FANG = register("fang");
 
 
     //万用蟹钳

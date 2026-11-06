@@ -3,6 +3,9 @@ package org.polaris2023.wildwind.hfas.entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+/**
+ * @author Mon-Landis
+ */
 
 public interface WindupAttackMob {
     void setTarget(LivingEntity entity);

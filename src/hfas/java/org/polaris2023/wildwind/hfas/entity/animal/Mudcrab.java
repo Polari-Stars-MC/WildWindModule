@@ -79,6 +79,8 @@ import java.util.Optional;
 
 /**
  * 泥沼蟹生物实体<p>
+ *
+ * @author Mon-Landis
  */
 public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoEntity {
 	/**

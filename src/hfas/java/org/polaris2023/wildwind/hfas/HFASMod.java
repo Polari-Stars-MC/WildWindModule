@@ -14,6 +14,11 @@ import org.polaris2023.wildwind.hfas.config.ModCommonConfig;
 import org.polaris2023.wildwind.hfas.entity.animal.MudcrabVariant;
 import org.polaris2023.wildwind.hfas.menu.ModMenus;
 import org.polaris2023.wildwind.hfas.registry.*;
+/**
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ */
 
 @Mod(HFASMod.MOD_ID)
 @Slf4j
@@ -32,6 +37,13 @@ public class HFASMod {
         ModDataComponents.register(bus);
         // 注册属性
         ModAttributes.register(bus);
+
+        // 注册状态效果、药水
+        ModMobEffects.register(bus);
+        ModPotions.register(bus);
+
+        // 注册食人鱼音效
+        ModSoundEvents.register(bus);
 
         // 注册配置文件
         container.registerConfig(net.neoforged.fml.config.ModConfig.Type.COMMON, ModCommonConfig.SPEC);
