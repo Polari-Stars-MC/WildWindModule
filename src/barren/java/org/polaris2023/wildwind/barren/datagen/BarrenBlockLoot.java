@@ -35,8 +35,20 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
             generateWood(family);
         }
 
-        dropPottedContents(BarrenBlocks.POTTED_BLAZE_SAPLING.get());
-        dropPottedContents(BarrenBlocks.POTTED_SOUL_SAPLING.get());
+        dropPottedContents(BarrenBlocks.POTTED_CINDER_SAPLING.get());
+        dropPottedContents(BarrenBlocks.POTTED_EMBER_SAPLING.get());
+
+        dropSelf(BarrenBlocks.CINDER_SHELF.get());
+        dropSelf(BarrenBlocks.CINDER_SIGN.get());
+        dropSelf(BarrenBlocks.CINDER_HANGING_SIGN.get());
+        dropSelf(BarrenBlocks.EMBER_SHELF.get());
+        dropSelf(BarrenBlocks.EMBER_SIGN.get());
+        dropSelf(BarrenBlocks.EMBER_HANGING_SIGN.get());
+        // 原版墙面告示牌没有掉落物，但战利品表必须存在
+        add(BarrenBlocks.CINDER_WALL_SIGN.get(), noDrop());
+        add(BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(), noDrop());
+        add(BarrenBlocks.EMBER_WALL_SIGN.get(), noDrop());
+        add(BarrenBlocks.EMBER_WALL_HANGING_SIGN.get(), noDrop());
 
         dropSelf(BarrenBlocks.SCORCHED_GRASS_BLOCK.get());
         dropSelf(BarrenBlocks.SCORCHED_DIRT.get());

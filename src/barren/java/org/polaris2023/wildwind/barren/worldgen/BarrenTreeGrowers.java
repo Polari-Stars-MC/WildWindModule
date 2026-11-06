@@ -15,17 +15,17 @@ import java.util.Optional;
  */
 public final class BarrenTreeGrowers {
 
-    public static final TreeGrower BLAZE = new TreeGrower(
-            "blaze",
+    public static final TreeGrower CINDER = new TreeGrower(
+            "cinder",
             Optional.empty(),
-            Optional.of(configured(BarrenConfiguredFeatures.BLAZE_TREE_KEY)),
+            Optional.of(configured(BarrenConfiguredFeatures.CINDER_TREE_KEY)),
             Optional.empty()
     );
 
-    public static final TreeGrower SOUL = new TreeGrower(
-            "soul",
+    public static final TreeGrower EMBER = new TreeGrower(
+            "ember",
             Optional.empty(),
-            Optional.of(configured(BarrenConfiguredFeatures.SOUL_TREE_KEY)),
+            Optional.of(configured(BarrenConfiguredFeatures.EMBER_TREE_KEY)),
             Optional.empty()
     );
 

@@ -23,7 +23,7 @@ public final class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BARREN =
             CREATIVE_TABS.register("barren", () -> CreativeModeTab.builder()
                     .title(Component.translatable("tab.ww_barren.name"))
-                    .icon(() -> BarrenBlocks.BLAZE_LOG.toStack())
+                    .icon(() -> BarrenBlocks.CINDER_LOG.toStack())
                     .displayItems((params, output) -> addStacks(output))
                     .build()
             );
@@ -41,6 +41,18 @@ public final class ModCreativeTabs {
                 output.accept(family.sapling().get());
             }
         }
+
+        // 告示牌 / 悬挂告示牌 / 展示架 / 船
+        output.accept(BarrenBlocks.CINDER_SIGN.get().asItem());
+        output.accept(BarrenBlocks.CINDER_HANGING_SIGN.get().asItem());
+        output.accept(BarrenItems.CINDER_BOAT.get());
+        output.accept(BarrenItems.CINDER_CHEST_BOAT.get());
+        output.accept(BarrenBlocks.CINDER_SHELF.get().asItem());
+        output.accept(BarrenBlocks.EMBER_SIGN.get().asItem());
+        output.accept(BarrenBlocks.EMBER_HANGING_SIGN.get().asItem());
+        output.accept(BarrenItems.EMBER_BOAT.get());
+        output.accept(BarrenItems.EMBER_CHEST_BOAT.get());
+        output.accept(BarrenBlocks.EMBER_SHELF.get().asItem());
 
         // 焦土
         output.accept(BarrenBlocks.SCORCHED_GRASS_BLOCK.get());

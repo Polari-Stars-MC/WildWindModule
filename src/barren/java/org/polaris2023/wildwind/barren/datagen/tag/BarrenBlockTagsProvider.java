@@ -39,6 +39,19 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
             registerWoodTags(family);
         }
 
+        // 告示牌 / 悬挂告示牌 / 展示架
+        addToTag(BlockItemTags.SIGNS.block(), BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.EMBER_SIGN.get());
+        addToTag(BlockTags.WALL_SIGNS, BarrenBlocks.CINDER_WALL_SIGN.get(), BarrenBlocks.EMBER_WALL_SIGN.get());
+        addToTag(BlockItemTags.HANGING_SIGNS.block(), BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.EMBER_HANGING_SIGN.get());
+        addToTag(BlockTags.WALL_HANGING_SIGNS, BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(), BarrenBlocks.EMBER_WALL_HANGING_SIGN.get());
+        addToTag(BlockTags.WOODEN_SHELVES, BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get());
+        addToTag(BlockTags.MINEABLE_WITH_AXE,
+                BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get(),
+                BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.CINDER_WALL_SIGN.get(),
+                BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(),
+                BarrenBlocks.EMBER_SIGN.get(), BarrenBlocks.EMBER_WALL_SIGN.get(),
+                BarrenBlocks.EMBER_HANGING_SIGN.get(), BarrenBlocks.EMBER_WALL_HANGING_SIGN.get());
+
         addToTag(BlockTags.DIRT, BarrenBlocks.SCORCHED_GRASS_BLOCK.get(), BarrenBlocks.SCORCHED_DIRT.get());
         addToTag(BlockTags.MINEABLE_WITH_SHOVEL, BarrenBlocks.SUSPICIOUS_RED.get());
 
@@ -109,6 +122,7 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
         }
 
         addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
+
     }
 
     public TagAppender<Block> addToTag(TagKey<Block> tag, Block... blocks) {

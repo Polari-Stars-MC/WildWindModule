@@ -21,22 +21,22 @@ import org.polaris2023.wildwind.barren.WildWindBarren;
  */
 public final class BarrenBiomeModifiers {
 
-    public static final ResourceKey<BiomeModifier> ADD_BLAZE_TREE = createKey("add_blaze_tree");
-    public static final ResourceKey<BiomeModifier> ADD_SOUL_TREE = createKey("add_soul_tree");
+    public static final ResourceKey<BiomeModifier> ADD_CINDER_TREE = createKey("add_cinder_tree");
+    public static final ResourceKey<BiomeModifier> ADD_EMBER_TREE = createKey("add_ember_tree");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
         var biomes = context.lookup(Registries.BIOME);
 
-        context.register(ADD_BLAZE_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
+        context.register(ADD_CINDER_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.NETHER_WASTES)),
-                HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.BLAZE_TREE_PLACED_KEY)),
+                HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.CINDER_TREE_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
 
-        context.register(ADD_SOUL_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
+        context.register(ADD_EMBER_TREE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.SOUL_SAND_VALLEY)),
-                HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.SOUL_TREE_PLACED_KEY)),
+                HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.EMBER_TREE_PLACED_KEY)),
                 GenerationStep.Decoration.VEGETAL_DECORATION
         ));
     }

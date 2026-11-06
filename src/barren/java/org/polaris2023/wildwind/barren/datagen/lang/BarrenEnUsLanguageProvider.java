@@ -4,6 +4,8 @@ import net.minecraft.data.PackOutput;
 import net.neoforged.neoforge.common.data.LanguageProvider;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
+import org.polaris2023.wildwind.barren.registry.BarrenEntities;
+import org.polaris2023.wildwind.barren.registry.BarrenItems;
 
 /**
  * 瘠土更新的英文语言文件。
@@ -22,40 +24,58 @@ public class BarrenEnUsLanguageProvider extends LanguageProvider {
         add("tab.ww_barren.name", "Barren Update");
 
         // 焚烬木套件
-        addBlock(BarrenBlocks.BLAZE_LOG, "Blaze Log");
-        addBlock(BarrenBlocks.BLAZE_WOOD, "Blaze Wood");
-        addBlock(BarrenBlocks.STRIPPED_BLAZE_LOG, "Stripped Blaze Log");
-        addBlock(BarrenBlocks.STRIPPED_BLAZE_WOOD, "Stripped Blaze Wood");
-        addBlock(BarrenBlocks.BLAZE_PLANKS, "Blaze Planks");
-        addBlock(BarrenBlocks.BLAZE_STAIRS, "Blaze Stairs");
-        addBlock(BarrenBlocks.BLAZE_SLAB, "Blaze Slab");
-        addBlock(BarrenBlocks.BLAZE_FENCE, "Blaze Fence");
-        addBlock(BarrenBlocks.BLAZE_FENCE_GATE, "Blaze Fence Gate");
-        addBlock(BarrenBlocks.BLAZE_DOOR, "Blaze Door");
-        addBlock(BarrenBlocks.BLAZE_TRAPDOOR, "Blaze Trapdoor");
-        addBlock(BarrenBlocks.BLAZE_PRESSURE_PLATE, "Blaze Pressure Plate");
-        addBlock(BarrenBlocks.BLAZE_BUTTON, "Blaze Button");
-        addBlock(BarrenBlocks.BLAZE_LEAVES, "Blaze Leaves");
-        addBlock(BarrenBlocks.BLAZE_SAPLING, "Blaze Sapling");
-        addBlock(BarrenBlocks.POTTED_BLAZE_SAPLING, "Potted Blaze Sapling");
+        addBlock(BarrenBlocks.CINDER_LOG, "Cinder Log");
+        addBlock(BarrenBlocks.CINDER_WOOD, "Cinder Wood");
+        addBlock(BarrenBlocks.STRIPPED_CINDER_LOG, "Stripped Cinder Log");
+        addBlock(BarrenBlocks.STRIPPED_CINDER_WOOD, "Stripped Cinder Wood");
+        addBlock(BarrenBlocks.CINDER_PLANKS, "Cinder Planks");
+        addBlock(BarrenBlocks.CINDER_STAIRS, "Cinder Stairs");
+        addBlock(BarrenBlocks.CINDER_SLAB, "Cinder Slab");
+        addBlock(BarrenBlocks.CINDER_FENCE, "Cinder Fence");
+        addBlock(BarrenBlocks.CINDER_FENCE_GATE, "Cinder Fence Gate");
+        addBlock(BarrenBlocks.CINDER_DOOR, "Cinder Door");
+        addBlock(BarrenBlocks.CINDER_TRAPDOOR, "Cinder Trapdoor");
+        addBlock(BarrenBlocks.CINDER_PRESSURE_PLATE, "Cinder Pressure Plate");
+        addBlock(BarrenBlocks.CINDER_BUTTON, "Cinder Button");
+        addBlock(BarrenBlocks.CINDER_SHELF, "Cinder Shelf");
+        addBlock(BarrenBlocks.CINDER_SIGN, "Cinder Sign");
+        addBlock(BarrenBlocks.CINDER_WALL_SIGN, "Cinder Wall Sign");
+        addBlock(BarrenBlocks.CINDER_HANGING_SIGN, "Cinder Hanging Sign");
+        addBlock(BarrenBlocks.CINDER_WALL_HANGING_SIGN, "Cinder Wall Hanging Sign");
+        addItem(BarrenItems.CINDER_BOAT, "Cinder Boat");
+        addItem(BarrenItems.CINDER_CHEST_BOAT, "Cinder Boat with Chest");
+        addEntityType(BarrenEntities.CINDER_BOAT, "Cinder Boat");
+        addEntityType(BarrenEntities.CINDER_CHEST_BOAT, "Cinder Boat with Chest");
+        addBlock(BarrenBlocks.CINDER_LEAVES, "Cinder Leaves");
+        addBlock(BarrenBlocks.CINDER_SAPLING, "Cinder Sapling");
+        addBlock(BarrenBlocks.POTTED_CINDER_SAPLING, "Potted Cinder Sapling");
 
         // 灵焰木套件
-        addBlock(BarrenBlocks.SOUL_LOG, "Soul Log");
-        addBlock(BarrenBlocks.SOUL_WOOD, "Soul Wood");
-        addBlock(BarrenBlocks.STRIPPED_SOUL_LOG, "Stripped Soul Log");
-        addBlock(BarrenBlocks.STRIPPED_SOUL_WOOD, "Stripped Soul Wood");
-        addBlock(BarrenBlocks.SOUL_PLANKS, "Soul Planks");
-        addBlock(BarrenBlocks.SOUL_STAIRS, "Soul Stairs");
-        addBlock(BarrenBlocks.SOUL_SLAB, "Soul Slab");
-        addBlock(BarrenBlocks.SOUL_FENCE, "Soul Fence");
-        addBlock(BarrenBlocks.SOUL_FENCE_GATE, "Soul Fence Gate");
-        addBlock(BarrenBlocks.SOUL_DOOR, "Soul Door");
-        addBlock(BarrenBlocks.SOUL_TRAPDOOR, "Soul Trapdoor");
-        addBlock(BarrenBlocks.SOUL_PRESSURE_PLATE, "Soul Pressure Plate");
-        addBlock(BarrenBlocks.SOUL_BUTTON, "Soul Button");
-        addBlock(BarrenBlocks.SOUL_LEAVES, "Soul Leaves");
-        addBlock(BarrenBlocks.SOUL_SAPLING, "Soul Sapling");
-        addBlock(BarrenBlocks.POTTED_SOUL_SAPLING, "Potted Soul Sapling");
+        addBlock(BarrenBlocks.EMBER_LOG, "Ember Log");
+        addBlock(BarrenBlocks.EMBER_WOOD, "Ember Wood");
+        addBlock(BarrenBlocks.STRIPPED_EMBER_LOG, "Stripped Ember Log");
+        addBlock(BarrenBlocks.STRIPPED_EMBER_WOOD, "Stripped Ember Wood");
+        addBlock(BarrenBlocks.EMBER_PLANKS, "Ember Planks");
+        addBlock(BarrenBlocks.EMBER_STAIRS, "Ember Stairs");
+        addBlock(BarrenBlocks.EMBER_SLAB, "Ember Slab");
+        addBlock(BarrenBlocks.EMBER_FENCE, "Ember Fence");
+        addBlock(BarrenBlocks.EMBER_FENCE_GATE, "Ember Fence Gate");
+        addBlock(BarrenBlocks.EMBER_DOOR, "Ember Door");
+        addBlock(BarrenBlocks.EMBER_TRAPDOOR, "Ember Trapdoor");
+        addBlock(BarrenBlocks.EMBER_PRESSURE_PLATE, "Ember Pressure Plate");
+        addBlock(BarrenBlocks.EMBER_BUTTON, "Ember Button");
+        addBlock(BarrenBlocks.EMBER_SHELF, "Ember Shelf");
+        addBlock(BarrenBlocks.EMBER_SIGN, "Ember Sign");
+        addBlock(BarrenBlocks.EMBER_WALL_SIGN, "Ember Wall Sign");
+        addBlock(BarrenBlocks.EMBER_HANGING_SIGN, "Ember Hanging Sign");
+        addBlock(BarrenBlocks.EMBER_WALL_HANGING_SIGN, "Ember Wall Hanging Sign");
+        addItem(BarrenItems.EMBER_BOAT, "Ember Boat");
+        addItem(BarrenItems.EMBER_CHEST_BOAT, "Ember Boat with Chest");
+        addEntityType(BarrenEntities.EMBER_BOAT, "Ember Boat");
+        addEntityType(BarrenEntities.EMBER_CHEST_BOAT, "Ember Boat with Chest");
+        addBlock(BarrenBlocks.EMBER_LEAVES, "Ember Leaves");
+        addBlock(BarrenBlocks.EMBER_SAPLING, "Ember Sapling");
+        addBlock(BarrenBlocks.POTTED_EMBER_SAPLING, "Potted Ember Sapling");
 
         // 焦土 / 瘠地
         addBlock(BarrenBlocks.SCORCHED_GRASS_BLOCK, "Scorched Grass Block");

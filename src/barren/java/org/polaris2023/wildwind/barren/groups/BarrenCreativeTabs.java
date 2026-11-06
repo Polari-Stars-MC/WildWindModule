@@ -32,19 +32,19 @@ public final class BarrenCreativeTabs {
     @SubscribeEvent
     public static void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.BUILDING_BLOCKS) {
-            appendWoodSet(event, new ItemStack(Blocks.BAMBOO_BUTTON), BarrenWoodFamilies.BLAZE);
-            appendWoodSet(event, BarrenBlocks.BLAZE_BUTTON.toStack(), BarrenWoodFamilies.SOUL);
+            appendWoodSet(event, new ItemStack(Blocks.BAMBOO_BUTTON), BarrenWoodFamilies.CINDER);
+            appendWoodSet(event, BarrenBlocks.CINDER_BUTTON.toStack(), BarrenWoodFamilies.EMBER);
         }
 
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
-            ItemStack blazeLogStack = BarrenBlocks.BLAZE_LOG.toStack();
-            event.insertAfter(new ItemStack(Items.CHERRY_LOG), blazeLogStack, VISIBILITY);
-            event.insertAfter(blazeLogStack, BarrenBlocks.SOUL_LOG.toStack(), VISIBILITY);
-            event.insertAfter(BarrenBlocks.SOUL_LOG.toStack(), BarrenBlocks.BLAZE_LEAVES.toStack(), VISIBILITY);
-            event.insertAfter(BarrenBlocks.BLAZE_LEAVES.toStack(), BarrenBlocks.SOUL_LEAVES.toStack(), VISIBILITY);
-            event.insertAfter(BarrenBlocks.SOUL_LEAVES.toStack(), BarrenBlocks.BLAZE_SAPLING.toStack(), VISIBILITY);
-            event.insertAfter(BarrenBlocks.BLAZE_SAPLING.toStack(), BarrenBlocks.SOUL_SAPLING.toStack(), VISIBILITY);
-            event.insertAfter(BarrenBlocks.SOUL_SAPLING.toStack(), BarrenBlocks.QUICKSAND.toStack(), VISIBILITY);
+            ItemStack cinderLogStack = BarrenBlocks.CINDER_LOG.toStack();
+            event.insertAfter(new ItemStack(Items.CHERRY_LOG), cinderLogStack, VISIBILITY);
+            event.insertAfter(cinderLogStack, BarrenBlocks.EMBER_LOG.toStack(), VISIBILITY);
+            event.insertAfter(BarrenBlocks.EMBER_LOG.toStack(), BarrenBlocks.CINDER_LEAVES.toStack(), VISIBILITY);
+            event.insertAfter(BarrenBlocks.CINDER_LEAVES.toStack(), BarrenBlocks.EMBER_LEAVES.toStack(), VISIBILITY);
+            event.insertAfter(BarrenBlocks.EMBER_LEAVES.toStack(), BarrenBlocks.CINDER_SAPLING.toStack(), VISIBILITY);
+            event.insertAfter(BarrenBlocks.CINDER_SAPLING.toStack(), BarrenBlocks.EMBER_SAPLING.toStack(), VISIBILITY);
+            event.insertAfter(BarrenBlocks.EMBER_SAPLING.toStack(), BarrenBlocks.QUICKSAND.toStack(), VISIBILITY);
             event.insertAfter(BarrenBlocks.QUICKSAND.toStack(), BarrenBlocks.RED_QUICKSAND.toStack(), VISIBILITY);
             event.insertAfter(BarrenBlocks.RED_QUICKSAND.toStack(), BarrenBlocks.QUARTZ_SAND.toStack(), VISIBILITY);
             event.insertAfter(BarrenBlocks.QUARTZ_SAND.toStack(), BarrenBlocks.TINY_CACTUS.toStack(), VISIBILITY);

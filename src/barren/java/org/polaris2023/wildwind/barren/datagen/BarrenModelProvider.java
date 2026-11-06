@@ -1,6 +1,7 @@
 package org.polaris2023.wildwind.barren.datagen;
 
 import net.minecraft.client.data.models.BlockModelGenerators;
+import net.minecraft.client.data.models.ItemModelGenerators;
 import net.minecraft.client.data.models.MultiVariant;
 import net.minecraft.client.data.models.model.ModelTemplate;
 import net.minecraft.client.data.models.model.ModelTemplates;
@@ -10,6 +11,7 @@ import net.minecraft.client.data.models.model.TexturedModel;
 import net.minecraft.client.data.models.model.ModelLocationUtils;
 import net.minecraft.client.data.models.ModelProvider;
 import net.minecraft.client.resources.model.sprite.Material;
+import net.minecraft.data.BlockFamily;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
@@ -17,6 +19,7 @@ import net.minecraft.world.level.block.Blocks;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.block.BarrenWoodFamilies;
+import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 
 import java.util.Optional;
@@ -43,15 +46,33 @@ public class BarrenModelProvider extends ModelProvider {
     }
 
     @Override
-    protected void registerModels(BlockModelGenerators blockModels, net.minecraft.client.data.models.ItemModelGenerators itemModels) {
+    protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         // 木材套件
         for (WoodFamily family : BarrenWoodFamilies.ALL) {
             registerWoodModels(blockModels, family);
         }
 
+        // 告示牌 / 悬挂告示牌 / 展示架
+        registerSignSet(blockModels,
+                BarrenBlocks.CINDER_PLANKS.get(), BarrenBlocks.STRIPPED_CINDER_LOG.get(),
+                BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.CINDER_WALL_SIGN.get(),
+                BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(),
+                BarrenBlocks.CINDER_SHELF.get());
+        registerSignSet(blockModels,
+                BarrenBlocks.EMBER_PLANKS.get(), BarrenBlocks.STRIPPED_EMBER_LOG.get(),
+                BarrenBlocks.EMBER_SIGN.get(), BarrenBlocks.EMBER_WALL_SIGN.get(),
+                BarrenBlocks.EMBER_HANGING_SIGN.get(), BarrenBlocks.EMBER_WALL_HANGING_SIGN.get(),
+                BarrenBlocks.EMBER_SHELF.get());
+
+        // 船物品图标
+        itemModels.generateFlatItem(BarrenItems.CINDER_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(BarrenItems.CINDER_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(BarrenItems.EMBER_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(BarrenItems.EMBER_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
+
         // 树苗 + 花盆
-        blockModels.createPlant(BarrenBlocks.BLAZE_SAPLING.get(), BarrenBlocks.POTTED_BLAZE_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
-        blockModels.createPlant(BarrenBlocks.SOUL_SAPLING.get(), BarrenBlocks.POTTED_SOUL_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlant(BarrenBlocks.CINDER_SAPLING.get(), BarrenBlocks.POTTED_CINDER_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createPlant(BarrenBlocks.EMBER_SAPLING.get(), BarrenBlocks.POTTED_EMBER_SAPLING.get(), BlockModelGenerators.PlantType.NOT_TINTED);
 
         // 焦土
         createGrassBlock(blockModels, BarrenBlocks.SCORCHED_GRASS_BLOCK.get());
@@ -108,6 +129,22 @@ public class BarrenModelProvider extends ModelProvider {
         if (family.hasLeaves()) {
             blockModels.createTintedLeaves(family.leaves().get(), TexturedModel.LEAVES, family.leavesTint());
         }
+    }
+
+    /**
+     * 告示牌 / 悬挂告示牌复用原版 family 生成器，展示架复用原版 createShelf。
+     * <p>
+     * 这里直接新建 provider：{@code blockModels.family(planks)} 会重新生成木板本体模型，与已有模型冲突。
+     */
+    private void registerSignSet(BlockModelGenerators blockModels, Block planks, Block strippedLog,
+                                 Block sign, Block wallSign, Block hangingSign, Block wallHangingSign, Block shelf) {
+        BlockFamily signFamily = new BlockFamily.Builder(planks)
+                .strippedLog(strippedLog)
+                .sign(sign, wallSign)
+                .hangingSign(hangingSign, wallHangingSign)
+                .getFamily();
+        blockModels.new BlockFamilyProvider(TexturedModel.CUBE.get(planks).getMapping()).generateFor(signFamily);
+        blockModels.createShelf(shelf, strippedLog);
     }
 
     /**
