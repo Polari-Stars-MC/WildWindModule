@@ -41,7 +41,7 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
 
         addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
         addToTag(BlockTags.SMALL_FLOWERS, ModBlocks.ROSE.get(), ModBlocks.SOUL_ROSE.get());
-        addToTag(BlockTags.FLOWERS, ModBlocks.SOUL_ROSE_BUSH.get());
+        addToTag(BlockTags.FLOWERS, ModBlocks.SOUL_ROSE_BUSH.get(), ModBlocks.WITHER_ROSE_BUSH.get());
     }
 
     private void registerWoodTags(WoodFamily family) {

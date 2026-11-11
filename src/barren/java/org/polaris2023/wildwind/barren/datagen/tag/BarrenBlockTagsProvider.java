@@ -77,6 +77,44 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
                 BarrenBlocks.SOUL_QUICKSAND.get(),
                 BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get(),
                 BarrenBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 灰烬 / 植被（草稿）
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL, BarrenBlocks.ASH_BLOCK.get());
+
+        // 灵魂砂岩衍生物 / 硝石
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SOUL_SANDSTONE_WALL.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.NITER_BLOCK.get());
+        addToTag(BlockTags.STAIRS,
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get());
+        addToTag(BlockTags.SLABS,
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.WALLS, BarrenBlocks.SOUL_SANDSTONE_WALL.get());
+
+        // 石英砂岩衍生物
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_WALL.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.STAIRS,
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        addToTag(BlockTags.SLABS,
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.WALLS, BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
     }
 
     private void registerWoodTags(WoodFamily family) {

@@ -21,6 +21,7 @@ import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.block.BarrenWoodFamilies;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.core.block.WoodFamily;
+import org.polaris2023.wildwind.core.datagen.provider.MissingModels;
 
 import java.util.Optional;
 
@@ -87,8 +88,14 @@ public class BarrenModelProvider extends ModelProvider {
         blockModels.createBrushableBlock(BarrenBlocks.SUSPICIOUS_RED.get());
 
         // 砂岩
-        createSandstone(blockModels, BarrenBlocks.QUARTZ_SANDSTONE.get());
-        createSandstone(blockModels, BarrenBlocks.SOUL_SANDSTONE.get());
+        createSandstoneSet(blockModels, BarrenBlocks.QUARTZ_SANDSTONE.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
+        createSandstoneSet(blockModels, BarrenBlocks.SOUL_SANDSTONE.get(),
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SOUL_SANDSTONE_WALL.get());
 
         Material quartzTop = TextureMapping.getBlockTexture(BarrenBlocks.QUARTZ_SANDSTONE.get(), "_top");
         Material soulTop = TextureMapping.getBlockTexture(BarrenBlocks.SOUL_SANDSTONE.get(), "_top");
@@ -103,6 +110,12 @@ public class BarrenModelProvider extends ModelProvider {
 
         createSmoothSandstone(blockModels, BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE.get(), quartzTop);
         createSmoothSandstone(blockModels, BarrenBlocks.SMOOTH_SOUL_SANDSTONE.get(), soulTop);
+        createStairs(blockModels, BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get(), quartzTop);
+        createSlab(blockModels, BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE.get(), BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(), quartzTop);
+        createSlab(blockModels, BarrenBlocks.CUT_QUARTZ_SANDSTONE.get(), BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get(), quartzTop);
+        createStairs(blockModels, BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get(), soulTop);
+        createSlab(blockModels, BarrenBlocks.SMOOTH_SOUL_SANDSTONE.get(), BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(), soulTop);
+        createSlab(blockModels, BarrenBlocks.CUT_SOUL_SANDSTONE.get(), BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(), soulTop);
 
         blockModels.createTrivialCube(BarrenBlocks.QUARTZ_SAND.get());
         blockModels.createTrivialCube(BarrenBlocks.QUARTZ_QUICKSAND.get());
@@ -110,6 +123,11 @@ public class BarrenModelProvider extends ModelProvider {
 
         blockModels.createBrushableBlock(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get());
         blockModels.createBrushableBlock(BarrenBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 灰烬 / 植被（草稿）：暂无贴图，统一使用原版黑紫缺失纹理
+        MissingModels.cube(blockModels, BarrenBlocks.ASH_BLOCK.get());
+        MissingModels.cube(blockModels, BarrenBlocks.NITER_BLOCK.get());
+        MissingModels.cross(blockModels, BarrenBlocks.FROGBIT.get());
     }
 
     private void registerWoodModels(BlockModelGenerators blockModels, WoodFamily family) {
@@ -160,15 +178,45 @@ public class BarrenModelProvider extends ModelProvider {
         blockModels.registerSimpleItemModel(block.asItem(), model);
     }
 
-    private void createSandstone(BlockModelGenerators blockModels, Block block) {        TextureMapping mapping = new TextureMapping()
-                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(block, "_bottom"))
-                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(block, "_top"))
-                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(block))
-                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(block));
-        MultiVariant model = BlockModelGenerators.plainVariant(
-                ModelTemplates.CUBE_BOTTOM_TOP.create(block, mapping, blockModels.modelOutput));
-        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(block, model));
-        blockModels.registerSimpleItemModel(block.asItem(), ModelLocationUtils.getModelLocation(block));
+    /**
+     * 砂岩 + 楼梯 / 台阶 / 墙，统一使用砂岩自身的侧面 / 顶底贴图。
+     */
+    private void createSandstoneSet(BlockModelGenerators blockModels, Block base, Block stairs, Block slab, Block wall) {
+        TextureMapping mapping = new TextureMapping()
+                .put(TextureSlot.BOTTOM, TextureMapping.getBlockTexture(base, "_bottom"))
+                .put(TextureSlot.TOP, TextureMapping.getBlockTexture(base, "_top"))
+                .put(TextureSlot.SIDE, TextureMapping.getBlockTexture(base))
+                .put(TextureSlot.WALL, TextureMapping.getBlockTexture(base))
+                .put(TextureSlot.PARTICLE, TextureMapping.getBlockTexture(base));
+        BlockModelGenerators.BlockFamilyProvider provider = blockModels.new BlockFamilyProvider(mapping)
+                .fullBlock(base, ModelTemplates.CUBE_BOTTOM_TOP);
+        blockModels.registerSimpleItemModel(base.asItem(), ModelLocationUtils.getModelLocation(base));
+        provider.stairs(stairs).slab(slab).wall(wall);
+    }
+
+    /** 单贴图楼梯 */
+    private void createStairs(BlockModelGenerators blockModels, Block stairs, Material texture) {
+        TextureMapping mapping = TextureMapping.cube(texture);
+        Identifier inner = ModelTemplates.STAIRS_INNER.create(stairs, mapping, blockModels.modelOutput);
+        Identifier straight = ModelTemplates.STAIRS_STRAIGHT.create(stairs, mapping, blockModels.modelOutput);
+        Identifier outer = ModelTemplates.STAIRS_OUTER.create(stairs, mapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createStairs(stairs,
+                BlockModelGenerators.plainVariant(inner),
+                BlockModelGenerators.plainVariant(straight),
+                BlockModelGenerators.plainVariant(outer)));
+        blockModels.registerSimpleItemModel(stairs.asItem(), straight);
+    }
+
+    /** 单贴图台阶，双台阶沿用基底方块模型 */
+    private void createSlab(BlockModelGenerators blockModels, Block base, Block slab, Material texture) {
+        TextureMapping mapping = TextureMapping.cube(texture);
+        Identifier bottom = ModelTemplates.SLAB_BOTTOM.create(slab, mapping, blockModels.modelOutput);
+        Identifier top = ModelTemplates.SLAB_TOP.create(slab, mapping, blockModels.modelOutput);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSlab(slab,
+                BlockModelGenerators.plainVariant(bottom),
+                BlockModelGenerators.plainVariant(top),
+                BlockModelGenerators.plainVariant(ModelLocationUtils.getModelLocation(base))));
+        blockModels.registerSimpleItemModel(slab.asItem(), bottom);
     }
 
     private void createRotatedTopSandstone(BlockModelGenerators blockModels, Block block, Material top) {

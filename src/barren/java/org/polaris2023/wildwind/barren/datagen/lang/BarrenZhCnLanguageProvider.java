@@ -105,5 +105,26 @@ public class BarrenZhCnLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.SOUL_QUICKSAND, "灵魂流沙");
         addBlock(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND, "可疑的珍珠沙");
         addBlock(BarrenBlocks.SUSPICIOUS_SOUL_SAND, "可疑的灵魂沙");
+
+        // 灰烬 / 植被（草稿）
+        addBlock(BarrenBlocks.FROGBIT, "浮萤");
+        addBlock(BarrenBlocks.ASH_BLOCK, "灰烬块");
+
+        // 灵魂砂岩衍生物 / 硝石
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_STAIRS, "灵魂砂岩楼梯");
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_SLAB, "灵魂砂岩台阶");
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_WALL, "灵魂砂岩墙");
+        addBlock(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS, "平滑灵魂砂岩楼梯");
+        addBlock(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB, "平滑灵魂砂岩台阶");
+        addBlock(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB, "切制灵魂砂岩台阶");
+        addBlock(BarrenBlocks.NITER_BLOCK, "硝石块");
+
+        // 石英砂岩衍生物
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_STAIRS, "石英砂岩楼梯");
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_SLAB, "石英砂岩台阶");
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_WALL, "石英砂岩墙");
+        addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS, "平滑石英砂岩楼梯");
+        addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB, "平滑石英砂岩台阶");
+        addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "切制石英砂岩台阶");
     }
 }

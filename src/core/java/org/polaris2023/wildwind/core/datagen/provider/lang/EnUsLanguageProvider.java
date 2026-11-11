@@ -43,6 +43,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.ROSE, "Rose");
         addBlock(ModBlocks.SOUL_ROSE, "Soul Rose");
         addBlock(ModBlocks.SOUL_ROSE_BUSH, "Soul Rose Bush");
+        addBlock(ModBlocks.WITHER_ROSE_BUSH, "Wither Rose Bush");
 
         // GUI
         add("container.fletching_table", "Arrow Crafting");

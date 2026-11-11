@@ -25,6 +25,11 @@ public final class WildernessCreativeTabs {
     public static void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.insertAfter(new ItemStack(Items.JACK_O_LANTERN), WildernessBlocks.SOUL_JACK_O_LANTERN.toStack(), VISIBILITY);
+            ItemStack mudStack = new ItemStack(Items.MUD);
+            event.insertAfter(mudStack, WildernessBlocks.BOG_MUD.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.BOG_MUD.toStack(), WildernessBlocks.REMAINS.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.REMAINS.toStack(), WildernessBlocks.REEDS.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.REEDS.toStack(), WildernessBlocks.CATTAILS.toStack(), VISIBILITY);
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {

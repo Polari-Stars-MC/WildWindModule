@@ -4,6 +4,7 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.CarvedPumpkinBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
+import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
@@ -28,10 +29,61 @@ public final class WildernessBlocks {
                     .lightLevel(state -> 10))
     );
 
+    // ==================== 沼泽装饰 ====================
+
+    /** 芦苇 */
+    public static final DeferredBlock<Block> REEDS = BLOCKS.registerBlock(
+            "reeds",
+            p -> new Block(p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    /** 香蒲 */
+    public static final DeferredBlock<Block> CATTAILS = BLOCKS.registerBlock(
+            "cattails",
+            p -> new Block(p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    /** 泥沼 */
+    public static final DeferredBlock<Block> BOG_MUD = BLOCKS.registerBlock(
+            "bog_mud",
+            p -> new Block(p
+                    .mapColor(MapColor.DIRT)
+                    .strength(0.5F)
+                    .sound(SoundType.MUD))
+    );
+
+    /** 遗迹 */
+    public static final DeferredBlock<Block> REMAINS = BLOCKS.registerBlock(
+            "remains",
+            p -> new Block(p
+                    .mapColor(MapColor.TERRACOTTA_WHITE)
+                    .strength(0.6F)
+                    .sound(SoundType.BONE_BLOCK))
+    );
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
-        ITEMS.registerSimpleBlockItem(SOUL_JACK_O_LANTERN);
+        blockItems();
         ITEMS.register(bus);
+    }
+
+    public static void blockItems() {
+        ITEMS.registerSimpleBlockItem(SOUL_JACK_O_LANTERN);
+
+        ITEMS.registerSimpleBlockItem(REEDS);
+        ITEMS.registerSimpleBlockItem(CATTAILS);
+        ITEMS.registerSimpleBlockItem(BOG_MUD);
+        ITEMS.registerSimpleBlockItem(REMAINS);
     }
 
     private WildernessBlocks() {

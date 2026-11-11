@@ -22,6 +22,12 @@ public class WildernessEnUsLanguageProvider extends LanguageProvider {
     protected void addTranslations() {
         addBlock(WildernessBlocks.SOUL_JACK_O_LANTERN, "§4Soul Jack o'Lantern");
 
+        // Swamp decorations
+        addBlock(WildernessBlocks.REEDS, "Reeds");
+        addBlock(WildernessBlocks.CATTAILS, "Cattails");
+        addBlock(WildernessBlocks.BOG_MUD, "Bog Mud");
+        addBlock(WildernessBlocks.REMAINS, "Remains");
+
         // 创造栏标题
         add("tab.ww_wilderness.name", "Wilderness Update");
 

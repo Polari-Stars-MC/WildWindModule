@@ -191,6 +191,17 @@ public final class ModBlocks {
                     .pushReaction(PushReaction.DESTROY))
     );
 
+    /** 凋零玫瑰丛（双层高花） */
+    public static final DeferredBlock<DoublePlantBlock> WITHER_ROSE_BUSH = BLOCKS.registerBlock(
+            "wither_rose_bush",
+            p -> new DoublePlantBlock(p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
     public static void blockItems() {
         ITEMS.registerSimpleBlockItem(AZALEA_LOG);
         ITEMS.registerSimpleBlockItem(AZALEA_WOOD);
@@ -209,6 +220,7 @@ public final class ModBlocks {
         ITEMS.registerSimpleBlockItem(ROSE);
         ITEMS.registerSimpleBlockItem(SOUL_ROSE);
         ITEMS.registerSimpleBlockItem(SOUL_ROSE_BUSH);
+        ITEMS.registerSimpleBlockItem(WITHER_ROSE_BUSH);
         ITEMS.registerSimpleBlockItem(FLETCHING_TABLE);
     }
 

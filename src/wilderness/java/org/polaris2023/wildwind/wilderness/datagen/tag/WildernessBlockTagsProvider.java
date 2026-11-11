@@ -34,6 +34,8 @@ public class WildernessBlockTagsProvider extends BlockTagsProvider {
         addToTag(BlockTags.MINEABLE_WITH_AXE, WildernessBlocks.SOUL_JACK_O_LANTERN.get());
         addToTag(BlockTags.PIGLIN_REPELLENTS, WildernessBlocks.SOUL_JACK_O_LANTERN.get());
 
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL, WildernessBlocks.BOG_MUD.get());
+
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON, Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS);
 
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND, Blocks.CLAY, Blocks.MUD, Blocks.DIRT, Blocks.MUDDY_MANGROVE_ROOTS)

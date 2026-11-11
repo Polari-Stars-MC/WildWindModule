@@ -86,6 +86,27 @@ public final class ModCreativeTabs {
         output.accept(BarrenBlocks.SUSPICIOUS_RED.get());
         output.accept(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get());
         output.accept(BarrenBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 灵魂砂岩衍生物 / 硝石
+        output.accept(BarrenBlocks.SOUL_SANDSTONE_STAIRS.get());
+        output.accept(BarrenBlocks.SOUL_SANDSTONE_SLAB.get());
+        output.accept(BarrenBlocks.SOUL_SANDSTONE_WALL.get());
+        output.accept(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get());
+        output.accept(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get());
+        output.accept(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get());
+        output.accept(BarrenBlocks.NITER_BLOCK.get());
+
+        // 石英砂岩衍生物
+        output.accept(BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get());
+        output.accept(BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get());
+        output.accept(BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
+        output.accept(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        output.accept(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get());
+        output.accept(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+
+        // 灰烬 / 植被（草稿）
+        output.accept(BarrenBlocks.FROGBIT.get());
+        output.accept(BarrenBlocks.ASH_BLOCK.get());
     }
 
     private ModCreativeTabs() {

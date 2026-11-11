@@ -42,6 +42,7 @@ public final class ModCreativeTabs {
         output.accept(ModBlocks.ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE_BUSH.get());
+        output.accept(ModBlocks.WITHER_ROSE_BUSH.get());
         output.accept(ModBlocks.FLETCHING_TABLE.get());
 
         output.accept(ModItems.SPIDERLING_SPAWN_EGG);

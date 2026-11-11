@@ -50,6 +50,21 @@ public class BarrenItemTagsProvider extends ItemTagsProvider {
         addToTag(ItemTags.WOODEN_SHELVES, BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get());
         addToTag(ItemTags.BOATS, BarrenItems.CINDER_BOAT.get(), BarrenItems.EMBER_BOAT.get());
         addToTag(ItemTags.CHEST_BOATS, BarrenItems.CINDER_CHEST_BOAT.get(), BarrenItems.EMBER_CHEST_BOAT.get());
+
+        // 灰烬 / 植被（草稿）
+        addToTag(BlockItemTags.STAIRS.item(),
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        addToTag(BlockItemTags.SLABS.item(),
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockItemTags.WALLS.item(), BarrenBlocks.SOUL_SANDSTONE_WALL.get(), BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
     }
 
     private void registerWoodItemTags(WoodFamily family) {

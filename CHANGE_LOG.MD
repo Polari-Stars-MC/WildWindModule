@@ -234,3 +234,16 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **木材 id 统一为 `cinder` / `ember`** - 会话中曾短暂改为 `blaze` / `soul`，已全部回退：方块、物品、实体、`WoodType`、贴图、模型、配方、进度、标签、语言文件一并改名；`core` 中早期遗留的 28 张同系列素材（船 / 箱船 / 告示牌 / 悬挂告示牌的实体贴图与物品图标、`gui/hanging_signs`、`screens`）也保留并同步改名为 `cinder_*` / `ember_*`，未删除
 
 
+
+---
+
+## [Unreleased] - 2026.11.10
+
+### Added
+- **`ww_core` 凋零玫瑰丛** - 新增 `wither_rose_bush`；补全掉落表与花标签
+- **`ww_wilderness` 沼泽方块** - 新增 `reeds`、`cattails`、`bog_mud`、`remains`
+- **`ww_barren` 砂岩衍生物 / 灰烬与植被草稿** - 新增 `soul_sandstone_stairs` / `_slab` / `_wall`、`smooth_soul_sandstone_stairs` / `_slab`、`cut_soul_sandstone_slab`、`quartz_sandstone_stairs` / `_slab` / `_wall`、`smooth_quartz_sandstone_stairs` / `_slab`、`cut_quartz_sandstone_slab`、`niter_block`、`frogbit`、`ash_block`；楼梯 / 台阶 / 墙沿用各自砂岩的侧面 + 顶底贴图
+
+### Changed
+- **无贴图方块模型引用自身贴图路径** - 新增 `MissingModels` 模型工具：六面 / 楼梯 / 台阶 / 墙 / 十字植物 / 双层植物统一引用 `ww_xxx:block/<id>`，贴图缺失时客户端自动回退黑紫 missingno，补齐 png 即生效；新增方块同步补全中英语言、创造栏排序与物品标签
+- **可疑的灵魂沙贴图重绘** - 以原版 `suspicious_sand_0..3` 为基板、按灵魂沙的明暗色阶重上色，替换原 4 帧 `suspicious_soul_sand_*.png`；生成脚本 `textures_generator/gen_suspicious_soul_sand.ps1`

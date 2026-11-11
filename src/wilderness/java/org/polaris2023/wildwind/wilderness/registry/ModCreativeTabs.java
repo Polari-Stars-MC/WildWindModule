@@ -33,6 +33,12 @@ public final class ModCreativeTabs {
     private static void addStacks(CreativeModeTab.Output output) {
         output.accept(WildernessBlocks.SOUL_JACK_O_LANTERN.get());
 
+        // 沼泽装饰
+        output.accept(WildernessBlocks.REEDS.get());
+        output.accept(WildernessBlocks.CATTAILS.get());
+        output.accept(WildernessBlocks.BOG_MUD.get());
+        output.accept(WildernessBlocks.REMAINS.get());
+
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.MUDCRAB_BUCKET);
         output.accept(ModItems.PIRANHA_SPAWN_EGG);

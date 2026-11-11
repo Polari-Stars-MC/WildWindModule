@@ -41,6 +41,7 @@ public final class ModCreativeTabs {
             event.insertAfter(azaleaLogStack, ModBlocks.ROSE.toStack(), VISIBILITY);
             event.insertAfter(ModBlocks.ROSE.toStack(), ModBlocks.SOUL_ROSE.toStack(), VISIBILITY);
             event.insertAfter(ModBlocks.SOUL_ROSE.toStack(), ModBlocks.SOUL_ROSE_BUSH.toStack(), VISIBILITY);
+            event.insertAfter(ModBlocks.SOUL_ROSE_BUSH.toStack(), ModBlocks.WITHER_ROSE_BUSH.toStack(), VISIBILITY);
         }
     }
 

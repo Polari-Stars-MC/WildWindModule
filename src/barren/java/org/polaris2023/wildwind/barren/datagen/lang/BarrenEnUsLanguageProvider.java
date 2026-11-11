@@ -105,5 +105,26 @@ public class BarrenEnUsLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.SOUL_QUICKSAND, "Soul Quicksand");
         addBlock(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND, "Suspicious Quartz Sand");
         addBlock(BarrenBlocks.SUSPICIOUS_SOUL_SAND, "Suspicious Soul Sand");
+
+        // 灰烬 / 植被（草稿）
+        addBlock(BarrenBlocks.FROGBIT, "Frogbit");
+        addBlock(BarrenBlocks.ASH_BLOCK, "Ash Block");
+
+        // 灵魂砂岩衍生物 / 硝石
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_STAIRS, "Soul Sandstone Stairs");
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_SLAB, "Soul Sandstone Slab");
+        addBlock(BarrenBlocks.SOUL_SANDSTONE_WALL, "Soul Sandstone Wall");
+        addBlock(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS, "Smooth Soul Sandstone Stairs");
+        addBlock(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB, "Smooth Soul Sandstone Slab");
+        addBlock(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB, "Cut Soul Sandstone Slab");
+        addBlock(BarrenBlocks.NITER_BLOCK, "Niter Block");
+
+        // 石英砂岩衍生物
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_STAIRS, "Quartz Sandstone Stairs");
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_SLAB, "Quartz Sandstone Slab");
+        addBlock(BarrenBlocks.QUARTZ_SANDSTONE_WALL, "Quartz Sandstone Wall");
+        addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS, "Smooth Quartz Sandstone Stairs");
+        addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB, "Smooth Quartz Sandstone Slab");
+        addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "Cut Quartz Sandstone Slab");
     }
 }

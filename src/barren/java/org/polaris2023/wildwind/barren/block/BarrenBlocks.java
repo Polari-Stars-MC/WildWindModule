@@ -26,6 +26,7 @@ import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.minecraft.world.level.block.TintedParticleLeavesBlock;
 import net.minecraft.world.level.block.SandBlock;
+import net.minecraft.world.level.block.WallBlock;
 import net.minecraft.world.level.block.WallHangingSignBlock;
 import net.minecraft.world.level.block.WallSignBlock;
 import net.minecraft.world.level.block.entity.BlockEntityTypes;
@@ -682,6 +683,150 @@ public final class BarrenBlocks {
                     .sound(SoundType.SOUL_SAND))
     );
 
+    // ==================== 灰烬 / 植被（草稿） ====================
+
+    /** 浮萤 */
+    public static final DeferredBlock<Block> FROGBIT = BLOCKS.registerBlock(
+            "frogbit",
+            p -> new Block(p
+                    .mapColor(MapColor.PLANT)
+                    .noCollision()
+                    .instabreak()
+                    .sound(SoundType.GRASS)
+                    .pushReaction(PushReaction.DESTROY))
+    );
+
+    /** 灰烬块 */
+    public static final DeferredBlock<Block> ASH_BLOCK = BLOCKS.registerBlock(
+            "ash_block",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BLACK)
+                    .strength(0.5F)
+                    .sound(SoundType.SAND))
+    );
+
+    // ==================== 石英砂岩衍生物 ====================
+
+    public static final DeferredBlock<StairBlock> QUARTZ_SANDSTONE_STAIRS = BLOCKS.registerBlock(
+            "quartz_sandstone_stairs",
+            p -> new StairBlock(QUARTZ_SANDSTONE.get().defaultBlockState(), p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> QUARTZ_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "quartz_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<WallBlock> QUARTZ_SANDSTONE_WALL = BLOCKS.registerBlock(
+            "quartz_sandstone_wall",
+            p -> new WallBlock(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<StairBlock> SMOOTH_QUARTZ_SANDSTONE_STAIRS = BLOCKS.registerBlock(
+            "smooth_quartz_sandstone_stairs",
+            p -> new StairBlock(SMOOTH_QUARTZ_SANDSTONE.get().defaultBlockState(), p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> SMOOTH_QUARTZ_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "smooth_quartz_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> CUT_QUARTZ_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "cut_quartz_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.QUARTZ)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    // ==================== 灵魂砂岩衍生物 / 硝石 ====================
+
+    public static final DeferredBlock<StairBlock> SOUL_SANDSTONE_STAIRS = BLOCKS.registerBlock(
+            "soul_sandstone_stairs",
+            p -> new StairBlock(SOUL_SANDSTONE.get().defaultBlockState(), p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> SOUL_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "soul_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<WallBlock> SOUL_SANDSTONE_WALL = BLOCKS.registerBlock(
+            "soul_sandstone_wall",
+            p -> new WallBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<StairBlock> SMOOTH_SOUL_SANDSTONE_STAIRS = BLOCKS.registerBlock(
+            "smooth_soul_sandstone_stairs",
+            p -> new StairBlock(SMOOTH_SOUL_SANDSTONE.get().defaultBlockState(), p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> SMOOTH_SOUL_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "smooth_soul_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    public static final DeferredBlock<SlabBlock> CUT_SOUL_SANDSTONE_SLAB = BLOCKS.registerBlock(
+            "cut_soul_sandstone_slab",
+            p -> new SlabBlock(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
+    /** 硝石块 */
+    public static final DeferredBlock<Block> NITER_BLOCK = BLOCKS.registerBlock(
+            "niter_block",
+            p -> new Block(p
+                    .mapColor(MapColor.SAND)
+                    .strength(0.8F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+    );
+
     public static void register(IEventBus bus) {
         BLOCKS.register(bus);
         blockItems();
@@ -773,6 +918,27 @@ public final class BarrenBlocks {
         ITEMS.registerSimpleBlockItem(SOUL_QUICKSAND);
         ITEMS.registerSimpleBlockItem(SUSPICIOUS_QUARTZ_SAND);
         ITEMS.registerSimpleBlockItem(SUSPICIOUS_SOUL_SAND);
+
+        // 灰烬 / 植被（草稿）
+        ITEMS.registerSimpleBlockItem(FROGBIT);
+        ITEMS.registerSimpleBlockItem(ASH_BLOCK);
+
+        // 灵魂砂岩衍生物 / 硝石
+        ITEMS.registerSimpleBlockItem(SOUL_SANDSTONE_STAIRS);
+        ITEMS.registerSimpleBlockItem(SOUL_SANDSTONE_SLAB);
+        ITEMS.registerSimpleBlockItem(SOUL_SANDSTONE_WALL);
+        ITEMS.registerSimpleBlockItem(SMOOTH_SOUL_SANDSTONE_STAIRS);
+        ITEMS.registerSimpleBlockItem(SMOOTH_SOUL_SANDSTONE_SLAB);
+        ITEMS.registerSimpleBlockItem(CUT_SOUL_SANDSTONE_SLAB);
+        ITEMS.registerSimpleBlockItem(NITER_BLOCK);
+
+        // 石英砂岩衍生物
+        ITEMS.registerSimpleBlockItem(QUARTZ_SANDSTONE_STAIRS);
+        ITEMS.registerSimpleBlockItem(QUARTZ_SANDSTONE_SLAB);
+        ITEMS.registerSimpleBlockItem(QUARTZ_SANDSTONE_WALL);
+        ITEMS.registerSimpleBlockItem(SMOOTH_QUARTZ_SANDSTONE_STAIRS);
+        ITEMS.registerSimpleBlockItem(SMOOTH_QUARTZ_SANDSTONE_SLAB);
+        ITEMS.registerSimpleBlockItem(CUT_QUARTZ_SANDSTONE_SLAB);
     }
 
     private BarrenBlocks() {

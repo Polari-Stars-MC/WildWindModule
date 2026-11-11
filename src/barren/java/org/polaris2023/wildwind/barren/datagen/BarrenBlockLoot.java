@@ -76,6 +76,27 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
         dropSelf(BarrenBlocks.SOUL_QUICKSAND.get());
         add(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get(), createSilkTouchOnlyTable(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get()));
         add(BarrenBlocks.SUSPICIOUS_SOUL_SAND.get(), createSilkTouchOnlyTable(BarrenBlocks.SUSPICIOUS_SOUL_SAND.get()));
+
+        // 灰烬 / 植被（草稿）
+        dropSelf(BarrenBlocks.FROGBIT.get());
+        dropSelf(BarrenBlocks.ASH_BLOCK.get());
+
+        // 灵魂砂岩衍生物 / 硝石
+        dropSelf(BarrenBlocks.SOUL_SANDSTONE_STAIRS.get());
+        add(BarrenBlocks.SOUL_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.SOUL_SANDSTONE_SLAB.get()));
+        dropSelf(BarrenBlocks.SOUL_SANDSTONE_WALL.get());
+        dropSelf(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get());
+        add(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get()));
+        add(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get()));
+        dropSelf(BarrenBlocks.NITER_BLOCK.get());
+
+        // 石英砂岩衍生物
+        dropSelf(BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get());
+        add(BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get()));
+        dropSelf(BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
+        dropSelf(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        add(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get()));
+        add(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get()));
     }
 
     private void generateWood(WoodFamily family) {
