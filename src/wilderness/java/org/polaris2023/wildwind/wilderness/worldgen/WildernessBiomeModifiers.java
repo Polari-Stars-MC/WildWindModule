@@ -16,6 +16,11 @@ import org.polaris2023.wildwind.wilderness.tag.ModBiomeTags;
 
 /**
  * 荒野更新的生物群系修改器：泥沼蟹 / 恐鱼的生成。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class WildernessBiomeModifiers {
 

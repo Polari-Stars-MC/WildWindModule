@@ -13,6 +13,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 荒野更新的群系标签生成器。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class WildernessBiomeTagsProvider extends BiomeTagsProvider {
 

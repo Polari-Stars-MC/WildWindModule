@@ -24,6 +24,10 @@ import java.util.List;
 
 /**
  * 核心模块的放置特征：杜鹃树。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModPlacedFeatures {
 

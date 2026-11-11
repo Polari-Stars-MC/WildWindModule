@@ -15,6 +15,9 @@ import org.polaris2023.wildwind.wilderness.component.OmniClawTools;
  * GuiGraphics 重构为 GuiGraphicsExtractor，原版 bundle/background、bundle/slot
  * 与 item/empty_slot_* 精灵图已移除，改用 gui 图集的 bundle/slot_background
  * 与 container/slot/* 占位图标。槽位高亮改为 slot_highlight 精灵图。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class ClientOmniClawTooltip implements ClientTooltipComponent {
 	private static final Identifier BACKGROUND_SPRITE = Identifier.withDefaultNamespace("container/bundle/slot_background");

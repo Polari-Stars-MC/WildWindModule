@@ -11,6 +11,7 @@ import org.polaris2023.wildwind.core.WildWindCore;
  * 用于控制模组行为的各种配置选项
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID)

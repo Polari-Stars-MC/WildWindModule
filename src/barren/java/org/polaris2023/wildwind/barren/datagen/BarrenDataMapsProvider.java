@@ -18,6 +18,10 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的数据映射：去皮与燃料。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenDataMapsProvider extends DataMapProvider {
 
@@ -28,10 +32,10 @@ public class BarrenDataMapsProvider extends DataMapProvider {
     @Override
     protected void gather(HolderLookup.Provider provider) {
         builder(NeoForgeDataMaps.STRIPPABLES)
-                .add(BarrenBlocks.BLAZE_LOG.getKey(), new Strippable(BarrenBlocks.STRIPPED_BLAZE_LOG.get()), false)
-                .add(BarrenBlocks.BLAZE_WOOD.getKey(), new Strippable(BarrenBlocks.STRIPPED_BLAZE_WOOD.get()), false)
-                .add(BarrenBlocks.SOUL_LOG.getKey(), new Strippable(BarrenBlocks.STRIPPED_SOUL_LOG.get()), false)
-                .add(BarrenBlocks.SOUL_WOOD.getKey(), new Strippable(BarrenBlocks.STRIPPED_SOUL_WOOD.get()), false);
+                .add(BarrenBlocks.CINDER_LOG.getKey(), new Strippable(BarrenBlocks.STRIPPED_CINDER_LOG.get()), false)
+                .add(BarrenBlocks.CINDER_WOOD.getKey(), new Strippable(BarrenBlocks.STRIPPED_CINDER_WOOD.get()), false)
+                .add(BarrenBlocks.EMBER_LOG.getKey(), new Strippable(BarrenBlocks.STRIPPED_EMBER_LOG.get()), false)
+                .add(BarrenBlocks.EMBER_WOOD.getKey(), new Strippable(BarrenBlocks.STRIPPED_EMBER_WOOD.get()), false);
 
         var fuels = builder(NeoForgeDataMaps.FURNACE_FUELS);
         for (WoodFamily family : BarrenWoodFamilies.ALL) {

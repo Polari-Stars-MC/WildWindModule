@@ -24,6 +24,7 @@ import javax.annotation.Nullable;
  * 制箭台方块 - 带有GUI功能
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class FletchingTableBlock extends Block implements EntityBlock {

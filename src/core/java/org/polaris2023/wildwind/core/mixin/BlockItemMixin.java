@@ -15,6 +15,8 @@ import org.spongepowered.asm.mixin.injection.At;
  * 26.2 的 {@code BlockItem#place} 不再触发 {@code BlockEvent.EntityPlaceEvent}，
  * 所以不再拦事件，而是在 {@code getPlacementState} 里把 {@code getBlock()} 的返回值换掉：
  * 之后的放置、音效、消耗物品、方块实体创建全部仍走原版流程，只是方块换成了我们的。
+ *
+ * @author safe_saffawa
  */
 @Mixin(BlockItem.class)
 public abstract class BlockItemMixin {

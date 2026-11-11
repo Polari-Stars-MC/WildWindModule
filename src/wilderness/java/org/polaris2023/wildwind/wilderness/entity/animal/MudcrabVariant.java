@@ -25,6 +25,9 @@ import java.util.function.Supplier;
 
 /**
  * 泥沼蟹变种数据喵~
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public record MudcrabVariant(ClientAsset.ResourceTexture assetInfo,
                              SpawnPrioritySelectors spawnConditions) implements PriorityProvider<SpawnContext, SpawnCondition> {

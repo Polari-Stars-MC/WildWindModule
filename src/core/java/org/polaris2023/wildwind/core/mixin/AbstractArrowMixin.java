@@ -26,6 +26,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * 没有组件的普通箭走原版逻辑，本 mixin 全部方法都会提前返回。
  *
  * @author baka4n
+ * @author safe_saffawa
  */
 @Mixin(AbstractArrow.class)
 public abstract class AbstractArrowMixin {
@@ -33,6 +34,10 @@ public abstract class AbstractArrowMixin {
     /** 伤害加成每个箭矢只加一次，避免穿透箭反复命中时叠加 */
     @Unique
     private boolean wildwind$damageBoosted;
+
+    /** 旋风棒箭杆的无重力只在首段飞行生效，否则减速后会永久悬停在空中 */
+    @Unique
+    private static final int WILDWIND$NO_GRAVITY_TICKS = 100;
 
     @Unique
     private @Nullable ArrowComponent wildwind$component() {
@@ -126,6 +131,10 @@ public abstract class AbstractArrowMixin {
 
     /**
      * 箭杆重力倍率：旋风棒无重力，骨头下坠快，竹子下坠慢。
+     * <p>
+     * 旋风棒只在“刚出手且未入水”时无重力：无重力箭矢永远不会落地，
+     * 也就永远不会进入原版的地面存活计时；若不限时，空气阻力会把速度衰减到接近 0，
+     * 表现就是箭矢永久浮在空中、最后看起来定住了。
      */
     @Inject(method = "getDefaultGravity", at = @At("HEAD"), cancellable = true)
     private void wildwind$gravity(CallbackInfoReturnable<Double> cir) {
@@ -135,7 +144,10 @@ public abstract class AbstractArrowMixin {
         }
 
         if (component.shaft().hasNoGravity()) {
-            cir.setReturnValue(0.0);
+            AbstractArrow self = this.wildwind$self();
+            if (!self.isInFluidType() && self.tickCount < WILDWIND$NO_GRAVITY_TICKS) {
+                cir.setReturnValue(0.0);
+            }
             return;
         }
 

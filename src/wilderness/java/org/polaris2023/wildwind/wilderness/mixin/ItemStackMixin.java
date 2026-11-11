@@ -18,6 +18,9 @@ import org.spongepowered.asm.mixin.injection.At;
  * <p>
  * 26.2 迁移说明：hurtAndBreak 内的 shrink 调用点已下沉到私有方法 applyDamage，
  * 因此第二个注入目标改为 applyDamage。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {

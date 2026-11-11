@@ -22,6 +22,9 @@ import java.util.List;
  * <p>
  * 26.2 迁移说明：PacketDistributor.sendToServer 迁移至 ClientPacketDistributor；
  * AbstractContainerScreen#getSlotUnderMouse 废弃，改用 getHoveredSlot()。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID, value = Dist.CLIENT)
 public class ModClientHooks {

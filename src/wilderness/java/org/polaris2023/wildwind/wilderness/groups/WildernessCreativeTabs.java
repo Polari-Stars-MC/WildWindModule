@@ -13,6 +13,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的原版物品栏排序（模组自己的页由 {@link org.polaris2023.wildwind.wilderness.registry.ModCreativeTabs} 注册）。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public final class WildernessCreativeTabs {
@@ -23,6 +25,11 @@ public final class WildernessCreativeTabs {
     public static void buildCreativeTabContents(BuildCreativeModeTabContentsEvent event) {
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             event.insertAfter(new ItemStack(Items.JACK_O_LANTERN), WildernessBlocks.SOUL_JACK_O_LANTERN.toStack(), VISIBILITY);
+            ItemStack mudStack = new ItemStack(Items.MUD);
+            event.insertAfter(mudStack, WildernessBlocks.BOG_MUD.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.BOG_MUD.toStack(), WildernessBlocks.REMAINS.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.REMAINS.toStack(), WildernessBlocks.REEDS.toStack(), VISIBILITY);
+            event.insertAfter(WildernessBlocks.REEDS.toStack(), WildernessBlocks.CATTAILS.toStack(), VISIBILITY);
         }
 
         if (event.getTabKey() == CreativeModeTabs.TOOLS_AND_UTILITIES) {

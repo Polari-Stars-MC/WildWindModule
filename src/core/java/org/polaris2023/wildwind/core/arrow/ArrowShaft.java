@@ -7,6 +7,7 @@ import net.minecraft.world.item.Items;
  * 影响箭矢轨迹
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public enum ArrowShaft {

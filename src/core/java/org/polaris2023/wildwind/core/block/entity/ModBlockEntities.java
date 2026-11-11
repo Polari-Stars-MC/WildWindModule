@@ -12,6 +12,7 @@ import org.polaris2023.wildwind.core.block.ModBlocks;
  * 方块实体注册类
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class ModBlockEntities {

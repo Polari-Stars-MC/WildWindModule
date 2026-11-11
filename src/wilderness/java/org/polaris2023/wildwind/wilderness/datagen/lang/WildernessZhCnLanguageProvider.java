@@ -9,6 +9,8 @@ import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的简体中文语言文件。
+ *
+ * @author safe_saffawa
  */
 public class WildernessZhCnLanguageProvider extends LanguageProvider {
 
@@ -19,6 +21,12 @@ public class WildernessZhCnLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addBlock(WildernessBlocks.SOUL_JACK_O_LANTERN, "§4灵魂南瓜灯");
+
+        // 沼泽装饰
+        addBlock(WildernessBlocks.REEDS, "芦苇");
+        addBlock(WildernessBlocks.CATTAILS, "香蒲");
+        addBlock(WildernessBlocks.BOG_MUD, "泥沼");
+        addBlock(WildernessBlocks.REMAINS, "遗骸");
 
         // 创造栏标题
         add("tab.ww_wilderness.name", "荒野更新");

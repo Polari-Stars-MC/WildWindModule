@@ -17,6 +17,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 荒野更新的配方生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class WildernessRecipeProvider extends RecipeProvider {
 

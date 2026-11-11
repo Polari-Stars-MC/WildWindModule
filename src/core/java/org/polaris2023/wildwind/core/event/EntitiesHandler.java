@@ -13,6 +13,10 @@ import org.polaris2023.wildwind.core.registry.ModEntities;
 
 /**
  * 核心模块的实体属性与生成位置注册。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID)
 public final class EntitiesHandler {

@@ -14,6 +14,10 @@ import org.polaris2023.wildwind.wilderness.registry.ModEntities;
 
 /**
  * 荒野更新的实体属性与生成位置注册。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)
 public class EntitiesHandler {

@@ -27,6 +27,11 @@ import java.util.stream.Stream;
 
 /**
  * 核心模块的战利品表入口。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class ModLootProvider extends LootTableProvider {
 

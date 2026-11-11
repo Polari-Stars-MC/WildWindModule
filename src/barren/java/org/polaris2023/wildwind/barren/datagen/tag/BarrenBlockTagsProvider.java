@@ -21,6 +21,11 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的方块标签生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenBlockTagsProvider extends BlockTagsProvider {
 
@@ -33,6 +38,19 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
         for (WoodFamily family : BarrenWoodFamilies.ALL) {
             registerWoodTags(family);
         }
+
+        // 告示牌 / 悬挂告示牌 / 展示架
+        addToTag(BlockItemTags.SIGNS.block(), BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.EMBER_SIGN.get());
+        addToTag(BlockTags.WALL_SIGNS, BarrenBlocks.CINDER_WALL_SIGN.get(), BarrenBlocks.EMBER_WALL_SIGN.get());
+        addToTag(BlockItemTags.HANGING_SIGNS.block(), BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.EMBER_HANGING_SIGN.get());
+        addToTag(BlockTags.WALL_HANGING_SIGNS, BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(), BarrenBlocks.EMBER_WALL_HANGING_SIGN.get());
+        addToTag(BlockTags.WOODEN_SHELVES, BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get());
+        addToTag(BlockTags.MINEABLE_WITH_AXE,
+                BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get(),
+                BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.CINDER_WALL_SIGN.get(),
+                BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.CINDER_WALL_HANGING_SIGN.get(),
+                BarrenBlocks.EMBER_SIGN.get(), BarrenBlocks.EMBER_WALL_SIGN.get(),
+                BarrenBlocks.EMBER_HANGING_SIGN.get(), BarrenBlocks.EMBER_WALL_HANGING_SIGN.get());
 
         addToTag(BlockTags.DIRT, BarrenBlocks.SCORCHED_GRASS_BLOCK.get(), BarrenBlocks.SCORCHED_DIRT.get());
         addToTag(BlockTags.MINEABLE_WITH_SHOVEL, BarrenBlocks.SUSPICIOUS_RED.get());
@@ -59,6 +77,44 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
                 BarrenBlocks.SOUL_QUICKSAND.get(),
                 BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get(),
                 BarrenBlocks.SUSPICIOUS_SOUL_SAND.get());
+
+        // 灰烬 / 植被（草稿）
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL, BarrenBlocks.ASH_BLOCK.get());
+
+        // 灵魂砂岩衍生物 / 硝石
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SOUL_SANDSTONE_WALL.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.NITER_BLOCK.get());
+        addToTag(BlockTags.STAIRS,
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get());
+        addToTag(BlockTags.SLABS,
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.WALLS, BarrenBlocks.SOUL_SANDSTONE_WALL.get());
+
+        // 石英砂岩衍生物
+        addToTag(BlockTags.MINEABLE_WITH_PICKAXE,
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_WALL.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.STAIRS,
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        addToTag(BlockTags.SLABS,
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockTags.WALLS, BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
     }
 
     private void registerWoodTags(WoodFamily family) {
@@ -104,6 +160,7 @@ public class BarrenBlockTagsProvider extends BlockTagsProvider {
         }
 
         addToTag(BlockTags.MINEABLE_WITH_AXE, log, wood, strippedLog, strippedWood, planks, stairs, slab, fence, fenceGate, door, trapdoor, pressurePlate, button);
+
     }
 
     public TagAppender<Block> addToTag(TagKey<Block> tag, Block... blocks) {

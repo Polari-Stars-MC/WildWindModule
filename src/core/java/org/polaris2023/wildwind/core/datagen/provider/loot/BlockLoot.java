@@ -13,6 +13,10 @@ import java.util.Set;
 
 /**
  * 核心模块的方块战利品表。
+ *
+ * @author baka4n
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BlockLoot extends BlockLootSubProvider {
 
@@ -35,6 +39,7 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.ROSE.get());
         dropSelf(ModBlocks.SOUL_ROSE.get());
         dropSelf(ModBlocks.SOUL_ROSE_BUSH.get());
+        dropSelf(ModBlocks.WITHER_ROSE_BUSH.get());
     }
 
     private void generateWood(WoodFamily family) {

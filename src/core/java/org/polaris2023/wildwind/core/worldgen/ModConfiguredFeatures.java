@@ -26,6 +26,11 @@ import java.util.Optional;
 
 /**
  * 核心模块的配置特征：杜鹃树（杜鹃木原木 + 原版杜鹃树叶）。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModConfiguredFeatures {
 

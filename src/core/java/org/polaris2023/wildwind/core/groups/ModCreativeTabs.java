@@ -17,6 +17,12 @@ import org.polaris2023.wildwind.core.block.WoodFamily;
 
 /**
  * 核心模块的原版物品栏排序。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID)
 public final class ModCreativeTabs {
@@ -35,6 +41,7 @@ public final class ModCreativeTabs {
             event.insertAfter(azaleaLogStack, ModBlocks.ROSE.toStack(), VISIBILITY);
             event.insertAfter(ModBlocks.ROSE.toStack(), ModBlocks.SOUL_ROSE.toStack(), VISIBILITY);
             event.insertAfter(ModBlocks.SOUL_ROSE.toStack(), ModBlocks.SOUL_ROSE_BUSH.toStack(), VISIBILITY);
+            event.insertAfter(ModBlocks.SOUL_ROSE_BUSH.toStack(), ModBlocks.WITHER_ROSE_BUSH.toStack(), VISIBILITY);
         }
     }
 

@@ -11,6 +11,8 @@ import javax.annotation.Nullable;
 /**
  * 食人鱼渲染器
  * @author huimanman
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class PiranhaRenderer extends GeoEntityRenderer<Piranha, PiranhaRenderState> {
 	public PiranhaRenderer(EntityRendererProvider.Context renderManager) {

@@ -30,6 +30,7 @@ import org.polaris2023.wildwind.core.registry.ModDataComponents;
  * 所有效果都只在服务端执行，客户端靠 {@code sendParticles} 与爆炸包同步。
  *
  * @author baka4n
+ * @author safe_saffawa
  */
 public final class ArrowEffects {
 

@@ -9,6 +9,11 @@ import org.polaris2023.wildwind.core.registry.ModItems;
 
 /**
  * 核心模块的英文语言文件。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class EnUsLanguageProvider extends LanguageProvider {
 
@@ -38,6 +43,7 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.ROSE, "Rose");
         addBlock(ModBlocks.SOUL_ROSE, "Soul Rose");
         addBlock(ModBlocks.SOUL_ROSE_BUSH, "Soul Rose Bush");
+        addBlock(ModBlocks.WITHER_ROSE_BUSH, "Wither Rose Bush");
 
         // GUI
         add("container.fletching_table", "Arrow Crafting");

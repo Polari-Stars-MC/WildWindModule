@@ -18,17 +18,22 @@ import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 
 /**
  * 瘠土更新的配置特征：焚烬木树 / 灵焰木树。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class BarrenConfiguredFeatures {
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> BLAZE_TREE_KEY = ResourceKey.create(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
-            WildWindBarren.id("blaze_tree")
+            WildWindBarren.id("cinder_tree")
     );
 
-    public static final ResourceKey<ConfiguredFeature<?, ?>> SOUL_TREE_KEY = ResourceKey.create(
+    public static final ResourceKey<ConfiguredFeature<?, ?>> EMBER_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
-            WildWindBarren.id("soul_tree")
+            WildWindBarren.id("ember_tree")
     );
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
@@ -36,22 +41,22 @@ public final class BarrenConfiguredFeatures {
         BlockStateProvider belowTrunkProvider = TreeConfiguration.defaultPlaceBelowTreeTrunkProvider(biomes);
 
         // 焚烬木树
-        context.register(BLAZE_TREE_KEY, new ConfiguredFeature<>(Feature.TREE,
+        context.register(CINDER_TREE_KEY, new ConfiguredFeature<>(Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(BarrenBlocks.BLAZE_LOG.get()),
+                        BlockStateProvider.simple(BarrenBlocks.CINDER_LOG.get()),
                         new StraightTrunkPlacer(4, 2, 0),
-                        BlockStateProvider.simple(BarrenBlocks.BLAZE_LEAVES.get()),
+                        BlockStateProvider.simple(BarrenBlocks.CINDER_LEAVES.get()),
                         new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                         new TwoLayersFeatureSize(1, 0, 1),
                         belowTrunkProvider
                 ).build()));
 
         // 灵焰木树
-        context.register(SOUL_TREE_KEY, new ConfiguredFeature<>(Feature.TREE,
+        context.register(EMBER_TREE_KEY, new ConfiguredFeature<>(Feature.TREE,
                 new TreeConfiguration.TreeConfigurationBuilder(
-                        BlockStateProvider.simple(BarrenBlocks.SOUL_LOG.get()),
+                        BlockStateProvider.simple(BarrenBlocks.EMBER_LOG.get()),
                         new StraightTrunkPlacer(4, 2, 0),
-                        BlockStateProvider.simple(BarrenBlocks.SOUL_LEAVES.get()),
+                        BlockStateProvider.simple(BarrenBlocks.EMBER_LEAVES.get()),
                         new BlobFoliagePlacer(ConstantInt.of(2), ConstantInt.of(0), 3),
                         new TwoLayersFeatureSize(1, 0, 1),
                         belowTrunkProvider

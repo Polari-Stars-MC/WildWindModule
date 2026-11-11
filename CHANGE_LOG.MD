@@ -4,153 +4,6 @@ All notable changes to the Wild Wind Module project will be documented in this f
 
 ---
 
-## 拆分为三个模块（core / wilderness / barren）
-
-原 `hfas` 单模块按内容归属拆为三个可独立安装的 mod：
-
-| 目录 | modid | 显示名 | 内容 |
-|:----:|:-----:|:------|:-----|
-| `src/core` | `ww_core` | Wild Wind: Core | 杜鹃木套件、玫瑰 / 灵魂玫瑰（丛）、制箭台与矢术、幼蛛 |
-| `src/wilderness` | `ww_wilderness` | Wild Wind: Wilderness Update | 泥沼蟹、恐鱼、蟹钳 / 尖牙 / 万用蟹钳、延展药水、灵魂南瓜灯 |
-| `src/barren` | `ww_barren` | Wild Wind: Barren Update | 焚烬木 / 灵焰木套件、砂岩 / 沙 / 流沙 / 焦土 / 仙人球 / 可疑沙 |
-
-要点：
-
-- Java 包名同步为 `org.polaris2023.wildwind.core` / `.wilderness` / `.barren`，主类为 `WildWindCore` / `WildWindWilderness` / `WildWindBarren`。
-- `wilderness`、`barren` 在 `neoforge.mods.toml` 中以 `type="required"`、`ordering="AFTER"` 依赖 `ww_core`，Gradle 侧用 `implementation project(":core")`。
-- 共享组件留在 core：`WoodFamily` / `ModWoodFamilies`（仅杜鹃木）、`WindupAttackMob` 与 AI goal、制箭台菜单与方块实体。
-- 每个模块各自拥有 `mixins.json`、访问转换器、datagen 入口与 `assets/data` 命名空间（`ww_core` / `ww_wilderness` / `ww_barren`），原 `ww_hfas` 资源已按归属重新分配。
-- 创造模式物品栏不再共用一个标签页：core 提供 `ww_core:wild_wind`（图标杜鹃木原木），wilderness 提供 `ww_wilderness:wilderness`（图标灵魂南瓜灯），barren 提供 `ww_barren:barren`（图标焚烬木原木）；三者同时安装时并列显示。
-
----
-
-## 项目总结 - HFAS 模块
-
-### 模组概述
-**HFAS (Wild Wind - Fletching Table and Saplings)** 是 Wild Wind Module 的子模块，专注于：
-- 制箭台功能扩展
-- 自定义木质方块套件
-- 世界生成增强
-
-### 核心功能
-
-#### 1. 制箭台替换系统
-- **区块加载替换** - 使用 `ChunkEvent.Load` 事件自动替换原版制箭台
-- **配置控制** - 通过 `worldgen.replaceVanillaFletchingTable` 配置项控制开关
-- **GUI系统** - 自定义制箭台带有交互界面（3个输入槽位）
-
-#### 2. 木质方块套件
-| 木材类型| 方块数量 | 特点|
-|--------------|------|-----------|
-| 焚烬木 (Blaze)| 16种| 橙色调，下界风格|
-| 灵焰木 (Soul)| 16种| 青色调，灵魂主题|
-| 杜鹃木 (Azalea) | 13种| 浅绿色调，繁茂洞穴 |
-
-每种套件包含：原木、木头、去皮原木、去皮木头、木板、楼梯、台阶、栅栏、栅栏门、门、活板门、压力板、按钮、树叶、树苗
-
-#### 3. 世界生成
-- **焚烬木** - 下界废土群系 (Nether Wastes)
-- **灵焰木** - 灵魂沙峡谷群系 (Soul Sand Valley)
-- **杜鹃木** - 繁茂洞穴群系 (Lush Caves)，替换原版杜鹃树
-
-#### 4. 杜鹃树增强
-- **Mixin 注入** - 修改杜鹃花催熟行为，生成杜鹃木原木
-- **生物群系修改** - 移除原版杜鹃树，添加自定义杜鹃树
-- **保留原版树叶** - 使用原版杜鹃树叶和开花杜鹃树叶
-
-#### 5. 木质方块功能
-- **去皮功能** - 使用斧头可将原木/木头去皮
-- **堆肥功能** - 树叶和树苗可用于堆肥（30%概率）
-- **燃料功能** - 木质方块可作为熔炉燃料（由 NeoForge `furnace_fuels` 数据地图提供）
-
-### 技术实现
-
-#### 数据生成
-| 提供器| 功能|
-|------------------------|--------------|
-| `HFASDatagen`         | 数据生成入口|
-| `ModModelProvider`    | 模型生成（支持染色树叶） |
-| `ModBlockTagsProvider`| 方块标签生成|
-| `ModItemTagsProvider` | 物品标签生成|
-| `ModLootProvider`     | 战利品表生成|
-| `ModDatapackProvider` | 数据包提供器|
-| `ModDataMapsProvider` | 数据映射提供器|
-| `EnUsLanguageProvider`| 英文语言文件|
-| `ZhCnLanguageProvider`| 中文语言文件|
-
-#### 世界生成系统
-| 类| 功能|
-|---------------------------|------------|
-| `ModConfiguredFeatures`   | 配置特征（树木结构） |
-| `ModPlacedFeatures`       | 放置特征|
-| `ModBiomeModifiers`       | 生物群系修改器|
-| `ModTreeGrowers`          | 树苗生长器|
-
-#### 事件处理
-| 类| 功能|
-|--------------------------------|------------|
-| `FletchingTableReplaceHandler` | 区块加载时替换制箭台 |
-| `BlockFeaturesHandler`         | 方块功能（堆肥等）|
-
-#### Mixin 注入
-| 类| 功能|
-|--------------------|-----------|
-| `AzaleaBlockMixin` | 修改杜鹃花催熟行为 |
-
-#### 自定义类型
-| 类型| 用途|
-|----------------|------------------------|
-| `BlockSetType` | 焚烬木、灵焰木、杜鹃木的门/活板门/按钮类型 |
-| `WoodType`     | 对应木材类型|
-| `TreeGrower`   | 自定义树木生长逻辑|
-
-### 文件结构
-```
-src/hfas/java/org/polaris2023/wildwind/hfas/
-├── block/# 方块注册
-│├── ModBlocks.java# 方块定义
-│├── FletchingTableBlock.java
-│└── entity/# 方块实体
-│└── FletchingTableBlockEntity.java
-├── worldgen/# 世界生成
-│├── ModConfiguredFeatures.java
-│├── ModPlacedFeatures.java
-│├── ModBiomeModifiers.java
-│└── ModTreeGrowers.java
-├── datagen/# 数据生成
-│├── HFASDatagen.java
-│└── provider/
-│├── loot/# 实体掉落
-│├── lang/# 语言系统
-│├── tag/# Tag标签
-│├── ModModelProvider.java
-│├── ModLootProvider.java
-│├── ModDatapackProvider.java
-│├── ModDataMapsProvider.java
-├── event/# 事件处理
-│├── FletchingTableReplaceHandler.java
-│└── BlockFeaturesHandler.java
-├── mixin/# Mixin 注入
-│└── AzaleaBlockMixin.java
-├── config/# 配置文件
-│└── ModCommonConfig.java
-├── menu/# GUI 菜单
-│└── FletchingTableMenu.java
-└── groups/# 创造模式物品栏
-└── ModCreativeTabs.java
-```
-
-### 生成资源统计
-| 类型| 数量|
-|---------|---------------------------|
-| 方块模型 | 118+|
-| 物品模型 | 60+|
-| 方块状态 | 45+|
-| 战利品表 | 45+|
-| 语言条目 | 90+ (en_us) / 90+ (zh_cn) |
-
----
-
 ## [1.0.0] - 2026.04.15
 
 ### Added
@@ -181,24 +34,33 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 
 ---
 
-## 开发计划
+## 项目总结
 
-### 已完成功能
-- [x] 模组制箭台GUI功能
-- [x] 世界生成时替换结构内制箭台
-- [x] 创造模式物品栏排序
-- [x] 焚烬木/灵焰木/杜鹃木套件
-- [x] 树木自然生成
-- [x] 杜鹃树催熟增强
-- [x] 木头去皮功能
-- [x] 树叶堆肥功能
-- [x] 木质方块燃料功能
-- [x] 模型数据生成
-- [x] 标签数据生成
+### 模块
 
-### 待开发功能
+| 目录 | modid | 显示名 | 内容 |
+|:----:|:-----:|:------|:-----|
+| `src/core` | `ww_core` | Wild Wind: Core | 杜鹃木套件、玫瑰 / 灵魂玫瑰（丛）、制箭台与矢术、幼蛛 |
+| `src/wilderness` | `ww_wilderness` | Wild Wind: Wilderness Update | 泥沼蟹、恐鱼、蟹钳 / 尖牙 / 万用蟹钳、延展药水、灵魂南瓜灯 |
+| `src/barren` | `ww_barren` | Wild Wind: Barren Update | 焚烬木 / 灵焰木套件（含船、运输船、展示架、告示牌）、砂岩 / 沙 / 流沙 / 焦土 / 仙人球 / 可疑沙 |
+
+- Java 包名 `org.polaris2023.wildwind.core` / `.wilderness` / `.barren`，主类 `WildWindCore` / `WildWindWilderness` / `WildWindBarren`
+- `wilderness`、`barren` 在 `neoforge.mods.toml` 中以 `type="required"`、`ordering="AFTER"` 依赖 `ww_core`，Gradle 侧用 `implementation project(":core")`
+- 共享组件留在 core：`WoodFamily`、`WindupAttackMob` 与 AI goal、制箭台菜单与方块实体
+- 每个模块各自拥有 `mixins.json`、访问转换器、datagen 入口与 `assets/data` 命名空间
+- 创造栏：`ww_core:wild_wind`（杜鹃木原木）、`ww_wilderness:wilderness`（灵魂南瓜灯）、`ww_barren:barren`（焚烬木原木）
+
+### 技术要点
+
+- 木质方块统一由 `WoodFamily` 聚合，模型 / 战利品 / 标签 / 数据地图 / 创造栏只遍历一次
+- datagen 生成 blockstates / models / items / lang / tags / loot_table，输出到 `build/generated/<module>/{client,server}`；贴图与配方手写在 `src/<module>/resources`
+- 制箭台：`FletchingTableBlock` + 4 槽方块实体（箭羽 / 箭杆 / 箭头 / 产物）；`ArrowComponent` 随箭矢 `pickupItemStack` 存读档，`AbstractArrowMixin` 应用实际效果
+- 自定义木种只需注册 `BlockSetType` + `WoodType`；`WoodType` 名必须带命名空间，否则告示牌编辑界面会去 `minecraft:` 找 GUI 贴图
+- 船 / 展示架 / 告示牌复用原版实体与方块实体类型（`BlockEntityTypeAddBlocksEvent`，不新建 BlockEntityType）
+
+### 待办
+
 - [ ] 更多下界植物
-- [ ] 制箭台配方系统
 - [ ] 成就系统
 
 ---
@@ -267,7 +129,7 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **字幕中文统一为原版格式** - 副标题由 `实体+动作`（`食人鱼袭击`）改为原版中文的 `实体：动作`（`食人鱼：袭击`、`幼蛛：嘶嘶`）；英文侧保持原版无冒号写法（`Piranha attacks`、`Spiderling hisses`），原版中英文本就不同构
 
 ### Fixed
-- **`SpiderlingEyesLayer` 泛型编译失败** - `GeoRenderLayer` / `AutoGlowingGeoLayer` 要求 `R extends GeoRenderState`，而 `EntityRenderState` 上的该接口由 GeckoLib 运行时 mixin 注入，编译期 `LivingEntityRenderState` 不满足边界；图层改用 `GeoRenderState` 作为 `R`，注册处做一次等价强转（`@SuppressWarnings({"unchecked", "rawtypes"})`）并注明原因
+- **`SpiderlingEyesLayer` 泛型编译失败** - `GeoRenderLayer` / `AutoGlowingGeoLayer` 要求 `R extends GeoRenderState`，而该接口由 GeckoLib mixin 在运行时注入 `EntityRenderState`，编译期不可见；现由 `SpiderlingRenderState` 显式实现 `GeoRenderState`（自持 `DataTicket` 数据表，覆写 `addGeckolibData` / `hasGeckolibData` / `getDataMap`），图层与渲染器统一使用真实类型，注册处的原始类型强转与 `@SuppressWarnings` 一并删除
 - **属性翻译键前缀错误** - `RangedAttribute` 的 `descriptionId` 是构造参数原样保存，不按注册 id 派生；原值为 `attributes.ww_hfas.extra_item_pickup_range`，与 `Attributes` 中的 `attribute.name.armor` 规范不符，属性名会直接显示原始键。现已改为 `attribute.name.ww_hfas.extra_item_pickup_range`，`ModAttributes` 与 en_us / zh_cn 三处同步
 - **字幕格式与原版不一致** - 原版 `entity.spider.step` 没有 subtitle（脚步声不产生字幕），此前为改字幕额外覆写 `playStepSound` 属多余，已连同 `entity.spiderling.step` 字幕一并移除
 
@@ -346,3 +208,42 @@ src/hfas/java/org/polaris2023/wildwind/hfas/
 - **shift 只能合成一次** - `quickMoveStack` 在产物槽搬完后会走公共尾巴 `slot.set(ItemStack.EMPTY)`，把 `onTake → consumeInputs → updateResult` 刚重算好的产物清掉，而产物槽的 `setItem` 不再触发重算，于是产物永久为空。产物槽分支改为 `onTake` 后直接返回，不再动槽位
 - **关界面材料留在方块里** - `FletchingTableMenu` 补 `removed(Player)`，关闭界面时把三个输入槽的材料塞回玩家背包（放不下就丢地上）并清空方块实体，与工作台一致
 
+---
+
+## [Unreleased] - 2026.11.06
+
+### Added
+- **焚烬木 / 灵焰木的船与运输船** - `ww_barren` 新增 `BarrenEntities`（`cinder_boat` / `cinder_chest_boat` / `ember_boat` / `ember_chest_boat`）与 `BarrenItems`，实体用原版 `Boat` / `ChestBoat`、物品用 `BoatItem`（`stacksTo(1)`），尺寸 1.375×0.5625、眼睛高度 0.5625、`clientTrackingRange(10)` 全部照搬原版；四种船都用 `EntityType.Builder#fireImmune()` 注册，免疫火焰与岩浆伤害；实体类改为 `entity/WildWindBoat` / `WildWindChestBoat`，只覆写 `canBoatInFluid(FluidState)` 把岩浆也算作可航行流体，于是岩浆里同样有浮力、能正常划桨；`BarrenClientEvents` 烘焙 `BoatModel` 的船 / 运输船模型层并注册 `BoatRenderer`，贴图为 `textures/entity/boat/<wood>.png`、`textures/entity/chest_boat/<wood>.png`
+- **焚烬木 / 灵焰木的展示架** - `ShelfBlock` 直接复用原版 `BlockEntityTypes.SHELF`，通过 `BlockEntityTypeAddBlocksEvent` 登记；掉落、`wooden_shelves` 标签、`createShelf` 模型与配方（6 去皮原木）均按原版
+- **焚烬木 / 灵焰木的告示牌与悬挂告示牌** - `StandingSignBlock` / `WallSignBlock` / `CeilingHangingSignBlock` / `WallHangingSignBlock`，方块实体分别挂到原版 `SIGN` / `HANGING_SIGN`；`SignItem` / `HangingSignItem` 用 `useBlockDescriptionPrefix()` 注册，配方与配方解锁进度按原版
+- **船 / 告示牌 / 展示架素材** - 木材 id 统一为 `cinder`（**青灰**，焚烬木）/ `ember`（**橙红**，灵焰木）；船的实体与物品图标直接复用同名素材；告示牌编辑界面底板 `gui/signs/<wood>.png`（24×26）为脚本自绘：板面 0~11 行是 3 条横板（颜色取自本模组 `*_planks.png` 每 4 行一带的平均色 + 确定性噪点，带拼缝与 1px 描边），立柱 12~25 行 2px 取木板色压暗，其余透明，轮廓与原版 `oak.png` 一致；生成脚本存于 `textures_generator/gen_sign_gui.ps1`；方块贴图 `block/<wood>_sign|hanging_sign|shelf` 仍为按原版橡木对应贴图明暗套用本模组木材底色
+
+### Changed
+- **`WoodType` 注册名带命名空间** - `ww_barren:cinder` / `ww_barren:ember`：原版 `SignEditScreen` / `HangingSignEditScreen` 用 `Identifier.parse(woodType.name() + ".png")` 拼 GUI 贴图路径，不带冒号会默认落到 `minecraft:` 命名空间；`WoodType` 不是注册表对象、记录里只有 `String name`，只能这样传命名空间
+- **运输船英文名对齐原版** - `item.ww_barren.*_chest_boat` / `entity.ww_barren.*_chest_boat` 为 `Cinder Boat with Chest` / `Ember Boat with Chest`（中文仍为「运输船」）
+
+### Fixed
+- **告示牌编辑界面底板是纯色块** - `gui/signs/<wood>.png` 原先只是把 16×16 木板贴图缩放到 24×26，整张不透明、没有告示牌轮廓，编辑时看到的是一块方形色斑；已按 `SignEditScreen` 的 `TEXTURE_WIDTH/HEIGHT = 24×26`、`POST_HEIGHT = 14` 重画：0~11 行为板面（含边框、拼缝、铆钉），12~25 行仅中间 2px 立柱，其余透明，墙挂告示牌只画前 12 行也正常
+- **旋风棒箭杆的箭矢永久悬停** - `ArrowShaft.BREEZE_ROD` 让 `getDefaultGravity()` 永远返回 0，箭矢永不落地，也就永远不进入原版 `tickDespawn()` 的 1200 tick 倒计时；同时空气阻力把速度衰减到接近 0，表现为箭矢一直飘着、最后像静止。现在无重力只在**出手后前 100 tick 且不在流体中**生效，之后恢复正常重力下坠并触发落点风弹爆炸，入水 / 入岩浆立即恢复重力
+- **告示牌 / 悬挂告示牌显示原始翻译键** - 手写 `ITEMS.registerItem(...)` 时缺少 `useBlockDescriptionPrefix()`，物品描述键默认是 `item.ww_barren.<wood>_sign`，而语言文件只有 `block.*`；补上后正常显示译名
+- **告示牌相关译名缺失** - 补 `block.ww_barren.*_wall_sign` / `*_wall_hanging_sign` 与 `entity.ww_barren.*_boat` / `*_chest_boat`，`/summon` 等提示不再出现原始键
+- **焚烬木 / 灵焰木地图色与树叶染色反了** - `MapColor` 与 `WoodFamily.leavesTint` 按旧设计写成「焚烬木橙、灵焰木青」，与实际贴图相反（实际贴图 `cinder_*` 青灰、`ember_*` 橙红）；已按贴图互换，地图颜色与树叶物品图标两者一致
+- **资源 id 大写残留** - `stripped_CINDER_log` / `potted_EMBER_sapling` / `add_CINDER_tree` 等混入大写字母导致 `IdentifierException: Non [a-z0-9/._-] character in path of location`，datagen 直接起不来；改为全小写后重跑 `runServerData` / `runClientData`，`build/generated/barren` 内的 blaze / soul 旧产物已清空重建
+
+### Changed（命名）
+- **木材 id 统一为 `cinder` / `ember`** - 会话中曾短暂改为 `blaze` / `soul`，已全部回退：方块、物品、实体、`WoodType`、贴图、模型、配方、进度、标签、语言文件一并改名；`core` 中早期遗留的 28 张同系列素材（船 / 箱船 / 告示牌 / 悬挂告示牌的实体贴图与物品图标、`gui/hanging_signs`、`screens`）也保留并同步改名为 `cinder_*` / `ember_*`，未删除
+
+
+
+---
+
+## [Unreleased] - 2026.11.10
+
+### Added
+- **`ww_core` 凋零玫瑰丛** - 新增 `wither_rose_bush`；补全掉落表与花标签
+- **`ww_wilderness` 沼泽方块** - 新增 `reeds`、`cattails`、`bog_mud`、`remains`
+- **`ww_barren` 砂岩衍生物 / 灰烬与植被草稿** - 新增 `soul_sandstone_stairs` / `_slab` / `_wall`、`smooth_soul_sandstone_stairs` / `_slab`、`cut_soul_sandstone_slab`、`quartz_sandstone_stairs` / `_slab` / `_wall`、`smooth_quartz_sandstone_stairs` / `_slab`、`cut_quartz_sandstone_slab`、`niter_block`、`frogbit`、`ash_block`；楼梯 / 台阶 / 墙沿用各自砂岩的侧面 + 顶底贴图
+
+### Changed
+- **无贴图方块模型引用自身贴图路径** - 新增 `MissingModels` 模型工具：六面 / 楼梯 / 台阶 / 墙 / 十字植物 / 双层植物统一引用 `ww_xxx:block/<id>`，贴图缺失时客户端自动回退黑紫 missingno，补齐 png 即生效；新增方块同步补全中英语言、创造栏排序与物品标签
+- **可疑的灵魂沙贴图重绘** - 以原版 `suspicious_sand_0..3` 为基板、按灵魂沙的明暗色阶重上色，替换原 4 帧 `suspicious_soul_sand_*.png`；生成脚本 `textures_generator/gen_suspicious_soul_sand.ps1`

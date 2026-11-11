@@ -11,6 +11,10 @@ import org.polaris2023.wildwind.wilderness.registry.ModEntities;
 
 /**
  * 荒野更新的实体渲染器注册。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID, value = Dist.CLIENT)
 public class EntitiesClientHandler {

@@ -17,6 +17,8 @@ import org.polaris2023.wildwind.core.registry.ModItems;
 
 /**
  * 核心模块的模型生成器。
+ *
+ * @author safe_saffawa
  */
 public class ModModelProvider extends ModelProvider {
 
@@ -40,6 +42,7 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createCrossBlockWithDefaultItem(ModBlocks.ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createCrossBlockWithDefaultItem(ModBlocks.SOUL_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createDoublePlantWithDefaultItem(ModBlocks.SOUL_ROSE_BUSH.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        MissingModels.doublePlant(blockModels, ModBlocks.WITHER_ROSE_BUSH.get());
 
         itemModels.generateFlatItem(ModItems.SPIDERLING_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
     }

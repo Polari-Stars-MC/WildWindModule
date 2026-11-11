@@ -11,6 +11,8 @@ import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
 
 /**
  * 荒野更新自己的创造模式物品栏页。
+ *
+ * @author safe_saffawa
  */
 public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
@@ -30,6 +32,12 @@ public final class ModCreativeTabs {
 
     private static void addStacks(CreativeModeTab.Output output) {
         output.accept(WildernessBlocks.SOUL_JACK_O_LANTERN.get());
+
+        // 沼泽装饰
+        output.accept(WildernessBlocks.REEDS.get());
+        output.accept(WildernessBlocks.CATTAILS.get());
+        output.accept(WildernessBlocks.BOG_MUD.get());
+        output.accept(WildernessBlocks.REMAINS.get());
 
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
         output.accept(ModItems.MUDCRAB_BUCKET);

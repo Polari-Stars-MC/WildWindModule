@@ -10,6 +10,10 @@ import org.polaris2023.wildwind.core.component.ArrowComponent;
 
 /**
  * 核心模块的数据组件注册。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public final class ModDataComponents {
     public static final DeferredRegister.DataComponents REGISTER =

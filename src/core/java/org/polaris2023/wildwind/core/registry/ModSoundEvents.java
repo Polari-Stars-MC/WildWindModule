@@ -9,6 +9,9 @@ import org.polaris2023.wildwind.core.WildWindCore;
 
 /**
  * 核心模块的音效注册。
+ *
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =

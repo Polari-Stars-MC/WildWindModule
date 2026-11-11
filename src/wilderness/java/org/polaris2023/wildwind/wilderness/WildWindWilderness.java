@@ -23,6 +23,11 @@ import org.polaris2023.wildwind.wilderness.registry.ModSoundEvents;
  * 原野之风：荒野更新（Wild Wind: Wilderness Update）
  * <p>
  * 泥沼蟹 / 恐鱼 / 万用蟹钳 / 延展药水 / 灵魂南瓜灯等荒野内容。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 @Mod(WildWindWilderness.MOD_ID)
 @EventBusSubscriber(modid = WildWindWilderness.MOD_ID)

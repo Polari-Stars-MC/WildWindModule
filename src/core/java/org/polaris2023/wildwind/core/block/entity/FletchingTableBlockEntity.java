@@ -21,6 +21,7 @@ import org.polaris2023.wildwind.core.component.ArrowComponent;
  * 制箭台方块实体
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 public class FletchingTableBlockEntity extends BlockEntity implements Container {

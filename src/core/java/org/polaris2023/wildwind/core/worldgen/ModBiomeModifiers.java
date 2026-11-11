@@ -16,6 +16,11 @@ import java.util.Set;
 
 /**
  * 核心模块的生物群系修改器：繁茂洞穴的杜鹃树（移除原版、加入杜鹃木版）。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModBiomeModifiers {
 

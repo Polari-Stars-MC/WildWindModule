@@ -1,9 +1,10 @@
 package org.polaris2023.wildwind.wilderness.datagen.tag;
 
-import net.minecraft.core.Holder;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.tags.TagAppender;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.level.block.Block;
@@ -19,6 +20,8 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 荒野更新的方块标签生成器。
+ *
+ * @author safe_saffawa
  */
 public class WildernessBlockTagsProvider extends BlockTagsProvider {
 
@@ -31,6 +34,8 @@ public class WildernessBlockTagsProvider extends BlockTagsProvider {
         addToTag(BlockTags.MINEABLE_WITH_AXE, WildernessBlocks.SOUL_JACK_O_LANTERN.get());
         addToTag(BlockTags.PIGLIN_REPELLENTS, WildernessBlocks.SOUL_JACK_O_LANTERN.get());
 
+        addToTag(BlockTags.MINEABLE_WITH_SHOVEL, WildernessBlocks.BOG_MUD.get());
+
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_ON, Blocks.MUD, Blocks.MUDDY_MANGROVE_ROOTS);
 
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_SPAWNABLE_IN_WATER_GROUND, Blocks.CLAY, Blocks.MUD, Blocks.DIRT, Blocks.MUDDY_MANGROVE_ROOTS)
@@ -40,9 +45,13 @@ public class WildernessBlockTagsProvider extends BlockTagsProvider {
         addToTag(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS, Blocks.MANGROVE_LOG, Blocks.MANGROVE_ROOTS, Blocks.MUDDY_MANGROVE_ROOTS);
     }
 
-    @SuppressWarnings("all")
     public TagAppender<Block> addToTag(TagKey<Block> tag, Block... items) {
         if (items.length == 0) return tag(tag);
-        return tag(tag).addAll(Arrays.stream(items).map(Block::builtInRegistryHolder).map(Holder.Reference::getKey));
+        return tag(tag).addAll(Arrays.stream(items).map(WildernessBlockTagsProvider::blockKey));
+    }
+
+    private static ResourceKey<Block> blockKey(Block block) {
+        return BuiltInRegistries.BLOCK.getResourceKey(block)
+                .orElseThrow(() -> new IllegalStateException("未注册的方块: " + block));
     }
 }

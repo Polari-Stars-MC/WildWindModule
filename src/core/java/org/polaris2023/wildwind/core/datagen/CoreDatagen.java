@@ -17,6 +17,10 @@ import org.polaris2023.wildwind.core.datagen.provider.tag.ModItemTagsProvider;
 
 /**
  * 核心模块的数据生成入口。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID)
 public class CoreDatagen {

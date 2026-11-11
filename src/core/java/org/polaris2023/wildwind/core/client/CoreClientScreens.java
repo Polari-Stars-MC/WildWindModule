@@ -10,6 +10,8 @@ import org.polaris2023.wildwind.core.menu.ModMenus;
 
 /**
  * 核心模块的客户端界面注册。
+ *
+ * @author safe_saffawa
  */
 @EventBusSubscriber(modid = WildWindCore.MOD_ID, value = Dist.CLIENT)
 public final class CoreClientScreens {

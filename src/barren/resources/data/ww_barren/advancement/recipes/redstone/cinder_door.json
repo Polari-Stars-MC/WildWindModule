@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_CINDER_planks": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ww_barren:cinder_planks"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ww_barren:cinder_door"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_CINDER_planks"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ww_barren:cinder_door"
+    ]
+  }
+}

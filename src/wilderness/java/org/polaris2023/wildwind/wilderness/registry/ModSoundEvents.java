@@ -6,6 +6,10 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
+/**
+ * @author mdjfnfn
+ * @author safe_saffawa
+ */
 
 public class ModSoundEvents {
     public static final DeferredRegister<SoundEvent> SOUND_EVENTS =

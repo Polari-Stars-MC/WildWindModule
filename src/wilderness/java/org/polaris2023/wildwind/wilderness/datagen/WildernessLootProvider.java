@@ -33,6 +33,11 @@ import java.util.stream.Stream;
 
 /**
  * 荒野更新的战利品表：实体掉落 + 方块掉落。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class WildernessLootProvider extends LootTableProvider {
 
@@ -100,6 +105,11 @@ public class WildernessLootProvider extends LootTableProvider {
         @Override
         protected void generate() {
             dropSelf(WildernessBlocks.SOUL_JACK_O_LANTERN.get());
+
+            dropSelf(WildernessBlocks.REEDS.get());
+            dropSelf(WildernessBlocks.CATTAILS.get());
+            dropSelf(WildernessBlocks.BOG_MUD.get());
+            dropSelf(WildernessBlocks.REMAINS.get());
         }
     }
 }

@@ -14,6 +14,7 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import org.polaris2023.wildwind.core.WildWindCore;
+import org.polaris2023.wildwind.core.block.ModBlocks;
 import org.polaris2023.wildwind.core.block.ModWoodFamilies;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 
@@ -22,6 +23,12 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 核心模块的物品标签生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class ModItemTagsProvider extends ItemTagsProvider {
 
@@ -35,6 +42,8 @@ public class ModItemTagsProvider extends ItemTagsProvider {
             registerWoodLogItemTag(family);
             registerWoodItemTags(family);
         }
+
+        addToTag(BlockItemTags.FLOWERS.item(), ModBlocks.SOUL_ROSE_BUSH.get(), ModBlocks.WITHER_ROSE_BUSH.get());
     }
 
     private void registerWoodItemTags(WoodFamily family) {

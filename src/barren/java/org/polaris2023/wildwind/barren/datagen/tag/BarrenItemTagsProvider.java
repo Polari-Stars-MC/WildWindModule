@@ -4,7 +4,6 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.BlockItemTags;
@@ -15,7 +14,9 @@ import net.minecraft.world.level.block.Block;
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.ItemTagsProvider;
 import org.polaris2023.wildwind.barren.WildWindBarren;
+import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.block.BarrenWoodFamilies;
+import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 
 import java.util.Arrays;
@@ -23,6 +24,12 @@ import java.util.concurrent.CompletableFuture;
 
 /**
  * 瘠土更新的物品标签生成器。
+ *
+ * @author baka4n
+ * @author Mon-Landis
+ * @author CarrotLegend
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public class BarrenItemTagsProvider extends ItemTagsProvider {
 
@@ -36,6 +43,28 @@ public class BarrenItemTagsProvider extends ItemTagsProvider {
             registerWoodLogItemTag(family);
             registerWoodItemTags(family);
         }
+
+        // 告示牌 / 悬挂告示牌 / 展示架 / 船
+        addToTag(ItemTags.SIGNS, BarrenBlocks.CINDER_SIGN.get(), BarrenBlocks.EMBER_SIGN.get());
+        addToTag(ItemTags.HANGING_SIGNS, BarrenBlocks.CINDER_HANGING_SIGN.get(), BarrenBlocks.EMBER_HANGING_SIGN.get());
+        addToTag(ItemTags.WOODEN_SHELVES, BarrenBlocks.CINDER_SHELF.get(), BarrenBlocks.EMBER_SHELF.get());
+        addToTag(ItemTags.BOATS, BarrenItems.CINDER_BOAT.get(), BarrenItems.EMBER_BOAT.get());
+        addToTag(ItemTags.CHEST_BOATS, BarrenItems.CINDER_CHEST_BOAT.get(), BarrenItems.EMBER_CHEST_BOAT.get());
+
+        // 灰烬 / 植被（草稿）
+        addToTag(BlockItemTags.STAIRS.item(),
+                BarrenBlocks.SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
+        addToTag(BlockItemTags.SLABS.item(),
+                BarrenBlocks.SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get(),
+                BarrenBlocks.QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(),
+                BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get());
+        addToTag(BlockItemTags.WALLS.item(), BarrenBlocks.SOUL_SANDSTONE_WALL.get(), BarrenBlocks.QUARTZ_SANDSTONE_WALL.get());
     }
 
     private void registerWoodItemTags(WoodFamily family) {

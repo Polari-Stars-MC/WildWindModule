@@ -29,6 +29,9 @@ import java.util.List;
  * {@code Item.Properties.pickaxe(...)} 等工厂方法写入的 {@link Tool} 组件，
  * 因此槽位识别改为检查 TOOL 组件规则中的 mineable 标签，并对仍然存在的
  * AxeItem/ShovelItem/HoeItem 保留 instanceof 兜底。
+ *
+ * @author Mon-Landis
+ * @author safe_saffawa
  */
 public class OmniClawTools implements TooltipComponent {
 	/**

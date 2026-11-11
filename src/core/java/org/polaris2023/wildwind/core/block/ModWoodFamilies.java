@@ -4,6 +4,8 @@ import java.util.List;
 
 /**
  * 核心模块的木材家族清单。
+ *
+ * @author safe_saffawa
  */
 public final class ModWoodFamilies {
 

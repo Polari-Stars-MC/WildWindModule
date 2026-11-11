@@ -16,6 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
  * 使用杜鹃木原木替代橡木原木
  *
  * @author baka4n
+ * @author safe_saffawa
  * @since 2026/04/15
  */
 @Mixin(AzaleaBlock.class)

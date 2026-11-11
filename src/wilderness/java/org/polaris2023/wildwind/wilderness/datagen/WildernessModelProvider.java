@@ -9,12 +9,15 @@ import net.minecraft.client.data.models.model.ModelTemplates;
 import net.minecraft.client.data.models.model.TextureMapping;
 import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
+import org.polaris2023.wildwind.core.datagen.provider.MissingModels;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
 import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新的模型生成器。
+ *
+ * @author safe_saffawa
  */
 public class WildernessModelProvider extends ModelProvider {
 
@@ -26,6 +29,12 @@ public class WildernessModelProvider extends ModelProvider {
     protected void registerModels(BlockModelGenerators blockModels, ItemModelGenerators itemModels) {
         // 灵魂南瓜灯 - 正面自定义贴图，其余使用原版南瓜
         blockModels.createPumpkinVariant(WildernessBlocks.SOUL_JACK_O_LANTERN.get(), TextureMapping.column(Blocks.PUMPKIN));
+
+        // 沼泽方块：暂无贴图，统一使用原版黑紫缺失纹理
+        MissingModels.cube(blockModels, WildernessBlocks.BOG_MUD.get());
+        MissingModels.cube(blockModels, WildernessBlocks.REMAINS.get());
+        MissingModels.cross(blockModels, WildernessBlocks.REEDS.get());
+        MissingModels.cross(blockModels, WildernessBlocks.CATTAILS.get());
 
         // 独立物品
         itemModels.generateFlatItem(ModItems.CRAB_CLAW.get(), ModelTemplates.FLAT_ITEM);

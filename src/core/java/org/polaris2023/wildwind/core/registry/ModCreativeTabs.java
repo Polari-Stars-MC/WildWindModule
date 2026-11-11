@@ -15,6 +15,10 @@ import org.polaris2023.wildwind.core.block.ModWoodFamilies;
  * 模组专用创造模式物品栏。
  * <p>
  * 只放核心内容；荒野 / 瘠土更新各自把自己的条目追加进原版物品栏。
+ *
+ * @author Mon-Landis
+ * @author mdjfnfn
+ * @author safe_saffawa
  */
 public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
@@ -38,6 +42,7 @@ public final class ModCreativeTabs {
         output.accept(ModBlocks.ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE_BUSH.get());
+        output.accept(ModBlocks.WITHER_ROSE_BUSH.get());
         output.accept(ModBlocks.FLETCHING_TABLE.get());
 
         output.accept(ModItems.SPIDERLING_SPAWN_EGG);

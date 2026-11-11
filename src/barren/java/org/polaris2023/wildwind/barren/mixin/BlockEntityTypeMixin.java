@@ -13,6 +13,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * 允许自定义的可疑沙使用原版 BrushableBlockEntity。
  * 原版 {@link BlockEntityType#isValid(BlockState)} 只认注册时列出的方块，
  * 这里对 BRUSHABLE_BLOCK 额外放行瘠土更新的可疑沙。
+ *
+ * @author safe_saffawa
  */
 @Mixin(BlockEntityType.class)
 public abstract class BlockEntityTypeMixin {
