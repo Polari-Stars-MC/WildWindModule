@@ -51,6 +51,7 @@ public final class ModCreativeTabs {
         output.accept(ModBlocks.SOUL_ROSE_BUSH.get());
         output.accept(ModBlocks.WITHER_ROSE_BUSH.get());
         output.accept(ModBlocks.FLETCHING_TABLE.get());
+        output.accept(ModBlocks.KILN.get());
     }
 
     private ModCreativeTabs() {

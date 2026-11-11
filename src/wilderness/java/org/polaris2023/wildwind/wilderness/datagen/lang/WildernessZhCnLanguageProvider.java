@@ -21,6 +21,7 @@ public class WildernessZhCnLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addBlock(WildernessBlocks.SOUL_JACK_O_LANTERN, "§4灵魂南瓜灯");
+        addBlock(WildernessBlocks.SILT, "泥沼块");
 
         // 沼泽装饰
         addBlock(WildernessBlocks.REEDS, "芦苇");
@@ -40,6 +41,7 @@ public class WildernessZhCnLanguageProvider extends LanguageProvider {
         addItem(ModItems.COOKED_PIRANHA, "熟恐鱼");
         addItem(ModItems.PIRANHA_BUCKET, "恐鱼桶");
         addItem(ModItems.FANG, "尖牙");
+        addItem(ModItems.SPIDER_EGG, "蜘蛛卵");
 
         addEntityType(ModEntities.MUDCRAB, "泥沼蟹");
         addEntityType(ModEntities.PIRANHA, "恐鱼");

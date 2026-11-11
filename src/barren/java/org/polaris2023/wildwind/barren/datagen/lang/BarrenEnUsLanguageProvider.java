@@ -6,6 +6,7 @@ import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.registry.BarrenEntities;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
+import org.polaris2023.wildwind.barren.registry.ModItems;
 
 /**
  * 瘠土更新的英文语言文件。
@@ -126,5 +127,7 @@ public class BarrenEnUsLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS, "Smooth Quartz Sandstone Stairs");
         addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB, "Smooth Quartz Sandstone Slab");
         addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "Cut Quartz Sandstone Slab");
+
+        addItem(ModItems.ASH, "Ash");
     }
 }

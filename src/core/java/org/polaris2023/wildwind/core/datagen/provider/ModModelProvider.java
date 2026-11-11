@@ -50,6 +50,13 @@ public class ModModelProvider extends ModelProvider {
                 BlockModelGenerators.plainVariant(vanillaFletchingModel)));
         blockModels.registerSimpleItemModel(ModBlocks.FLETCHING_TABLE.get().asItem(), vanillaFletchingModel);
 
+        // 窑炉：外观与方块模型均沿用原版熔炉
+        Identifier vanillaFurnaceModel = ModelLocationUtils.getModelLocation(Blocks.FURNACE);
+        blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
+                ModBlocks.KILN.get(),
+                BlockModelGenerators.plainVariant(vanillaFurnaceModel)));
+        blockModels.registerSimpleItemModel(ModBlocks.KILN.get().asItem(), vanillaFurnaceModel);
+
         blockModels.createCrossBlockWithDefaultItem(ModBlocks.ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createCrossBlockWithDefaultItem(ModBlocks.SOUL_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createDoublePlantWithDefaultItem(ModBlocks.SOUL_ROSE_BUSH.get(), BlockModelGenerators.PlantType.NOT_TINTED);
@@ -57,10 +64,14 @@ public class ModModelProvider extends ModelProvider {
     }
 
     private void registerWoodModels(BlockModelGenerators blockModels, WoodFamily family) {
-        blockModels.woodProvider(family.log().get()).logWithHorizontal(family.log().get()).wood(family.wood().get());
+        blockModels.woodProvider(family.log().get())
+                .logWithHorizontal(family.log().get())
+                .wood(family.wood().get());
+
         blockModels.woodProvider(family.strippedLog().get())
                 .logWithHorizontal(family.strippedLog().get())
                 .wood(family.strippedWood().get());
+
         blockModels.family(family.planks().get())
                 .stairs(family.stairs().get())
                 .slab(family.slab().get())
@@ -68,10 +79,16 @@ public class ModModelProvider extends ModelProvider {
                 .fenceGate(family.fenceGate().get())
                 .pressurePlate(family.pressurePlate().get())
                 .button(family.button().get());
+
         blockModels.createDoor(family.door().get());
         blockModels.createTrapdoor(family.trapdoor().get());
+
         if (family.hasLeaves()) {
-            blockModels.createTintedLeaves(family.leaves().get(), TexturedModel.LEAVES, family.leavesTint());
+            blockModels.createTintedLeaves(
+                    family.leaves().get(),
+                    TexturedModel.LEAVES,
+                    family.leavesTint()
+            );
         }
     }
 }

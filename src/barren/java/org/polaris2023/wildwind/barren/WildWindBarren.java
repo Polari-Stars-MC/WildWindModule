@@ -8,6 +8,7 @@ import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.registry.BarrenEntities;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.barren.registry.ModCreativeTabs;
+import org.polaris2023.wildwind.barren.registry.ModItems;
 
 /**
  * 原野之风：瘠土更新（Wild Wind: Barren Update）
@@ -27,6 +28,7 @@ public class WildWindBarren {
         BarrenItems.register(bus);
         bus.addListener(BlockEntityTypeAddBlocksEvent.class, BarrenBlocks::addBlockEntityBlocks);
         ModCreativeTabs.register(bus);
+        ModItems.register(bus);
     }
 
     public static Identifier id(String path) {

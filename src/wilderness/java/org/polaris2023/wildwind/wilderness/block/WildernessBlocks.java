@@ -28,6 +28,13 @@ public final class WildernessBlocks {
                     .sound(SoundType.WOOD)
                     .lightLevel(state -> 10))
     );
+    public static final DeferredBlock<Block> SILT = BLOCKS.registerBlock(
+            "silt",
+            p -> new Block(p
+                    .mapColor(MapColor.COLOR_BROWN)
+                    .strength(0.5F)
+                    .sound(SoundType.MUD))
+    );
 
     // ==================== 沼泽装饰 ====================
 
@@ -79,6 +86,7 @@ public final class WildernessBlocks {
 
     public static void blockItems() {
         ITEMS.registerSimpleBlockItem(SOUL_JACK_O_LANTERN);
+        ITEMS.registerSimpleBlockItem(SILT);
 
         ITEMS.registerSimpleBlockItem(REEDS);
         ITEMS.registerSimpleBlockItem(CATTAILS);

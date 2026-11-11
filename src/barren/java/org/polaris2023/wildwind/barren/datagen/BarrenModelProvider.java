@@ -21,6 +21,7 @@ import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 import org.polaris2023.wildwind.core.datagen.provider.MissingModels;
 import org.polaris2023.wildwind.core.datagen.provider.SignModels;
+import org.polaris2023.wildwind.barren.registry.ModItems;
 
 import java.util.Optional;
 
@@ -80,6 +81,8 @@ public class BarrenModelProvider extends ModelProvider {
         blockModels.createCrossBlock(BarrenBlocks.SCORCHED_GRASS.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createCrossBlock(BarrenBlocks.SCORCHED_TWIG.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createCrossBlock(BarrenBlocks.TINY_CACTUS.get(), BlockModelGenerators.PlantType.NOT_TINTED);
+        blockModels.createTrivialCube(BarrenBlocks.ASH_BLOCK.get());
+        itemModels.generateFlatItem(ModItems.ASH.get(), ModelTemplates.FLAT_ITEM);
 
         // 流沙 / 可疑沙
         blockModels.createTrivialCube(BarrenBlocks.QUICKSAND.get());
@@ -123,8 +126,7 @@ public class BarrenModelProvider extends ModelProvider {
         blockModels.createBrushableBlock(BarrenBlocks.SUSPICIOUS_QUARTZ_SAND.get());
         blockModels.createBrushableBlock(BarrenBlocks.SUSPICIOUS_SOUL_SAND.get());
 
-        // 灰烬 / 植被（草稿）：暂无贴图，统一使用原版黑紫缺失纹理
-        MissingModels.cube(blockModels, BarrenBlocks.ASH_BLOCK.get());
+        // 灰烬 / 植被（草稿）：硝石与浮萤暂无贴图，统一使用原版黑紫缺失纹理
         MissingModels.cube(blockModels, BarrenBlocks.NITER_BLOCK.get());
         MissingModels.cross(blockModels, BarrenBlocks.FROGBIT.get());
     }

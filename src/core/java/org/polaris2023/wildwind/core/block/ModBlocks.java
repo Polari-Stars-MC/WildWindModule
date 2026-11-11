@@ -256,7 +256,6 @@ public final class ModBlocks {
                     .sound(SoundType.GRASS)
                     .pushReaction(PushReaction.DESTROY))
     );
-
     /** 凋零玫瑰丛（双层高花） */
     public static final DeferredBlock<DoublePlantBlock> WITHER_ROSE_BUSH = BLOCKS.registerBlock(
             "wither_rose_bush",
@@ -267,6 +266,17 @@ public final class ModBlocks {
                     .sound(SoundType.GRASS)
                     .pushReaction(PushReaction.DESTROY))
     );
+
+
+    public static final DeferredBlock<Block> KILN = BLOCKS.registerBlock(
+            "kiln",
+            p -> new Block(p
+                    .mapColor(MapColor.STONE)
+                    .strength(3.5F)
+                    .sound(SoundType.STONE)
+                    .requiresCorrectToolForDrops())
+);
+
 
     public static void blockItems() {
         ITEMS.registerSimpleBlockItem(AZALEA_LOG);
@@ -295,6 +305,7 @@ public final class ModBlocks {
         ITEMS.registerSimpleBlockItem(SOUL_ROSE_BUSH);
         ITEMS.registerSimpleBlockItem(WITHER_ROSE_BUSH);
         ITEMS.registerSimpleBlockItem(FLETCHING_TABLE);
+        ITEMS.registerSimpleBlockItem(KILN);
     }
 
     public static void register(IEventBus bus) {

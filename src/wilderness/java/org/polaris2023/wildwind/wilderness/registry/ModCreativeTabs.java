@@ -9,6 +9,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
+import org.polaris2023.wildwind.wilderness.registry.ModItems;
 
 /**
  * 荒野更新自己的创造模式物品栏页。
@@ -52,6 +53,8 @@ public final class ModCreativeTabs {
         output.accept(ModItems.CRAB_CLAW);
         output.accept(ModItems.FANG);
         output.accept(ModItems.OMNI_CLAW);
+        output.accept(ModItems.SPIDER_EGG.get());
+        output.accept(WildernessBlocks.SILT.get());
     }
 
     private ModCreativeTabs() {

@@ -21,6 +21,7 @@ public class WildernessEnUsLanguageProvider extends LanguageProvider {
     @Override
     protected void addTranslations() {
         addBlock(WildernessBlocks.SOUL_JACK_O_LANTERN, "§4Soul Jack o'Lantern");
+        addBlock(WildernessBlocks.SILT, "Silt");
 
         // Swamp decorations
         addBlock(WildernessBlocks.REEDS, "Reeds");
@@ -40,6 +41,7 @@ public class WildernessEnUsLanguageProvider extends LanguageProvider {
         addItem(ModItems.COOKED_PIRANHA, "Cooked Direfish");
         addItem(ModItems.PIRANHA_BUCKET, "Bucket of Direfish");
         addItem(ModItems.FANG, "Fang");
+        addItem(ModItems.SPIDER_EGG, "Spider Egg");
 
         addEntityType(ModEntities.MUDCRAB, "Mudcrab");
         addEntityType(ModEntities.PIRANHA, "Direfish");

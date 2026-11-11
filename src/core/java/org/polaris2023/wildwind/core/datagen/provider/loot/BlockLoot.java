@@ -47,6 +47,7 @@ public class BlockLoot extends BlockLootSubProvider {
         // 原版墙面告示牌没有掉落物，但战利品表必须存在
         add(ModBlocks.AZALEA_WALL_SIGN.get(), noDrop());
         add(ModBlocks.AZALEA_WALL_HANGING_SIGN.get(), noDrop());
+        dropSelf(ModBlocks.KILN.get());
     }
 
     private void generateWood(WoodFamily family) {

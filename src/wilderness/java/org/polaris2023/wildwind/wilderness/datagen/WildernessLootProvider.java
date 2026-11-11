@@ -133,6 +133,7 @@ public class WildernessLootProvider extends LootTableProvider {
             dropSelf(WildernessBlocks.CATTAILS.get());
             dropSelf(WildernessBlocks.BOG_MUD.get());
             dropSelf(WildernessBlocks.REMAINS.get());
+            dropSelf(WildernessBlocks.SILT.get());
         }
     }
 }

@@ -6,6 +6,7 @@ import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.registry.BarrenEntities;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
+import org.polaris2023.wildwind.barren.registry.ModItems;
 
 /**
  * 瘠土更新的简体中文语言文件。
@@ -126,5 +127,6 @@ public class BarrenZhCnLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS, "平滑石英砂岩楼梯");
         addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB, "平滑石英砂岩台阶");
         addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "切制石英砂岩台阶");
+        addItem(ModItems.ASH, "灰烬");
     }
 }

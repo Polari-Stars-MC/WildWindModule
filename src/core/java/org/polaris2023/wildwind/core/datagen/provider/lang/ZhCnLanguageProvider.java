@@ -53,6 +53,7 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.SOUL_ROSE, "灵魂玫瑰");
         addBlock(ModBlocks.SOUL_ROSE_BUSH, "灵魂玫瑰丛");
         addBlock(ModBlocks.WITHER_ROSE_BUSH, "凋零玫瑰丛");
+        addBlock(ModBlocks.KILN, "窑炉");
 
         // GUI
         add("container.fletching_table", "制作箭");
