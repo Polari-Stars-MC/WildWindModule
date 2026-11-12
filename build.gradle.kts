@@ -159,6 +159,18 @@ allprojects {
                     )
                 )
             }
+            // debug_all.bat 使用：起一个无界面服务端，导出全部方块 / 物品 / 生物属性后自动退出
+            register("debugExport") {
+                server()
+                programArgument("--nogui")
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/debug").get().asFile
+                systemProperty(
+                    "wildwind.debug.export.dir",
+                    rootProject.file(providers.gradleProperty("wildwindDebugOutput").getOrElse("build/debug")).absolutePath
+                )
+                systemProperty("wildwind.debug.export.exit", "true")
+                systemProperty("wildwind.debug.export.namespaces", "ww_core,ww_wilderness,ww_barren")
+            }
             configureEach {
                 systemProperty("forge.logging.markers", "REGISTRIES")
                 logLevel.set(INFO)

@@ -6,9 +6,11 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.config.ModConfig;
+import net.neoforged.neoforge.common.NeoForge;
 import org.polaris2023.wildwind.core.block.ModBlocks;
 import org.polaris2023.wildwind.core.block.entity.ModBlockEntities;
 import org.polaris2023.wildwind.core.config.ModCommonConfig;
+import org.polaris2023.wildwind.core.debug.ModDebugExporter;
 import org.polaris2023.wildwind.core.menu.ModMenus;
 import org.polaris2023.wildwind.core.registry.ModCreativeTabs;
 import org.polaris2023.wildwind.core.registry.ModDataComponents;
@@ -43,6 +45,8 @@ public class WildWindCore {
         ModItems.register(bus);
         ModCreativeTabs.register(bus);
         ModEntities.register(bus);
+
+        NeoForge.EVENT_BUS.addListener(ModDebugExporter::onServerStarted);
     }
 
     public static Identifier id(String path) {

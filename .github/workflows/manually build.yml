@@ -76,18 +76,12 @@ jobs:
           echo "Total jars: $(ls -1 dist/*.jar | wc -l)"
           ls -l dist
 
-      - name: Package jars
-        run: |
-          set -euo pipefail
-          cd dist
-          zip -j "../${{ steps.version.outputs.ARCHIVE_NAME }}.zip" ./*.jar
-          cd ..
-          ls -l "${{ steps.version.outputs.ARCHIVE_NAME }}.zip"
-
       - name: Upload package
         uses: actions/upload-artifact@v4
         with:
           name: ${{ steps.version.outputs.ARCHIVE_NAME }}
-          path: ${{ steps.version.outputs.ARCHIVE_NAME }}.zip
+          # 直接上传 jar：upload-artifact 会自动把路径打包成一个 zip，
+          # 再手动 zip 一次就会变成「zip 里套 zip」
+          path: dist/*.jar
           if-no-files-found: error
           retention-days: 30
