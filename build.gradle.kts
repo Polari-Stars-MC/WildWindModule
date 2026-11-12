@@ -209,3 +209,14 @@ allprojects {
         }
     }
 }
+
+// datagen 产物写在 build/generated/<module>/{client,server}，由上面 main.resources 的 srcDir 打进 jar。
+// 这些目录不在版本库里，所以打包前必须先跑一遍 datagen，否则 jar 会缺 blockstates / models / lang / loot_table 等资源。
+// 注意不能把 datagen 挂到 processResources 上（runClientData 依赖 classes，会形成循环依赖）。
+tasks.register("genData") {
+    group = "build"
+    description = "为每个模块运行 datagen，生成 build/generated/<module> 下的资源"
+    subprojects.forEach { sub ->
+        dependsOn(sub.tasks.matching { it.name == "runClientData" || it.name == "runServerData" })
+    }
+}

@@ -247,3 +247,14 @@ All notable changes to the Wild Wind Module project will be documented in this f
 ### Changed
 - **无贴图方块模型引用自身贴图路径** - 新增 `MissingModels` 模型工具：六面 / 楼梯 / 台阶 / 墙 / 十字植物 / 双层植物统一引用 `ww_xxx:block/<id>`，贴图缺失时客户端自动回退黑紫 missingno，补齐 png 即生效；新增方块同步补全中英语言、创造栏排序与物品标签
 - **可疑的灵魂沙贴图重绘** - 以原版 `suspicious_sand_0..3` 为基板、按灵魂沙的明暗色阶重上色，替换原 4 帧 `suspicious_soul_sand_*.png`；生成脚本 `textures_generator/gen_suspicious_soul_sand.ps1`
+
+---
+
+## [Unreleased] - 2026.11.12
+
+### Added
+- **`genData` 聚合任务** - 根项目新增 `genData`，`dependsOn` 三个模块的 `runClientData` + `runServerData`，一条命令跑完全部 datagen；不能把 datagen 挂到 `processResources` 上，因为 data run 依赖 `classes`，会形成循环依赖
+
+### Fixed
+- **GitHub Actions 打出的 jar 缺少 datagen 资源** - `build.gradle.kts` 把 `build/generated/<module>/{client,server}` 作为 `main.resources` 的 srcDir 打包，但 `build/` 被 `.gitignore` 忽略，而 CI 只执行 `./gradlew build`，从不运行 datagen，于是产物只剩 `src/<module>/resources` 里的手写资源；实测与本地完整 jar 对比为严格子集（CI 独有文件 0 个），core 缺 154 个、wilderness 缺 72 个、barren 缺 514 个文件（blockstates / models / items / lang / loot_table / tags / worldgen / data_maps），游戏内表现为方块无模型、物品无图标、方块无掉落、语言键未翻译
+- **CI 流程补 datagen 步骤** - `build.yml` 与 `manually build.yml` 改为先 `./gradlew genData` 再 `./gradlew build`；本地验证：删空 `build/generated` 后重跑 `genData` 能完整还原原文件集合（768 个文件一致），再 `build` 得到完整 jar（barren 由 307 KB → 340 KB）
