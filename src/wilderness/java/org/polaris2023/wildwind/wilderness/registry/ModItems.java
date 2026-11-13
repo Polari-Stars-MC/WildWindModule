@@ -28,6 +28,9 @@ public class ModItems {
     //泥沼蟹刷怪蛋
     public static final DeferredItem<SpawnEggItem> MUDCRAB_SPAWN_EGG = registerMobEgg("mudcrab_spawn_egg",ModEntities.MUDCRAB);
 
+    //幼蛛刷怪蛋
+    public static final DeferredItem<SpawnEggItem> SPIDERLING_SPAWN_EGG = registerMobEgg("spiderling_spawn_egg", ModEntities.SPIDERLING);
+
     //泥沼蟹桶
     public static final DeferredItem<MobBucketItem> MUDCRAB_BUCKET = register("mudcrab_bucket",p -> new MobBucketItem(ModEntities.MUDCRAB.get(),Fluids.WATER,SoundEvents.BUCKET_EMPTY,p));
 

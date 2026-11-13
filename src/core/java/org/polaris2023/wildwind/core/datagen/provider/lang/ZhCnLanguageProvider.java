@@ -37,6 +37,15 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.AZALEA_TRAPDOOR, "杜鹃木活板门");
         addBlock(ModBlocks.AZALEA_PRESSURE_PLATE, "杜鹃木压力板");
         addBlock(ModBlocks.AZALEA_BUTTON, "杜鹃木按钮");
+        addBlock(ModBlocks.AZALEA_SHELF, "杜鹃木展示架");
+        addBlock(ModBlocks.AZALEA_SIGN, "杜鹃木告示牌");
+        addBlock(ModBlocks.AZALEA_WALL_SIGN, "杜鹃木墙式告示牌");
+        addBlock(ModBlocks.AZALEA_HANGING_SIGN, "杜鹃木悬挂告示牌");
+        addBlock(ModBlocks.AZALEA_WALL_HANGING_SIGN, "杜鹃木墙式悬挂告示牌");
+        addItem(ModItems.AZALEA_BOAT, "杜鹃木船");
+        addItem(ModItems.AZALEA_CHEST_BOAT, "杜鹃木运输船");
+        addEntityType(ModEntities.AZALEA_BOAT, "杜鹃木船");
+        addEntityType(ModEntities.AZALEA_CHEST_BOAT, "杜鹃木运输船");
 
         // 其他方块
         addBlock(ModBlocks.FLETCHING_TABLE, "制箭台");
@@ -48,14 +57,5 @@ public class ZhCnLanguageProvider extends LanguageProvider {
         // GUI
         add("container.fletching_table", "制作箭");
         add("tab.ww_core.name", "原野之风");
-
-        // 幼蛛
-        addItem(ModItems.SPIDERLING_SPAWN_EGG, "幼蛛刷怪蛋");
-        addEntityType(ModEntities.SPIDERLING, "幼蛛");
-
-        // 幼蛛音效字幕
-        add("subtitles.entity.spiderling.ambient", "幼蛛：嘶嘶");
-        add("subtitles.entity.spiderling.hurt", "幼蛛：受伤");
-        add("subtitles.entity.spiderling.death", "幼蛛：死亡");
     }
 }

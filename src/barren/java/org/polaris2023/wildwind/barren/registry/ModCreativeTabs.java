@@ -2,6 +2,7 @@ package org.polaris2023.wildwind.barren.registry;
 
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
@@ -9,6 +10,7 @@ import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.block.BarrenWoodFamilies;
+import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 
 /**
@@ -20,9 +22,17 @@ public final class ModCreativeTabs {
     public static final DeferredRegister<CreativeModeTab> CREATIVE_TABS =
             DeferredRegister.create(Registries.CREATIVE_MODE_TAB, WildWindBarren.MOD_ID);
 
+    /**
+     * 荒野更新的创造栏 id：瘠土更新在编译期不依赖荒野，只用一个字符串做排序提示。
+     * 未安装荒野更新时该条排序边会被 NeoForge 忽略，剩下核心那条仍然生效。
+     */
+    private static final Identifier WILDERNESS_TAB = Identifier.fromNamespaceAndPath("ww_wilderness", "wilderness");
+
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> BARREN =
             CREATIVE_TABS.register("barren", () -> CreativeModeTab.builder()
                     .title(Component.translatable("tab.ww_barren.name"))
+                    // NeoForge 按 tabsBefore/tabsAfter 做拓扑排序：核心 → 荒野 → 瘠土
+                    .withTabsBefore(WildWindCore.id("wild_wind"), WILDERNESS_TAB)
                     .icon(() -> BarrenBlocks.CINDER_LOG.toStack())
                     .displayItems((params, output) -> addStacks(output))
                     .build()

@@ -1,12 +1,21 @@
+param([string[]]$Woods)
+
 Add-Type -AssemblyName System.Drawing
 
 # 24x26 告示牌编辑界面底板（vanilla SignEditScreen: 24x26, 板 0~11 行, 立柱 12~25 行 2px 宽）
 # 取色自本模组 *_planks.png（按 4 行一带求平均），板面/立柱的像素由脚本按模板绘制：
 #   3 条横板 + 深色拼缝 + 1px 描边 + 立柱，全部为本模组自绘，不引用原版贴图
-# 用法：在仓库根目录执行 pwsh -NoProfile -File textures_generator\gen_sign_gui.ps1
+# 用法：在仓库根目录执行 pwsh -NoProfile -File textures_generator\gen_sign_gui.ps1 [-Woods azalea]
 
-$tex = 'src\barren\resources\assets\ww_barren\textures'
-$out = "$tex\gui\signs"
+$bar  = 'src\barren\resources\assets\ww_barren\textures'
+$core = 'src\core\resources\assets\ww_core\textures'
+
+# 木材 -> 资源根目录
+$trees = @(
+    @('cinder', $bar),
+    @('ember', $bar),
+    @('azalea', $core)
+)
 
 function Clamp([int]$v) { if ($v -lt 0) { 0 } elseif ($v -gt 255) { 255 } else { $v } }
 function Shade([System.Drawing.Color]$c, [double]$k) {
@@ -17,7 +26,13 @@ function Jitter([System.Drawing.Color]$c, [int]$x, [int]$y) {
     [System.Drawing.Color]::FromArgb(255, (Clamp ($c.R + $d)), (Clamp ($c.G + $d)), (Clamp ($c.B + $d)))
 }
 
-foreach ($wood in @('cinder', 'ember')) {
+foreach ($tree in $trees) {
+    $wood = $tree[0]
+    if ($Woods -and ($Woods -notcontains $wood)) { continue }
+
+    $tex = $tree[1]
+    $out = "$tex\gui\signs"
+    New-Item -ItemType Directory -Force -Path $out | Out-Null
     $planks = [System.Drawing.Bitmap]::FromFile((Resolve-Path "$tex\block\${wood}_planks.png").Path)
 
     # 每 4 行一条横板，取前 3 行（跳过拼缝行）的平均色

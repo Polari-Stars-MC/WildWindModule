@@ -42,6 +42,17 @@ public class ModBlockTagsProvider extends BlockTagsProvider {
         addToTag(BlockTags.MINEABLE_WITH_AXE, ModBlocks.FLETCHING_TABLE.get());
         addToTag(BlockTags.SMALL_FLOWERS, ModBlocks.ROSE.get(), ModBlocks.SOUL_ROSE.get());
         addToTag(BlockTags.FLOWERS, ModBlocks.SOUL_ROSE_BUSH.get(), ModBlocks.WITHER_ROSE_BUSH.get());
+
+        // 告示牌 / 悬挂告示牌 / 展示架
+        addToTag(BlockItemTags.SIGNS.block(), ModBlocks.AZALEA_SIGN.get());
+        addToTag(BlockTags.WALL_SIGNS, ModBlocks.AZALEA_WALL_SIGN.get());
+        addToTag(BlockItemTags.HANGING_SIGNS.block(), ModBlocks.AZALEA_HANGING_SIGN.get());
+        addToTag(BlockTags.WALL_HANGING_SIGNS, ModBlocks.AZALEA_WALL_HANGING_SIGN.get());
+        addToTag(BlockTags.WOODEN_SHELVES, ModBlocks.AZALEA_SHELF.get());
+        addToTag(BlockTags.MINEABLE_WITH_AXE,
+                ModBlocks.AZALEA_SHELF.get(),
+                ModBlocks.AZALEA_SIGN.get(), ModBlocks.AZALEA_WALL_SIGN.get(),
+                ModBlocks.AZALEA_HANGING_SIGN.get(), ModBlocks.AZALEA_WALL_HANGING_SIGN.get());
     }
 
     private void registerWoodTags(WoodFamily family) {

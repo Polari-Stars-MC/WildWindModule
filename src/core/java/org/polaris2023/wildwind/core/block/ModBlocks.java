@@ -1,8 +1,12 @@
 package org.polaris2023.wildwind.core.block;
 
+import net.minecraft.world.item.HangingSignItem;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.SignItem;
 import net.minecraft.world.item.component.SuspiciousStewEffects;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.ButtonBlock;
+import net.minecraft.world.level.block.CeilingHangingSignBlock;
 import net.minecraft.world.level.block.DoorBlock;
 import net.minecraft.world.level.block.DoublePlantBlock;
 import net.minecraft.world.level.block.FenceBlock;
@@ -10,15 +14,22 @@ import net.minecraft.world.level.block.FenceGateBlock;
 import net.minecraft.world.level.block.FlowerBlock;
 import net.minecraft.world.level.block.PressurePlateBlock;
 import net.minecraft.world.level.block.RotatedPillarBlock;
+import net.minecraft.world.level.block.ShelfBlock;
 import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.block.StairBlock;
+import net.minecraft.world.level.block.StandingSignBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
+import net.minecraft.world.level.block.WallHangingSignBlock;
+import net.minecraft.world.level.block.WallSignBlock;
+import net.minecraft.world.level.block.entity.BlockEntityTypes;
 import net.minecraft.world.level.block.state.properties.BlockSetType;
+import net.minecraft.world.level.block.state.properties.NoteBlockInstrument;
 import net.minecraft.world.level.block.state.properties.WoodType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
+import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.core.WildWindCore;
@@ -37,7 +48,8 @@ public final class ModBlocks {
 
     // 杜鹃木方块类型
     public static final BlockSetType AZALEA_BLOCK_SET = BlockSetType.register(new BlockSetType("azalea"));
-    public static final WoodType AZALEA_WOOD_TYPE = WoodType.register(new WoodType("azalea", AZALEA_BLOCK_SET));
+    // 告示牌编辑界面用 WoodType.name() 拼贴图路径，必须带命名空间才能落到 ww_core 资源下
+    public static final WoodType AZALEA_WOOD_TYPE = WoodType.register(new WoodType(WildWindCore.MOD_ID + ":azalea", AZALEA_BLOCK_SET));
 
     // ==================== 杜鹃木套件 ====================
 
@@ -145,6 +157,60 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
+    public static final DeferredBlock<ShelfBlock> AZALEA_SHELF = BLOCKS.registerBlock(
+            "azalea_shelf",
+            p -> new ShelfBlock(p
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .instrument(NoteBlockInstrument.BASS)
+                    .sound(SoundType.SHELF)
+                    .ignitedByLava()
+                    .strength(2.0F, 3.0F))
+    );
+
+    public static final DeferredBlock<StandingSignBlock> AZALEA_SIGN = BLOCKS.registerBlock(
+            "azalea_sign",
+            p -> new StandingSignBlock(AZALEA_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .noCollision()
+                    .strength(1.0F)
+                    .ignitedByLava())
+    );
+
+    public static final DeferredBlock<WallSignBlock> AZALEA_WALL_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_sign",
+            p -> new WallSignBlock(AZALEA_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .noCollision()
+                    .strength(1.0F)
+                    .ignitedByLava())
+    );
+
+    public static final DeferredBlock<CeilingHangingSignBlock> AZALEA_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_hanging_sign",
+            p -> new CeilingHangingSignBlock(AZALEA_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .noCollision()
+                    .strength(1.0F)
+                    .ignitedByLava())
+    );
+
+    public static final DeferredBlock<WallHangingSignBlock> AZALEA_WALL_HANGING_SIGN = BLOCKS.registerBlock(
+            "azalea_wall_hanging_sign",
+            p -> new WallHangingSignBlock(AZALEA_WOOD_TYPE, p
+                    .mapColor(MapColor.COLOR_LIGHT_GREEN)
+                    .forceSolidOn()
+                    .instrument(NoteBlockInstrument.BASS)
+                    .noCollision()
+                    .strength(1.0F)
+                    .ignitedByLava())
+    );
+
     // ==================== 制箭台 ====================
 
     /** 制箭台 - 使用自定义方块类支持 GUI */
@@ -216,6 +282,13 @@ public final class ModBlocks {
         ITEMS.registerSimpleBlockItem(AZALEA_TRAPDOOR);
         ITEMS.registerSimpleBlockItem(AZALEA_PRESSURE_PLATE);
         ITEMS.registerSimpleBlockItem(AZALEA_BUTTON);
+        ITEMS.registerSimpleBlockItem(AZALEA_SHELF);
+        ITEMS.registerItem("azalea_sign",
+                p -> new SignItem(AZALEA_SIGN.get(), AZALEA_WALL_SIGN.get(), p),
+                () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
+        ITEMS.registerItem("azalea_hanging_sign",
+                p -> new HangingSignItem(AZALEA_HANGING_SIGN.get(), AZALEA_WALL_HANGING_SIGN.get(), p),
+                () -> new Item.Properties().stacksTo(16).useBlockDescriptionPrefix());
 
         ITEMS.registerSimpleBlockItem(ROSE);
         ITEMS.registerSimpleBlockItem(SOUL_ROSE);
@@ -228,6 +301,15 @@ public final class ModBlocks {
         BLOCKS.register(bus);
         blockItems();
         ITEMS.register(bus);
+    }
+
+    /**
+     * 告示牌 / 悬挂告示牌 / 展示架复用原版方块实体类型。
+     */
+    public static void addBlockEntityBlocks(BlockEntityTypeAddBlocksEvent event) {
+        event.modify(BlockEntityTypes.SIGN, AZALEA_SIGN.get(), AZALEA_WALL_SIGN.get());
+        event.modify(BlockEntityTypes.HANGING_SIGN, AZALEA_HANGING_SIGN.get(), AZALEA_WALL_HANGING_SIGN.get());
+        event.modify(BlockEntityTypes.SHELF, AZALEA_SHELF.get());
     }
 
     private ModBlocks() {

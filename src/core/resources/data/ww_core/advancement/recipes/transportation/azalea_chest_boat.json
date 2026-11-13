@@ -1,0 +1,32 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "ww_core:azalea_chest_boat"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    },
+    "has_boat": {
+      "conditions": {
+        "items": [
+          {
+            "items": "ww_core:azalea_boat"
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_boat"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "ww_core:azalea_chest_boat"
+    ]
+  }
+}

@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.core.entity.monster;
+package org.polaris2023.wildwind.wilderness.entity.monster;
 
 import com.geckolib.animatable.GeoEntity;
 import com.geckolib.animatable.instance.AnimatableInstanceCache;
@@ -19,7 +19,7 @@ import net.minecraft.world.entity.monster.spider.Spider;
 import net.minecraft.world.level.Level;
 import org.polaris2023.wildwind.core.entity.WindupAttackMob;
 import org.polaris2023.wildwind.core.entity.ai.goal.ChargingMeleeAttackGoal;
-import org.polaris2023.wildwind.core.registry.ModSoundEvents;
+import org.polaris2023.wildwind.wilderness.registry.ModSoundEvents;
 
 /**
  * 幼蛛；继承原版蜘蛛的攀爬与目标选择，攻击改为蓄力扑击喵~

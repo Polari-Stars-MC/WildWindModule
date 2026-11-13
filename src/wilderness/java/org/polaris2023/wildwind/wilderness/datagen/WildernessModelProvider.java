@@ -44,6 +44,7 @@ public class WildernessModelProvider extends ModelProvider {
         itemModels.generateFlatItem(ModItems.COOKED_PIRANHA.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PIRANHA_BUCKET.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.PIRANHA_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.SPIDERLING_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
         itemModels.generateFlatItem(ModItems.FANG.get(), ModelTemplates.FLAT_ITEM);
 
         // 万用蟹钳 - 使用手写 3D 模型
