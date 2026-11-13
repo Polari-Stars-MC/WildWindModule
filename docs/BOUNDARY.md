@@ -18,6 +18,8 @@ barren ─┐
 
 | 内容 | 归属 | 说明 |
 |---|---|---|
+| imp / imp-annotations（版本中间层，ADR-0003） | imp | 上层模块经 imp 的版本无关 API 访问版本敏感能力；**上层模块禁止 import `net.minecraft.*` / `net.neoforged.*`**（CI grep 兜底，随 ADR-0003 阶段三生效） |
+|---|---|---|
 | `WoodFamily` / `ModWoodFamilies` | core | 所有模块的木质聚合，barren 的木种在其自身模块注册 Family 实例，但类型定义在 core |
 | `WindupAttackMob` + 蓄力 AI goal | core | 跨模块实体 AI 契约 |
 | 制箭台：Block/BlockEntity/Menu/Screen/ArrowComponent/ArrowEffects | core | 矢术是核心玩法，箭物品可被任何模块产出 |

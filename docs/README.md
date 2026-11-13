@@ -6,7 +6,7 @@
 | [BOUNDARY.md](./BOUNDARY.md) | 模块边界与依赖规则：什么放哪、谁能依赖谁 | 跨模块改动、决定代码归属时 |
 | [CHECKPOINT_RECOVERY.md](./CHECKPOINT_RECOVERY.md) | 检查点与恢复手册：中断后如何恢复 | 任务被打断、构建/datagen 失败时 |
 | [ROADMAP.md](./ROADMAP.md) | 路线图与待办 | 规划下一步工作 |
-| [adr/](./adr/) | 架构决策记录（ADR） | 想知道"当初为什么这么定" |
+| [adr/](./adr/) | 架构决策记录（ADR） | 想知道"当初为什么这么定"（imp 中间层见 ADR-0003） |
 | [evidence/](./evidence/) | 验证证据存档 | 交付/审查功能改动时 |
 
 根目录文档：

@@ -237,8 +237,75 @@ All notable changes to the Wild Wind Module project will be documented in this f
 
 ---
 
-## [Unreleased] - 2026.11.10
+## [Unreleased] - 2026.11.13
 
+### Added
+
+- **源码预处理器（ADR-0004，取代 ADR-0003 的纯 APT 机制）** - 新增 `SourcePreprocessor`（`imp-processor` 模块，基于 JavaParser），在 javac 之前改写源码，实现"所有版本写在同一个类里"：
+  - 版本裁剪：按 `@Since` / `@Until`（含 `until` 区间、`exclude` 空洞）删除该版本不存在的成员
+  - 符号改名：`@Name` 同时改写声明与调用点；同一旧名映射到不同新名时**直接报错**而非猜测
+  - 外部改名表 `gradle/imp-renames.txt`（`族 => 旧名 => 新名 => 说明`）：用于 Minecraft 自身跨版本改名，按族过滤、按简单名匹配
+  - Gradle 接入：`preprocessImpSources`（JavaExec）→ `build/preprocessed/java`，`compileJava` 依赖它
+- **`@Name` 注解** - `@Target({TYPE, METHOD, FIELD, CONSTRUCTOR})`，SOURCE 保留策略；让源码可用顺手的名字书写，打包时改成目标版本真实名字
+- **单类多版本样板** - `ImpIds` 与 `imp/sample/SampleScreen` 改为三段并排实现：
+  `@Since("26.1") @Name("id")` → `Identifier.parse`；`@Since("1.21") @Until("26.1") @Name("id")` → `ResourceLocation.fromNamespaceAndPath`；`@Until("1.21") @Name("id")` → `new ResourceLocation(...)`。三个产物里的方法都叫 `id`
+- **预处理器回归测试** - `SourcePreprocessorTest` 8 项：三分支各自只留一段、区间/空洞裁剪、声明与调用点改名、`@Name` 歧义报错、外部改名表生效与族过滤、非法目标版本报错
+- **imp API 允许返回 MC 原生类型** - `ImpIds.id(...)` / `ImpIds.of(...)` 改为直接返回 `Identifier`（26.x）或 `ResourceLocation`（1.20/1.21），三族各自只有一份确定签名；新增 `idString` / `ofString` 返回 `String` 供存字段与字符串比较。调用方用 `var` 接原生返回版本，禁止在内容模块显式书写这些类型（否则版本分叉泄漏到上层）
+- **返回类型分叉的回归测试** - `allowsVaryingReturnTypesAcrossVersionBranches`：同名声明的返回类型按版本不同，每次只保留一个分支即可编译——这是"imp 可返回 MC 原生类型"的实现依据
+
+### Changed
+
+- **退役按族分目录的实现** - 删除上一轮试点的 `imp/src/family/{1.20,1.21,26.x}`、`FamilyBridge` 与 `FamilyBridgeContract`；跨族差异全部收敛进单类的注解组合。版本族概念仅保留用于依赖与工具链选择
+- **APT 降级为辅助** - `ImpManifest` 与 `@ParamSince` 重载分派仅服务"参数差异"；成员级差异改由删除处理，不再用 `if (ImpManifest.HAS_X)` 分流
+
+### Fixed
+
+- **`presentIn` 变量遮蔽** - `since` 同时作为注解节点与版本字符串变量导致编译失败，重命名为 `sinceVersion`
+
+---
+
+## [Unreleased] - 2026.11.12
+
+### Added
+
+- **imp 中间层基础设施（ADR-0003 阶段一/二）** - 新增 `imp-annotations` 与 `imp-processor` 两个纯 Java 子项目，不参与 moddev/NeoForge 配置（根 build.gradle.kts 的 `impInfraProjects` 提前返回）：
+  - `imp-annotations`：`@Since` / `@Until`（field/method/构造器/类型）与 `@ParamSince`（参数）注解，保留策略 SOURCE，零产物开销；`ImpVersionSpec` 提供 seg 数值比较语义（`26.1 < 26.2 < 26.2.1`），非数字版本号直接抛错
+  - `imp-processor`：标准 APT 处理器，按 `-AimpTargetMcVersion`（回退 `targetMcVersion` 属性）生成 `org.polaris2023.wildwind.imp.runtime.ImpManifest` 常量类（`HAS_*` / `UNTIL_*` 布尔，编译期内联）；处理器注册用 auto-service 生成 `META-INF/services`；代码生成用纯文本拼装，处理器 jar 自包含（无 javapoet 传递依赖）
+  - `ParamSinceValidator`：带 `@ParamSince` 参数的方法必须在同类型中存在「同名、同返回类型、其余参数按序一致」的回退重载，否则编译报错（重载分派的前提）
+  - `settings.gradle.kts`：imp 基础设施项目不再重定向 projectDir 到 `modules/`，使用根目录标准布局
+- **端到端验证** - 冒烟测试（临时目录 javac）：target=26.2 与 26.1 产出正确翻转的 `ImpManifest`；缺失回退重载时编译失败并输出指引信息
+- **注解区间与空洞表达** - `@Since` 增加 `until()` 与 `exclude()`，`@Until` 增加 `since()` 与 `exclude()`：支持「区间存在」（`[start, end)`）与「区间内特定版本缺失」（如 `@Since(value="26.1", exclude={"26.2"})` 表示 26.1 有、26.2 中途移除、26.3 恢复）；`exclude` 为精确版本匹配（`ImpVersionSpec.matchesAny`）；起始版本不早于结束版本时编译报错
+- **imp 中间层本体（ADR-0003 阶段三）** - 新增 `imp` 子项目（根目录标准布局，非 mod）：
+  - 自行应用 moddev 插件并配置 `neoForge { version = neoVersion }`，因此**可以真正 import `net.minecraft.*` / `net.neoforged.*`**（ADR 前提：版本适配实现放在 imp 内）
+  - 依赖 `compileOnly project(":imp-annotations")` + `annotationProcessor project(":imp-processor")`，JavaCompile 注入 `-AimpTargetMcVersion`（含回退 key `-AtargetMcVersion`）
+  - `imp/sample/SampleScreen`：模板示例，同时作为构建期自检——三种差异（成员存在 `@Since`、成员移除 `@Until`、参数差异 `@ParamSince` + 回退重载）每次构建都会真实编译一遍
+  - 三个 mod 模块改为 `api(project(":imp"))`；jar 阶段把 imp 字节码合并进 mod 产物（`tasks.named<Jar>("jar") { from(imp.main.output) }`），否则发布后运行期 `NoClassDefFoundError`
+- **产物名带目标版本** - mod jar 改为 `ww_core-mc26.2-1.0.0.jar` 形式（imp 为 `ww-imp-mc26.2-1.0.0.jar`），CI 矩阵各版本产物可直接区分
+
+### Fixed
+
+- **imp 子项目 projectDir 错位** - settings.gradle.kts 原循环把所有 include 的子项目都重定向到 `modules/<名>`，导致 `imp-annotations` 源码不被识别（`compileJava NO-SOURCE`）；已拆分 `modProjects` / `impInfraProjects` 两组，并清理配置缓存后恢复
+- **处理器 source 版本写死** - `@SupportedSourceVersion(RELEASE_21)` 在 Java 25 编译时报「不支持 source 版本 21」；改为覆盖 `getSupportedSourceVersion()` 返回 `SourceVersion.latestSupported()`
+- **`@SupportedOptions` 前向引用编译失败** - 注解参数引用同类常量时报「找不到符号」，改为直接写字面量 key
+- **`@ParamSince` 宿主方法缺少 manifest 常量** - 仅参数带注解的方法此前不生成 `HAS_*` 常量，回退重载无从分派；现已为宿主方法补生成
+- **imp 多版本族分区（ADR-0003 阶段 B）** - `imp` 内部按版本族分区，解决"跨大版本 API 改名/改用法"这类注解无法表达的问题：
+  - 目录：`imp/src/main`（版本无关 API）+ `imp/src/family/<族>/java`（各族适配实现）；Gradle 依 `targetMcVersion` 只用其一
+  - 三族实测通过：`1.20`（MC 1.20.4 / NeoForge 20.4.253 / Java 17）、`1.21`（MC 1.21.1 / NeoForge 21.1.209 / Java 21）、`26.x`（MC 26.2 / NeoForge 26.2.0.75 / Java 25）
+  - Java 级别按 MC 版本推导（`<1.20.5`→17，`1.20.5~26`→21，`>=26`→25），工具链统一 JDK 25 + `options.release` 降级；1.20 族产物实测 major version 61
+  - 真实跨族差异已跑通：1.21 的 `ResourceLocation` 构造器变为私有（须用 `fromNamespaceAndPath`），26.x 改名为 `Identifier` —— 各族 `FamilyBridge` 分别实现，main 源码零改动
+  - `imp` jar 的 MANIFEST 记录 `Imp-Target-MC-Version` / `Imp-Version-Family` / `Imp-Neo-Version`，便于排查产物来源
+- **imp 边界守卫（ADR-0003 阶段 A）** - 新增 `checkImpBoundary` 任务与规则文件 `gradle/imp-boundary.txt`（格式 `族列表 => 正则 => 说明`），挂在各 mod 模块 `check` 之前：
+  - 校验内容模块未使用只存在于某族的版本分叉 API（首条规则即实测出 1.21 族下 17 处 `Identifier` 违规）
+  - 禁止内容模块自行使用 `@Since`/`@Until`/`@ParamSince`（版本注解只能是 imp 的收敛点）
+  - 分隔符用 `=>` 而非 `|`，因为正则本身常用 `|`
+- **处理器回归测试（ADR-0003 阶段 A）** - `imp-processor` 新增 11 个 JUnit 测试，用 JDK 自带 `javac` 驱动真实编译：
+  - `ImpProcessorCompileTest`：`@Since`/`@Until` 翻转、`[start,end)` 区间（含右开边界 26.3）、`exclude` 命中与未命中、`@ParamSince` 宿主常量；三类失败场景（区间倒置、缺回退重载、缺目标版本）
+  - `ImpVersionSpecTest`：跨大版本排序、缺失段视为 0（`26.2` == `26.2.0`）、非数字版本报错
+- **增量构建验证** - 切换 `-PtargetMcVersion` 时 Gradle 正确重编译 `imp` 并更新嵌入的字节码，无跨族串味
+
+---
+
+## [Unreleased] - 2026.11.10
 ### Added
 - **`ww_core` 凋零玫瑰丛** - 新增 `wither_rose_bush`；补全掉落表与花标签
 - **`ww_wilderness` 沼泽方块** - 新增 `reeds`、`cattails`、`bog_mud`、`remains`
