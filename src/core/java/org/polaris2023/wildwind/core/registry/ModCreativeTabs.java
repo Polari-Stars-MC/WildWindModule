@@ -39,13 +39,18 @@ public final class ModCreativeTabs {
     private static void addStacks(CreativeModeTab.Output output) {
         ModWoodFamilies.AZALEA.buildingBlocks().forEach(output::accept);
 
+        // 告示牌 / 悬挂告示牌 / 展示架 / 船
+        output.accept(ModBlocks.AZALEA_SIGN.get().asItem());
+        output.accept(ModBlocks.AZALEA_HANGING_SIGN.get().asItem());
+        output.accept(ModItems.AZALEA_BOAT.get());
+        output.accept(ModItems.AZALEA_CHEST_BOAT.get());
+        output.accept(ModBlocks.AZALEA_SHELF.get().asItem());
+
         output.accept(ModBlocks.ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE.get());
         output.accept(ModBlocks.SOUL_ROSE_BUSH.get());
         output.accept(ModBlocks.WITHER_ROSE_BUSH.get());
         output.accept(ModBlocks.FLETCHING_TABLE.get());
-
-        output.accept(ModItems.SPIDERLING_SPAWN_EGG);
     }
 
     private ModCreativeTabs() {

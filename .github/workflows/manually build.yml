@@ -1,0 +1,87 @@
+name: Manually Build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: manual-build-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    name: Build & Package
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup JDK 25
+        uses: actions/setup-java@v4
+        with:
+          java-version: '25'
+          distribution: 'temurin'
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      # This is needed to be able to run ./gradlew below
+      - name: Make Gradle wrapper executable
+        run: chmod +x ./gradlew
+
+      # datagen 产物不提交到版本库，必须在打包前生成，否则 jar 里会缺模型 / 语言文件 / 战利品表等资源
+      - name: Generate data (datagen)
+        run: ./gradlew genData --stacktrace
+
+      - name: Build with Gradle
+        run: ./gradlew build --stacktrace
+
+      - name: Resolve version
+        id: version
+        run: |
+          version=$(grep -E '^[[:space:]]*modVersion[[:space:]]*=' gradle.properties | head -n1 | cut -d= -f2 | tr -d '[:space:]')
+          version=${version:-dev}
+          echo "ARCHIVE_NAME=ww-${version}" >> "$GITHUB_OUTPUT"
+          echo "Mod version: ${version}"
+
+      - name: Collect module jars
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          for module in core wilderness barren; do
+            jars=()
+            while IFS= read -r jar; do
+              jars+=("$jar")
+            done < <(find . \( -path './.git' -o -path './.gradle' \) -prune -o \
+                       -type f -path '*/build/libs/*' -name "ww_${module}-*.jar" \
+                       ! -name '*-sources.jar' ! -name '*-javadoc.jar' -print | sort)
+
+            if [ "${#jars[@]}" -eq 0 ]; then
+              echo "::error::No jar found for ww_${module}"
+              find . \( -path './.git' -o -path './.gradle' \) -prune -o -type f -path '*/build/libs/*' -name '*.jar' -print | sort || true
+              exit 1
+            fi
+            if [ "${#jars[@]}" -gt 1 ]; then
+              echo "::warning::Multiple jars found for ww_${module}, keeping all: ${jars[*]}"
+            fi
+            for jar in "${jars[@]}"; do
+              cp "$jar" dist/
+              echo "Collected: $jar"
+            done
+          done
+
+          echo "Total jars: $(ls -1 dist/*.jar | wc -l)"
+          ls -l dist
+
+      - name: Upload package
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ steps.version.outputs.ARCHIVE_NAME }}
+          # 直接上传 jar：upload-artifact 会自动把路径打包成一个 zip，
+          # 再手动 zip 一次就会变成「zip 里套 zip」
+          path: dist/*.jar
+          if-no-files-found: error
+          retention-days: 30

@@ -7,6 +7,7 @@ import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.client.entity.renderer.MudcrabRenderer;
 import org.polaris2023.wildwind.wilderness.client.entity.renderer.PiranhaRenderer;
+import org.polaris2023.wildwind.wilderness.client.entity.renderer.SpiderlingRenderer;
 import org.polaris2023.wildwind.wilderness.registry.ModEntities;
 
 /**
@@ -23,6 +24,7 @@ public class EntitiesClientHandler {
     static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
         event.registerEntityRenderer(ModEntities.PIRANHA.get(), PiranhaRenderer::new);
         event.registerEntityRenderer(ModEntities.MUDCRAB.get(), MudcrabRenderer::new);
+        event.registerEntityRenderer(ModEntities.SPIDERLING.get(), SpiderlingRenderer::new);
     }
 
     private EntitiesClientHandler() {

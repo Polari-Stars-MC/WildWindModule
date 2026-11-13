@@ -43,6 +43,8 @@ public class WildernessZhCnLanguageProvider extends LanguageProvider {
 
         addEntityType(ModEntities.MUDCRAB, "泥沼蟹");
         addEntityType(ModEntities.PIRANHA, "恐鱼");
+        addItem(ModItems.SPIDERLING_SPAWN_EGG, "幼蛛刷怪蛋");
+        addEntityType(ModEntities.SPIDERLING, "幼蛛");
 
         // 属性
         add("attribute.name.ww_wilderness.extra_item_pickup_range", "额外物品拾取距离");
@@ -62,5 +64,10 @@ public class WildernessZhCnLanguageProvider extends LanguageProvider {
         add("subtitles.entity.piranha.attack", "恐鱼：袭击");
         add("subtitles.entity.piranha.death", "恐鱼：死亡");
         add("subtitles.entity.piranha.flop", "恐鱼：拍打");
+
+        // 幼蛛音效字幕
+        add("subtitles.entity.spiderling.ambient", "幼蛛：嘶嘶");
+        add("subtitles.entity.spiderling.hurt", "幼蛛：受伤");
+        add("subtitles.entity.spiderling.death", "幼蛛：死亡");
     }
 }

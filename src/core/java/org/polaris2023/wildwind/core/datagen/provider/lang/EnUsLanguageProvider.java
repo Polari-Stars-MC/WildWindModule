@@ -37,6 +37,15 @@ public class EnUsLanguageProvider extends LanguageProvider {
         addBlock(ModBlocks.AZALEA_TRAPDOOR, "Azalea Trapdoor");
         addBlock(ModBlocks.AZALEA_PRESSURE_PLATE, "Azalea Pressure Plate");
         addBlock(ModBlocks.AZALEA_BUTTON, "Azalea Button");
+        addBlock(ModBlocks.AZALEA_SHELF, "Azalea Shelf");
+        addBlock(ModBlocks.AZALEA_SIGN, "Azalea Sign");
+        addBlock(ModBlocks.AZALEA_WALL_SIGN, "Azalea Wall Sign");
+        addBlock(ModBlocks.AZALEA_HANGING_SIGN, "Azalea Hanging Sign");
+        addBlock(ModBlocks.AZALEA_WALL_HANGING_SIGN, "Azalea Wall Hanging Sign");
+        addItem(ModItems.AZALEA_BOAT, "Azalea Boat");
+        addItem(ModItems.AZALEA_CHEST_BOAT, "Azalea Boat with Chest");
+        addEntityType(ModEntities.AZALEA_BOAT, "Azalea Boat");
+        addEntityType(ModEntities.AZALEA_CHEST_BOAT, "Azalea Boat with Chest");
 
         // 其他方块
         addBlock(ModBlocks.FLETCHING_TABLE, "Fletching Table");
@@ -48,14 +57,5 @@ public class EnUsLanguageProvider extends LanguageProvider {
         // GUI
         add("container.fletching_table", "Arrow Crafting");
         add("tab.ww_core.name", "Wild Wind");
-
-        // 幼蛛
-        addItem(ModItems.SPIDERLING_SPAWN_EGG, "Spiderling Spawn Egg");
-        addEntityType(ModEntities.SPIDERLING, "Spiderling");
-
-        // 幼蛛音效字幕
-        add("subtitles.entity.spiderling.ambient", "Spiderling hisses");
-        add("subtitles.entity.spiderling.hurt", "Spiderling hurts");
-        add("subtitles.entity.spiderling.death", "Spiderling dies");
     }
 }

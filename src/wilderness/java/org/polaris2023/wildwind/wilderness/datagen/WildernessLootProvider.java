@@ -89,6 +89,29 @@ public class WildernessLootProvider extends LootTableProvider {
                                             .when(LootItemRandomChanceCondition.randomChance(0.05F))
                             )
             );
+
+            // 幼蛛：线 0~2 根，蜘蛛眼 0~1 个（仅玩家击杀）
+            this.add(
+                    ModEntities.SPIDERLING.get(),
+                    LootTable.lootTable()
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(ConstantValue.exactly(1.0F))
+                                            .add(LootItem.lootTableItem(Items.STRING)
+                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(0.0F, 2.0F)))
+                                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
+                                            )
+                            )
+                            .withPool(
+                                    LootPool.lootPool()
+                                            .setRolls(ConstantValue.exactly(1.0F))
+                                            .add(LootItem.lootTableItem(Items.SPIDER_EYE)
+                                                    .apply(SetItemCountFunction.setCount(UniformGenerator.between(-1.0F, 1.0F)))
+                                                    .apply(EnchantedCountIncreaseFunction.lootingMultiplier(this.registries, UniformGenerator.between(0.0F, 1.0F)))
+                                            )
+                                            .when(LootItemKilledByPlayerCondition.killedByPlayer())
+                            )
+            );
         }
     }
 

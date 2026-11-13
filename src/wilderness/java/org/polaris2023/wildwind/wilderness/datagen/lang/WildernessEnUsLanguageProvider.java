@@ -43,6 +43,8 @@ public class WildernessEnUsLanguageProvider extends LanguageProvider {
 
         addEntityType(ModEntities.MUDCRAB, "Mudcrab");
         addEntityType(ModEntities.PIRANHA, "Direfish");
+        addItem(ModItems.SPIDERLING_SPAWN_EGG, "Spiderling Spawn Egg");
+        addEntityType(ModEntities.SPIDERLING, "Spiderling");
 
         // 属性
         add("attribute.name.ww_wilderness.extra_item_pickup_range", "Extra Item Pickup Range");
@@ -62,5 +64,10 @@ public class WildernessEnUsLanguageProvider extends LanguageProvider {
         add("subtitles.entity.piranha.attack", "Direfish attacks");
         add("subtitles.entity.piranha.death", "Direfish dies");
         add("subtitles.entity.piranha.flop", "Direfish flops");
+
+        // 幼蛛音效字幕
+        add("subtitles.entity.spiderling.ambient", "Spiderling hisses");
+        add("subtitles.entity.spiderling.hurt", "Spiderling hurts");
+        add("subtitles.entity.spiderling.death", "Spiderling dies");
     }
 }

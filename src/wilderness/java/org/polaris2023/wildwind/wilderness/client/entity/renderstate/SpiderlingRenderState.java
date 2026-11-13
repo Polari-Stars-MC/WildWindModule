@@ -1,4 +1,4 @@
-package org.polaris2023.wildwind.core.client.entity.renderstate;
+package org.polaris2023.wildwind.wilderness.client.entity.renderstate;
 
 import com.geckolib.constant.dataticket.DataTicket;
 import com.geckolib.renderer.base.GeoRenderState;

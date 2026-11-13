@@ -6,6 +6,7 @@ import net.minecraft.world.item.CreativeModeTab;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredHolder;
 import net.neoforged.neoforge.registries.DeferredRegister;
+import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
 
@@ -21,6 +22,8 @@ public final class ModCreativeTabs {
     public static final DeferredHolder<CreativeModeTab, CreativeModeTab> WILDERNESS =
             CREATIVE_TABS.register("wilderness", () -> CreativeModeTab.builder()
                     .title(Component.translatable("tab.ww_wilderness.name"))
+                    // NeoForge 按 tabsBefore/tabsAfter 做拓扑排序，声明排在核心「原野之风」之后
+                    .withTabsBefore(WildWindCore.id("wild_wind"))
                     .icon(() -> WildernessBlocks.SOUL_JACK_O_LANTERN.toStack())
                     .displayItems((params, output) -> addStacks(output))
                     .build()
@@ -40,6 +43,7 @@ public final class ModCreativeTabs {
         output.accept(WildernessBlocks.REMAINS.get());
 
         output.accept(ModItems.MUDCRAB_SPAWN_EGG);
+        output.accept(ModItems.SPIDERLING_SPAWN_EGG);
         output.accept(ModItems.MUDCRAB_BUCKET);
         output.accept(ModItems.PIRANHA_SPAWN_EGG);
         output.accept(ModItems.PIRANHA_BUCKET);

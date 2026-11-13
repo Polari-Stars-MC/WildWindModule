@@ -159,6 +159,18 @@ allprojects {
                     )
                 )
             }
+            // debug_all.bat 使用：起一个无界面服务端，导出全部方块 / 物品 / 生物属性后自动退出
+            register("debugExport") {
+                server()
+                programArgument("--nogui")
+                gameDirectory = layout.buildDirectory.dir("runs/${project.name}/debug").get().asFile
+                systemProperty(
+                    "wildwind.debug.export.dir",
+                    rootProject.file(providers.gradleProperty("wildwindDebugOutput").getOrElse("build/debug")).absolutePath
+                )
+                systemProperty("wildwind.debug.export.exit", "true")
+                systemProperty("wildwind.debug.export.namespaces", "ww_core,ww_wilderness,ww_barren")
+            }
             configureEach {
                 systemProperty("forge.logging.markers", "REGISTRIES")
                 logLevel.set(INFO)
@@ -207,5 +219,16 @@ allprojects {
             isDownloadJavadoc = true
             isDownloadSources = true
         }
+    }
+}
+
+// datagen 产物写在 build/generated/<module>/{client,server}，由上面 main.resources 的 srcDir 打进 jar。
+// 这些目录不在版本库里，所以打包前必须先跑一遍 datagen，否则 jar 会缺 blockstates / models / lang / loot_table 等资源。
+// 注意不能把 datagen 挂到 processResources 上（runClientData 依赖 classes，会形成循环依赖）。
+tasks.register("genData") {
+    group = "build"
+    description = "为每个模块运行 datagen，生成 build/generated/<module> 下的资源"
+    subprojects.forEach { sub ->
+        dependsOn(sub.tasks.matching { it.name == "runClientData" || it.name == "runServerData" })
     }
 }

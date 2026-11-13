@@ -17,6 +17,7 @@ import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.core.block.ModBlocks;
 import org.polaris2023.wildwind.core.block.ModWoodFamilies;
 import org.polaris2023.wildwind.core.block.WoodFamily;
+import org.polaris2023.wildwind.core.registry.ModItems;
 
 import java.util.Arrays;
 import java.util.concurrent.CompletableFuture;
@@ -44,6 +45,13 @@ public class ModItemTagsProvider extends ItemTagsProvider {
         }
 
         addToTag(BlockItemTags.FLOWERS.item(), ModBlocks.SOUL_ROSE_BUSH.get(), ModBlocks.WITHER_ROSE_BUSH.get());
+
+        // 告示牌 / 悬挂告示牌 / 展示架 / 船
+        addToTag(ItemTags.SIGNS, ModBlocks.AZALEA_SIGN.get());
+        addToTag(ItemTags.HANGING_SIGNS, ModBlocks.AZALEA_HANGING_SIGN.get());
+        addToTag(ItemTags.WOODEN_SHELVES, ModBlocks.AZALEA_SHELF.get());
+        addToTag(ItemTags.BOATS, ModItems.AZALEA_BOAT.get());
+        addToTag(ItemTags.CHEST_BOATS, ModItems.AZALEA_CHEST_BOAT.get());
     }
 
     private void registerWoodItemTags(WoodFamily family) {

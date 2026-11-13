@@ -1,11 +1,11 @@
-package org.polaris2023.wildwind.core.client.entity.renderer;
+package org.polaris2023.wildwind.wilderness.client.entity.renderer;
 
 import com.geckolib.renderer.GeoEntityRenderer;
 import net.minecraft.client.renderer.entity.EntityRendererProvider;
-import org.polaris2023.wildwind.core.client.entity.model.SpiderlingModel;
-import org.polaris2023.wildwind.core.client.entity.renderer.layer.SpiderlingEyesLayer;
-import org.polaris2023.wildwind.core.client.entity.renderstate.SpiderlingRenderState;
-import org.polaris2023.wildwind.core.entity.monster.Spiderling;
+import org.polaris2023.wildwind.wilderness.client.entity.model.SpiderlingModel;
+import org.polaris2023.wildwind.wilderness.client.entity.renderer.layer.SpiderlingEyesLayer;
+import org.polaris2023.wildwind.wilderness.client.entity.renderstate.SpiderlingRenderState;
+import org.polaris2023.wildwind.wilderness.entity.monster.Spiderling;
 
 import javax.annotation.Nullable;
 

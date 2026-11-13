@@ -32,6 +32,17 @@ public class ModModelProvider extends ModelProvider {
             registerWoodModels(blockModels, family);
         }
 
+        // 告示牌 / 悬挂告示牌 / 展示架
+        SignModels.registerSet(blockModels,
+                ModBlocks.AZALEA_PLANKS.get(), ModBlocks.STRIPPED_AZALEA_LOG.get(),
+                ModBlocks.AZALEA_SIGN.get(), ModBlocks.AZALEA_WALL_SIGN.get(),
+                ModBlocks.AZALEA_HANGING_SIGN.get(), ModBlocks.AZALEA_WALL_HANGING_SIGN.get(),
+                ModBlocks.AZALEA_SHELF.get());
+
+        // 船物品图标
+        itemModels.generateFlatItem(ModItems.AZALEA_BOAT.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.AZALEA_CHEST_BOAT.get(), ModelTemplates.FLAT_ITEM);
+
         // 制箭台：外观与方块模型均沿用原版，只多了 GUI
         Identifier vanillaFletchingModel = ModelLocationUtils.getModelLocation(Blocks.FLETCHING_TABLE);
         blockModels.blockStateOutput.accept(BlockModelGenerators.createSimpleBlock(
@@ -43,8 +54,6 @@ public class ModModelProvider extends ModelProvider {
         blockModels.createCrossBlockWithDefaultItem(ModBlocks.SOUL_ROSE.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createDoublePlantWithDefaultItem(ModBlocks.SOUL_ROSE_BUSH.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         MissingModels.doublePlant(blockModels, ModBlocks.WITHER_ROSE_BUSH.get());
-
-        itemModels.generateFlatItem(ModItems.SPIDERLING_SPAWN_EGG.get(), ModelTemplates.FLAT_ITEM);
     }
 
     private void registerWoodModels(BlockModelGenerators blockModels, WoodFamily family) {

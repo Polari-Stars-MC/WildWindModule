@@ -40,6 +40,13 @@ public class BlockLoot extends BlockLootSubProvider {
         dropSelf(ModBlocks.SOUL_ROSE.get());
         dropSelf(ModBlocks.SOUL_ROSE_BUSH.get());
         dropSelf(ModBlocks.WITHER_ROSE_BUSH.get());
+
+        dropSelf(ModBlocks.AZALEA_SHELF.get());
+        dropSelf(ModBlocks.AZALEA_SIGN.get());
+        dropSelf(ModBlocks.AZALEA_HANGING_SIGN.get());
+        // 原版墙面告示牌没有掉落物，但战利品表必须存在
+        add(ModBlocks.AZALEA_WALL_SIGN.get(), noDrop());
+        add(ModBlocks.AZALEA_WALL_HANGING_SIGN.get(), noDrop());
     }
 
     private void generateWood(WoodFamily family) {

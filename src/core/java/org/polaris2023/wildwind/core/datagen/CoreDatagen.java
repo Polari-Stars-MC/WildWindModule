@@ -12,7 +12,6 @@ import org.polaris2023.wildwind.core.datagen.provider.ModRecipeProvider;
 import org.polaris2023.wildwind.core.datagen.provider.lang.EnUsLanguageProvider;
 import org.polaris2023.wildwind.core.datagen.provider.lang.ZhCnLanguageProvider;
 import org.polaris2023.wildwind.core.datagen.provider.tag.ModBlockTagsProvider;
-import org.polaris2023.wildwind.core.datagen.provider.tag.ModEntityTypeTagsProvider;
 import org.polaris2023.wildwind.core.datagen.provider.tag.ModItemTagsProvider;
 
 /**
@@ -36,7 +35,6 @@ public class CoreDatagen {
     private static void gatherServer(GatherDataEvent.Server event) {
         event.createProvider(ModBlockTagsProvider::new);
         event.createProvider(ModItemTagsProvider::new);
-        event.createProvider(ModEntityTypeTagsProvider::new);
         event.createProvider(ModLootProvider::new);
         event.createProvider(ModDatapackProvider::new);
         event.createProvider(ModDataMapsProvider::new);
