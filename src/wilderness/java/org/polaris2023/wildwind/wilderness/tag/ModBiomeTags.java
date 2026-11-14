@@ -22,6 +22,6 @@ public interface ModBiomeTags {
     }
 
     static TagKey<Biome> create(String path) {
-        return TagKey.create(Registries.BIOME, WildWindWilderness.id(path));
+        return TagKey.create(Registries.BIOME, WildWindWilderness.id(path).unwrap());
     }
 }

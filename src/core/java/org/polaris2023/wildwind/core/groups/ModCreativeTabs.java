@@ -14,9 +14,14 @@ import org.polaris2023.wildwind.core.WildWindCore;
 import org.polaris2023.wildwind.core.block.ModBlocks;
 import org.polaris2023.wildwind.core.block.ModWoodFamilies;
 import org.polaris2023.wildwind.core.block.WoodFamily;
+import org.polaris2023.wildwind.imp.ImpCreativeTabs;
 
 /**
  * 核心模块的原版物品栏排序。
+ *
+ * <p>「插到锚点之后」走 {@link ImpCreativeTabs#insertAfter}：1.20.6 的
+ * {@code BuildCreativeModeTabContentsEvent} 没有 {@code insertAfter}，
+ * 只有 {@code getEntries()} 那张链式表（详见 imp 侧注释）。</p>
  *
  * @author baka4n
  * @author Mon-Landis
@@ -37,11 +42,11 @@ public final class ModCreativeTabs {
 
         if (event.getTabKey() == CreativeModeTabs.NATURAL_BLOCKS) {
             ItemStack azaleaLogStack = ModBlocks.AZALEA_LOG.toStack();
-            event.insertAfter(new ItemStack(Items.CHERRY_LOG), azaleaLogStack, VISIBILITY);
-            event.insertAfter(azaleaLogStack, ModBlocks.ROSE.toStack(), VISIBILITY);
-            event.insertAfter(ModBlocks.ROSE.toStack(), ModBlocks.SOUL_ROSE.toStack(), VISIBILITY);
-            event.insertAfter(ModBlocks.SOUL_ROSE.toStack(), ModBlocks.SOUL_ROSE_BUSH.toStack(), VISIBILITY);
-            event.insertAfter(ModBlocks.SOUL_ROSE_BUSH.toStack(), ModBlocks.WITHER_ROSE_BUSH.toStack(), VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, new ItemStack(Items.CHERRY_LOG), azaleaLogStack, VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, azaleaLogStack, ModBlocks.ROSE.toStack(), VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, ModBlocks.ROSE.toStack(), ModBlocks.SOUL_ROSE.toStack(), VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, ModBlocks.SOUL_ROSE.toStack(), ModBlocks.SOUL_ROSE_BUSH.toStack(), VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, ModBlocks.SOUL_ROSE_BUSH.toStack(), ModBlocks.WITHER_ROSE_BUSH.toStack(), VISIBILITY);
         }
     }
 
@@ -49,7 +54,7 @@ public final class ModCreativeTabs {
         ItemStack previous = anchor;
         for (DeferredBlock<? extends Block> block : family.buildingBlocks()) {
             ItemStack stack = block.toStack();
-            event.insertAfter(previous, stack, VISIBILITY);
+            ImpCreativeTabs.insertAfter(event, previous, stack, VISIBILITY);
             previous = stack;
         }
     }

@@ -19,13 +19,13 @@ import org.polaris2023.wildwind.barren.registry.BarrenEntities;
 public final class BarrenClientEvents {
 
     private static final ModelLayerLocation CINDER_BOAT_LAYER =
-            new ModelLayerLocation(WildWindBarren.id("boat/cinder"), "main");
+            new ModelLayerLocation(WildWindBarren.id("boat/cinder").unwrap(), "main");
     private static final ModelLayerLocation CINDER_CHEST_BOAT_LAYER =
-            new ModelLayerLocation(WildWindBarren.id("chest_boat/cinder"), "main");
+            new ModelLayerLocation(WildWindBarren.id("chest_boat/cinder").unwrap(), "main");
     private static final ModelLayerLocation EMBER_BOAT_LAYER =
-            new ModelLayerLocation(WildWindBarren.id("boat/ember"), "main");
+            new ModelLayerLocation(WildWindBarren.id("boat/ember").unwrap(), "main");
     private static final ModelLayerLocation EMBER_CHEST_BOAT_LAYER =
-            new ModelLayerLocation(WildWindBarren.id("chest_boat/ember"), "main");
+            new ModelLayerLocation(WildWindBarren.id("chest_boat/ember").unwrap(), "main");
 
     @SubscribeEvent
     static void registerLayerDefinitions(EntityRenderersEvent.RegisterLayerDefinitions event) {

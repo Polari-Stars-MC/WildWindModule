@@ -1,14 +1,5 @@
 package org.polaris2023.wildwind.wilderness.entity.animal;
 
-import com.geckolib.animatable.GeoEntity;
-import com.geckolib.animatable.instance.AnimatableInstanceCache;
-import com.geckolib.animatable.manager.AnimatableManager;
-import com.geckolib.animation.AnimationController;
-import com.geckolib.animation.RawAnimation;
-import com.geckolib.animation.object.PlayState;
-import com.geckolib.animation.state.AnimationTest;
-import com.geckolib.constant.DefaultAnimations;
-import com.geckolib.util.GeckoLibUtil;
 import com.mojang.logging.LogUtils;
 import net.minecraft.core.*;
 import net.minecraft.core.component.DataComponentGetter;
@@ -68,6 +59,8 @@ import net.neoforged.neoforge.fluids.FluidType;
 import org.polaris2023.wildwind.wilderness.entity.ModSpawnPlacementTypes;
 import org.polaris2023.wildwind.core.entity.WindupAttackMob;
 import org.polaris2023.wildwind.core.entity.ai.goal.ChargingMeleeAttackGoal;
+import org.polaris2023.wildwind.imp.client.ImpAnimatedEntity;
+import org.polaris2023.wildwind.imp.client.ImpRig;
 import org.polaris2023.wildwind.wilderness.registry.*;
 import org.polaris2023.wildwind.wilderness.tag.ModBlockTags;
 import org.polaris2023.wildwind.wilderness.tag.ModItemTags;
@@ -83,7 +76,7 @@ import java.util.Optional;
  * @author Mon-Landis
  * @author safe_saffawa
  */
-public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoEntity {
+public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, ImpRig.Animated {
 	/**
 	 * 泥沼蟹使用的自定义生成位置类型喵~
 	 */
@@ -101,20 +94,56 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		}
 	};
 
-	protected static final RawAnimation HURT_ANIM = RawAnimation.begin().thenPlay("misc.hurt");
-	protected static final RawAnimation GREETING_ANIM = RawAnimation.begin().thenPlay("misc.greeting");
+	/** 攻击动画的控制器名（与 {@code AnimationSet#oneShot} 的第一个参数一致）。 */
+	public static final String ATTACK_CONTROLLER = "Attack";
+	/** 攻击动画的触发键（与 {@code AnimationSet#oneShot} 的第二个参数一致）。 */
+	public static final String ATTACK_TRIGGER = "attack";
+	/** 打招呼动画的控制器名。 */
+	public static final String GREETING_CONTROLLER = "Greeting";
+	/** 打招呼动画的触发键。 */
+	public static final String GREETING_TRIGGER = "greeting";
+
 	protected static final float CLIENT_SIDE_MAX_MODEL_ROT = 90.0f;
 	protected static final int CLIENT_SIDE_MODEL_ROT_TIME = 5;
 	protected static final float CLIENT_SIDE_MODEL_ROT_PER_TICK = CLIENT_SIDE_MAX_MODEL_ROT / CLIENT_SIDE_MODEL_ROT_TIME;
 	private static final EntityDataAccessor<Holder<MudcrabVariant>> VARIANT_ID = SynchedEntityData.defineId(Mudcrab.class, ModEntityDataSerializers.MUDCRAB_VARIANT.get());
 	private static final EntityDataAccessor<Boolean> FROM_BUCKET = SynchedEntityData.defineId(Mudcrab.class, EntityDataSerializers.BOOLEAN);
 	private static final EntityDataAccessor<Boolean> CLIMBING = SynchedEntityData.defineId(Mudcrab.class, EntityDataSerializers.BOOLEAN);
+
+	/**
+	 * 一次性动画的触发令牌。
+	 *
+	 * <p>取值为"已触发过的次数"。渲染侧每帧比对它是否变化来检测<b>边沿</b>，
+	 * 所以连续两次攻击/打招呼会得到不同的值，动画不会被去重吞掉。</p>
+	 *
+	 * <p>为什么必须走 {@link SynchedEntityData}：{@link #prepareAttack} 与打招呼判定
+	 * 都跑在<b>服务端</b>，而动画只在<b>客户端</b>播放。用普通字段服务端置位后客户端永远看不到
+	 * ——这正是 GeckoLib 4.x 的 {@code triggerAnim} 踩过的坑。</p>
+	 */
+	private static final EntityDataAccessor<Integer> DATA_ATTACK_TRIGGER = SynchedEntityData.defineId(Mudcrab.class, EntityDataSerializers.INT);
+
+	/** 打招呼动画的触发令牌（同上）。 */
+	private static final EntityDataAccessor<Integer> DATA_GREETING_TRIGGER = SynchedEntityData.defineId(Mudcrab.class, EntityDataSerializers.INT);
+
 	private static final Logger LOGGER = LogUtils.getLogger();
 	private static final int TOTAL_AIR_SUPPLY = 7200;
 	private static final int START_FIND_WATER_AIR_SUPPLY = 2400;
 	private static final int REHYDRATE_AIR_SUPPLY = 1800;
 
-	private final AnimatableInstanceCache geoCache = GeckoLibUtil.createInstanceCache(this);
+	/** 本实体登记的动画集（构造期填好，之后只读）。 */
+	private final ImpAnimatedEntity.AnimationSet animations = new ImpAnimatedEntity.AnimationSet();
+
+	/**
+	 * 渲染侧已经消费到的攻击令牌值（只增不减，永不回落）。
+	 *
+	 * <p>初值 <b>0</b> 而不是 -1：{@code DATA_ATTACK_TRIGGER} 的同步默认值就是 0，
+	 * 若初值取 -1，实体刚出现的第一帧就会被当成"令牌变化过"而多播一次攻击动画。</p>
+	 */
+	private int consumedAttackTrigger = 0;
+
+	/** 渲染侧已经消费到的打招呼令牌值（同 {@link #consumedAttackTrigger}）。 */
+	private int consumedGreetingTrigger = 0;
+
 	/**
 	 * 客户端渲染时模型的 Y 轴附加旋转偏移喵~
 	 */
@@ -144,6 +173,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		super(entityType, level);
 		this.setPathfindingMalus(PathType.WATER, 0.0f);
 		this.moveControl = new MudcrabMoveControl(this);
+		// registerAnimations 在接口里是"每次实例化调用一次"的约定，这里显式完成
+		this.registerAnimations(this.animations);
 	}
 
 	@Override
@@ -175,6 +206,8 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		builder.define(VARIANT_ID, VariantUtils.getDefaultOrAny(this.registryAccess(), MudcrabVariant.TEMPERATE));
 		builder.define(FROM_BUCKET, false);
 		builder.define(CLIMBING, false);
+		builder.define(DATA_ATTACK_TRIGGER, 0);
+		builder.define(DATA_GREETING_TRIGGER, 0);
 	}
 
 	/**
@@ -240,7 +273,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	@Override
 	public boolean prepareAttack(LivingEntity entity) {
 		boolean result = WindupAttackMob.super.prepareAttack(entity);
-		if (result) this.triggerAnim("Attack", "attack");
+		if (result) this.triggerAnimation(ATTACK_CONTROLLER, ATTACK_TRIGGER);
 		return result;
 	}
 
@@ -714,39 +747,137 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 		return this.entityData.get(VARIANT_ID);
 	}
 
+	// ══════════════════════════════════════════════════════════════════════
+	// 动画契约（ImpAnimatedEntity + ImpRig.Animated）
+	// ══════════════════════════════════════════════════════════════════════
+
 	/**
-	 * 注册泥沼蟹的动画控制器喵~
+	 * 注册动画规则——与迁移前 GeckoLib 的四个控制器逐条对应。
 	 *
-	 * @param controllers 动画控制器注册器喵~
+	 * <h2>迁移前的写法（GeckoLib 5.x）</h2>
+	 * <pre>{@code
+	 * controllers.add(new AnimationController<>("Move", 3, this::moveAnimController));
+	 * controllers.add(new AnimationController<>("Hurt", this::hurtAnimController));
+	 * controllers.add(new AnimationController<>("Attack", st -> PlayState.STOP)
+	 *         .triggerableAnim("attack", DefaultAnimations.ATTACK_SWING));
+	 * controllers.add(new AnimationController<>("Greeting", st -> PlayState.STOP)
+	 *         .triggerableAnim("greeting", GREETING_ANIM));
+	 *
+	 * PlayState moveAnimController(AnimationTest<Mudcrab> state) {
+	 *     return this.isInWater()
+	 *             ? state.setAndContinue(DefaultAnimations.SWIM)          // move.swim
+	 *             : state.isMoving() || this.isClimbing()
+	 *               ? state.setAndContinue(DefaultAnimations.WALK)        // move.walk
+	 *               : state.setAndContinue(DefaultAnimations.IDLE);       // misc.idle
+	 * }
+	 *
+	 * PlayState hurtAnimController(AnimationTest<Mudcrab> state) {
+	 *     if (this.isAlive() && this.hurtTime > 0) return state.setAndContinue(HURT_ANIM); // misc.hurt
+	 *     return PlayState.STOP;
+	 * }
+	 * }</pre>
+	 *
+	 * <h2>搬过来的映射关系</h2>
+	 * <table border="1">
+	 *   <caption>GeckoLib → ImpRig</caption>
+	 *   <tr><th>GeckoLib</th><th>这里</th></tr>
+	 *   <tr><td>{@code state.isInWater()}</td><td>{@code state.isInWater()}（{@link ImpRig.Driver}
+	 *       每帧从 {@code Entity#isInWater()} 取，与原写法同源）</td></tr>
+	 *   <tr><td>{@code state.isMoving()}</td><td>{@code state.isMoving()}
+	 *       （由 {@code walkAnimationSpeed} 判定，见 {@code ImpRig.Driver#tick}）</td></tr>
+	 *   <tr><td>{@code this.isClimbing()}</td><td>从 {@code state.entity()} 强转回泥沼蟹后调
+	 *       {@link #isClimbing()}（读的是同步字段 {@code CLIMBING}）</td></tr>
+	 *   <tr><td>{@code PlayState.STOP}</td><td>selector 返回 {@code null}</td></tr>
+	 *   <tr><td>{@code setAndContinue(DefaultAnimations.X)}</td><td>返回动画文件里的键
+	 *       （{@code DefaultAnimations.SWIM/WALK/IDLE} 就是 {@code move.swim}/{@code move.walk}/
+	 *       {@code misc.idle}，已用字节码核对常量）</td></tr>
+	 * </table>
+	 *
+	 * <h2>为什么 Hurt 的优先级是 1、Move 是 0</h2>
+	 * <p>GeckoLib 里每个控制器各自持有一条动画，按加入顺序叠加、后加入者覆盖同名骨骼，
+	 * 所以 {@code Hurt}（后加入）会在受击时盖掉 {@code Move} 的姿态。{@link ImpRig.Driver}
+	 * 只能选<b>一条</b>循环动画，因此这里用优先级表达同一件事：{@code Hurt}(1) &gt; {@code Move}(0)。
+	 * 可观察行为一致——受击时播 {@code misc.hurt}，不播行走/待机。</p>
+	 *
+	 * <p>迁移前 {@code "Move"} 的构造器第二个实参 3 在 GeckoLib 5.x 里是<b>过渡 tick</b>
+	 * （{@code AnimationController(String, int transitionTicks, handler)}，已用 javap 核对），
+	 * 不是优先级；{@link ImpRig} 的过渡由 {@code GeoAnimationState} 的"换 clip 即重置时间"
+	 * 近似表达，因此那个 3 不再需要搬运。</p>
 	 */
 	@Override
-	public void registerControllers(AnimatableManager.ControllerRegistrar controllers) {
-		controllers.add(new AnimationController<>("Move", 3, this::moveAnimController));
-		controllers.add(new AnimationController<>("Hurt", this::hurtAnimController));
-		controllers.add(new AnimationController<>("Attack", state -> PlayState.STOP)
-				.triggerableAnim("attack", DefaultAnimations.ATTACK_SWING)
-		);
-		controllers.add(new AnimationController<>("Greeting", state -> PlayState.STOP)
-				.triggerableAnim("greeting", GREETING_ANIM)
-		);
+	public void registerAnimations(ImpAnimatedEntity.AnimationSet set) {
+		// 移动 / 游泳 / 待机：三选一，永不停（对应旧 moveAnimController 的三条 setAndContinue）
+		set.controller("Move", 0, state -> {
+			Mudcrab mudcrab = asMudcrab(state);
+			if (mudcrab == null) {
+				return null;
+			}
+			if (state.isInWater()) {
+				return "move.swim";
+			}
+			return state.isMoving() || mudcrab.isClimbing() ? "move.walk" : "misc.idle";
+		});
+		// 受击：存活且 hurtTime > 0 时播 misc.hurt，否则 null（= 旧的 PlayState.STOP）
+		set.controller("Hurt", 1, state -> {
+			Mudcrab mudcrab = asMudcrab(state);
+			return mudcrab != null && mudcrab.isAlive() && mudcrab.hurtTime > 0 ? "misc.hurt" : null;
+		});
+		// 攻击 / 打招呼：由 triggerAnimation 插入，播完自动回落到循环动画
+		set.oneShot(ATTACK_CONTROLLER, "attack.swing");
+		set.oneShot(GREETING_CONTROLLER, "misc.greeting");
 	}
 
-	protected PlayState moveAnimController(final AnimationTest<Mudcrab> state) {
-		return this.isInWater()
-				? state.setAndContinue(DefaultAnimations.SWIM)
-				: state.isMoving() || this.isClimbing()
-				  ? state.setAndContinue(DefaultAnimations.WALK)
-				  : state.setAndContinue(DefaultAnimations.IDLE);
+	/** selector 收到的实体就是本类实例；类型不符时返回 {@code null}（防御，不抛异常）。 */
+	private static @Nullable Mudcrab asMudcrab(ImpAnimatedEntity.State state) {
+		return state.entity() instanceof Mudcrab mudcrab ? mudcrab : null;
 	}
 
-	protected PlayState hurtAnimController(final AnimationTest<Mudcrab> state) {
-		if (this.isAlive() && this.hurtTime > 0) {
-			return state.setAndContinue(HURT_ANIM);
+	/** 渲染器通过这个访问器拿到动画集（{@code registerAnimations} 不回传结果）。 */
+	@Override
+	public ImpAnimatedEntity.AnimationSet animationSet() {
+		return this.animations;
+	}
+
+	/**
+	 * 取走一次性动画的触发令牌。
+	 *
+	 * <p>只在令牌值与上次消费的不同时返回 {@code true} 一次。语义与 GeckoLib 的
+	 * {@code triggerableAnim} 一致：一次触发对应一次播放，重复触发会重新从 0 播。</p>
+	 */
+	@Override
+	public boolean consumeAnimationTrigger(String controllerName) {
+		if (ATTACK_CONTROLLER.equals(controllerName)) {
+			int current = this.entityData.get(DATA_ATTACK_TRIGGER);
+			if (current == this.consumedAttackTrigger) {
+				return false;
+			}
+			this.consumedAttackTrigger = current;
+			return true;
 		}
+		if (GREETING_CONTROLLER.equals(controllerName)) {
+			int current = this.entityData.get(DATA_GREETING_TRIGGER);
+			if (current == this.consumedGreetingTrigger) {
+				return false;
+			}
+			this.consumedGreetingTrigger = current;
+			return true;
+		}
+		return false;
+	}
 
-		//stop语义：Stop the currently playing animation, resetting the animation time to 0，已包含重置，且原方法已删除
-//		state.resetCurrentAnimation();
-		return PlayState.STOP;
+	/**
+	 * 触发一次性动画（对应 GeckoLib 的 {@code triggerAnim(controller, key)}）。
+	 *
+	 * @param controllerName 一次性控制器名（{@value #ATTACK_CONTROLLER} 或 {@value #GREETING_CONTROLLER}）
+	 * @param animationKey   动画键（{@value #ATTACK_TRIGGER} 或 {@value #GREETING_TRIGGER}）
+	 */
+	public void triggerAnimation(String controllerName, String animationKey) {
+		// 令牌自增而不是置 true：两次相邻触发会得到不同的值，边沿检测不会把它们合并
+		if (ATTACK_CONTROLLER.equals(controllerName) && ATTACK_TRIGGER.equals(animationKey)) {
+			this.entityData.set(DATA_ATTACK_TRIGGER, this.entityData.get(DATA_ATTACK_TRIGGER) + 1);
+		} else if (GREETING_CONTROLLER.equals(controllerName) && GREETING_TRIGGER.equals(animationKey)) {
+			this.entityData.set(DATA_GREETING_TRIGGER, this.entityData.get(DATA_GREETING_TRIGGER) + 1);
+		}
 	}
 
 	/**
@@ -808,7 +939,7 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 			for (BlockPos pos : BlockPos.betweenClosed(BlockPos.containing(box.minX, box.minY, box.minZ), BlockPos.containing(box.maxX, box.maxY, box.maxZ))) {
 				if (this.level().getBlockState(pos).is(ModBlockTags.EntityAbout.MUDCRAB_PREFERRED_WANDER_BLOCKS)) {
 					this.greetingTicks = 27;
-					this.triggerAnim("Greeting", "greeting");
+					this.triggerAnimation(GREETING_CONTROLLER, GREETING_TRIGGER);
 				}
 			}
 		}
@@ -821,16 +952,6 @@ public class Mudcrab extends Animal implements Bucketable, WindupAttackMob, GeoE
 	 */
 	@Override
 	public void setJumping(boolean jumping) {
-	}
-
-	/**
-	 * 获取 GeckoLib 动画缓存喵~
-	 *
-	 * @return 动画缓存喵~
-	 */
-	@Override
-	public AnimatableInstanceCache getAnimatableInstanceCache() {
-		return this.geoCache;
 	}
 
 	protected static class MudcrabFloatGoal extends Goal {

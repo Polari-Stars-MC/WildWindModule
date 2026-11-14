@@ -18,6 +18,10 @@
 # 2) 26.x 已无 ResourceLocation；内容模块不得再引用旧名
 26.x => net\.minecraft\.resources\.ResourceLocation => 26.x 已改名，须经 imp 访问资源 ID
 
+# 2b) 静态构造也要拦：只拦 import 会漏掉 `Identifier.parse(...)` 这类调用点
+1.20,1.21 => Identifier\.(parse|fromNamespaceAndPath|tryParse) => 旧族没有 Identifier，构造函数必须走 imp
+26.x => ResourceLocation\.(parse|fromNamespaceAndPath|tryParse) => 26.x 已改名，构造函数必须走 imp
+
 # 3) 版本注解只属于 imp：内容模块不得自行标注版本差异，
 #    否则版本逻辑会散落到各处，imp 也就失去了收敛点
 * => org\.polaris2023\.wildwind\.imp\.annotations\.(Since|Until|ParamSince) => 版本注解只允许在 imp 内使用

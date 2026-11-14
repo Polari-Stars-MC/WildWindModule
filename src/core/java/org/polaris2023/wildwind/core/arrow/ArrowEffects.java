@@ -6,20 +6,24 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
+import net.minecraft.world.entity.projectile.Projectile;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.BaseFireBlock;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
-import net.minecraft.world.level.block.VegetationBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.Vec3;
+import net.minecraft.util.RandomSource;
 import net.neoforged.neoforge.common.Tags;
-import org.jspecify.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.polaris2023.wildwind.core.component.ArrowComponent;
 import org.polaris2023.wildwind.core.registry.ModDataComponents;
+import org.polaris2023.wildwind.imp.ImpArrow;
+import org.polaris2023.wildwind.imp.ImpBlocks;
+import org.polaris2023.wildwind.imp.ImpEntities;
 
 /**
  * 矢术（箭羽 / 箭杆 / 箭头）的实际玩法效果。
@@ -28,6 +32,11 @@ import org.polaris2023.wildwind.core.registry.ModDataComponents;
  * 自己的三个部件读回来，不需要额外的 attachment 或同步字段。
  * <p>
  * 所有效果都只在服务端执行，客户端靠 {@code sendParticles} 与爆炸包同步。
+ * <p>
+ * 参数类型统一写 {@link Projectile} 而不是 {@code AbstractArrow}：箭矢类在 26.x 被移进了
+ * {@code projectile.arrow} 子包，而 {@code Projectile} 三族都在
+ * {@code net.minecraft.world.entity.projectile}。真正只属于 {@code AbstractArrow} 的
+ * {@code getPickupItemStackOrigin()} 只在 {@link ImpArrow#pickupItemStack} 内部转型。
  *
  * @author baka4n
  * @author safe_saffawa
@@ -46,15 +55,19 @@ public final class ArrowEffects {
     /**
      * 读取箭矢携带的部件数据；普通原版箭（没有组件）返回 null，走原版逻辑。
      */
-    public static @Nullable ArrowComponent componentOf(AbstractArrow arrow) {
-        ItemStack stack = arrow.getPickupItemStackOrigin();
+    public static @Nullable ArrowComponent componentOf(Projectile arrow) {
+        // 先确认真的是箭矢：签名用的是三族通用的 Projectile，别的投射物不该进到组件读取
+        if (!ImpArrow.isArrow(arrow)) {
+            return null;
+        }
+        ItemStack stack = ImpArrow.pickupItemStack(arrow);
         return stack.get(ModDataComponents.ARROW_COMPONENT.get());
     }
 
     /**
      * 飞行途中的持续效果：烈焰棒箭杆的火尾粒子。
      */
-    public static void tick(AbstractArrow arrow, ArrowComponent component) {
+    public static void tick(Projectile arrow, ArrowComponent component) {
         if (!(arrow.level() instanceof ServerLevel server)) {
             return;
         }
@@ -69,7 +82,7 @@ public final class ArrowEffects {
     /**
      * 命中实体时的箭头效果。
      */
-    public static void onHitEntity(AbstractArrow arrow, ArrowComponent component, Entity target) {
+    public static void onHitEntity(Projectile arrow, ArrowComponent component, Entity target) {
         if (arrow.level().isClientSide()) {
             return;
         }
@@ -92,7 +105,7 @@ public final class ArrowEffects {
     /**
      * 命中方块时的箭头 / 箭杆效果。
      */
-    public static void onHitBlock(AbstractArrow arrow, ArrowComponent component, BlockHitResult hit) {
+    public static void onHitBlock(Projectile arrow, ArrowComponent component, BlockHitResult hit) {
         if (arrow.level().isClientSide()) {
             return;
         }
@@ -114,14 +127,14 @@ public final class ArrowEffects {
         }
     }
 
-    private static void explode(AbstractArrow arrow, float radius, Level.ExplosionInteraction interaction) {
+    private static void explode(Projectile arrow, float radius, Level.ExplosionInteraction interaction) {
         arrow.level().explode(arrow, arrow.getX(), arrow.getY(), arrow.getZ(), radius, interaction);
     }
 
     /**
      * 风弹爆炸：不破坏方块，但会击退周围实体。
      */
-    private static void windBurst(AbstractArrow arrow) {
+    private static void windBurst(Projectile arrow) {
         if (arrow.level() instanceof ServerLevel server) {
             server.sendParticles(ParticleTypes.GUST_EMITTER_LARGE,
                     arrow.getX(), arrow.getY(), arrow.getZ(), 1, 0.0, 0.0, 0.0, 0.0);
@@ -135,7 +148,7 @@ public final class ArrowEffects {
     /**
      * 弹力：把命中的实体朝远离箭矢的方向弹开。
      */
-    private static void bounce(AbstractArrow arrow, Entity target) {
+    private static void bounce(Projectile arrow, Entity target) {
         Vec3 away = new Vec3(arrow.getX() - target.getX(), 0.0, arrow.getZ() - target.getZ());
         if (away.lengthSqr() < 1.0E-4) {
             Vec3 motion = arrow.getDeltaMovement();
@@ -145,16 +158,20 @@ public final class ArrowEffects {
             away = new Vec3(0.0, 0.0, 1.0);
         }
         Vec3 push = away.normalize().scale(0.6).add(0.0, 0.4, 0.0);
-        target.push(push);
+        ImpEntities.push(target, push);
     }
 
     /**
      * 紫颂果：目标在半径内随机传送。
+     *
+     * <p>随机源走 {@link ImpEntities#random}：1.20.6 的 {@code Entity} 没有公开
+     * {@code getRandom()}（只有 {@code LivingEntity} 有），由 imp 分族取。</p>
      */
     private static void teleportRandomly(Entity target) {
-        double x = target.getX() + (target.getRandom().nextDouble() - 0.5) * 2.0 * CHORUS_RADIUS;
-        double y = target.getY() + (target.getRandom().nextInt(16) - 8);
-        double z = target.getZ() + (target.getRandom().nextDouble() - 0.5) * 2.0 * CHORUS_RADIUS;
+        RandomSource random = ImpEntities.random(target);
+        double x = target.getX() + (random.nextDouble() - 0.5) * 2.0 * CHORUS_RADIUS;
+        double y = target.getY() + (random.nextInt(16) - 8);
+        double z = target.getZ() + (random.nextDouble() - 0.5) * 2.0 * CHORUS_RADIUS;
         if (target instanceof LivingEntity living) {
             living.randomTeleport(x, y, z, true);
         } else {
@@ -165,7 +182,7 @@ public final class ArrowEffects {
     /**
      * 末影之眼：射手与目标交换位置。
      */
-    private static void swapWithOwner(AbstractArrow arrow, Entity target) {
+    private static void swapWithOwner(Projectile arrow, Entity target) {
         Entity owner = arrow.getOwner();
         if (owner == null || owner == target) {
             return;
@@ -179,7 +196,7 @@ public final class ArrowEffects {
     /**
      * 煤炭：命中面外侧放置火把。
      */
-    private static void placeTorch(AbstractArrow arrow, BlockHitResult hit) {
+    private static void placeTorch(Projectile arrow, BlockHitResult hit) {
         Level level = arrow.level();
         Direction direction = hit.getDirection();
         BlockPos pos = hit.getBlockPos().relative(direction);
@@ -205,7 +222,7 @@ public final class ArrowEffects {
     /**
      * 烈焰棒箭杆：落点生成火焰。
      */
-    private static void placeFire(AbstractArrow arrow, BlockHitResult hit) {
+    private static void placeFire(Projectile arrow, BlockHitResult hit) {
         Level level = arrow.level();
         BlockPos pos = hit.getBlockPos().relative(hit.getDirection());
         if (!level.getBlockState(pos).isAir()) {
@@ -222,7 +239,7 @@ public final class ArrowEffects {
     /**
      * 紫水晶碎片：破坏命中位置附近的植物与玻璃类方块。
      */
-    private static void breakSoftBlocks(AbstractArrow arrow, BlockHitResult hit) {
+    private static void breakSoftBlocks(Projectile arrow, BlockHitResult hit) {
         Level level = arrow.level();
         BlockPos center = hit.getBlockPos().relative(hit.getDirection());
         BlockPos.betweenClosed(center.offset(-1, -1, -1), center.offset(1, 1, 1)).forEach(pos -> {
@@ -234,10 +251,14 @@ public final class ArrowEffects {
     }
 
     /**
-     * 植物（{@link VegetationBlock}）与玻璃类（NeoForge 的 {@code c:glass_blocks} / {@code c:glass_panes} 标签）。
+     * 植物与玻璃类（NeoForge 的 {@code c:glass_blocks} / {@code c:glass_panes} 标签）。
+     *
+     * <p>「植物」判定必须走 {@link ImpBlocks#isVegetation}：26.x 把植被基类从
+     * {@code BushBlock} 抽成了 {@code VegetationBlock}，直接写任一族的具体类都会在
+     * 另一族编译失败或静默改变语义。</p>
      */
     private static boolean isSoftBlock(BlockState state) {
-        return state.getBlock() instanceof VegetationBlock
+        return ImpBlocks.isVegetation(state)
                 || state.is(Tags.Blocks.GLASS_BLOCKS)
                 || state.is(Tags.Blocks.GLASS_PANES);
     }

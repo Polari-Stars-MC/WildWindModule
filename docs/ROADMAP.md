@@ -11,9 +11,19 @@
   - ✅ 阶段 A（防护）：处理器回归测试 11 项 + `checkImpBoundary` 边界守卫（2026.11.12）
   - ✅ 阶段 B（多版本族）：三族实测编译通过，Java 17/21/25 与各自 NeoForge 版本对齐（2026.11.12）
   - ✅ 机制转向（ADR-0004）：改为源码预处理，`@Name` 改名，单类容纳所有版本，按族分目录的实现已退役（2026.11.13）
-  - 🚧 阶段 C：内容模块迁移首个真实跨族差异（当前 core 有 17 处 `Identifier` 需经 imp 访问）
-  - 📋 阶段 D：CI 矩阵（1.20.4 / 1.21.1 / 26.2 三轴）+ 断言 `targetMcVersion` 与 `neoVersion` 成对一致
-  - 📋 阶段 E：datagen 版本分叉（42 个 datagen 文件全依赖 MC API，最难版本无关化的一块）
+  - ✅ 阶段 C-1：core 的 ID 出口收口到 imp（`WildWindCore.id()` → `ImpId`，6 处调用迁移），1.20 族锚点改为 1.20.6（2026.11.14）
+  - ✅ 阶段 C-2：wilderness / barren 的 `id()` 同样收口（16 文件 / 30 处调用），边界违规 19 → 12，剩余 12 处均为结构性不可迁移项（2026.11.15）
+  - 📋 阶段 D：~~CI 矩阵~~ ✅ 已完成（2026.11.16）：`primary` 全量 26.2、`imp-matrix` 三族必过、`content-matrix` 手动触发观测进度；`checkVersionPairing` 防假产物，版本族单一事实源 `gradle/version-families.properties`
+  - ✅ 阶段 E（datagen 分叉）**完成**：independent source set + 按族选目录；**ADR-0005 三层迁移覆盖全部六类**（tags / models / loot / recipes / datapacks / datamaps），三模块产物 diff「丢失或改动 = 0」
+    - 26.x 分支：六类全部实现并经 diff 验证
+    - 旧版分支：tags + models 已实现（仅编译验证）；loot / recipes / datapacks / datamaps 为显式抛异常
+    - 📋 待内容模块支持旧版编译后，补旧版分支的运行时 datagen diff（重点：`fenceBlock` / `buttonBlock` 的 inventory 模型命名）
+  - ✅ 阶段 F（内容模块支持旧版编译）：
+    - ✅ **GeckoLib 已彻底移除（ADR-0006）**——三个实体（幼蛛 / 泥沼蟹 / 恐鱼）改用原版 `ModelPart` + 自研 Bedrock 动画运行时，Blockbench 导出的 `.geo.json` / `.animation.json` 原文件直接复用。这不是权宜之计：GeckoLib 按 MC 版本独立发布、两代 groupId 不同、4.x/5.x API 互不兼容，留着它等于每个 MC 版本都要额外适配一个第三方库的两个大版本
+    - ✅ **`core` 三族编译全绿**（26.2 / 1.21.1 / 1.20.6 均 0 错误）——这是多版本工程第一次做到
+    - ✅ **`checkImpBoundary` 三族违规 0**（迁移前 5 处：4 处 GeckoLib `getTextureResource` 覆写 + 1 处 `MudcrabVariant.createKey` 形参），结构性边界随本次迁移全部消失
+    - 📋 剩余：`wilderness` / `barren` 为旧版族的编译（它们的错误全是 26.x 独有 API：`ClientAsset`、`SpawnPrioritySelectors`、`TemperatureVariants`、`EntitySpawnReason`、`ValueInput/ValueOutput` 等）
+    - 📋 一次 `runClient` 人工确认动画观感（已知限制：同类实体循环动画相位共享、动画时钟走 `nanoTime` 而非 tick）
   - 📋 阶段 F：Fabric 支持（独立一层，注解层帮不上忙，需单独立项）
   - 📋 参数级裁剪：当前 `@ParamSince` 靠重载分派，若重载方案在真实迁移中不敷使用，再让预处理器直接删参数并改写调用点
 - 📋 CI 版本矩阵落地：`.github/workflows/build.yml` 改 matrix（26.1 / 26.2），`-PtargetMcVersion` 传参

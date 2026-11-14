@@ -18,6 +18,12 @@
 | [../OPTIMIZATION.md](../OPTIMIZATION.md) | 优化记录与量化方法 |
 | [../CHANGE_LOG.MD](../CHANGE_LOG.MD) | 变更日志（每次改动必更新） |
 
+工具脚本：
+
+| 脚本 | 用途 |
+|---|---|
+| [../tools/datagen-diff.ps1](../tools/datagen-diff.ps1) | datagen 产物 diff 校验：`-Snapshot` 建基线、`-Verify` 重跑对比（ADR-0005 迁移的固定动作） |
+
 ## 阅读顺序建议
 
 新贡献者：README → DESIGN → ARCHITECTURE → BOUNDARY。

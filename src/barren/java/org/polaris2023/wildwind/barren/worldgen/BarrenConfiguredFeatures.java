@@ -28,12 +28,12 @@ public final class BarrenConfiguredFeatures {
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> CINDER_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
-            WildWindBarren.id("cinder_tree")
+            WildWindBarren.id("cinder_tree").unwrap()
     );
 
     public static final ResourceKey<ConfiguredFeature<?, ?>> EMBER_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
-            WildWindBarren.id("ember_tree")
+            WildWindBarren.id("ember_tree").unwrap()
     );
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {

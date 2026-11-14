@@ -23,7 +23,7 @@ public record ServerBoundSelectOmniClawItemPayload(int slot, int index) implemen
 	/**
 	 * 当前负载的类型标识喵~
 	 */
-	public static final Type<ServerBoundSelectOmniClawItemPayload> TYPE = new Type<>(WildWindWilderness.id("select_omni_claw_item"));
+	public static final Type<ServerBoundSelectOmniClawItemPayload> TYPE = new Type<>(WildWindWilderness.id("select_omni_claw_item").unwrap());
 	/**
 	 * 当前负载的流编解码器喵~
 	 */

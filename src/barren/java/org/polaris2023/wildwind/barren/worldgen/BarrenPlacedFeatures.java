@@ -21,12 +21,12 @@ public final class BarrenPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> CINDER_TREE_PLACED_KEY = ResourceKey.create(
             Registries.PLACED_FEATURE,
-            WildWindBarren.id("cinder_tree_placed")
+            WildWindBarren.id("cinder_tree_placed").unwrap()
     );
 
     public static final ResourceKey<PlacedFeature> EMBER_TREE_PLACED_KEY = ResourceKey.create(
             Registries.PLACED_FEATURE,
-            WildWindBarren.id("ember_tree_placed")
+            WildWindBarren.id("ember_tree_placed").unwrap()
     );
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {

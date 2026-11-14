@@ -13,8 +13,8 @@ import net.minecraft.world.level.block.SlabBlock;
 import net.minecraft.world.level.block.StairBlock;
 import net.minecraft.world.level.block.TrapDoorBlock;
 import net.neoforged.neoforge.registries.DeferredBlock;
-import org.jspecify.annotations.Nullable;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 /**

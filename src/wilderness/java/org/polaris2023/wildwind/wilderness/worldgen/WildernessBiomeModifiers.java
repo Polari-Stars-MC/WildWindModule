@@ -44,7 +44,7 @@ public final class WildernessBiomeModifiers {
     }
 
     private static ResourceKey<BiomeModifier> createKey(String name) {
-        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WildWindWilderness.id(name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WildWindWilderness.id(name).unwrap());
     }
 
     private WildernessBiomeModifiers() {

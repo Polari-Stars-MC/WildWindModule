@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
-import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.damagesource.DamageSource;
@@ -32,6 +31,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.state.BlockState;
 import net.neoforged.neoforge.common.ItemAbility;
 import net.neoforged.neoforge.common.extensions.IItemExtension;
+import org.polaris2023.wildwind.imp.ImpId;
 import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 import org.polaris2023.wildwind.wilderness.component.OmniClawTools;
 import org.polaris2023.wildwind.wilderness.registry.ModAttributes;
@@ -56,15 +56,15 @@ public class OmniClawItem extends Item {
 	/**
 	 * 额外交互方块距离属性修饰符标识喵~
 	 */
-	public static final Identifier BLOCK_INTERACTION_RANGE_ID = WildWindWilderness.id("omni_claw_block_interaction_range");
+	public static final ImpId BLOCK_INTERACTION_RANGE_ID = WildWindWilderness.id("omni_claw_block_interaction_range");
 	/**
 	 * 额外交互实体距离属性修饰符标识喵~
 	 */
-	public static final Identifier ENTITY_INTERACTION_RANGE_ID = WildWindWilderness.id("omni_claw_entity_interaction_range");
+	public static final ImpId ENTITY_INTERACTION_RANGE_ID = WildWindWilderness.id("omni_claw_entity_interaction_range");
 	/**
 	 * 额外拾取物品距离属性修饰符标识喵~
 	 */
-	public static final Identifier EXTRA_ITEM_PICKUP_RANGE_ID = WildWindWilderness.id("omni_claw_extra_item_pickup_range");
+	public static final ImpId EXTRA_ITEM_PICKUP_RANGE_ID = WildWindWilderness.id("omni_claw_extra_item_pickup_range");
 
 	/**
 	 * 创建万用蟹钳物品喵~
@@ -141,9 +141,9 @@ public class OmniClawItem extends Item {
 	 */
 	public static ItemAttributeModifiers createAttributes() {
 		return ItemAttributeModifiers.builder()
-				.add(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(BLOCK_INTERACTION_RANGE_ID, 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ENTITY_INTERACTION_RANGE_ID, 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
-				.add(ModAttributes.EXTRA_ITEM_PICKUP_RANGE, new AttributeModifier(EXTRA_ITEM_PICKUP_RANGE_ID, 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.BLOCK_INTERACTION_RANGE, new AttributeModifier(BLOCK_INTERACTION_RANGE_ID.unwrap(), 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(Attributes.ENTITY_INTERACTION_RANGE, new AttributeModifier(ENTITY_INTERACTION_RANGE_ID.unwrap(), 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
+				.add(ModAttributes.EXTRA_ITEM_PICKUP_RANGE, new AttributeModifier(EXTRA_ITEM_PICKUP_RANGE_ID.unwrap(), 2.0, AttributeModifier.Operation.ADD_VALUE), EquipmentSlotGroup.MAINHAND)
 				.build();
 	}
 

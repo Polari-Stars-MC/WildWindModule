@@ -14,5 +14,5 @@ import org.polaris2023.wildwind.wilderness.WildWindWilderness;
 public interface ModItemTags {
 
     /** 泥沼蟹食物的物品标签 */
-    TagKey<Item> MUDCRAB_FOOD = ItemTags.create(WildWindWilderness.id("mudcrab_food"));
+    TagKey<Item> MUDCRAB_FOOD = ItemTags.create(WildWindWilderness.id("mudcrab_food").unwrap());
 }

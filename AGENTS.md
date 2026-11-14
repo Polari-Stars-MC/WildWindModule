@@ -41,6 +41,12 @@ datagen 跑完后检查 `build/generated/<模块>/` 内容符合预期（generat
 
 - 包名 `org.polaris2023.wildwind.<模块>.*`，主类 `WildWindCore` / `WildWindWilderness` / `WildWindBarren`。
 - 注册器按领域分包：`registry/`（ModItems、ModBlocks…）、`datagen/`、`client/`、`worldgen/`、`mixin/`。
+- **datagen 代码不在 `main` 里**：放 `src/<模块>/datagen/<族>/java/...`（族 = `26.x` / `1.21` / `1.20`）。datagen 是独立 Gradle source set，按当前 `targetMcVersion` 选目录；放回 `src/<模块>/java` 会被当成主代码编译，旧版族直接失败。
+  - 现有的 34 个 Provider 都在 `datagen/26.x/`；旧族尚未编写 → 该族 datagen 编译任务为 `NO-SOURCE`（不阻塞构建）。
+  - `check` 会连带编译 datagen，所以 datagen 编译错误在 CI 就会暴露。
+  - wilderness / barren 的 datagen 可复用 core 的 Provider 工具（`MissingModels`、`BlockLoot` 等），classpath 已由根脚本挂好。
+  - **跨版本 shared 的 datagen 逻辑写进 imp**（ADR-0005）：规格（`ImpTagSpec` 这类纯数据）+ 发射器（`ImpTagWriter` 的 `@Since`/`@Until` 分段）+ 内容模块的薄适配（`Appenders` 三行）。**不要**为三个族各写一份内容逻辑。
+  - **迁移任何一类 datagen 后必须做产物 diff**：`pwsh -File tools/datagen-diff.ps1 -Snapshot`（迁移前建基线）→ 迁移 → `pwsh -File tools/datagen-diff.ps1 -Verify`（重跑并逐文件哈希对比）。**没有 diff 证据的迁移不算完成**——曾靠它发现 `soul_rose_bush` 模型形状被悄悄改变。
 - 木质方块一律走 `WoodFamily` 聚合：模型、战利品、标签、数据地图、创造栏只遍历 `ModWoodFamilies.ALL` 一次，**不要**新写 13~15 参数的手工列表。
 - Mixin 命名 `<目标类>Mixin`，登记进对应模块的 `<modid>.mixins.json`；优先用事件/DataMap 而非 Mixin（如燃料用 `furnace_fuels` 数据地图而非事件）。
 - 语言文件由 datagen 生成（`ZhEnCombineLangProvider` 等），中文字幕遵循原版格式「实体：动作」。
@@ -54,6 +60,10 @@ datagen 跑完后检查 `build/generated/<模块>/` 内容符合预期（generat
 - **只有 `imp` 允许 import `net.minecraft.*` / `net.neoforged.*`**。mod 模块（core/wilderness/barren）要访问版本敏感能力时，走 imp 的版本无关 API。
 - **主导机制是源码预处理**，不是注解处理器：`preprocessImpSources` 在编译前按 `targetMcVersion` 删掉不适用的成员、应用 `@Name` 改名，输出 `build/preprocessed/java` 再交给 javac。APT（`ImpManifest`）只保留给"参数差异"这一种场景。
 - **所有版本写同一个类**：不适用的实现整块被删掉，所以源码里可以放心使用只属于某版本的 API。
+- **imp 不能作为运行期依赖**：它的预处理输出以 `srcDir(imp/build/preprocessed/java)` 并入 **core** 的 main source set，类因此编译进 core 的输出、由 mod 加载器加载；wilderness / barren 通过 `implementation(project(":core"))` 获得。
+  - **禁止** `api(project(":imp"))` / `implementation(project(":imp"))`：那会让 imp 作为**运行库**进 app 类路径；FML 只接管 MC/NeoForge 包、其它包委托父加载器，于是 imp 类由 app 加载，其签名里的 `Identifier`/`ResourceLocation` 会触发 `LinkageError: loader constraint violation`（曾导致 datagen 全部失败）。
+  - **也禁止把 imp 源码并入所有模块**：多个模块会各自包含包 `org.polaris2023.wildwind.imp`，JPMS 直接拒绝（`Module ww_wilderness contains package ..., module ww_core exports package ...`）。只能 core 一份。
+  - 正确写法（core 专属）：`compileOnly(project(":imp-annotations"))` + `srcDir(...)` + `compileJava.dependsOn(":imp:preprocessImpSources")`。
 
 ### 写法
 
@@ -99,30 +109,40 @@ imp 的 API **可以**直接返回 MC 原生类型（如 `Identifier` / `Resourc
 - 要喂给 MC API → 用原生返回版本，**必须用 `var` 接**（`var id = ImpIds.of("sample");`）。
 - **禁止在内容模块里显式写 `Identifier` / `ResourceLocation`** —— 那等于把版本分叉泄漏到上层，1.21 构建会直接失败。
 - 要存字段/写配置/比较字符串 → 用 `ImpIds.ofString(...)` 这类 `String` 版本（跨版本稳定）。
-- `var` 只能用于局部变量，不能用于字段与返回类型；需要分叉返回类型的方法必须按版本各写一份。
+- **字段里存 ID 用 `ImpId`**（字段不能用 `var`）：`private static final ImpId ICON = ImpIds.idOf("minecraft", "...")`，取用时 `ICON.unwrap()`。`ImpId` 本身跨版本稳定，`unwrap()` 的返回类型按版本分叉。
+- 每个内容模块的 ID 出口应集中成一个方法（core 是 `WildWindCore.id(String)`），返回 `ImpId`，禁止各处直接 `Identifier.parse(...)`。
 
 ### 版本族（依赖与工具链）
 
+单一事实源：`gradle/version-families.properties`（`族=mc|neoForge|java`）。根脚本、`imp/build.gradle.kts` 与 CI 矩阵都读它，**不要**在别处再抄一份表。
+
 | 族 | 默认 MC | 默认 NeoForge | Java |
 |---|---|---|---|
-| `1.20` | 1.20.4 | 20.4.253 | 17 |
+| `1.20` | 1.20.6 | 20.6.144 | 21 |
 | `1.21` | 1.21.1 | 21.1.209 | 21 |
 | `26.x` | 26.2 | 26.2.0.75 | 25 |
 
 ```bash
-./gradlew :imp:build -PtargetMcVersion=1.21.1      # 编 1.21 族
-./gradlew :imp:printImpVariant -PtargetMcVersion=1.20.4   # 查看族/依赖/Java 级别
+./gradlew :imp:build -PtargetMcVersion=1.21.1            # 编 1.21 族
+./gradlew :imp:printImpVariant -PtargetMcVersion=1.20.6  # 查看族/依赖/Java 级别
 ./gradlew checkImpBoundary -PtargetMcVersion=1.21.1      # 校验内容模块未越过 imp 边界
+./gradlew checkVersionPairing -PtargetMcVersion=1.21.1 -PminecraftVersion=1.21.1 -PneoVersion=21.1.209
 ```
 
 要点：
 
-- 族由 `targetMcVersion` 推导；未知族直接构建失败（`familyDefaults` 表在 `imp/build.gradle.kts`）。
-- Java 级别按 MC 版本推导：`<1.20.5`→17、`1.20.5~26`→21、`>=26`→25；工具链固定 JDK 25，靠 `options.release` 降级。
-- **1.20 族锚定 1.20.4 而非 1.20.2**：NeoForge 20.2.x 没有发布 moddev 需要的 `neoforge-moddev-bundle` capability，无法解析。
+- **版本三件套必须成对**：`targetMcVersion` / `minecraftVersion` / `neoVersion` 由 `checkVersionPairing` 校验，只改 `targetMcVersion` 会被拦下（那会产出"标着 1.21 却按 26.2 编译"的假产物）。确需放行用 `-PallowVersionMismatch=true`。
+- 《字节码级别》跟随目标版本（`javaReleaseForVersion`）：1.20.x→17/21、1.21→21、26.x→25；工具链固定 JDK 25，靠 `options.release` 降级。实测 26.2 产 major 69、1.20.6 产 major 65。
+- 族由 `targetMcVersion` 推导；未知族直接构建失败。
+- **1.20 族锚定 1.20.6 而非 1.20.2/1.20.4**：数据组件与 `ValueInput/ValueOutput` 是 **1.20.5 才引入**的，而本仓库矢术系统整个建立在数据组件上（实测：`DataComponents` 在 1.20.6 可用、1.20.4 不可用）。锚定 1.20.4 会迫使为旧版重写一套 NBT 实现。另外 NeoForge 20.2.x 没有发布 moddev 需要的 `neoforge-moddev-bundle` capability。
 - 边界规则在 `gradle/imp-boundary.txt`，格式 `族列表 => 正则 => 说明`（用 `=>` 因为正则常用 `|`）。新增分叉 API 时**先加规则再迁移代码**。
 - 已知限制：单类形态下 IDE 只能对一个版本显示为绿；`@Name` 与外部改名表都按简单名匹配，同名不同类会被一起改。
-- 现状：内容模块尚未按族迁移，`1.20`/`1.21` 族目前只有 `imp` 能编；`checkImpBoundary` 在 1.21 族下会报出 17 处 `Identifier` 违规，这是待迁移清单，不是误报。
+- 现状：三个模块的 ID 出口全部收口（`WildWindCore.id()` / `WildWindWilderness.id()` / `WildWindBarren.id()` 均返回 `ImpId`），datagen 已拆出 main。`checkImpBoundary -PtargetMcVersion=1.21.1` 当前报 **5 处，全部为结构性不可迁移项**：4 处 GeckoLib `getTextureResource` 覆写签名（返回类型由库决定）+ 1 处外部 API 形参类型（`MudcrabVariant.createKey`，类型源自 `TemperatureVariants` 常量）。这不是待办，而是能力边界。
+- datagen 的违规不计入：datagen 按族分目录，1.21/1.20 族没有 datagen 代码即不存在冲突；守卫只扫描**当前族**的 datagen 目录。
+
+### CI
+
+`.github/workflows/build.yml` 三个 job：`primary`（26.2 全量，必过）、`imp-matrix`（三族 `:imp:build`，必过）、`content-matrix`（手动 `workflow_dispatch` + `full_matrix=true`，`continue-on-error`，用于观测旧版内容迁移进度）。
 
 ## 调试与排错参考
 

@@ -5,7 +5,6 @@ import net.minecraft.core.HolderGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.tags.BlockTags;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.util.valueproviders.UniformInt;
 import net.minecraft.world.level.levelgen.VerticalAnchor;
@@ -19,6 +18,7 @@ import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
 import net.minecraft.world.level.levelgen.placement.RandomOffsetPlacement;
 import org.polaris2023.wildwind.core.WildWindCore;
+import org.polaris2023.wildwind.imp.ImpWorldGen;
 
 import java.util.List;
 
@@ -33,7 +33,7 @@ public final class ModPlacedFeatures {
 
     public static final ResourceKey<PlacedFeature> AZALEA_TREE_PLACED_KEY = ResourceKey.create(
             Registries.PLACED_FEATURE,
-            WildWindCore.id("azalea_tree_placed")
+            WildWindCore.id("azalea_tree_placed").unwrap()
     );
 
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
@@ -45,7 +45,7 @@ public final class ModPlacedFeatures {
                         CountPlacement.of(UniformInt.of(1, 2)),
                         InSquarePlacement.spread(),
                         HeightRangePlacement.uniform(VerticalAnchor.aboveBottom(0), VerticalAnchor.absolute(256)),
-                        EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), BlockPredicate.matchesTag(BlockTags.AIR), 12),
+                        EnvironmentScanPlacement.scanningFor(Direction.UP, BlockPredicate.solid(), ImpWorldGen.airPredicate(), 12),
                         RandomOffsetPlacement.of(ConstantInt.of(0), ConstantInt.of(-1)),
                         BiomeFilter.biome()
                 )

@@ -22,6 +22,8 @@ import net.neoforged.bus.api.IEventBus;
 import net.neoforged.neoforge.registries.DeferredBlock;
 import net.neoforged.neoforge.registries.DeferredRegister;
 import org.polaris2023.wildwind.core.WildWindCore;
+import org.polaris2023.wildwind.imp.ImpBlocks;
+import org.polaris2023.wildwind.imp.ImpLegacy;
 
 /**
  * 核心模块的方块注册：杜鹃木套件 / 制箭台 / 玫瑰。
@@ -41,7 +43,7 @@ public final class ModBlocks {
 
     // ==================== 杜鹃木套件 ====================
 
-    public static final DeferredBlock<RotatedPillarBlock> AZALEA_LOG = BLOCKS.registerBlock(
+    public static final DeferredBlock<RotatedPillarBlock> AZALEA_LOG = ImpBlocks.registerBlock(BLOCKS,
             "azalea_log",
             p -> new RotatedPillarBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -49,7 +51,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<RotatedPillarBlock> AZALEA_WOOD = BLOCKS.registerBlock(
+    public static final DeferredBlock<RotatedPillarBlock> AZALEA_WOOD = ImpBlocks.registerBlock(BLOCKS,
             "azalea_wood",
             p -> new RotatedPillarBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -57,7 +59,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_LOG = BLOCKS.registerBlock(
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_LOG = ImpBlocks.registerBlock(BLOCKS,
             "stripped_azalea_log",
             p -> new RotatedPillarBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -65,7 +67,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_WOOD = BLOCKS.registerBlock(
+    public static final DeferredBlock<RotatedPillarBlock> STRIPPED_AZALEA_WOOD = ImpBlocks.registerBlock(BLOCKS,
             "stripped_azalea_wood",
             p -> new RotatedPillarBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -73,7 +75,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<Block> AZALEA_PLANKS = BLOCKS.registerBlock(
+    public static final DeferredBlock<Block> AZALEA_PLANKS = ImpBlocks.registerBlock(BLOCKS,
             "azalea_planks",
             p -> new Block(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -81,7 +83,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<StairBlock> AZALEA_STAIRS = BLOCKS.registerBlock(
+    public static final DeferredBlock<StairBlock> AZALEA_STAIRS = ImpBlocks.registerBlock(BLOCKS,
             "azalea_stairs",
             p -> new StairBlock(AZALEA_PLANKS.get().defaultBlockState(), p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -89,7 +91,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<SlabBlock> AZALEA_SLAB = BLOCKS.registerBlock(
+    public static final DeferredBlock<SlabBlock> AZALEA_SLAB = ImpBlocks.registerBlock(BLOCKS,
             "azalea_slab",
             p -> new SlabBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -97,7 +99,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<FenceBlock> AZALEA_FENCE = BLOCKS.registerBlock(
+    public static final DeferredBlock<FenceBlock> AZALEA_FENCE = ImpBlocks.registerBlock(BLOCKS,
             "azalea_fence",
             p -> new FenceBlock(p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -105,7 +107,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<FenceGateBlock> AZALEA_FENCE_GATE = BLOCKS.registerBlock(
+    public static final DeferredBlock<FenceGateBlock> AZALEA_FENCE_GATE = ImpBlocks.registerBlock(BLOCKS,
             "azalea_fence_gate",
             p -> new FenceGateBlock(AZALEA_WOOD_TYPE, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -113,7 +115,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<DoorBlock> AZALEA_DOOR = BLOCKS.registerBlock(
+    public static final DeferredBlock<DoorBlock> AZALEA_DOOR = ImpBlocks.registerBlock(BLOCKS,
             "azalea_door",
             p -> new DoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -121,7 +123,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<TrapDoorBlock> AZALEA_TRAPDOOR = BLOCKS.registerBlock(
+    public static final DeferredBlock<TrapDoorBlock> AZALEA_TRAPDOOR = ImpBlocks.registerBlock(BLOCKS,
             "azalea_trapdoor",
             p -> new TrapDoorBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -129,7 +131,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<PressurePlateBlock> AZALEA_PRESSURE_PLATE = BLOCKS.registerBlock(
+    public static final DeferredBlock<PressurePlateBlock> AZALEA_PRESSURE_PLATE = ImpBlocks.registerBlock(BLOCKS,
             "azalea_pressure_plate",
             p -> new PressurePlateBlock(AZALEA_BLOCK_SET, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -137,7 +139,7 @@ public final class ModBlocks {
                     .sound(SoundType.WOOD))
     );
 
-    public static final DeferredBlock<ButtonBlock> AZALEA_BUTTON = BLOCKS.registerBlock(
+    public static final DeferredBlock<ButtonBlock> AZALEA_BUTTON = ImpBlocks.registerBlock(BLOCKS,
             "azalea_button",
             p -> new ButtonBlock(AZALEA_BLOCK_SET, 30, p
                     .mapColor(MapColor.COLOR_LIGHT_GREEN)
@@ -148,7 +150,7 @@ public final class ModBlocks {
     // ==================== 制箭台 ====================
 
     /** 制箭台 - 使用自定义方块类支持 GUI */
-    public static final DeferredBlock<Block> FLETCHING_TABLE = BLOCKS.registerBlock(
+    public static final DeferredBlock<Block> FLETCHING_TABLE = ImpBlocks.registerBlock(BLOCKS,
             "fletching_table",
             p -> new FletchingTableBlock(p
                     .mapColor(MapColor.WOOD)
@@ -159,47 +161,43 @@ public final class ModBlocks {
     // ==================== 花 ====================
 
     /** 玫瑰 */
-    public static final DeferredBlock<FlowerBlock> ROSE = BLOCKS.registerBlock(
+    public static final DeferredBlock<FlowerBlock> ROSE = ImpBlocks.registerBlock(BLOCKS,
             "rose",
-            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, p
+            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, ImpLegacy.noCollision(p
                     .mapColor(MapColor.PLANT)
-                    .noCollision()
                     .instabreak()
                     .sound(SoundType.GRASS)
-                    .pushReaction(PushReaction.DESTROY))
+                    .pushReaction(PushReaction.DESTROY)))
     );
 
     /** 灵魂玫瑰（单格花） */
-    public static final DeferredBlock<FlowerBlock> SOUL_ROSE = BLOCKS.registerBlock(
+    public static final DeferredBlock<FlowerBlock> SOUL_ROSE = ImpBlocks.registerBlock(BLOCKS,
             "soul_rose",
-            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, p
+            p -> new FlowerBlock(SuspiciousStewEffects.EMPTY, ImpLegacy.noCollision(p
                     .mapColor(MapColor.PLANT)
-                    .noCollision()
                     .instabreak()
                     .sound(SoundType.GRASS)
-                    .pushReaction(PushReaction.DESTROY))
+                    .pushReaction(PushReaction.DESTROY)))
     );
 
     /** 灵魂玫瑰丛（双层高花） */
-    public static final DeferredBlock<DoublePlantBlock> SOUL_ROSE_BUSH = BLOCKS.registerBlock(
+    public static final DeferredBlock<DoublePlantBlock> SOUL_ROSE_BUSH = ImpBlocks.registerBlock(BLOCKS,
             "soul_rose_bush",
-            p -> new DoublePlantBlock(p
+            p -> new DoublePlantBlock(ImpLegacy.noCollision(p
                     .mapColor(MapColor.PLANT)
-                    .noCollision()
                     .instabreak()
                     .sound(SoundType.GRASS)
-                    .pushReaction(PushReaction.DESTROY))
+                    .pushReaction(PushReaction.DESTROY)))
     );
 
     /** 凋零玫瑰丛（双层高花） */
-    public static final DeferredBlock<DoublePlantBlock> WITHER_ROSE_BUSH = BLOCKS.registerBlock(
+    public static final DeferredBlock<DoublePlantBlock> WITHER_ROSE_BUSH = ImpBlocks.registerBlock(BLOCKS,
             "wither_rose_bush",
-            p -> new DoublePlantBlock(p
+            p -> new DoublePlantBlock(ImpLegacy.noCollision(p
                     .mapColor(MapColor.PLANT)
-                    .noCollision()
                     .instabreak()
                     .sound(SoundType.GRASS)
-                    .pushReaction(PushReaction.DESTROY))
+                    .pushReaction(PushReaction.DESTROY)))
     );
 
     public static void blockItems() {

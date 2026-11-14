@@ -237,6 +237,239 @@ All notable changes to the Wild Wind Module project will be documented in this f
 
 ---
 
+### Fixed
+
+- **datagen / 运行期 LinkageError 彻底修复** - 根因是 `imp` 被当作**运行期库**解析（日志可见 `ww-imp-mc26.2-1.0.0.jar (project :imp)`）。FML 只接管 MC/NeoForge 包，其它包委托父加载器（app），于是 imp 类由 app 加载；而 imp 的方法签名里含 `net.minecraft.resources.Identifier`，app 于是去自己的类路径找 MC 类，撞上 TRANSFORMER 已加载的同名类 → `loader constraint violation`。
+  - 修法：`api(project(":imp"))` 改为 `compileOnly(project(":imp-annotations"))`；imp 的**预处理输出以源码目录形式并入 core** 的 main source set（`srcDir(imp/build/preprocessed/java)`，排除 `sample`），使其类编译进 core 的输出、由 mod 加载器加载；删除 jar 阶段的字节码合并（已无必要）
+  - 追加修正：imp 源码**只能并入 core**。最初并入所有模块时，多个模块各自包含同一个包，触发 JPMS 拒绝（`Module ww_wilderness contains package org.polaris2023.wildwind.imp, module ww_core exports package ...`）；wilderness / barren 通过 `implementation(project(":core"))` 获得
+  - 验证：三个模块的 `runServerData` / `runClientData` 全部成功——core（Tags / Loot / Registries / Data Maps / Recipes / Model Definitions / en_us / zh_cn）、wilderness（含 worldgen/biome 标签、Recipes）、barren（含 Data Maps），均 `BUILD SUCCESSFUL`
+
+---
+
+## [Unreleased] - 2026.11.22
+
+### Changed
+
+- **实体渲染全面脱离 GeckoLib，改用原版渲染管线（ADR-0006）** - 三个实体（幼蛛 / 泥沼蟹 / 恐鱼）改用原版 `ModelPart` + 自研 Bedrock 动画运行时，`geckolib` 依赖从构建脚本、仓库声明与 `neoforge.mods.toml` 中彻底移除：
+  - 新增 `imp/client/bedrock/`：`BedrockAnimation`（关键帧求值，线性 + Catmull-Rom）、`BedrockGeometry`（`.geo.json` 解析）、`GeoModelBuilder`（转 `ModelPart` 层级）、`GeoAnimationState`（状态机）、`GeoResources`（加载 + 每帧驱动）
+  - 新增 `ImpRig`（渲染器 / 模型 / 渲染态基类，三族分段）、`ImpGeoRig`（装配门面）、`ImpAnimatedEntity`（实体侧动画契约）
+  - Blockbench 导出的 `.geo.json` / `.animation.json` **原文件直接复用**，不需要格式转换
+  - 提供三个版本无关钩子（`textureFor` / `scaleFor` / `rotationFor`）替代被移除的 GeckoLib 覆写，恢复变种纹理、幼年体型、攀爬倾斜
+
+### Fixed
+
+- **攻击/问候动画在客户端从未播放（既有 bug）** - `triggerAnim` 在服务端写普通字段，客户端收不到。改用 `SynchedEntityData` 同步计数器（每次触发 +1 而非置 boolean，以便边沿检测区分相邻两次），渲染侧每帧比对，只在值变化时触发一次
+- **`EntitiesHandler` 静态初始化 NPE** - `static` 块里读 `ModEntities.SPIDERLING.get()`，而 `@EventBusSubscriber` 自动注册本身触发类初始化，此时 `DeferredRegister` 尚未绑定，抛 `Trying to access unbound value`。声明移入 `onAttributeCreate` 事件回调
+- **刷怪蛋 `Item id not set` NPE** - `ImpLegacy.spawnEgg(...)` 接收立即求值的 `EntityType`，但物品注册阶段实体类型未绑定。改为接收 `Supplier`（调用点传 `ModEntities.SPIDERLING::value`），推迟到真正需要时求值
+- **`preprocessImpSources` 切换版本族时残留旧产物** - 任务被判定 up-to-date 时不会执行 `main()` 里的目录清理，导致读到上一族的预处理产物、报出大量"包不存在"假错误。加 `outputs.upToDateWhen { false }`
+- **configuration cache 之前是坏的** - `preprocessImpSources` 的 `doFirst` 闭包捕获 Provider/脚本对象；`checkImpBoundary` / `checkVersionPairing` 的 `doLast` 闭包同理。前者把清理移入预处理器 `main`，后者显式声明 `notCompatibleWithConfigurationCache`
+
+### 验证
+
+```
+26.2 clean build                BUILD SUCCESSFUL
+core @26.2 / 1.21.1 / 1.20.6    0 / 0 / 0 错误      ← 首次三族全绿
+:imp:build @三族                BUILD SUCCESSFUL ×3
+:imp-processor:test             20 项全过
+checkImpBoundary @三族          违规 0 / 0 / 0       ← 迁移前 5 处
+```
+
+datagen 六个任务全部成功，产物与基线**逐字节一致**（core 154、wilderness 72、barren 514，丢失或改动 0）。
+
+### 已知限制
+
+同屏同类实体的循环动画相位一致（`ModelPart` 树按实体类型共享，26.x `EntityModel` 要求构造期固定 root）；动画时间走 `System.nanoTime()` 差分而非 tick。两条均已写入 ADR-0006，实际观感需一次 `runClient` 人工确认。
+
+---
+
+## [Unreleased] - 2026.11.21
+
+### Changed
+
+- **datagen 六类全部完成 ADR-0005 三层迁移** - tags / models / loot / recipes / datapacks / datamaps 均拆为「规格（纯数据，三族共用）+ 发射器（`@Since`/`@Until` 分段）+ 薄适配」：
+  - `imp/data/` 新增 10 个文件：`ImpLootSpec`/`ImpLootWriter`、`ImpRecipeSpec`/`ImpRecipeWriter`、`ImpDatapackSpec`/`ImpDatapackWriter`、`ImpDataMapSpec`/`ImpDataMapWriter`（tags 与 models 此前已完成）
+  - 各模块 main 新增规格类：`ModTagSpecs`/`ModModelSpecs`/`ModLootSpecs`/`ModRecipeSpecs`/`ModDatapackSpecs`/`ModDataMapSpecs` 及 wilderness / barren 的同名版本
+  - 所有 Provider 收缩为薄适配；`ImpModelSpec` 新增 `Cube` / `StoneSet` 变体
+
+### Fixed
+
+- **wilderness / barren 的 `runClientData` 长期失败** - `NoClassDefFoundError: core/datagen/provider/MissingModels`：它们的模型 Provider 直接依赖 core 的 datagen source set，而运行期 core 以 jar 加载（不含 datagen 类）。模型能力迁入 imp 后两个模块不再依赖 core 的 datagen，client datagen **首次跑通**（wilderness +36、barren +362 个产物）
+- **configuration cache 之前是坏的**（三处独立报告）：
+  - `:imp:preprocessImpSources` 的 `doFirst` 闭包捕获 Provider/脚本对象 → 清理逻辑移入预处理器 `main`（新增 `deleteTree`），任务改用 `args(...)` 传不可变 `File` 路径
+  - `checkImpBoundary` / `checkVersionPairing` 的 `doLast` 闭包同样捕获脚本对象 → 显式 `notCompatibleWithConfigurationCache(...)`，让 Gradle 只对这两个任务禁用 CC，而不是让整次构建失败
+  - 修完后 `./gradlew build` 与三族 `:imp:build` 在**开启 configuration cache** 下全部通过
+
+### 验证
+
+三模块 datagen 与基线逐字节对比：
+
+```
+core        154 → 154   丢失或改动 0 ; 新增 0
+wilderness   36 →  72   丢失或改动 0 ; 新增 36   ← 修复 client datagen
+barren      152 → 514   丢失或改动 0 ; 新增 362  ← 修复 client datagen
+```
+
+**"丢失或改动 = 0"** 证明六类迁移未改变任何已有产物字节。另：`clean build` ✅、20 项测试 ✅、三族 `:imp:build --rerun-tasks` ✅、`checkImpBoundary` 无新增违规。
+
+新增工具 [tools/datagen-diff.ps1](tools/datagen-diff.ps1)：`-Snapshot` 建基线 / `-Verify` 重跑对比（PowerShell 5.1 需 UTF-8 BOM，已处理）。
+
+---
+
+## [Unreleased] - 2026.11.20
+
+### Changed
+
+- **模型 datagen 改为规格驱动（ADR-0005 第二类）** - 模型是两代 API 差异最大的一类（`javap` 实测：26.x 用 `BlockModelGenerators` 的 `woodProvider`/`family`/`createTintedLeaves`，1.21.1 用 NeoForge 的 Forge 风格 `BlockStateProvider`，且 `createDoor`/`createTrapdoor` 在旧版是包私有）：
+  - 新增 `imp/data/ImpModelSpec`（sealed 接口，6 个变体：`WoodSet` / `Cross` / `DoublePlant` / `BuiltinDoublePlant` / `VanillaLike` / `FlatItem`），纯数据、零 MC 类型
+  - 新增 `imp/data/ImpModelWriter`：26.x 分支完整实现；旧版分支**显式抛 `UnsupportedOperationException`** 并附待办说明（原因见 ADR-0005）
+  - 新增 `core/data/ModModelSpecs`；`ModModelProvider` 只剩交出生成器对象
+
+### Fixed
+
+- **`soul_rose_bush` 模型形状差异（由 diff 发现）** - 26.x 内置 `createDoublePlantWithDefaultItem` 生成 `_bottom`/`_top` 两个模型，而 `MissingModels.doublePlant` 是单模型实现；原 Provider 对 `soul_rose_bush` 与 `wither_rose_bush` 用了不同做法。规格现区分 `BuiltinDoublePlant` 与 `DoublePlant`，与原实现一一对应，diff 归零
+
+### 验证
+
+`core` 的 datagen 产物与基线**逐字节一致（154 个文件）**；三族 `:imp:build` 通过；`clean build` + 20 项测试通过。
+
+---
+
+## [Unreleased] - 2026.11.19
+
+### Changed
+
+- **core 的三个标签 Provider 改为规格驱动（ADR-0005 落地）** - 把"生成什么"迁进纯数据规格，Provider 只剩薄适配：
+  - 新增 `core/data/ModTagSpecs`（main 源码，零 MC 类型）：`blockTags()` / `itemTags()` / `entityTypeTags()`
+  - `ModBlockTagsProvider` / `ModItemTagsProvider` / `ModEntityTypeTagsProvider` 改为 `ImpTagWriter.apply(specs, appenders)`，各自只剩三行 `return tag(key);`
+  - 新增 imp 辅助 `ImpIds.fromString` / `ofHolder` / `ofTag`：用 `toString()` 中转，**单实现跨版本**（`DeferredHolder.getId()` 的返回类型虽不同，但只需字符串）
+
+### 验证
+
+按"基线快照 → 迁移 → 重跑 → 逐字节 diff"流程验证，三次独立零差异：
+
+| 模块 | 对比文件数 | 结果 |
+|---|---|---|
+| core | 154（server+client，排除 `.cache`） | ✅ 哈希全一致 |
+| wilderness | 36（server） | ✅ 哈希全一致 |
+| barren | 152（server） | ✅ 哈希全一致 |
+
+---
+
+## [Unreleased] - 2026.11.18
+
+### Added
+
+- **datagen 的中间层兼容机制（ADR-0005）** - 把 datagen 拆成「规格 / 发射器 / 薄适配」三层，使"生成什么"三族共用：
+  - `imp/data/ImpTagSpec`：`(Kind, tag ImpId, values List<ImpId>)` + `Collector`，纯数据、零 MC 类型
+  - `imp/data/ImpTagWriter`：`apply(List<ImpTagSpec>, Appenders)`，内部按版本分段：
+    - `@Since("26.1")`：`net.minecraft.data.tags.TagAppender.addAll(Stream<ResourceKey<T>>)`
+    - `@Until("26.1")`：`IntrinsicHolderTagsProvider.IntrinsicTagAppender.add(T)`，用 `@Name` 统一方法名
+  - `ImpTagWriter.Appenders`：内容模块实现的薄适配（每族三行 `return tag(key);`）
+- **三族实测** - `:imp:build` 在 26.2 / 1.21.1 / 1.20.6 全部通过，意味着**现代与旧版两套 API 分支都经过真实编译验证**，不是"写了没编过"
+
+### 说明
+
+不可消除的分叉：`class X extends <版本专属 Provider>`——类只能继承一个父类，注解删的是成员而非 `extends`。因此每个 Provider 仍需壳，但壳从"整套逻辑"缩到"三行适配"。
+
+---
+
+## [Unreleased] - 2026.11.17
+
+### Added
+
+- **datagen 独立 source set 与按版本分叉（阶段 E）** - datagen 从 `main` 拆出，成为 Gradle `datagen` source set，按版本族选目录：
+  - 目录约定 `src/<模块>/datagen/<族>/java`；现有 34 个 datagen 文件迁至 `src/<模块>/datagen/26.x/java/...`
+  - 旧族目录不存在时该编译任务为 `NO-SOURCE`，**datagen 不再阻塞旧版模块构建**（此前 34 个文件混在 main 里，1.20/1.21 连编译都无法开始）
+  - `mods { register(...) { sourceSet(datagen) } }`：让 `GatherDataEvent` 能发现 datagen 类
+  - `check` 依赖 `compileDatagenJava`，CI 可验证 datagen 可编译
+  - wilderness/barren 的 datagen 通过 `gradle.projectsEvaluated` 延迟挂载 core 的 datagen 输出（复用 `MissingModels`、`BlockLoot` 等工具）
+
+### 实测事实（决定 datagen 必须按版本分叉）
+
+| API | 26.2 | 1.21.1 | 1.20.6 |
+|---|---|---|---|
+| `net.minecraft.client.data.models.ModelProvider` | ✅ | ❌ 包不存在 | ❌ 包不存在 |
+| `net.minecraft.data.models.ModelProvider` | ❌ | ✅ | ✅ |
+
+类声明无法用注解表达分叉（一个类只能继承一个父类），因此 datagen 只能分目录。
+
+### Changed
+
+- **边界守卫扫描范围随 datagen 拆分调整** - 只扫描当前族的 datagen 目录（`src/<模块>/datagen/<族>/java`）。效果：`checkImpBoundary -PtargetMcVersion=1.21.1` 从 12 处降到 **5 处**，剩余全为结构性不可迁移项（4 处 GeckoLib `getTextureResource` 覆写签名 + 1 处 `MudcrabVariant.createKey` 形参类型）
+
+### Fixed
+
+- **datagen 运行期 LinkageError** - 此前把 `main.compileClasspath` / `runtimeClasspath` 直接并入 datagen source set，导致 `minecraft-patched-*.jar` 进入运行期，MC 类同时被 `app` 与 `TRANSFORMER` 加载（`loader constraint violation: net.minecraft.resources.Identifier`）。现改为以 **compileOnly 依赖**继承编译类路径、运行期只加 `main.output`
+
+### 未解决（已记录）
+
+`runServerData` 在 tags / loot 跑完（本次生成 64 个文件）后，于 `ModDatapackProvider` 的 `RegistrySetBuilder$RegistryStub.apply` 处仍报同一 LinkageError。类加载器日志显示 datagen 类已正确进入 `ww_core` content loader，触发点在 MC 内部反射路径，判断与 source set 拆分无关，需单独立项排查。
+
+---
+
+## [Unreleased] - 2026.11.16
+
+### Added
+
+- **CI 版本矩阵（ADR-0003 阶段 D）** - `.github/workflows/build.yml` 重构为三个 job：
+  - `primary`：26.2 全量 `./gradlew build`（含边界守卫与配对守卫），上传三个 mod jar + imp jar
+  - `imp-matrix`：`target ∈ {1.20.6, 1.21.1, 26.2}` 三族分别 `:imp:build`（必过），上传各版本 imp jar
+  - `content-matrix`：手动触发（`workflow_dispatch` + `full_matrix`）构建 1.20.6 / 1.21.1 的内容模块，`continue-on-error`——当前预期失败，用于观测迁移进度
+  - 并发控制：同分支新提交自动取消上一次运行
+- **版本族单一事实源** - 新增 `gradle/version-families.properties`（`族=mc|neoForge|java`），根脚本、`imp/build.gradle.kts` 与 CI 都从它取值，消除"三处各写一份表"的漂移
+- **`checkVersionPairing` 守卫** - 校验 `targetMcVersion` / `minecraftVersion` / `neoVersion` 属于同一版本族，防止产出"标着 1.21 却按 26.2 编译"的假产物；已挂到各 mod 模块的 `check` 之前；确需放行时用 `-PallowVersionMismatch=true`
+
+### Changed
+
+- **mod 模块的字节码级别跟随目标版本** - 根脚本 `options.release` 由 `javaReleaseForVersion(targetMcVersion)` 推导（1.20.x→17/21、1.21→21、26.x→25），此前固定 25 会给 1.20 族产出无法加载的字节码（实测：26.2 → major 69、1.20.6 → major 65）
+
+### 验证
+
+`checkVersionPairing` 四场景实测：默认通过；仅传 `-PtargetMcVersion=1.21.1` 失败（`minecraftVersion=26.2 ≠ 族 '1.21' 期望 1.21.1`）；三者成对通过；`-PneoVersion=21.1.209` 配 1.20.6 失败（`neoVersion=21.1.209 ≠ 族 '1.20' 期望 20.6.144`）。
+
+---
+
+## [Unreleased] - 2026.11.15
+
+### Changed
+
+- **wilderness / barren 的 ID 出口同样收口到 imp** - `WildWindWilderness.id(...)` / `WildWindBarren.id(...)` 返回类型改为 `ImpId`，内部转调 `ImpIds.idOf(...)`：
+  - 16 个文件、30 处调用点补 `.unwrap()`（`MudcrabModel`、`PiranhaModel`、`MudcrabVariant`、`ClientOmniClawTooltip`、`OmniClawItem`、`ServerBoundSelectOmniClawItemPayload`、`DatadrivenRegistryKey`、`ModMobEffects`、`ModBiomeTags`、`ModBlockTags`、`ModItemTags`、`WildernessBiomeModifiers`、`BarrenClientEvents`、`BarrenModelProvider`、`BarrenBiomeModifiers`、`BarrenConfiguredFeatures`、`BarrenPlacedFeatures`）
+  - `OmniClawItem` 的三个属性修饰符 ID 字段由 `Identifier` 改为 `ImpId`；`ClientOmniClawTooltip` 的 4 个精灵图字段与数组改为 `ImpId`
+  - 清理 5 处不再需要的 `Identifier` 导入（`WildWindWilderness`、`WildWindBarren`、`OmniClawItem`、`ClientOmniClawTooltip`、wilderness 的 `ModDataComponents`）
+
+### 结果
+
+- `checkImpBoundary -PtargetMcVersion=1.21.1`：19 处 → **12 处**，且剩余全部为结构性不可迁移项：
+  - **7 行 datagen**（`BarrenItemTagsProvider`×2、`BarrenModelProvider`、`MissingModels`、`ModItemTagsProvider`×2、`ModModelProvider`）：`net.minecraft.client.data.models.*` 是 1.21.4+ 结构，旧版需完全不同的 Provider
+  - **4 行 GeckoLib 覆写签名**（`MudcrabModel`、`PiranhaModel`、`SpiderlingModel`、`SpiderlingEyesLayer` 的 `getTextureResource`）：返回类型由 GeckoLib 决定
+  - **1 行外部 API 类型**（`MudcrabVariant.createKey(Identifier)`）：形参类型源自 `TemperatureVariants` 常量
+
+---
+
+## [Unreleased] - 2026.11.14
+
+### Added
+
+- **`ImpId` 跨版本稳定句柄** - 新增 `org.polaris2023.wildwind.imp.ImpId`：字段里存资源 ID 时的稳定类型，`unwrap()` 的返回类型按版本分叉（26.x → `Identifier`，1.20/1.21 → `ResourceLocation`），并提供 `asString()` / `equals` / `hashCode`。配合 `ImpIds.idOf(...)` 使用
+- **静态构造的边界规则** - `gradle/imp-boundary.txt` 增加 `Identifier.(parse|fromNamespaceAndPath|tryParse)` 与对应 26.x 规则：只拦 `import` 会漏掉静态调用点
+
+### Changed
+
+- **core 的 ID 出口收口到 imp** - `WildWindCore.id(String)` 返回类型由 `Identifier` 改为 `ImpId`，内部转调 `ImpIds.idOf(...)`；6 处调用点改为 `id(...).unwrap()` 或 `ImpId` 字段：
+  - `client/entity/model/SpiderlingModel`、`client/entity/renderer/layer/SpiderlingEyesLayer`（`EYES` 改为 `ImpId` 字段）
+  - `worldgen/{ModBiomeModifiers,ModConfiguredFeatures,ModPlacedFeatures}`
+  - `client/screen/FletchingTableScreen` 的两个贴图常量改为 `ImpId`，`blit(...)` 处取 `unwrap()`
+  - `WildWindCore` 与 `FletchingTableScreen` 不再 import `net.minecraft.resources.Identifier`
+- **1.20 族锚点由 1.20.4 改为 1.20.6（NF 20.6.144，Java 21）** - 数据组件与 `ValueInput/ValueOutput` 自 1.20.5 才引入，而矢术系统整个建立在数据组件上；实测 `DataComponents` 在 1.20.6 可用、1.20.4 不可用。锚定 1.20.4 会迫使为旧版重写一套 NBT 实现
+
+### Fixed
+
+- **`javaReleaseFor` 用错版本** - 原先按族锚点推导 Java 级别，导致 `-PtargetMcVersion=1.20.6` 被错判为 Java 17；改为按实际目标版本推导
+- **预处理器解析失败** - JavaParser 默认语言级别不认识 `instanceof` 模式匹配等现代语法；改为 `ParserConfiguration.LanguageLevel.BLEEDING_EDGE`
+
+---
+
 ## [Unreleased] - 2026.11.13
 
 ### Added

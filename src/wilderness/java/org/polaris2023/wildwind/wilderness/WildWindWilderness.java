@@ -1,11 +1,12 @@
 package org.polaris2023.wildwind.wilderness;
 
-import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import org.polaris2023.wildwind.imp.ImpId;
+import org.polaris2023.wildwind.imp.ImpIds;
 import org.polaris2023.wildwind.wilderness.block.WildernessBlocks;
 import org.polaris2023.wildwind.wilderness.entity.animal.MudcrabVariant;
 import org.polaris2023.wildwind.wilderness.registry.DatadrivenRegistryKey;
@@ -49,8 +50,12 @@ public class WildWindWilderness {
         ModCreativeTabs.register(bus);
     }
 
-    public static Identifier id(String path) {
-        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    /**
+     * 本模块所有资源 ID 的唯一出口，返回跨版本稳定的 {@link ImpId}。
+     * 需要原生类型时调用 {@code id(...).unwrap()}。
+     */
+    public static ImpId id(String path) {
+        return ImpIds.idOf(MOD_ID, path);
     }
 
     // 数据驱动项注册

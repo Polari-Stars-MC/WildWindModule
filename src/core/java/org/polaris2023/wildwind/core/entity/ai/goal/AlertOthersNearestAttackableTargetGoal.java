@@ -5,21 +5,27 @@ import net.minecraft.world.entity.EntitySelector;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
 import net.minecraft.world.entity.TamableAnimal;
-import net.minecraft.world.entity.ai.goal.target.NearestAttackableTargetGoal;
-import net.minecraft.world.entity.ai.targeting.TargetingConditions;
 import net.minecraft.world.phys.AABB;
+import org.polaris2023.wildwind.imp.ImpNearestAttackableTargetGoal;
 
 import javax.annotation.Nullable;
 import java.util.Set;
 
 /**
  * 警告最近可攻击对象的目标
+ * <p>
+ * 基类用 imp 的 {@link ImpNearestAttackableTargetGoal}：两族「额外筛选条件」的参数类型
+ * 不同（26.x 是 {@code TargetingConditions.Selector}，旧版是 {@code Predicate}），
+ * 构造器因此必须留在 imp，这里只写与版本无关的行为。
+ *
  * @param <T> 实体类型
  * @author huimanman
  * @author mdjfnfn
  * @author safe_saffawa
  */
-public class AlertOthersNearestAttackableTargetGoal<T extends LivingEntity> extends NearestAttackableTargetGoal<T> {
+public class AlertOthersNearestAttackableTargetGoal<T extends LivingEntity>
+        extends ImpNearestAttackableTargetGoal<T> {
+
     @Nullable
     private Set<Class<?>> toIgnoreAlert;
     private double overrideFindEntityFollowDistance = -1.0;
@@ -28,7 +34,8 @@ public class AlertOthersNearestAttackableTargetGoal<T extends LivingEntity> exte
         super(mob, targetType, mustSee);
     }
 
-    public AlertOthersNearestAttackableTargetGoal(Mob mob, Class<T> targetType, boolean mustSee, TargetingConditions.Selector targetPredicate) {
+    public AlertOthersNearestAttackableTargetGoal(Mob mob, Class<T> targetType, boolean mustSee,
+                                                  ImpTargetSelector targetPredicate) {
         super(mob, targetType, mustSee, targetPredicate);
     }
 
@@ -36,7 +43,9 @@ public class AlertOthersNearestAttackableTargetGoal<T extends LivingEntity> exte
         super(mob, targetType, mustSee, mustReach);
     }
 
-    public AlertOthersNearestAttackableTargetGoal(Mob mob, Class<T> targetType, int randomInterval, boolean mustSee, boolean mustReach, @Nullable TargetingConditions.Selector targetPredicate) {
+    public AlertOthersNearestAttackableTargetGoal(Mob mob, Class<T> targetType, int randomInterval,
+                                                  boolean mustSee, boolean mustReach,
+                                                  @Nullable ImpTargetSelector targetPredicate) {
         super(mob, targetType, randomInterval, mustSee, mustReach, targetPredicate);
     }
 

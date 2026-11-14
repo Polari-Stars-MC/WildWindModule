@@ -33,19 +33,19 @@ public class ModMobEffects {
 					() -> new WildWindMobEffect(MobEffectCategory.BENEFICIAL, 0xFF3F7E8E)
 							.addAttributeModifier(
 									Attributes.BLOCK_INTERACTION_RANGE,
-									WildWindWilderness.id("effect.reach"),
+									WildWindWilderness.id("effect.reach").unwrap(),
 									2.0,
 									AttributeModifier.Operation.ADD_VALUE
 							)
 							.addAttributeModifier(
 									Attributes.ENTITY_INTERACTION_RANGE,
-									WildWindWilderness.id("effect.reach"),
+									WildWindWilderness.id("effect.reach").unwrap(),
 									2.0,
 									AttributeModifier.Operation.ADD_VALUE
 							)
 							.addAttributeModifier(
 									ModAttributes.EXTRA_ITEM_PICKUP_RANGE,
-									WildWindWilderness.id("effect.reach"),
+									WildWindWilderness.id("effect.reach").unwrap(),
 									2.0,
 									AttributeModifier.Operation.ADD_VALUE
 							)

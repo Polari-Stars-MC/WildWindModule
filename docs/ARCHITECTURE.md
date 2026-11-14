@@ -161,7 +161,12 @@ gradle.properties: targetMcVersion=26.2      （或 -PtargetMcVersion=1.21.1 覆
   - 当前状态：`imp` 已能按族构建（1.20.4 / 1.21.1 / 26.2 三族实测通过）；**内容模块仍只在 26.x 族可编**，因为它们的源码直接使用 26.x 的 API（如 `Identifier`，`checkImpBoundary` 会报出待迁移清单）。
   - 各族依赖与 Java 级别由 `imp/build.gradle.kts` 的 `familyDefaults` / `javaReleaseFor` 决定，可 `-PimpNeoVersion` 覆盖。
 - 边界检查：`./gradlew checkImpBoundary -PtargetMcVersion=<版本>`（已挂在各模块 `check` 之前）。
-- CI：GitHub Actions `build.yml`，JDK 25 temurin + `./gradlew build`。
+- 版本配对：`./gradlew checkVersionPairing`（同样挂在 `check` 之前）——校验 `targetMcVersion` / `minecraftVersion` / `neoVersion` 属于同一版本族，防止产出"标着 1.21 却按 26.2 编译"的假产物。确需放行用 `-PallowVersionMismatch=true`。
+- 版本族单一事实源：`gradle/version-families.properties`（`族=mc|neoForge|java`），根脚本、imp 脚本与 CI 共用。
+- CI（`.github/workflows/build.yml`）：
+  - `primary`：26.2 全量 `build`（必过），上传三 mod jar + imp jar
+  - `imp-matrix`：`1.20.6 / 1.21.1 / 26.2` 三族 `:imp:build`（必过）
+  - `content-matrix`：手动触发（`workflow_dispatch` + `full_matrix=true`）构建旧版内容模块，`continue-on-error`，用于观测迁移进度
 
 ## 6. 演进记录
 

@@ -3,6 +3,7 @@ package org.polaris2023.wildwind.core.entity;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.Mob;
+import org.polaris2023.wildwind.imp.ImpLegacy;
 /**
  * @author Mon-Landis
  * @author safe_saffawa
@@ -69,7 +70,7 @@ public interface WindupAttackMob {
                 this.setPreparingToAttackTick(-1);
 
                 if (target != null && target.isAlive() && mob.isWithinMeleeAttackRange(target) && mob.getSensing().hasLineOfSight(target)) {
-                    mob.doHurtTarget(level, target);
+                    ImpLegacy.doHurtTarget(mob, level, target);
                     this.onAttackDone(target);
                 }
             }

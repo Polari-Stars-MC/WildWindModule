@@ -1,6 +1,8 @@
 package org.polaris2023.wildwind.imp.preprocess;
 
-import com.github.javaparser.StaticJavaParser;
+import com.github.javaparser.JavaParser;
+import com.github.javaparser.ParseResult;
+import com.github.javaparser.ParserConfiguration;
 import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.Node;
 import com.github.javaparser.ast.body.BodyDeclaration;
@@ -28,6 +30,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
 import java.util.List;
@@ -63,11 +66,15 @@ public final class SourcePreprocessor {
     public record Report(int files, int removedMembers, int renamedSymbols) {}
 
     private final String targetVersion;
+    /** 解析器：语言级别必须放开到现代 Java，否则 instanceof 模式匹配、record 等会解析失败。 */
+    private final JavaParser parser;
 
     public SourcePreprocessor(String targetVersion) {
         // 提前校验版本可解析，坏版本不要等到改写中途才炸
         ImpVersionSpec.parse(targetVersion);
         this.targetVersion = targetVersion;
+        this.parser = new JavaParser(new ParserConfiguration()
+            .setLanguageLevel(ParserConfiguration.LanguageLevel.BLEEDING_EDGE));
     }
 
     /**
@@ -87,7 +94,10 @@ public final class SourcePreprocessor {
         Map<Path, CompilationUnit> units = new LinkedHashMap<>();
         for (Path src : sources) {
             try {
-                units.put(src, StaticJavaParser.parse(src));
+                ParseResult<CompilationUnit> result = parser.parse(src);
+                CompilationUnit cu = result.getResult().orElseThrow(() ->
+                    new IllegalStateException("无法解析：" + src + "\n" + result.getProblems()));
+                units.put(src, cu);
             } catch (IOException e) {
                 throw new UncheckedIOException("解析失败：" + src, e);
             }
@@ -317,7 +327,12 @@ public final class SourcePreprocessor {
         return values;
     }
 
-    /** 命令行入口：{@code <srcRoot> <outRoot> <targetVersion> [renamesFile]}。 */
+    /**
+     * 命令行入口：{@code <srcRoot> <outRoot> <targetVersion> [renamesFile]}。
+     *
+     * <p>会先清空 {@code outRoot}：增量构建时残留的旧文件（例如某版本独有的类）
+     * 不会被覆盖，留着会让后续编译看到不该存在的源码。</p>
+     */
     public static void main(String[] args) throws IOException {
         if (args.length < 3) {
             System.err.println("用法: SourcePreprocessor <srcRoot> <outRoot> <targetVersion> [renamesFile]");
@@ -329,8 +344,21 @@ public final class SourcePreprocessor {
         String target = args[2];
         Path renames = args.length > 3 && !args[3].isBlank() ? Path.of(args[3]) : null;
 
+        deleteTree(outRoot);
         Report report = new SourcePreprocessor(target).process(srcRoot, outRoot, renames);
         System.out.printf("imp 预处理完成：%d 个文件，裁剪成员 %d 处，改名 %d 处（target=%s）%n",
             report.files(), report.removedMembers(), report.renamedSymbols(), target);
+    }
+
+    /** 递归删除目录；不存在时静默返回。 */
+    private static void deleteTree(Path root) throws IOException {
+        if (!Files.exists(root)) {
+            return;
+        }
+        try (Stream<Path> walk = Files.walk(root)) {
+            for (Path path : walk.sorted(Comparator.reverseOrder()).toList()) {
+                Files.deleteIfExists(path);
+            }
+        }
     }
 }

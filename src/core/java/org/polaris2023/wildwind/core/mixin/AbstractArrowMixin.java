@@ -1,16 +1,16 @@
 package org.polaris2023.wildwind.core.mixin;
 
-import net.minecraft.core.BlockPos;
-import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.Projectile;
 import org.polaris2023.wildwind.core.arrow.ArrowEffects;
 import net.minecraft.world.entity.player.Player;
-import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.EntityHitResult;
-import org.jspecify.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.polaris2023.wildwind.core.arrow.ArrowHead;
 import org.polaris2023.wildwind.core.arrow.ArrowShaft;
 import org.polaris2023.wildwind.core.component.ArrowComponent;
+import org.polaris2023.wildwind.imp.ImpArrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -24,11 +24,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * <p>
  * 组件由箭矢实体自己的 {@code pickupItemStack} 携带（原版就会存读档），所以这里只负责读取与应用。
  * 没有组件的普通箭走原版逻辑，本 mixin 全部方法都会提前返回。
+ * <p>
+ * 目标类用<b>字符串</b>（{@code @Mixin(targets = ...)}）而不是 {@code AbstractArrow.class}：
+ * 箭矢类的包路径在 26.x 被移进了 {@code projectile.arrow} 子包，写类字面量会让另一族编译失败。
+ * 实体本身一律以三族稳定的 {@link Projectile} 处理；只属于 {@code AbstractArrow} 的成员
+ * 经 {@link AbstractArrowAccessor} 转发。
  *
  * @author baka4n
  * @author safe_saffawa
  */
-@Mixin(AbstractArrow.class)
+@Mixin(targets = ImpArrow.TARGET)
 public abstract class AbstractArrowMixin {
 
     /** 伤害加成每个箭矢只加一次，避免穿透箭反复命中时叠加 */
@@ -41,12 +46,17 @@ public abstract class AbstractArrowMixin {
 
     @Unique
     private @Nullable ArrowComponent wildwind$component() {
-        return ArrowEffects.componentOf((AbstractArrow) (Object) this);
+        return ArrowEffects.componentOf(this.wildwind$self());
     }
 
     @Unique
-    private AbstractArrow wildwind$self() {
-        return (AbstractArrow) (Object) this;
+    private Projectile wildwind$self() {
+        return (Projectile) (Object) this;
+    }
+
+    @Unique
+    private AbstractArrowAccessor wildwind$accessor() {
+        return (AbstractArrowAccessor) this;
     }
 
     /**
@@ -61,8 +71,8 @@ public abstract class AbstractArrowMixin {
 
         ArrowEffects.tick(this.wildwind$self(), component);
 
-        if (component.shaft() == ArrowShaft.BAMBOO && this.wildwind$self().getPierceLevel() == 0) {
-            ((AbstractArrowAccessor) this).wildwind$setPierceLevel((byte) 1);
+        if (component.shaft() == ArrowShaft.BAMBOO && this.wildwind$accessor().wildwind$getPierceLevel() == 0) {
+            this.wildwind$accessor().wildwind$setPierceLevel((byte) 1);
         }
     }
 
@@ -81,8 +91,8 @@ public abstract class AbstractArrowMixin {
         if (bonus == 0.0F) {
             return;
         }
-        AbstractArrowAccessor accessor = (AbstractArrowAccessor) this;
-        this.wildwind$self().setBaseDamage(accessor.wildwind$getBaseDamage() + bonus);
+        AbstractArrowAccessor accessor = this.wildwind$accessor();
+        accessor.wildwind$setBaseDamage(accessor.wildwind$getBaseDamage() + bonus);
     }
 
     /**
@@ -94,7 +104,7 @@ public abstract class AbstractArrowMixin {
         if (component == null) {
             return;
         }
-        Entity target = hitResult.getEntity();
+        net.minecraft.world.entity.Entity target = hitResult.getEntity();
         if (target == null) {
             return;
         }
@@ -110,7 +120,7 @@ public abstract class AbstractArrowMixin {
         if (component == null) {
             return;
         }
-        BlockPos pos = hitResult.getBlockPos();
+        net.minecraft.core.BlockPos pos = hitResult.getBlockPos();
         if (pos == null) {
             return;
         }
@@ -144,7 +154,7 @@ public abstract class AbstractArrowMixin {
         }
 
         if (component.shaft().hasNoGravity()) {
-            AbstractArrow self = this.wildwind$self();
+            Projectile self = this.wildwind$self();
             if (!self.isInFluidType() && self.tickCount < WILDWIND$NO_GRAVITY_TICKS) {
                 cir.setReturnValue(0.0);
             }

@@ -1,5 +1,6 @@
 import org.gradle.api.tasks.PathSensitivity
 import org.gradle.process.CommandLineArgumentProvider
+import java.util.Properties
 
 plugins {
     `java-library`
@@ -26,18 +27,19 @@ val minecraftVersion: String by rootProject
 val targetMcVersion: String = (findProperty("targetMcVersion") as String?) ?: minecraftVersion
 
 /**
- * 版本族 → 默认 (minecraftVersion, neoForgeVersion)。可用 -PimpNeoVersion 覆盖。
- *
- * 选定依据（已实测）：
- * - 1.20 族锚定 1.20.4 / NF 20.4.253：20.2.x 未发布 moddev 所需的 neoforge-moddev-bundle；
- * - 1.21 族锚定 1.21.1 / NF 21.1.209：生态最广；
- * - 26.x 族锚定 26.2 / NF 26.2.0.75：当前主力。
+ * 版本族表：单一事实源在 gradle/version-families.properties（与根脚本、CI 矩阵共用）。
+ * 条目格式：族=minecraft版本|neoForge版本|java级别。
  */
-val familyDefaults: Map<String, Pair<String, String>> = mapOf(
-    "1.20" to ("1.20.4" to "20.4.253"),
-    "1.21" to ("1.21.1" to "21.1.209"),
-    "26.x" to ("26.2" to "26.2.0.75"),
-)
+val versionFamilies: Map<String, Triple<String, String, Int>> =
+    Properties().apply {
+        rootProject.file("gradle/version-families.properties").inputStream().use { load(it) }
+    }.entries.associate { entry ->
+        val parts = entry.value.toString().split('|')
+        require(parts.size == 3) {
+            "版本族条目格式错误：${entry.key}=${entry.value}（应为 mc|neoForge|java）"
+        }
+        entry.key.toString() to Triple(parts[0].trim(), parts[1].trim(), parts[2].trim().toInt())
+    }
 
 val versionFamily: String = if (targetMcVersion.startsWith("1.")) {
     val parts = targetMcVersion.split(".")
@@ -46,10 +48,10 @@ val versionFamily: String = if (targetMcVersion.startsWith("1.")) {
     targetMcVersion.substringBefore('.') + ".x"
 }
 
-val familyDefault: Pair<String, String> = familyDefaults[versionFamily]
+val familyDefault: Triple<String, String, Int> = versionFamilies[versionFamily]
     ?: error(
         "未知的版本族 '$versionFamily'（来自 targetMcVersion=$targetMcVersion）。" +
-            "已支持：" + familyDefaults.keys.joinToString(" / ")
+            "已支持：" + versionFamilies.keys.joinToString(" / ")
     )
 
 /**
@@ -68,7 +70,8 @@ fun javaReleaseFor(mcVersion: String): Int {
     }
 }
 
-val familyJavaRelease: Int = javaReleaseFor(familyDefault.first)
+/** 该族对应的 Java 语言级别：按**实际目标版本**推导（不是族锚点），否则 1.20.6 会被错判为 17。 */
+val familyJavaRelease: Int = javaReleaseFor(targetMcVersion)
 val effectiveNeoVersion: String = (findProperty("impNeoVersion") as String?) ?: familyDefault.second
 
 group = modGroupId
@@ -90,27 +93,40 @@ val rawSourceDir = layout.projectDirectory.dir("src/main/java")
 val preprocessedDir = layout.buildDirectory.dir("preprocessed/java")
 val renamesFile = rootProject.file("gradle/imp-renames.txt")
 
+// 注意：这里刻意在配置期就把路径解析成不可变值。
+// 早期版本在 doFirst 闭包里捕获了 Provider 与脚本对象，导致 configuration cache
+// 无法序列化该任务（"cannot serialize Gradle script object references"），
+// 使 :imp:build 在开启 config cache 时直接失败。
+val preprocessOutDir: File = preprocessedDir.get().asFile
+val preprocessSrcDir: File = rawSourceDir.asFile
+val preprocessRenames: File = renamesFile
+
 val preprocessImpSources = tasks.register<JavaExec>("preprocessImpSources") {
     group = "build"
     description = "按 targetMcVersion 裁剪 imp 源码并应用 @Name 改名"
-    classpath = preprocessorClasspath
-    mainClass = "org.polaris2023.wildwind.imp.preprocess.SourcePreprocessor"
+    classpath = files(preprocessorClasspath)
+    mainClass.set("org.polaris2023.wildwind.imp.preprocess.SourcePreprocessor")
 
     inputs.dir(rawSourceDir).withPathSensitivity(PathSensitivity.RELATIVE)
     inputs.file(renamesFile).optional()
     inputs.property("targetMcVersion", targetMcVersion)
     outputs.dir(preprocessedDir)
 
-    doFirst { preprocessedDir.get().asFile.deleteRecursively() }
+    // 输出目录的清理由预处理器自己完成（main 里会先删再写）：
+    // 不在 doFirst 闭包里做，避免捕获脚本对象导致 configuration cache 无法序列化。
+    //
+    // ⚠️ 但必须让任务"永不 up-to-date"：切换 targetMcVersion 时，若 Gradle 认为任务已
+    // 是最新而跳过执行，就会沿用上一族的预处理产物（另一族的成员还在里面），
+    // 引发一堆莫名其妙的"包不存在 / 找不到符号"假错误。
+    // outputs.dir 的清理写在 main() 里，而 main() 只在任务真正执行时才跑。
+    outputs.upToDateWhen { false }
 
-    argumentProviders.add(CommandLineArgumentProvider {
-        listOf(
-            rawSourceDir.asFile.absolutePath,
-            preprocessedDir.get().asFile.absolutePath,
-            targetMcVersion,
-            if (renamesFile.exists()) renamesFile.absolutePath else "",
-        )
-    })
+    args(
+        preprocessSrcDir.absolutePath,
+        preprocessOutDir.absolutePath,
+        targetMcVersion,
+        if (preprocessRenames.exists()) preprocessRenames.absolutePath else "",
+    )
 }
 
 sourceSets {

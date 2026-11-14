@@ -4,8 +4,8 @@ import net.minecraft.client.gui.Font;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.screens.inventory.tooltip.ClientTooltipComponent;
 import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
+import org.polaris2023.wildwind.imp.ImpId;
 import org.polaris2023.wildwind.wilderness.component.OmniClawTools;
 
 /**
@@ -20,14 +20,14 @@ import org.polaris2023.wildwind.wilderness.component.OmniClawTools;
  * @author safe_saffawa
  */
 public class ClientOmniClawTooltip implements ClientTooltipComponent {
-	private static final Identifier BACKGROUND_SPRITE = Identifier.withDefaultNamespace("container/bundle/slot_background");
-	private static final Identifier SLOT_SPRITE = Identifier.withDefaultNamespace("container/bundle/slot_background");
-	private static final Identifier SLOT_HIGHLIGHT_FRONT_SPRITE = Identifier.withDefaultNamespace("container/slot_highlight_front");
-	private static final Identifier[] EMPTY_SLOT_TOOLS_TEXTURE = new Identifier[] {
-			Identifier.withDefaultNamespace("container/slot/pickaxe"),
-			Identifier.withDefaultNamespace("container/slot/axe"),
-			Identifier.withDefaultNamespace("container/slot/shovel"),
-			Identifier.withDefaultNamespace("container/slot/hoe")
+	private static final ImpId BACKGROUND_SPRITE = ImpId.of("minecraft", "container/bundle/slot_background");
+	private static final ImpId SLOT_SPRITE = ImpId.of("minecraft", "container/bundle/slot_background");
+	private static final ImpId SLOT_HIGHLIGHT_FRONT_SPRITE = ImpId.of("minecraft", "container/slot_highlight_front");
+	private static final ImpId[] EMPTY_SLOT_TOOLS_TEXTURE = new ImpId[] {
+			ImpId.of("minecraft", "container/slot/pickaxe"),
+			ImpId.of("minecraft", "container/slot/axe"),
+			ImpId.of("minecraft", "container/slot/shovel"),
+			ImpId.of("minecraft", "container/slot/hoe")
 	};
 	private static final int SLOT_WIDTH = 18;
 	private static final int SLOT_HEIGHT = 20;
@@ -82,20 +82,20 @@ public class ClientOmniClawTooltip implements ClientTooltipComponent {
 	 */
 	@Override
 	public void extractImage(Font font, int x, int y, int w, int h, GuiGraphicsExtractor graphics) {
-		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND_SPRITE, x, y, this.getWidth(font), this.getBackgroundHeight());
+		graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BACKGROUND_SPRITE.unwrap(), x, y, this.getWidth(font), this.getBackgroundHeight());
 		y += MARGIN;
 		x += MARGIN;
 		for (int i = 0; i < SLOT_COUNT; i++) {
-			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE, x, y, SLOT_WIDTH, SLOT_HEIGHT);
+			graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_SPRITE.unwrap(), x, y, SLOT_WIDTH, SLOT_HEIGHT);
 
 			ItemStack stack = this.tools.getTools().get(i);
 			if (stack.isEmpty()) {
-				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, EMPTY_SLOT_TOOLS_TEXTURE[i], x + 1, y + 1, 16, 16);
+				graphics.blitSprite(RenderPipelines.GUI_TEXTURED, EMPTY_SLOT_TOOLS_TEXTURE[i].unwrap(), x + 1, y + 1, 16, 16);
 			} else {
 				graphics.item(stack, x + 1, y + 1);
 				graphics.itemDecorations(font, stack, x + 1, y + 1);
 				if (i == this.tools.getSelectedToolIndex()) {
-					graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_FRONT_SPRITE, x + 1 - 4, y + 1 - 4, 24, 24);
+					graphics.blitSprite(RenderPipelines.GUI_TEXTURED, SLOT_HIGHLIGHT_FRONT_SPRITE.unwrap(), x + 1 - 4, y + 1 - 4, 24, 24);
 				}
 			}
 

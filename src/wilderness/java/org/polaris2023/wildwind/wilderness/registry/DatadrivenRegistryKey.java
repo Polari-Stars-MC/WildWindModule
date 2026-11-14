@@ -18,6 +18,6 @@ public class DatadrivenRegistryKey {
 
 
     private static <T> ResourceKey<Registry<T>> createRegistryKey(String name) {
-        return ResourceKey.createRegistryKey(WildWindWilderness.id(name));
+        return ResourceKey.createRegistryKey(WildWindWilderness.id(name).unwrap());
     }
 }

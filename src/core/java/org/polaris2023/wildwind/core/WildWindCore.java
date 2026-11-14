@@ -1,7 +1,6 @@
 package org.polaris2023.wildwind.core;
 
 import lombok.extern.slf4j.Slf4j;
-import net.minecraft.resources.Identifier;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.Mod;
@@ -15,6 +14,8 @@ import org.polaris2023.wildwind.core.registry.ModDataComponents;
 import org.polaris2023.wildwind.core.registry.ModEntities;
 import org.polaris2023.wildwind.core.registry.ModItems;
 import org.polaris2023.wildwind.core.registry.ModSoundEvents;
+import org.polaris2023.wildwind.imp.ImpId;
+import org.polaris2023.wildwind.imp.ImpIds;
 
 /**
  * 原野之风：核心（Wild Wind: Core）
@@ -45,7 +46,14 @@ public class WildWindCore {
         ModEntities.register(bus);
     }
 
-    public static Identifier id(String path) {
-        return Identifier.fromNamespaceAndPath(MOD_ID, path);
+    /**
+     * 本模块所有资源 ID 的唯一出口。
+     *
+     * <p>返回跨版本稳定的 {@link ImpId}：ID 的原生类型在 26.x 是 {@code Identifier}、
+     * 在 1.20/1.21 是 {@code ResourceLocation}，差异全部收在 imp 内。
+     * 需要原生类型时调用 {@code id(...).unwrap()}。</p>
+     */
+    public static ImpId id(String path) {
+        return ImpIds.idOf(MOD_ID, path);
     }
 }

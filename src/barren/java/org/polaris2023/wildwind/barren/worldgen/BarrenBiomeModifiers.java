@@ -42,7 +42,7 @@ public final class BarrenBiomeModifiers {
     }
 
     private static ResourceKey<BiomeModifier> createKey(String name) {
-        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WildWindBarren.id(name));
+        return ResourceKey.create(NeoForgeRegistries.Keys.BIOME_MODIFIERS, WildWindBarren.id(name).unwrap());
     }
 
     private BarrenBiomeModifiers() {

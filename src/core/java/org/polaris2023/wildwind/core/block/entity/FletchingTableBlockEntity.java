@@ -1,30 +1,32 @@
 package org.polaris2023.wildwind.core.block.entity;
 
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.NonNullList;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.storage.ValueInput;
-import net.minecraft.world.level.storage.ValueOutput;
-import org.jspecify.annotations.Nullable;
+
+import javax.annotation.Nullable;
 import org.polaris2023.wildwind.core.arrow.ArrowFletching;
 import org.polaris2023.wildwind.core.arrow.ArrowHead;
 import org.polaris2023.wildwind.core.arrow.ArrowShaft;
 import org.polaris2023.wildwind.core.component.ArrowComponent;
+import org.polaris2023.wildwind.imp.ImpItemContainerBlockEntity;
 
 /**
  * 制箭台方块实体
+ *
+ * <p>存读档钩子的签名在三族里不一样（26.x 是 {@code ValueInput/ValueOutput}，
+ * 1.20/1.21 是 {@code CompoundTag + HolderLookup.Provider}），覆写留在
+ * {@link ImpItemContainerBlockEntity} 里，这里只实现三族签名一致的那些 {@code Container} 方法。</p>
  *
  * @author baka4n
  * @author safe_saffawa
  * @since 2026/04/15
  */
-public class FletchingTableBlockEntity extends BlockEntity implements Container {
+public class FletchingTableBlockEntity extends ImpItemContainerBlockEntity implements Container {
     public enum Slots {
         SLOT_FLETCHING(0), // 箭羽槽
         SLOT_SHAFT(1),     // 箭杆槽
@@ -52,11 +54,8 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
     /** 每次组装产出的箭矢数量（对齐原版燧石箭 4 支） */
     public static final int ARROWS_PER_CRAFT = 4;
 
-    private final NonNullList<ItemStack> items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
-
     public FletchingTableBlockEntity(BlockPos pos, BlockState state) {
-        super(ModBlockEntities.FLETCHING_TABLE.get(), pos, state);
-
+        super(ModBlockEntities.FLETCHING_TABLE.get(), pos, state, CONTAINER_SIZE);
     }
 
     @Override
@@ -66,7 +65,7 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
 
     @Override
     public boolean isEmpty() {
-        for (ItemStack stack : items) {
+        for (ItemStack stack : items()) {
             if (!stack.isEmpty()) {
                 return false;
             }
@@ -76,12 +75,12 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
 
     @Override
     public ItemStack getItem(int slot) {
-        return slot >= 0 && slot < items.size() ? items.get(slot) : ItemStack.EMPTY;
+        return slot >= 0 && slot < items().size() ? items().get(slot) : ItemStack.EMPTY;
     }
 
     @Override
     public ItemStack removeItem(int slot, int amount) {
-        ItemStack removed = ContainerHelper.removeItem(items, slot, amount);
+        ItemStack removed = ContainerHelper.removeItem(items(), slot, amount);
         if (!removed.isEmpty() && slot != Slots.SLOT_RESULT.slot) {
             updateResult();
             setChanged();
@@ -91,7 +90,7 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
 
     @Override
     public ItemStack removeItemNoUpdate(int slot) {
-        ItemStack removed = ContainerHelper.takeItem(items, slot);
+        ItemStack removed = ContainerHelper.takeItem(items(), slot);
         if (!removed.isEmpty() && slot != Slots.SLOT_RESULT.slot) {
             updateResult();
         }
@@ -100,8 +99,8 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
 
     @Override
     public void setItem(int slot, ItemStack stack) {
-        if (slot >= 0 && slot < items.size()) {
-            items.set(slot, stack);
+        if (slot >= 0 && slot < items().size()) {
+            items().set(slot, stack);
             if (stack.getCount() > getMaxStackSize()) {
                 stack.setCount(getMaxStackSize());
             }
@@ -117,7 +116,7 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
      */
     private void updateResult() {
         ArrowComponent component = resolveArrow();
-        items.set(Slots.SLOT_RESULT.slot,
+        items().set(Slots.SLOT_RESULT.slot,
                 component == null ? ItemStack.EMPTY : component.createArrowStack(ARROWS_PER_CRAFT));
     }
 
@@ -145,9 +144,9 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
      * 取走产物后消耗每样材料各 1 个，并重算下一次的产物。
      */
     public void consumeInputs() {
-        ContainerHelper.removeItem(items, Slots.SLOT_FLETCHING.slot, 1);
-        ContainerHelper.removeItem(items, Slots.SLOT_SHAFT.slot, 1);
-        ContainerHelper.removeItem(items, Slots.SLOT_HEAD.slot, 1);
+        ContainerHelper.removeItem(items(), Slots.SLOT_FLETCHING.slot, 1);
+        ContainerHelper.removeItem(items(), Slots.SLOT_SHAFT.slot, 1);
+        ContainerHelper.removeItem(items(), Slots.SLOT_HEAD.slot, 1);
         updateResult();
         setChanged();
     }
@@ -173,19 +172,7 @@ public class FletchingTableBlockEntity extends BlockEntity implements Container 
 
     @Override
     public void clearContent() {
-        items.clear();
+        items().clear();
         setChanged();
-    }
-
-    @Override
-    protected void saveAdditional(ValueOutput output) {
-        super.saveAdditional(output);
-        ContainerHelper.saveAllItems(output, items);
-    }
-
-    @Override
-    public void loadAdditional(ValueInput input) {
-        super.loadAdditional(input);
-        ContainerHelper.loadAllItems(input, items);
     }
 }

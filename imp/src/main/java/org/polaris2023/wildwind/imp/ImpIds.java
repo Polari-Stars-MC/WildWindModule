@@ -91,6 +91,49 @@ public final class ImpIds {
     }
 
     /**
+     * 返回<b>跨版本稳定</b>的 {@link ImpId} 句柄。
+     *
+     * <p>字段里存 ID 时用这个（字段不能用 {@code var}）；需要原生类型时调用
+     * {@code ImpId#unwrap()}。</p>
+     */
+    public static ImpId idOf(String namespace, String path) {
+        return ImpId.of(namespace, path);
+    }
+
+    /** 返回 {@code ww:<path>} 的稳定句柄。 */
+    public static ImpId idOf(String path) {
+        return ImpId.of(path);
+    }
+
+    /**
+     * 解析 {@code namespace:path}；没有冒号时按 {@code minecraft} 处理。
+     *
+     * <p>用字符串中转可以规避 {@code Identifier} / {@code ResourceLocation} 的返回类型差异，
+     * 因此这个方法是单实现、不需要版本分支。</p>
+     */
+    public static ImpId fromString(String id) {
+        int colon = id.indexOf(':');
+        return colon < 0
+            ? ImpId.of("minecraft", id)
+            : ImpId.of(id.substring(0, colon), id.substring(colon + 1));
+    }
+
+    /**
+     * 从 NeoForge 的 {@code DeferredHolder} 取 {@link ImpId}。
+     *
+     * <p>{@code getId()} 的返回类型在 26.x 是 {@code Identifier}、旧版是 {@code ResourceLocation}，
+     * 这里用 {@code toString()} 中转，所以同样不需要版本分支。</p>
+     */
+    public static ImpId ofHolder(net.neoforged.neoforge.registries.DeferredHolder<?, ?> holder) {
+        return fromString(holder.getId().toString());
+    }
+
+    /** 从 {@code TagKey} 取 {@link ImpId}（同样用字符串中转）。 */
+    public static ImpId ofTag(net.minecraft.tags.TagKey<?> tag) {
+        return fromString(tag.location().toString());
+    }
+
+    /**
      * 资源 ID 字符集校验（版本无关，纯字符串逻辑）。
      *
      * @throws IllegalArgumentException 含非法字符时
