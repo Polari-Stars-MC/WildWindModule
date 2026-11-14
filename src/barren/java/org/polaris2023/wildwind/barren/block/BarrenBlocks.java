@@ -583,12 +583,13 @@ public final class BarrenBlocks {
                     .requiresCorrectToolForDrops())
     );
 
-    public static final DeferredBlock<Block> NITRIFIED_SANDSTONE = BLOCKS.registerBlock(
+    public static final DeferredBlock<NitrifiedSandstoneBlock> NITRIFIED_SANDSTONE = BLOCKS.registerBlock(
             "nitrified_sandstone",
-            p -> new Block(p
+            p -> new NitrifiedSandstoneBlock(p
                     .mapColor(MapColor.SAND)
                     .strength(0.8F)
                     .sound(SoundType.STONE)
+                    .instrument(NoteBlockInstrument.BASEDRUM)
                     .requiresCorrectToolForDrops())
     );
 

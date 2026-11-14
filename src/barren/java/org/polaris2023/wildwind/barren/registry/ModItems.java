@@ -13,6 +13,9 @@ public final class ModItems {
     public static final DeferredItem<Item> ASH =
             ITEMS.registerItem("ash", p -> new Item(p.stacksTo(16)));
 
+    public static final DeferredItem<Item> NITER =
+            ITEMS.registerItem("niter", Item::new);
+
     public static void register(IEventBus bus) {
         ITEMS.register(bus);
     }

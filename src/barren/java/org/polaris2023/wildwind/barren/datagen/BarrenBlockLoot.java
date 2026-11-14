@@ -1,12 +1,22 @@
 package org.polaris2023.wildwind.barren.datagen;
 
+import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.loot.BlockLootSubProvider;
 import net.minecraft.world.flag.FeatureFlags;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.Enchantments;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.storage.loot.LootTable;
+import net.minecraft.world.level.storage.loot.entries.LootItem;
+import net.minecraft.world.level.storage.loot.functions.ApplyBonusCount;
+import net.minecraft.world.level.storage.loot.functions.SetItemCountFunction;
+import net.minecraft.world.level.storage.loot.providers.number.UniformGenerator;
 import org.jspecify.annotations.NonNull;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.block.BarrenWoodFamilies;
+import org.polaris2023.wildwind.barren.registry.ModItems;
 import org.polaris2023.wildwind.core.block.WoodFamily;
 
 import java.util.Set;
@@ -65,7 +75,7 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
         dropSelf(BarrenBlocks.CUT_SOUL_SANDSTONE.get());
         dropSelf(BarrenBlocks.NITRIFIED_QUARTZ_SANDSTONE.get());
         dropSelf(BarrenBlocks.NITRIFIED_RED_SANDSTONE.get());
-        dropSelf(BarrenBlocks.NITRIFIED_SANDSTONE.get());
+        add(BarrenBlocks.NITRIFIED_SANDSTONE.get(), createNitrifiedSandstoneDrop());
         dropSelf(BarrenBlocks.NITRIFIED_SOUL_SANDSTONE.get());
         dropSelf(BarrenBlocks.QUARTZ_SANDSTONE.get());
         dropSelf(BarrenBlocks.SOUL_SANDSTONE.get());
@@ -98,6 +108,19 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
         dropSelf(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_STAIRS.get());
         add(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB.get()));
         add(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get(), createSlabItemTable(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB.get()));
+    }
+
+    /**
+     * 硝化砂岩：精准采集掉落自身，否则掉落 1-4 个硝石并受时运（矿脉公式）影响。
+     */
+    private LootTable.Builder createNitrifiedSandstoneDrop() {
+        Block block = BarrenBlocks.NITRIFIED_SANDSTONE.get();
+        HolderGetter<Enchantment> enchantments = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
+        return createSilkTouchDispatchTable(block,
+                applyExplosionDecay(block,
+                        LootItem.lootTableItem(ModItems.NITER.get())
+                                .apply(SetItemCountFunction.setCount(UniformGenerator.between(1.0F, 4.0F)))
+                                .apply(ApplyBonusCount.addOreBonusCount(enchantments.getOrThrow(Enchantments.FORTUNE)))));
     }
 
     private void generateWood(WoodFamily family) {

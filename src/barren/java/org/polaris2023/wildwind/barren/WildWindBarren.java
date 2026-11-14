@@ -9,6 +9,7 @@ import org.polaris2023.wildwind.barren.registry.BarrenEntities;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.barren.registry.ModCreativeTabs;
 import org.polaris2023.wildwind.barren.registry.ModItems;
+import org.polaris2023.wildwind.barren.worldgen.BarrenFeatures;
 
 /**
  * 原野之风：瘠土更新（Wild Wind: Barren Update）
@@ -24,6 +25,7 @@ public class WildWindBarren {
     public WildWindBarren(IEventBus bus) {
         // 实体先于物品注册：船物品在构造时需要拿到实体类型
         BarrenEntities.register(bus);
+        BarrenFeatures.register(bus);
         BarrenBlocks.register(bus);
         BarrenItems.register(bus);
         bus.addListener(BlockEntityTypeAddBlocksEvent.class, BarrenBlocks::addBlockEntityBlocks);

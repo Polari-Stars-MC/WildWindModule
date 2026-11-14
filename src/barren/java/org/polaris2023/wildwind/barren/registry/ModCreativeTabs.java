@@ -107,6 +107,7 @@ public final class ModCreativeTabs {
         output.accept(BarrenBlocks.SMOOTH_SOUL_SANDSTONE_SLAB.get());
         output.accept(BarrenBlocks.CUT_SOUL_SANDSTONE_SLAB.get());
         output.accept(BarrenBlocks.NITER_BLOCK.get());
+        output.accept(ModItems.NITER.get());
 
         // 石英砂岩衍生物
         output.accept(BarrenBlocks.QUARTZ_SANDSTONE_STAIRS.get());

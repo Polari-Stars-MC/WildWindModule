@@ -129,5 +129,6 @@ public class BarrenEnUsLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "Cut Quartz Sandstone Slab");
 
         addItem(ModItems.ASH, "Ash");
+        addItem(ModItems.NITER, "Niter");
     }
 }

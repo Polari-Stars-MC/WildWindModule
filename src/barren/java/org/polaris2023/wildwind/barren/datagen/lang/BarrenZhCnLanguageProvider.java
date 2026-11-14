@@ -128,5 +128,6 @@ public class BarrenZhCnLanguageProvider extends LanguageProvider {
         addBlock(BarrenBlocks.SMOOTH_QUARTZ_SANDSTONE_SLAB, "平滑石英砂岩台阶");
         addBlock(BarrenBlocks.CUT_QUARTZ_SANDSTONE_SLAB, "切制石英砂岩台阶");
         addItem(ModItems.ASH, "灰烬");
+        addItem(ModItems.NITER, "硝石");
     }
 }

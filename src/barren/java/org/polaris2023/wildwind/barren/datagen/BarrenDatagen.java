@@ -31,6 +31,7 @@ public class BarrenDatagen {
         event.createProvider(BarrenLootProvider::new);
         event.createProvider(BarrenDatapackProvider::new);
         event.createProvider(BarrenDataMapsProvider::new);
+        event.createProvider(BarrenRecipeProvider.Runner::new);
     }
 
     private BarrenDatagen() {

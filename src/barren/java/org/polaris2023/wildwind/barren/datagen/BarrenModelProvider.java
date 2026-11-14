@@ -83,6 +83,7 @@ public class BarrenModelProvider extends ModelProvider {
         blockModels.createCrossBlock(BarrenBlocks.TINY_CACTUS.get(), BlockModelGenerators.PlantType.NOT_TINTED);
         blockModels.createTrivialCube(BarrenBlocks.ASH_BLOCK.get());
         itemModels.generateFlatItem(ModItems.ASH.get(), ModelTemplates.FLAT_ITEM);
+        itemModels.generateFlatItem(ModItems.NITER.get(), ModelTemplates.FLAT_ITEM);
 
         // 流沙 / 可疑沙
         blockModels.createTrivialCube(BarrenBlocks.QUICKSAND.get());

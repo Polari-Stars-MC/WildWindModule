@@ -280,3 +280,13 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **创造栏分页顺序：核心 → 荒野 → 瘠土** - NeoForge 的 `CreativeModeTabRegistry#sortTabs` 对模组 tab 做拓扑排序，没有 `tabsBefore/tabsAfter` 声明时按 Identifier 字母序兜底，于是实际顺序是「瘠土 → 核心 → 荒野」；现在 `ww_wilderness:wilderness` 声明 `withTabsBefore(ww_core:wild_wind)`，`ww_barren:barren` 声明 `withTabsBefore(ww_core:wild_wind, ww_wilderness:wilderness)`，排序图变为 `spawn_eggs → core → wilderness → barren`；原版 10 个分类 tab 正好占满第一页，所以三者是第二页的左起前三格。瘠土对荒野的引用只是字符串 id（瘠土编译期不依赖荒野），未安装荒野时该条排序边会被忽略，核心那条仍然生效
 - **幼蛛整体迁到荒野更新** - `Spiderling` 与其 GeckoLib 模型 `SpiderlingModel`、渲染器 `SpiderlingRenderer`、发光眼睛图层 `SpiderlingEyesLayer`、渲染状态 `SpiderlingRenderState`，以及 `spiderling` 实体类型、`spiderling_spawn_egg`、三条音效事件 + `sounds.json` 条目、`EntityAttributeCreationEvent` / `RegisterSpawnPlacementsEvent` 注册、实体类型标签（`arthropod` / `dismounts_underwater` / `no_anger_from_wind_charge`）、实体战利品表（线 0~2、蜘蛛眼 0~1 仅玩家击杀）、刷怪蛋物品模型与中英语言，全部从 `ww_core` 移到 `ww_wilderness`；`assets/ww_core` 下的 `geckolib/models|animations/entity/spiderling.*`、`textures/entity/spiderling*.png`、`textures/item/spiderling_spawn_egg.png` 一并改命名空间搬到 `ww_wilderness`。`ww_core` 侧随之删掉已空的 `ModSoundEvents`、`event/EntitiesHandler`、`ModEntityTypeTagsProvider` 与 `sounds.json`，`ModLootProvider` 不再保留实体子 provider（核心只剩船的 `noLootTable`）；通用的 `WindupAttackMob` / `ChargingMeleeAttackGoal` 仍留在核心模块作为可复用基建
 - **实体 id 变更（破坏性）** - `ww_core:spiderling` → `ww_wilderness:spiderling`，刷怪蛋 `ww_core:spiderling_spawn_egg` → `ww_wilderness:spiderling_spawn_egg`；旧存档中的幼蛛、命令 / 战利品表 / 数据包里的旧 id 都会失效，需 `/summon ww_wilderness:spiderling` 重新生成
+
+---
+
+## [Unreleased] - 2026.11.14
+
+### Added
+- **`ww_barren` 硝化砂岩完整行为** - `nitrified_sandstone` 改为 `NitrifiedSandstoneBlock`（`DropExperienceBlock` 子类，经验 1-5，精准采集时不给经验）：硬度 / 爆炸抗性 0.8、`MapColor.SAND`、`SoundType.STONE`、`NoteBlockInstrument.BASEDRUM`（底鼓）、`requiresCorrectToolForDrops`；方块物品默认堆叠 64，并加入原版「自然方块」页（紧跟砂岩）与模组 `barren` 页
+- **`ww_barren` 硝石** - 新增 `niter` 物品（`ModItems.NITER`），作为硝化砂岩的战利品与烧炼产物；物品贴图由 `textures_generator/gen_niter_texture.ps1` 生成
+- **硝化砂岩战利品与配方** - 无精准采集时掉落 1-4 个硝石，时运按原版矿脉公式（I：1/3 双倍；II：1/4 双倍、1/4 三倍；III：1/5 双倍 / 三倍 / 四倍）；精准采集掉落自身；熔炉配方 `nitrified_sandstone -> niter`（0.1 经验，200 tick）
+- **沙漠硝化砂岩矿团** - 新增 `ww_barren:random_size_ore` 地物与 `nitrified_sandstone_ore` 配置 / 放置特征，替换沙漠群系中的砂岩，每区块尝试 5 次、矿团大小 1-10（`RandomSizeOreFeature` 每次随机）

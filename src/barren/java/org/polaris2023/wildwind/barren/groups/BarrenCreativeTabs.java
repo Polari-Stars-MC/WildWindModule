@@ -50,6 +50,7 @@ public final class BarrenCreativeTabs {
             event.insertAfter(BarrenBlocks.QUARTZ_SAND.toStack(), BarrenBlocks.TINY_CACTUS.toStack(), VISIBILITY);
             event.insertAfter(BarrenBlocks.TINY_CACTUS.toStack(), BarrenBlocks.FROGBIT.toStack(), VISIBILITY);
             event.insertAfter(BarrenBlocks.FROGBIT.toStack(), BarrenBlocks.ASH_BLOCK.toStack(), VISIBILITY);
+            event.insertAfter(new ItemStack(Items.SANDSTONE), BarrenBlocks.NITRIFIED_SANDSTONE.toStack(), VISIBILITY);
         }
     }
 

@@ -6,15 +6,20 @@ import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.util.valueproviders.ConstantInt;
 import net.minecraft.world.level.biome.Biome;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.levelgen.feature.ConfiguredFeature;
 import net.minecraft.world.level.levelgen.feature.Feature;
+import net.minecraft.world.level.levelgen.feature.configurations.OreConfiguration;
 import net.minecraft.world.level.levelgen.feature.configurations.TreeConfiguration;
 import net.minecraft.world.level.levelgen.feature.featuresize.TwoLayersFeatureSize;
 import net.minecraft.world.level.levelgen.feature.foliageplacers.BlobFoliagePlacer;
 import net.minecraft.world.level.levelgen.feature.stateproviders.BlockStateProvider;
 import net.minecraft.world.level.levelgen.feature.trunkplacers.StraightTrunkPlacer;
+import net.minecraft.world.level.levelgen.structure.templatesystem.BlockMatchTest;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
+
+import java.util.List;
 
 /**
  * 瘠土更新的配置特征：焚烬木树 / 灵焰木树。
@@ -34,6 +39,11 @@ public final class BarrenConfiguredFeatures {
     public static final ResourceKey<ConfiguredFeature<?, ?>> EMBER_TREE_KEY = ResourceKey.create(
             Registries.CONFIGURED_FEATURE,
             WildWindBarren.id("ember_tree")
+    );
+
+    public static final ResourceKey<ConfiguredFeature<?, ?>> NITRIFIED_SANDSTONE_ORE_KEY = ResourceKey.create(
+            Registries.CONFIGURED_FEATURE,
+            WildWindBarren.id("nitrified_sandstone_ore")
     );
 
     public static void bootstrap(BootstrapContext<ConfiguredFeature<?, ?>> context) {
@@ -61,6 +71,19 @@ public final class BarrenConfiguredFeatures {
                         new TwoLayersFeatureSize(1, 0, 1),
                         belowTrunkProvider
                 ).build()));
+
+        // 沙漠砂岩中的硝化砂岩矿团：尺寸在 1-10 之间由 RandomSizeOreFeature 随机
+        context.register(NITRIFIED_SANDSTONE_ORE_KEY, new ConfiguredFeature<>(
+                BarrenFeatures.RANDOM_SIZE_ORE.get(),
+                new OreConfiguration(
+                        List.of(OreConfiguration.target(
+                                new BlockMatchTest(Blocks.SANDSTONE),
+                                BarrenBlocks.NITRIFIED_SANDSTONE.get().defaultBlockState()
+                        )),
+                        10,
+                        0.0F
+                )
+        ));
     }
 
     private BarrenConfiguredFeatures() {
