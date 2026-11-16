@@ -28,14 +28,15 @@
 ## 常用命令
 
 ```bash
-./gradlew build                     # 构建三个 jar
-./gradlew :core:runClient           # 只跑 core
+./gradlew build                     # 构建三个 jar（自动先跑该模块的 datagen，-x runClientData -x runServerData 可跳过）
+./gradlew runClient                 # 默认只启动 barren（barren 的 run 自动额外加载 wilderness 联调）
+./gradlew :core:runClient           # 用 :模块:runClient 显式点名才跑 core / wilderness
 ./gradlew :barren:runClient         # 跑 barren（自动额外加载 wilderness 联调）
 ./gradlew :<模块>:runClientData     # 生成客户端资源（模型/blockstate/lang）
 ./gradlew :<模块>:runServerData     # 生成服务端数据（loot/tags/recipe）
 ```
 
-datagen 跑完后检查 `build/generated/<模块>/` 内容符合预期（generated 目录本身**不入库**，见 docs/BOUNDARY.md §5）；`run/` 目录是运行时工作区，不要提交。
+datagen 已挂到各模块的 `build` 上（`build` → `runClientData` + `runServerData`），所以 `./gradlew build` 单独一条命令就能打出完整 jar；`genData` 仍保留作为聚合任务。datagen 跑完后检查 `build/generated/<模块>/` 内容符合预期（generated 目录本身**不入库**，见 docs/BOUNDARY.md §5）；`run/` 目录是运行时工作区，不要提交。
 
 ## 代码约定
 
