@@ -74,8 +74,8 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
         dropSelf(BarrenBlocks.CUT_QUARTZ_SANDSTONE.get());
         dropSelf(BarrenBlocks.CUT_SOUL_SANDSTONE.get());
         dropSelf(BarrenBlocks.NITRIFIED_QUARTZ_SANDSTONE.get());
-        dropSelf(BarrenBlocks.NITRIFIED_RED_SANDSTONE.get());
-        add(BarrenBlocks.NITRIFIED_SANDSTONE.get(), createNitrifiedSandstoneDrop());
+        add(BarrenBlocks.NITRIFIED_SANDSTONE.get(), createNitrifiedSandstoneDrop(BarrenBlocks.NITRIFIED_SANDSTONE.get()));
+        add(BarrenBlocks.NITRIFIED_RED_SANDSTONE.get(), createNitrifiedSandstoneDrop(BarrenBlocks.NITRIFIED_RED_SANDSTONE.get()));
         dropSelf(BarrenBlocks.NITRIFIED_SOUL_SANDSTONE.get());
         dropSelf(BarrenBlocks.QUARTZ_SANDSTONE.get());
         dropSelf(BarrenBlocks.SOUL_SANDSTONE.get());
@@ -111,10 +111,9 @@ public class BarrenBlockLoot extends BlockLootSubProvider {
     }
 
     /**
-     * 硝化砂岩：精准采集掉落自身，否则掉落 1-4 个硝石并受时运（矿脉公式）影响。
+     * 硝化砂岩 / 硝化红砂岩：精准采集掉落自身，否则掉落 1-4 个硝石并受时运（矿脉公式）影响。
      */
-    private LootTable.Builder createNitrifiedSandstoneDrop() {
-        Block block = BarrenBlocks.NITRIFIED_SANDSTONE.get();
+    private LootTable.Builder createNitrifiedSandstoneDrop(Block block) {
         HolderGetter<Enchantment> enchantments = this.registries.lookupOrThrow(Registries.ENCHANTMENT);
         return createSilkTouchDispatchTable(block,
                 applyExplosionDecay(block,

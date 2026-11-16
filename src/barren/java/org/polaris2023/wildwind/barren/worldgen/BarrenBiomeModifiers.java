@@ -24,6 +24,7 @@ public final class BarrenBiomeModifiers {
     public static final ResourceKey<BiomeModifier> ADD_CINDER_TREE = createKey("add_cinder_tree");
     public static final ResourceKey<BiomeModifier> ADD_EMBER_TREE = createKey("add_ember_tree");
     public static final ResourceKey<BiomeModifier> ADD_NITRIFIED_SANDSTONE_ORE = createKey("add_nitrified_sandstone_ore");
+    public static final ResourceKey<BiomeModifier> ADD_NITRIFIED_RED_SANDSTONE_ORE = createKey("add_nitrified_red_sandstone_ore");
 
     public static void bootstrap(BootstrapContext<BiomeModifier> context) {
         var placedFeatures = context.lookup(Registries.PLACED_FEATURE);
@@ -44,6 +45,16 @@ public final class BarrenBiomeModifiers {
         context.register(ADD_NITRIFIED_SANDSTONE_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
                 HolderSet.direct(biomes.getOrThrow(Biomes.DESERT)),
                 HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.NITRIFIED_SANDSTONE_ORE_PLACED_KEY)),
+                GenerationStep.Decoration.UNDERGROUND_ORES
+        ));
+
+        context.register(ADD_NITRIFIED_RED_SANDSTONE_ORE, new BiomeModifiers.AddFeaturesBiomeModifier(
+                HolderSet.direct(
+                        biomes.getOrThrow(Biomes.BADLANDS),
+                        biomes.getOrThrow(Biomes.WOODED_BADLANDS),
+                        biomes.getOrThrow(Biomes.ERODED_BADLANDS)
+                ),
+                HolderSet.direct(placedFeatures.getOrThrow(BarrenPlacedFeatures.NITRIFIED_RED_SANDSTONE_ORE_PLACED_KEY)),
                 GenerationStep.Decoration.UNDERGROUND_ORES
         ));
     }

@@ -11,6 +11,7 @@ import net.minecraft.world.level.levelgen.placement.CountPlacement;
 import net.minecraft.world.level.levelgen.placement.HeightRangePlacement;
 import net.minecraft.world.level.levelgen.placement.InSquarePlacement;
 import net.minecraft.world.level.levelgen.placement.PlacedFeature;
+import net.minecraft.world.level.levelgen.placement.PlacementModifier;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 
 import java.util.List;
@@ -39,6 +40,11 @@ public final class BarrenPlacedFeatures {
             WildWindBarren.id("nitrified_sandstone_ore_placed")
     );
 
+    public static final ResourceKey<PlacedFeature> NITRIFIED_RED_SANDSTONE_ORE_PLACED_KEY = ResourceKey.create(
+            Registries.PLACED_FEATURE,
+            WildWindBarren.id("nitrified_red_sandstone_ore_placed")
+    );
+
     public static void bootstrap(BootstrapContext<PlacedFeature> context) {
         HolderGetter<ConfiguredFeature<?, ?>> configuredFeatures = context.lookup(Registries.CONFIGURED_FEATURE);
 
@@ -55,13 +61,21 @@ public final class BarrenPlacedFeatures {
         // 每区块尝试 5 次，矿团大小 1-10
         context.register(NITRIFIED_SANDSTONE_ORE_PLACED_KEY, new PlacedFeature(
                 configuredFeatures.getOrThrow(BarrenConfiguredFeatures.NITRIFIED_SANDSTONE_ORE_KEY),
-                List.of(
-                        CountPlacement.of(5),
-                        InSquarePlacement.spread(),
-                        HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80)),
-                        BiomeFilter.biome()
-                )
+                nitrifiedOrePlacement()
         ));
+        context.register(NITRIFIED_RED_SANDSTONE_ORE_PLACED_KEY, new PlacedFeature(
+                configuredFeatures.getOrThrow(BarrenConfiguredFeatures.NITRIFIED_RED_SANDSTONE_ORE_KEY),
+                nitrifiedOrePlacement()
+        ));
+    }
+
+    private static List<PlacementModifier> nitrifiedOrePlacement() {
+        return List.of(
+                CountPlacement.of(5),
+                InSquarePlacement.spread(),
+                HeightRangePlacement.uniform(VerticalAnchor.bottom(), VerticalAnchor.absolute(80)),
+                BiomeFilter.biome()
+        );
     }
 
     private BarrenPlacedFeatures() {

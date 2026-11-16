@@ -8,6 +8,7 @@ import net.minecraft.data.recipes.RecipeProvider;
 import net.minecraft.data.recipes.SimpleCookingRecipeBuilder;
 import net.minecraft.world.item.crafting.CookingBookCategory;
 import net.minecraft.world.item.crafting.Ingredient;
+import net.minecraft.world.level.block.Block;
 import org.polaris2023.wildwind.barren.WildWindBarren;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.registry.ModItems;
@@ -27,16 +28,21 @@ public class BarrenRecipeProvider extends RecipeProvider {
 
     @Override
     protected void buildRecipes() {
-        // 硝化砂岩 -> 硝石（熔炉）
+        // 硝化砂岩 / 硝化红砂岩 -> 硝石（熔炉）
+        smeltNitrifiedSandstone(BarrenBlocks.NITRIFIED_SANDSTONE.get(), "nitrified_sandstone");
+        smeltNitrifiedSandstone(BarrenBlocks.NITRIFIED_RED_SANDSTONE.get(), "nitrified_red_sandstone");
+    }
+
+    private void smeltNitrifiedSandstone(Block block, String name) {
         SimpleCookingRecipeBuilder.smelting(
-                        Ingredient.of(BarrenBlocks.NITRIFIED_SANDSTONE.get()),
+                        Ingredient.of(block),
                         RecipeCategory.MISC,
                         CookingBookCategory.MISC,
                         ModItems.NITER.get(),
                         0.1F,
                         200
                 )
-                .unlockedBy("has_nitrified_sandstone", this.has(BarrenBlocks.NITRIFIED_SANDSTONE.get()))
+                .unlockedBy("has_" + name, this.has(block))
                 .save(this.output);
     }
 

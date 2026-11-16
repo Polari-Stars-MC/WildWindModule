@@ -290,3 +290,16 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **`ww_barren` 硝石** - 新增 `niter` 物品（`ModItems.NITER`），作为硝化砂岩的战利品与烧炼产物；物品贴图由 `textures_generator/gen_niter_texture.ps1` 生成
 - **硝化砂岩战利品与配方** - 无精准采集时掉落 1-4 个硝石，时运按原版矿脉公式（I：1/3 双倍；II：1/4 双倍、1/4 三倍；III：1/5 双倍 / 三倍 / 四倍）；精准采集掉落自身；熔炉配方 `nitrified_sandstone -> niter`（0.1 经验，200 tick）
 - **沙漠硝化砂岩矿团** - 新增 `ww_barren:random_size_ore` 地物与 `nitrified_sandstone_ore` 配置 / 放置特征，替换沙漠群系中的砂岩，每区块尝试 5 次、矿团大小 1-10（`RandomSizeOreFeature` 每次随机）
+
+---
+
+## [Unreleased] - 2026.11.16
+
+### Added
+- **`ww_barren` 硝化红砂岩** - `nitrified_red_sandstone` 复用 `NitrifiedSandstoneBlock`：硬度 / 爆炸抗性 0.8、`MapColor.COLOR_ORANGE`、`SoundType.STONE`、`NoteBlockInstrument.BASEDRUM`（底鼓）、`requiresCorrectToolForDrops`；无精准采集时掉落 1-4 个硝石并给 1-5 经验（时运沿用矿脉公式），精准采集掉落自身
+- **硝化红砂岩配方** - 熔炉配方 `nitrified_red_sandstone -> niter`（0.1 经验，200 tick）
+- **恶地硝化红砂岩矿团** - `nitrified_red_sandstone_ore` 配置 / 放置特征与 `add_nitrified_red_sandstone_ore` 群系修改器：替换恶地、疏林恶地、风蚀恶地的红砂岩，每区块尝试 5 次、矿团大小 1-10
+- **硝化红砂岩创造栏** - 加入原版「自然方块」页（紧跟红砂岩）；模组 `barren` 页原本已有该方块
+
+### Changed
+- **硝化矿团生成与战利品复用** - `BarrenBlockLoot#createNitrifiedSandstoneDrop`、`BarrenRecipeProvider` 的熔炼配方、`BarrenConfiguredFeatures#registerNitrifiedOre` 与 `BarrenPlacedFeatures#nitrifiedOrePlacement` 改为共享实现，供硝化砂岩与硝化红砂岩共同使用
