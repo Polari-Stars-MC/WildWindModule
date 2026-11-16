@@ -280,3 +280,26 @@ All notable changes to the Wild Wind Module project will be documented in this f
 - **创造栏分页顺序：核心 → 荒野 → 瘠土** - NeoForge 的 `CreativeModeTabRegistry#sortTabs` 对模组 tab 做拓扑排序，没有 `tabsBefore/tabsAfter` 声明时按 Identifier 字母序兜底，于是实际顺序是「瘠土 → 核心 → 荒野」；现在 `ww_wilderness:wilderness` 声明 `withTabsBefore(ww_core:wild_wind)`，`ww_barren:barren` 声明 `withTabsBefore(ww_core:wild_wind, ww_wilderness:wilderness)`，排序图变为 `spawn_eggs → core → wilderness → barren`；原版 10 个分类 tab 正好占满第一页，所以三者是第二页的左起前三格。瘠土对荒野的引用只是字符串 id（瘠土编译期不依赖荒野），未安装荒野时该条排序边会被忽略，核心那条仍然生效
 - **幼蛛整体迁到荒野更新** - `Spiderling` 与其 GeckoLib 模型 `SpiderlingModel`、渲染器 `SpiderlingRenderer`、发光眼睛图层 `SpiderlingEyesLayer`、渲染状态 `SpiderlingRenderState`，以及 `spiderling` 实体类型、`spiderling_spawn_egg`、三条音效事件 + `sounds.json` 条目、`EntityAttributeCreationEvent` / `RegisterSpawnPlacementsEvent` 注册、实体类型标签（`arthropod` / `dismounts_underwater` / `no_anger_from_wind_charge`）、实体战利品表（线 0~2、蜘蛛眼 0~1 仅玩家击杀）、刷怪蛋物品模型与中英语言，全部从 `ww_core` 移到 `ww_wilderness`；`assets/ww_core` 下的 `geckolib/models|animations/entity/spiderling.*`、`textures/entity/spiderling*.png`、`textures/item/spiderling_spawn_egg.png` 一并改命名空间搬到 `ww_wilderness`。`ww_core` 侧随之删掉已空的 `ModSoundEvents`、`event/EntitiesHandler`、`ModEntityTypeTagsProvider` 与 `sounds.json`，`ModLootProvider` 不再保留实体子 provider（核心只剩船的 `noLootTable`）；通用的 `WindupAttackMob` / `ChargingMeleeAttackGoal` 仍留在核心模块作为可复用基建
 - **实体 id 变更（破坏性）** - `ww_core:spiderling` → `ww_wilderness:spiderling`，刷怪蛋 `ww_core:spiderling_spawn_egg` → `ww_wilderness:spiderling_spawn_egg`；旧存档中的幼蛛、命令 / 战利品表 / 数据包里的旧 id 都会失效，需 `/summon ww_wilderness:spiderling` 重新生成
+
+---
+
+## [Unreleased] - 2026.11.14
+
+### Added
+- **灵魂砂岩的世界自然生成** - 新增特征类型 `ww_barren:soul_sandstone`（`barren/worldgen/SoulSandstoneFeature`，注册在 `registry/BarrenFeatures`，由 `WildWindBarren` 挂上模组总线）；`BarrenConfiguredFeatures#SOUL_SANDSTONE_KEY` + `BarrenPlacedFeatures#SOUL_SANDSTONE_PLACED_KEY`（每区块 1 次、`in_square`）由 `BarrenDatapackProvider` 生成到 `build/generated/barren/server`；`BarrenBiomeModifiers#ADD_SOUL_SANDSTONE` 把该放置特征加进 `minecraft:soul_sand_valley` 的 `top_layer_modification` 阶段。因为灵魂沙峡谷的地表（含天花板）是原版 `minecraft:nether` 的 surface rule 铺出来的、没有可挂载的装饰特征，所以特征在顶层修改阶段整块扫一遍当前区块：逐列自上而下找出每一段连续的灵魂沙 / 灵魂土，紧贴段底面把 2 格下界岩换成灵魂砂岩，遇到洞穴、岩浆、砂砾等非下界岩立即停手（不会隔着空洞或岩浆往下铺）；位于天花板的灵魂沙 / 灵魂土地面朝空气，自然不会被处理。实现只改当前区块，不做跨区块写入
+- **灵魂砂岩生成的验证记录** - `runServer`（seed 424242）实测：`/locate biome minecraft:soul_sand_valley` 附近 16×113×16 的采样盒里 `/fill ... replace ww_barren:soul_sandstone` 分别统计到 527 / 839 / 837 / 661 / 330 个方块，而 `minecraft:nether_wastes` 同样大小的对照盒为 0；逐格探测三列得到 `26~23 灵魂沙 → 22、21 灵魂砂岩 → 20 起下界岩`（灵魂土列 `26~23 → 22、21`）、`85~90 灵魂土（天花板）→ 无灵魂砂岩`，与「紧贴沙层底面、两层厚」的预期一致
+
+---
+
+## [Unreleased] - 2026.11.16
+
+### Added
+- **`gradlew build` 自带 datagen** - `build.gradle.kts` 里每个模块的 `build` 现在 `dependsOn` 自己的 `runClientData` + `runServerData`，`./gradlew build` 一条命令就能打出带 blockstates / models / lang / loot_table 的完整 jar，不再依赖先手动跑 `genData`；`build/generated/<模块>/{client,server}` 仍留在 `main.resources` 的 srcDir 里，但同一轮构建中 `processResources` 的输入快照早于 datagen 产出，所以 `jar` 另外用 `mustRunAfter` 只做排序、并直接从 generated 目录补文件（重复 entry 靠 `duplicatesStrategy = EXCLUDE` 去重，`.cache/**` 与 `*.bbmodel` 继续排除）。datagen 不能挂到 `processResources` / `jar` 的 `dependsOn` 上：data run 依赖 `classes`，而 `:barren:runClient` 又依赖 `:core:jar`，会形成依赖环。只要纯编译时可加 `-x runClientData -x runServerData` 跳过
+- **`gradlew runClient` 默认只跑 barren** - 根目录执行 `runClient` 时 Gradle 按任务名会同时命中三个模块的 run 任务；现在非默认模块（core / wilderness）的同名任务在没有用 `:模块:runClient` 显式点名时用 `onlyIf` 跳过，于是 `./gradlew runClient` 等价于 `./gradlew :barren:runClient`（barren 的 run 自动额外加载 wilderness 联调），`:core:runClient` / `:wilderness:runClient` 依旧可用
+
+### Changed
+- **CI 工作流去掉单独的 datagen 步骤** - `build.yml` 与 `manually build.yml` 删掉 `./gradlew genData` 那一步，改为单条 `./gradlew build`（build 已自动前置 datagen），避免同一次构建把六个 data run 跑两遍
+- **README / AGENTS 常用命令同步** - 补充 `gradlew runClient` 的默认模块、`build` 自动 datagen，以及 `-x runClientData -x runServerData` 跳过方式
+
+### Fixed
+- **单次 `gradlew build` 会打出缺资源的 jar** - 根因：datagen 产物不在版本库，而 `processResources` 必须先于 data run（data run 依赖 `classes`），单次调用里 `build` 与 datagen 之间没有顺序约束，jar 就拿不到当轮刚生成的资源；已用「`build` → datagen 依赖 + `jar` 的 `mustRunAfter` 排序 + jar 直接读 generated 目录」修掉。验证：删空 `build/generated` 与各模块 `build/resources`、`build/libs` 后单跑 `./gradlew build`（1m22s），三个 jar 恢复完整——按 `build/generated` 逐文件比对，非 `.cache` 生成物缺失 0 个（core 202 / wilderness 84 / barren 519 个资源全部进包），jar 内无重复 entry 警告，barren 347677 / wilderness 237468 字节与改动前一致；另测 `gradlew runClient` 时 `:core:runClient` / `:wilderness:runClient` 输出 SKIPPED，而 `gradlew :core:runClient` 仍正常启动

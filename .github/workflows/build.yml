@@ -26,9 +26,7 @@ jobs:
       - name: Make Gradle wrapper executable
         run: chmod +x ./gradlew
 
-      # datagen 产物不提交到版本库，必须在打包前生成，否则 jar 里会缺模型 / 语言文件 / 战利品表等资源
-      - name: Generate data (datagen)
-        run: ./gradlew genData
-
-      - name: Build with Gradle
+      # datagen 产物不提交到版本库；`build` 已通过 dependsOn 自动先跑 runClientData / runServerData，
+      # 一次调用就能打出带模型 / 语言文件 / 战利品表的完整 jar
+      - name: Build with Gradle (includes datagen)
         run: ./gradlew build

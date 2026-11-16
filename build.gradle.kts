@@ -22,6 +22,17 @@ val modLicense: String by rootProject
 
 val geocklibVersion: String by rootProject
 
+// `gradlew runClient` 的默认模块：Gradle 只按「任务名」匹配，根目录执行时会同时命中
+// core / wilderness / barren 三个 runClient。这里让非默认模块的同名任务在没人用
+// `:模块:runClient` 显式点名时跳过，于是 `gradlew runClient` == `gradlew :barren:runClient`
+// （barren 的 run 会自动额外加载 wilderness 做联调）。
+val defaultClientModule: String = "barren"
+
+// 调用方显式写出的任务（去掉前导冒号），用于判断是否点名了某个模块
+val requestedTaskPaths: Set<String> = gradle.startParameter.taskNames
+    .map { it.trim().removePrefix(":") }
+    .toSet()
+
 allprojects {
     apply(plugin = "java-library")
     apply(plugin = "maven-publish")
@@ -220,11 +231,49 @@ allprojects {
             isDownloadSources = true
         }
     }
+
+    // ---- 默认运行入口：`gradlew runClient` 只启动 barren ----
+    if (project.name != defaultClientModule && requestedTaskPaths.none { it.startsWith("${project.name}:") }) {
+        tasks.matching { it.name == "runClient" }.configureEach {
+            onlyIf("未用项目路径点名模块，默认只启动 :$defaultClientModule:runClient") { false }
+        }
+    }
+
+    // ---- build 前自动跑 datagen ----
+    // datagen 产物写在 build/generated/<module>/{client,server}，不在版本库里；
+    // 直接 `gradlew build` 会打出缺模型 / 语言 / 战利品表的 jar，所以让每个模块的 build 先跑自己的 datagen。
+    // 不能把 datagen 挂到 processResources 或 jar 的 dependsOn 上：
+    // data run 依赖 classes（进而 processResources），而 `:barren:runClient` 又依赖 `:core:jar`，会形成依赖环。
+    // 因此 jar 只用 mustRunAfter 排序，并直接从 generated 目录补文件（同一轮构建里 processResources
+    // 的输入快照早于 datagen 产出，光靠排顺序仍然会漏资源）。
+    val generatedResourceDirs = listOf(
+        rootProject.file("build/generated/${project.name}/client"),
+        rootProject.file("build/generated/${project.name}/server"),
+    )
+    val datagenRuns = tasks.matching { it.name == "runClientData" || it.name == "runServerData" }
+
+    tasks.named("build") {
+        dependsOn(datagenRuns)
+    }
+
+    tasks.named<Jar>("jar") {
+        mustRunAfter(datagenRuns)
+        duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+        generatedResourceDirs.forEach { dir ->
+            from(dir) {
+                exclude("**/*.bbmodel")
+                exclude("**/.cache/**")
+                exclude(".cache/**")
+            }
+        }
+    }
 }
 
 // datagen 产物写在 build/generated/<module>/{client,server}，由上面 main.resources 的 srcDir 打进 jar。
-// 这些目录不在版本库里，所以打包前必须先跑一遍 datagen，否则 jar 会缺 blockstates / models / lang / loot_table 等资源。
-// 注意不能把 datagen 挂到 processResources 上（runClientData 依赖 classes，会形成循环依赖）。
+// 这些目录不在版本库里，所以每个模块的 `build` 都已 dependsOn 自己的 datagen（见上），`gradlew build` 一条命令即可；
+// 这里的 `genData` 保留为聚合任务，一次跑完全部模块的 client + server datagen。
+// 注意不能把 datagen 挂到 processResources / jar 的 dependsOn 上（runClientData 依赖 classes，而
+// `:barren:runClient` 又依赖 `:core:jar`，会形成循环依赖）。
 tasks.register("genData") {
     group = "build"
     description = "为每个模块运行 datagen，生成 build/generated/<module> 下的资源"

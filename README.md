@@ -20,8 +20,9 @@ NeoForge 多模块 Minecraft 模组（Minecraft 26.2 · NeoForge 26.2.0.75 · Ja
 ### 快速开始
 
 ```bash
-./gradlew build                  # 构建三个 jar
-./gradlew :core:runClient        # 只跑 core
+./gradlew build                  # 构建三个 jar（自动先跑 genData，可用 -x runClientData -x runServerData 跳过）
+./gradlew runClient              # 默认只跑 barren（自动额外加载 wilderness 联调）
+./gradlew :core:runClient        # 用项目路径点名才跑 core
 ./gradlew :barren:runClient      # 跑 barren（自动额外加载 wilderness 联调）
 ./gradlew :<模块>:runClientData  # 生成客户端资源（模型/blockstate/lang）
 ./gradlew :<模块>:runServerData  # 生成服务端数据（loot/tags/recipe）

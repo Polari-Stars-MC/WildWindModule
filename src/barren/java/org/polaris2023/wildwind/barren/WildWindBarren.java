@@ -6,6 +6,7 @@ import net.neoforged.fml.common.Mod;
 import net.neoforged.neoforge.event.BlockEntityTypeAddBlocksEvent;
 import org.polaris2023.wildwind.barren.block.BarrenBlocks;
 import org.polaris2023.wildwind.barren.registry.BarrenEntities;
+import org.polaris2023.wildwind.barren.registry.BarrenFeatures;
 import org.polaris2023.wildwind.barren.registry.BarrenItems;
 import org.polaris2023.wildwind.barren.registry.ModCreativeTabs;
 import org.polaris2023.wildwind.barren.registry.ModItems;
@@ -26,6 +27,7 @@ public class WildWindBarren {
         BarrenEntities.register(bus);
         BarrenBlocks.register(bus);
         BarrenItems.register(bus);
+        BarrenFeatures.register(bus);
         bus.addListener(BlockEntityTypeAddBlocksEvent.class, BarrenBlocks::addBlockEntityBlocks);
         ModCreativeTabs.register(bus);
         ModItems.register(bus);
